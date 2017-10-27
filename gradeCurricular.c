@@ -1,26 +1,23 @@
 /***************************************************************************
-*  $MCI Módulo de implementação: Módulo Corpo Docente
+*  $MCI Módulo de implementação: Módulo Grade Curricular
 *
-*  Arquivo gerado:              corpoDocente.C
+*  Arquivo gerado:              gradeCurricular.c
 *  Letras identificadoras:      GRC
 *
-*  Nome da base de software:    Fonte do módulo Corpo Docente
+*  Nome da base de software:    Fonte do módulo Grade Curricular
 *
 *  Projeto: Disciplina INF 1301
-*  Gestor:  DI/PUC-Rio
-*  Autores: Bruce Marcellino, BM  
-*			Felipe Alfena, FA
-*			Nicolas Paes, NP
-*			Mariana Ruddy, MR
-*			Rodrigo Pumar, RP.  
+*  Gestor:  Grupo 1 / Grupo 4
+*  Autores: 		Bruce Marcellino, BM  
+*			mrol - Matheus Rodrigues de Oliveira Leal
 *
 *  $HA Histórico de evolução:
 *     Versão  Autor 	Data     	Observações
+*	0.11   mrol	27/10/2017	Funções de consulta adicionadas
 *       0.10   BM	07/10/2017	Inicio do desenvolvimento 
 *
 *  $ED Descrição do módulo
-*     Este módulo contém as funções específicas para manipular os professores na lista de corpo docente.
-*     Este módulo utiliza funcões de interface do modulo professor.
+*     TODO AVISO IMPORTANTE boa parte da documentao está errada!! Não confie nela!! 
 ***************************************************************************/
 
 
