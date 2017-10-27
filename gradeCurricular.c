@@ -1,10 +1,10 @@
 /***************************************************************************
-*  $MCI Módulo de implementação: Módulo Corpo Docente
+*  $MCI MÃ³dulo de implementaÃ§Ã£o: MÃ³dulo Corpo Docente
 *
 *  Arquivo gerado:              corpoDocente.C
 *  Letras identificadoras:      GRC
 *
-*  Nome da base de software:    Fonte do módulo Corpo Docente
+*  Nome da base de software:    Fonte do mÃ³dulo Corpo Docente
 *
 *  Projeto: Disciplina INF 1301
 *  Gestor:  DI/PUC-Rio
@@ -14,13 +14,13 @@
 *			Mariana Ruddy, MR
 *			Rodrigo Pumar, RP.  
 *
-*  $HA Histórico de evolução:
-*     Versão  Autor 	Data     	Observações
+*  $HA HistÃ³rico de evoluÃ§Ã£o:
+*     VersÃ£o  Autor 	Data     	ObservaÃ§Ãµes
 *       0.10   BM	07/10/2017	Inicio do desenvolvimento 
 *
-*  $ED Descrição do módulo
-*     Este módulo contém as funções específicas para manipular os professores na lista de corpo docente.
-*     Este módulo utiliza funcões de interface do modulo professor.
+*  $ED DescriÃ§Ã£o do mÃ³dulo
+*     Este mÃ³dulo contÃ©m as funÃ§Ãµes especÃ­ficas para manipular os professores na lista de corpo docente.
+*     Este mÃ³dulo utiliza funcÃµes de interface do modulo professor.
 ***************************************************************************/
 
 
@@ -36,8 +36,8 @@
 *  $TC Tipo de dados: corpoDocente
 *
 *
-*  $ED Descrição do tipo
-*     Estrutura principal que armazena os dados de um corpo docente ao qual este módulo se dedica.
+*  $ED DescriÃ§Ã£o do tipo
+*     Estrutura principal que armazena os dados de um corpo docente ao qual este mÃ³dulo se dedica.
 *
 ***********************************************************************/
 
@@ -51,31 +51,31 @@ typedef struct gradeCurricular{
 } GradeCurricular;
 
 
-/*****  Dados encapsulados no módulo  *****/
+/*****  Dados encapsulados no mÃ³dulo  *****/
 	
 static GradeCurricular *grc;
-	/* instância de corpo docente armazenada por este módulo */
+	/* instÃ¢ncia de corpo docente armazenada por este mÃ³dulo */
 
-/***** Protótipos das funções encapsuladas no módulo *****/
-// TODO retirar isto caso nao faça nenhuma funcao
+/***** ProtÃ³tipos das funÃ§Ãµes encapsuladas no mÃ³dulo *****/
+// TODO retirar isto caso nao faÃ§a nenhuma funcao
 
 
-/*****  Código das funções exportadas pelo módulo  *****/
+/*****  CÃ³digo das funÃ§Ãµes exportadas pelo mÃ³dulo  *****/
 
 /***************************************************************************
 *
-*  Função: GRC Criar Lista de Corpo Docente
+*  FunÃ§Ã£o: GRC Criar Lista de Corpo Docente
 *  ****/
 
 GRC_tpCondRet GRC_cria(){
 	grc = (GradeCurricular*) malloc(sizeof(GradeCurricular));
 	createList(&grc->parDisciplinas);
 	return GRC_CondRetOk;
-}/* Fim função: GRC Criar Lista de Corpo Docente */
+}/* Fim funÃ§Ã£o: GRC Criar Lista de Corpo Docente */
 
 /***************************************************************************
 *
-*  Função: GRC Cadastrar Professor
+*  FunÃ§Ã£o: GRC Cadastrar Professor
 *  ****/
 
 GRC_tpCondRet GRC_cadastra(char* nome, char* codigo, int creditos, char* bibliografia, char* ementa){
@@ -92,11 +92,11 @@ GRC_tpCondRet GRC_cadastra(char* nome, char* codigo, int creditos, char* bibliog
 	createList(&parD->preRequisitos);
 	push_back(grc->parDisciplinas, parD);
 	return GRC_CondRetOk;
-}/* Fim função: GRC Cadastrar Professor */
+}/* Fim funÃ§Ã£o: GRC Cadastrar Professor */
 
 /***************************************************************************
 *
-*  Função: GRC Mostra Pre-Requisitos
+*  FunÃ§Ã£o: GRC Mostra Pre-Requisitos
 *  ****/
 
 /* Funcao interna */
@@ -120,17 +120,17 @@ GRC_tpCondRet GRC_mostraPreRequisitos(ParDisciplina *parD){
 		printf("--//--");
 	else{
 		tam = strlen(buffer);
-		/* Tam não é igual a zero, pois se fosse, nao estariamos neste if */
+		/* Tam nÃ£o Ã© igual a zero, pois se fosse, nao estariamos neste if */
 		buffer[tam-1] = '.';
 		printf("%s", buffer);
 	}
 	printf("\n");
 	return GRC_CondRetOk;
-}/* Fim função: GRC Mostra Pre-Requisitos */
+}/* Fim funÃ§Ã£o: GRC Mostra Pre-Requisitos */
 
 /***************************************************************************
 *
-*  Função: GRC Mostra Atual
+*  FunÃ§Ã£o: GRC Mostra Atual
 *  ****/
 
 GRC_tpCondRet GRC_mostraAtual(){
@@ -139,11 +139,11 @@ GRC_tpCondRet GRC_mostraAtual(){
 	DIS_exibe(parD->disciplina);
 	GRC_mostraPreRequisitos(parD);
 	return GRC_CondRetOk;
-}/* Fim função: GRC Mostra Atual */
+}/* Fim funÃ§Ã£o: GRC Mostra Atual */
 
  /***************************************************************************
  *
- *  Função: GRC Mostra Todos Professores
+ *  FunÃ§Ã£o: GRC Mostra Todos Professores
  *  ****/
 
 GRC_tpCondRet GRC_mostraTodas(){
@@ -155,11 +155,11 @@ GRC_tpCondRet GRC_mostraTodas(){
 		GRC_mostraPreRequisitos(parD);
 	}while(next(grc->parDisciplinas)==LIS_CondRetOK);
 	return GRC_CondRetOk;
-}/* Fim função: GRC Mosta Todos Professores */
+}/* Fim funÃ§Ã£o: GRC Mosta Todos Professores */
 
  /***************************************************************************
  *
- *  Função: GRC Limpa Lista
+ *  FunÃ§Ã£o: GRC Limpa Lista
  *  ****/
 
 GRC_tpCondRet GRC_limpa(){
@@ -170,11 +170,11 @@ GRC_tpCondRet GRC_limpa(){
 		free(parD);	
 	};
 	return GRC_CondRetOk;
-}/* Fim função: GRC Limpa Lista */
+}/* Fim funÃ§Ã£o: GRC Limpa Lista */
 
  /***************************************************************************
  *
- *  Função: GRC Retira da Lista
+ *  FunÃ§Ã£o: GRC Retira da Lista
  *  ****/
 
 GRC_tpCondRet GRC_retira(){
@@ -184,22 +184,22 @@ GRC_tpCondRet GRC_retira(){
 	del(parD->preRequisitos);
 	free(parD);
 	return GRC_CondRetOk;
-}/* Fim função: GRC Retira da Lista */
+}/* Fim funÃ§Ã£o: GRC Retira da Lista */
 
  /***************************************************************************
  *
- *  Função: GRC Libera
+ *  FunÃ§Ã£o: GRC Libera
  *  ****/
 
 GRC_tpCondRet GRC_libera(){
 	GRC_limpa();
 	del(grc->parDisciplinas);
 	return GRC_CondRetOk;
-}/* Fim função: GRC Libera */
+}/* Fim funÃ§Ã£o: GRC Libera */
 
  /***************************************************************************
  *
- *  Função: GRC Busca Por RG
+ *  FunÃ§Ã£o: GRC Busca Por RG
  *  ****/
 
 GRC_tpCondRet GRC_buscaPorCodigo(char *chave){
@@ -231,17 +231,17 @@ GRC_tpCondRet GRC_buscaPorCodigo(char *chave){
 	GRC_buscaPorCodigo(inicioCod);
 	free(inicioCod);
 	return GRC_CondRetDisciplinaNaoEncontrada;
-}/* Fim função: GRC Busca Por RG */
+}/* Fim funÃ§Ã£o: GRC Busca Por RG */
 
  /***************************************************************************
  *
- *  Função: GRC Busca Por RG
+ *  FunÃ§Ã£o: GRC Busca Por RG
  *  ****/
 
 /*
-	TODO formalizar este comentário
-	Note que o codigo passado como argumento é o codigo do pre-requisito. E NÃO o código da disciplina a qual vamos adicionar um preRequisito.
-	A disciplina a qual vamos adicionar é a disciplina selecionada (cursor).
+	TODO formalizar este comentÃ¡rio
+	Note que o codigo passado como argumento Ã© o codigo do pre-requisito. E NÃƒO o cÃ³digo da disciplina a qual vamos adicionar um preRequisito.
+	A disciplina a qual vamos adicionar Ã© a disciplina selecionada (cursor).
 */
 GRC_tpCondRet GRC_inserePreRequisito(char *codigoPre){
 	ParDisciplina *parD = NULL;
@@ -249,18 +249,18 @@ GRC_tpCondRet GRC_inserePreRequisito(char *codigoPre){
 	char *codigo = NULL;
 	/* Recuperando disciplina atual da lista */
 	if(get_val_cursor(grc->parDisciplinas, (void**) &parD)== LIS_CondRetListaVazia) return GRC_CondRetGradeCurricularVazia;
-	/* Recuperando o código dela */
+	/* Recuperando o cÃ³digo dela */
 	DIS_get_codigo(parD->disciplina, &codigo);	
 	/* Procurando o pre requisito */
 	if(GRC_buscaPorCodigo(codigoPre)!=GRC_CondRetOk){
-		/* Se não encontrei retorno o cursor para onde comecei e retorno */
+		/* Se nÃ£o encontrei retorno o cursor para onde comecei e retorno */
 		GRC_buscaPorCodigo(codigo);
 		free(codigo);
 		return GRC_CondRetDisciplinaNaoEncontrada;
 	}
 	/* 
 		Recuperando a disciplina Pre-Requisito
-		Ja sei que a lista não esta vazia, não preciso verificar de novo
+		Ja sei que a lista nÃ£o esta vazia, nÃ£o preciso verificar de novo
 	*/
 	get_val_cursor(grc->parDisciplinas, (void**) &parDPre);
 	/* Guardo o endereco do pre-requisito (disciplina, nao par) na lista do par (e nao disciplina) que recuperei no inicio */
@@ -269,7 +269,7 @@ GRC_tpCondRet GRC_inserePreRequisito(char *codigoPre){
 	GRC_buscaPorCodigo(codigo);
 	free(codigo);
 	return GRC_CondRetOk;
-}/* Fim função: GRC Busca Por RG */
+}/* Fim funÃ§Ã£o: GRC Busca Por RG */
 
 GRC_tpCondRet GRC_removePreRequisitos(){
 	ParDisciplina *parD = NULL;
@@ -277,54 +277,80 @@ GRC_tpCondRet GRC_removePreRequisitos(){
 	if(get_val_cursor(grc->parDisciplinas, (void**) &parD)== LIS_CondRetListaVazia) return GRC_CondRetGradeCurricularVazia;
 	clear(parD->preRequisitos);
 	return GRC_CondRetOk;
-}/* Fim função: GRC Busca Por RG */
-
+}/* Fim funÃ§Ã£o: GRC Busca Por RG */
 
  /***************************************************************************
  *
- *  Função: GRC Consulta RG
+ *  FunÃ§Ã£o: GRC Consulta Nome
  *  ****/
 GRC_tpCondRet GRC_consultaNome(char *nome){
 	ParDisciplina *parD = NULL;
 	char *nomeTemp = NULL;
 	/* Recuperando disciplina da lista */
 	if(get_val_cursor(grc->parDisciplinas, (void**) &parD)== LIS_CondRetListaVazia) return GRC_CondRetGradeCurricularVazia;
-	DIS_get_nome(parD->disciplina, &nomeTemp);
+	DIS_get_nome(parD->disciplina, nomeTemp);
 	strcpy(nome, nomeTemp);
 	free(nomeTemp);
 	return GRC_CondRetOk;
-}/* Fim função: GRC Consulta RG */
+}/* Fim funÃ§Ã£o: GRC Consulta Nome */
 
  /***************************************************************************
  *
- *  Função: GRC Consulta CPF
+ *  FunÃ§Ã£o: GRC Consulta Codigo
  *  ****/
-GRC_tpCondRet GRC_consultaCodigo(char *cpf){
+GRC_tpCondRet GRC_consultaCodigo(char *codigo){
+	ParDisciplina *parD = NULL;
+	char *codigoTemp = NULL;
+	/* Recuperando disciplina da lista */
+	if(get_val_cursor(grc->parDisciplinas, (void**) &parD)== LIS_CondRetListaVazia) return GRC_CondRetGradeCurricularVazia;
+	DIS_get_codigo(parD->disciplina, codigoTemp);
+	strcpy(codigo, codigoTemp);
+	free(codigoTemp);
 	return GRC_CondRetOk;
-}/* Fim função: GRC Consulta CPF*/
+}/* Fim funÃ§Ã£o: GRC Consulta Codigo*/
 
  /***************************************************************************
  *
- *  Função: GRC Consulta Matricula
+ *  FunÃ§Ã£o: GRC Consulta Credito
  *  ****/
 GRC_tpCondRet GRC_consultaCreditos(int *creditos){
+	ParDisciplina *parD = NULL;
+	int credTemp;
+	/* Recuperando disciplina da lista */
+	if(get_val_cursor(grc->parDisciplinas, (void**) &parD)== LIS_CondRetListaVazia) return GRC_CondRetGradeCurricularVazia;
+	DIS_get_creditos(parD->disciplina, &credTemp);
+	*creditos = credTemp;
 	return GRC_CondRetOk;
-}/* Fim função: GRC Consulta Matricula*/
+}/* Fim funÃ§Ã£o: GRC Consulta Credito*/
 
  /***************************************************************************
  *
- *  Função: GRC Consulta Email
+ *  FunÃ§Ã£o: GRC Consulta Bibliografia
  *  ****/
 GRC_tpCondRet GRC_consultaBibliografia(char *bibliografia){
+	ParDisciplina *parD = NULL;
+	char *biblioTemp = NULL;
+	/* Recuperando disciplina da lista */
+	if(get_val_cursor(grc->parDisciplinas, (void**) &parD)== LIS_CondRetListaVazia) return GRC_CondRetGradeCurricularVazia;
+	DIS_get_bibliografia(parD->disciplina, &biblioTemp);
+	strcpy(bibliografia, biblioTemp);
+	free(biblioTemp);
 	return GRC_CondRetOk;
-}/* Fim função: GRC Consulta Email*/
+}/* Fim funÃ§Ã£o: GRC Consulta Bibliografia*/
 
 
  /***************************************************************************
  *
- *  Função: GRC Consulta Telefone
+ *  FunÃ§Ã£o: GRC Consulta Ementa
  *  ****/
 GRC_tpCondRet GRC_consultaEmenta(char *ementa){
+	ParDisciplina *parD = NULL;
+	char *EmentaTemp = NULL;
+	/* Recuperando disciplina da lista */
+	if(get_val_cursor(grc->parDisciplinas, (void**) &parD)== LIS_CondRetListaVazia) return GRC_CondRetGradeCurricularVazia;
+	DIS_get_ementa(parD->disciplina, EmentaTemp);
+	strcpy(ementa, EmentaTemp);
+	free(EmentaTemp);
 	return GRC_CondRetOk;
-}/* Fim função: GRC Consulta Telefone*/
+}/* Fim funÃ§Ã£o: GRC Consulta Ementa*/
 
