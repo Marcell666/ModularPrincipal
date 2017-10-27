@@ -18,6 +18,7 @@
 *
 *  $ED Descrição do módulo
 *     TODO AVISO IMPORTANTE boa parte da documentao está errada!! Não confie nela!! 
+***********************************************************************/
 
 #ifndef GRADECURRICULAR_H
 #define GRADECURRICULAR_H
