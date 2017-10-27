@@ -1,34 +1,23 @@
 /***************************************************************************
+*  $MCI Módulo de implementação: Módulo Grade Curricular
 *
-*  $MCD Módulo de definição: Módulo Grade Curricular TODO documentacao
-*
-*  Arquivo gerado:              corpoDocente.h
+*  Arquivo gerado:              gradeCurricular.h
 *  Letras identificadoras:      GRC
 *
-*  Nome da base de software:    Fonte do módulo Corpo Docente
+*  Nome da base de software:    Fonte do módulo Grade Curricular
 *
 *  Projeto: Disciplina INF 1301
-*  Gestor:  DI/PUC-Rio
-*  Autores: Bruce Marcellino, BM  
-*			Felipe Alfena, FA
-*			Nicolas Paes, NP
-*			Mariana Ruddy, MR
-*			Rodrigo Pumar, RP.
+*  Gestor:  Grupo 1 / Grupo 4
+*  Autores: 		Bruce Marcellino, BM  
+*			mrol - Matheus Rodrigues de Oliveira Leal
 *
 *  $HA Histórico de evolução:
-*     Versão	Autor	Data		Observações
+*     Versão  Autor 	Data     	Observações
+*	0.11   mrol	27/10/2017	Funções de consulta adicionadas
 *       0.10   BM	07/10/2017	Inicio do desenvolvimento 
 *
 *  $ED Descrição do módulo
-*	  Este módulo implementa um conjunto de funções para criar e manipular uma lista de Instâncias de Professor, ou seja, um Corpo Docente.
-*     Ao iniciar a execução do programa não existe nenhuma instância de Corpo Docente.
-*     Ao chamar a função criar, uma Lista vazia é criada, precisando assim ter Instâncias de Professores cadastrados.
-*     Nenhuma funcao deste modulo deve ser chamada antes da cria();
-*	  Deve-se usar a função libera para que a memória alocada seja liberada.
-*	  Passar argumentos inválidos como 0 ou "" podem causar erro de formato (GRC_CondRetFormatoInvalido).
-*     Esse módulo utiliza funções auxiliares para manipulação de Instâncias de Professor (Ref. professor.h)
-*
-***************************************************************************/
+*     TODO AVISO IMPORTANTE boa parte da documentao está errada!! Não confie nela!! 
 
 #ifndef GRADECURRICULAR_H
 #define GRADECURRICULAR_H
