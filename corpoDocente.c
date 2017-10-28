@@ -4,7 +4,7 @@
 *  Arquivo gerado:              corpoDocente.C
 *  Letras identificadoras:      CDO
 *
-*  Nome da base de software:    Fonte do módulo Corpo Docente
+*  Nome da base de software:    Fonte do Módulo Corpo Docente
 *
 *  Projeto: Disciplina INF 1301
 *  Gestor:  DI/PUC-Rio
@@ -19,7 +19,7 @@
 *       0.52   BM/RP	04/10/2017	Revisão
 *       0.51   BM   	04/10/2017	Revisão
 *       0.50   RP   	03/10/2017	Documentação
-	0.40   FA	03/10/2017	Funções busca adicionadas
+*		0.40   FA		03/10/2017	Funções busca adicionadas
 *       0.30   MR   	03/10/2017	Funções de consulta/altera adicionadas 
 *       0.20   BM   	02/10/2017	Funcoes modelo adicionadas 
 *       0.10   BM	01/10/2017	Inicio do desenvolvimento 

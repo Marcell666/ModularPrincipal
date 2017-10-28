@@ -1,23 +1,27 @@
 /***************************************************************************
-*  $MCI Módulo de implementação: Módulo Grade Curricular
+*  $MCI Módulo de implementação: Módulo Corpo Grade Curricular
 *
-*  Arquivo gerado:              gradeCurricular.c
+*  Arquivo gerado:              gradeCurricular.C
 *  Letras identificadoras:      GRC
 *
 *  Nome da base de software:    Fonte do módulo Grade Curricular
 *
 *  Projeto: Disciplina INF 1301
-*  Gestor:  Grupo 1 / Grupo 4
-*  Autores: 		Bruce Marcellino, BM  
-*			mrol - Matheus Rodrigues de Oliveira Leal
+*  Gestor:  Grupo 1, Grupo 4
+*  Autores: Bruce Marcellino, BM Grupo 1.
+*			Rodrigo Pumar, RP, Grupo 1.
+*			Matheus Rodrigues de Oliveira Leal, mrol , Grupo 4.
 *
 *  $HA Histórico de evolução:
-*     Versão  Autor 	Data     	Observações
-*	0.11   mrol	27/10/2017	Funções de consulta adicionadas
-*       0.10   BM	07/10/2017	Inicio do desenvolvimento 
+*     Versão	Autor	Data		  Observações
+*		0.40    RP	    28/10/2017	  Get de disciplina agora recebem endereço (funcoes consultas aqui)
+*		0.30    RP	    27/10/2017	  Documentação adicionada
+*		0.20	mrol	27/10/2017	  Funções de consulta adicionadas
+*       0.10    BM	    07/10/2017	  Inicio do desenvolvimento 
 *
 *  $ED Descrição do módulo
-*     TODO AVISO IMPORTANTE boa parte da documentao está errada!! Não confie nela!! 
+*     Este módulo contém as funções específicas para manipular os disciplinas na lista de Grade Curricular.
+*     Este módulo utiliza funcões de interface do módulo disciplina e lista.
 ***************************************************************************/
 
 
@@ -30,11 +34,10 @@
 
 /***********************************************************************
 *
-*  $TC Tipo de dados: corpoDocente
-*
+*  $TC Tipo de dados: parDisciplina
 *
 *  $ED Descrição do tipo
-*     Estrutura principal que armazena os dados de um corpo docente ao qual este módulo se dedica.
+*     Estrutura do par Disciplina e Pre-requisitos encapsulada neste módulo.
 *
 ***********************************************************************/
 
@@ -43,6 +46,14 @@ typedef struct parDisciplina{
 	List *preRequisitos;
 } ParDisciplina;
 
+/***********************************************************************
+*
+*  $TC Tipo de dados: gradeCurricular
+*
+*  $ED Descrição do tipo
+*     Estrutura principal que armazena os dados de uma Grade Curricular ao qual este módulo se dedica.
+*
+***********************************************************************/
 typedef struct gradeCurricular{
 	List *parDisciplinas;
 } GradeCurricular;
@@ -51,28 +62,28 @@ typedef struct gradeCurricular{
 /*****  Dados encapsulados no módulo  *****/
 	
 static GradeCurricular *grc;
-	/* instância de corpo docente armazenada por este módulo */
+	/* instância de Grade Curricular armazenada por este módulo */
 
 /***** Protótipos das funções encapsuladas no módulo *****/
-// TODO retirar isto caso nao faça nenhuma funcao
+GRC_tpCondRet GRC_mostraPreRequisitos(ParDisciplina *parD);
 
 
 /*****  Código das funções exportadas pelo módulo  *****/
 
 /***************************************************************************
 *
-*  Função: GRC Criar Lista de Corpo Docente
+*  Função: GRC Criar Grade Curricular
 *  ****/
 
 GRC_tpCondRet GRC_cria(){
 	grc = (GradeCurricular*) malloc(sizeof(GradeCurricular));
 	createList(&grc->parDisciplinas);
 	return GRC_CondRetOk;
-}/* Fim função: GRC Criar Lista de Corpo Docente */
+}/* Fim função: GRC Criar Grade Curricular */
 
 /***************************************************************************
 *
-*  Função: GRC Cadastrar Professor
+*  Função: GRC Cadastrar Disciplina
 *  ****/
 
 GRC_tpCondRet GRC_cadastra(char* nome, char* codigo, int creditos, char* bibliografia, char* ementa){
@@ -89,15 +100,26 @@ GRC_tpCondRet GRC_cadastra(char* nome, char* codigo, int creditos, char* bibliog
 	createList(&parD->preRequisitos);
 	push_back(grc->parDisciplinas, parD);
 	return GRC_CondRetOk;
-}/* Fim função: GRC Cadastrar Professor */
+}/* Fim função: GRC Cadastrar Disciplina */
 
-/***************************************************************************
+/***********************************************************************
 *
-*  Função: GRC Mostra Pre-Requisitos
-*  ****/
-
-/* Funcao interna */
-
+*  $FC Função: GRC Mostra Pre-Requisitos
+*
+*  $ED Descrição da função
+*     Mostra Pre-requisitos da disciplina atual.
+*				
+*  $FV Valor retornado
+*     GRC_CondRetOk 
+*
+*  Assertiva de Entrada: 
+*		- A Grade Curricular já foi instanciada através da função cria
+*		- O cursor aponta para disciplina para qual deseja se mostrar todos os seus pre-requisitos
+*                    
+*  Assertiva de Saída: 
+*		-Mostra-se no Prompt de Comando todos os pre-requisitos da disciplina atual.
+*
+***********************************************************************/
 GRC_tpCondRet GRC_mostraPreRequisitos(ParDisciplina *parD){
 	Disciplina *disc = NULL;
 	char buffer[80] = "";
@@ -196,7 +218,7 @@ GRC_tpCondRet GRC_libera(){
 
  /***************************************************************************
  *
- *  Função: GRC Busca Por RG
+ *  Função: GRC Busca Por Codigo
  *  ****/
 
 GRC_tpCondRet GRC_buscaPorCodigo(char *chave){
@@ -228,11 +250,11 @@ GRC_tpCondRet GRC_buscaPorCodigo(char *chave){
 	GRC_buscaPorCodigo(inicioCod);
 	free(inicioCod);
 	return GRC_CondRetDisciplinaNaoEncontrada;
-}/* Fim função: GRC Busca Por RG */
+}/* Fim função: GRC Busca Por Codigo */
 
  /***************************************************************************
  *
- *  Função: GRC Busca Por RG
+ *  Função: GRC Insere Pre-Requisito
  *  ****/
 
 /*
@@ -268,13 +290,20 @@ GRC_tpCondRet GRC_inserePreRequisito(char *codigoPre){
 	return GRC_CondRetOk;
 }/* Fim função: GRC Busca Por RG */
 
+
+ /***************************************************************************
+ *
+ *  Função: GRC Remove Pre-requisitos
+ *  ****/
+
 GRC_tpCondRet GRC_removePreRequisitos(){
 	ParDisciplina *parD = NULL;
 	/* Recuperando disciplina da lista */
 	if(get_val_cursor(grc->parDisciplinas, (void**) &parD)== LIS_CondRetListaVazia) return GRC_CondRetGradeCurricularVazia;
 	clear(parD->preRequisitos);
 	return GRC_CondRetOk;
-}/* Fim função: GRC Busca Por RG */
+}/* Fim função: GRC Remove Pre-requisitos */
+
 
  /***************************************************************************
  *
@@ -285,7 +314,7 @@ GRC_tpCondRet GRC_consultaNome(char *nome){
 	char *nomeTemp = NULL;
 	/* Recuperando disciplina da lista */
 	if(get_val_cursor(grc->parDisciplinas, (void**) &parD)== LIS_CondRetListaVazia) return GRC_CondRetGradeCurricularVazia;
-	DIS_get_nome(parD->disciplina, nomeTemp);
+	DIS_get_nome(parD->disciplina, &nomeTemp);
 	strcpy(nome, nomeTemp);
 	free(nomeTemp);
 	return GRC_CondRetOk;
@@ -300,7 +329,7 @@ GRC_tpCondRet GRC_consultaCodigo(char *codigo){
 	char *codigoTemp = NULL;
 	/* Recuperando disciplina da lista */
 	if(get_val_cursor(grc->parDisciplinas, (void**) &parD)== LIS_CondRetListaVazia) return GRC_CondRetGradeCurricularVazia;
-	DIS_get_codigo(parD->disciplina, codigoTemp);
+	DIS_get_codigo(parD->disciplina, &codigoTemp);
 	strcpy(codigo, codigoTemp);
 	free(codigoTemp);
 	return GRC_CondRetOk;
@@ -315,7 +344,7 @@ GRC_tpCondRet GRC_consultaCreditos(int *creditos){
 	int credTemp;
 	/* Recuperando disciplina da lista */
 	if(get_val_cursor(grc->parDisciplinas, (void**) &parD)== LIS_CondRetListaVazia) return GRC_CondRetGradeCurricularVazia;
-	DIS_get_creditos(parD->disciplina, &credTemp);
+	DIS_get_creditos(parD->disciplina,&credTemp);
 	*creditos = credTemp;
 	return GRC_CondRetOk;
 }/* Fim função: GRC Consulta Credito*/
@@ -345,7 +374,7 @@ GRC_tpCondRet GRC_consultaEmenta(char *ementa){
 	char *EmentaTemp = NULL;
 	/* Recuperando disciplina da lista */
 	if(get_val_cursor(grc->parDisciplinas, (void**) &parD)== LIS_CondRetListaVazia) return GRC_CondRetGradeCurricularVazia;
-	DIS_get_ementa(parD->disciplina, EmentaTemp);
+	DIS_get_ementa(parD->disciplina, &EmentaTemp);
 	strcpy(ementa, EmentaTemp);
 	free(EmentaTemp);
 	return GRC_CondRetOk;
