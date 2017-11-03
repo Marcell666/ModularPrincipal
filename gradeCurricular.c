@@ -86,13 +86,13 @@ GRC_tpCondRet GRC_cria(){
 *  Função: GRC Cadastrar Disciplina
 *  ****/
 
-GRC_tpCondRet GRC_cadastra(char* nome, char* codigo, int creditos, char* bibliografia, char* ementa){
+ GRC_tpCondRet GRC_cadastra(char* nome, char* codigo, int creditos, char* bibliografia, char* ementa, int criterio){
 	ParDisciplina *parD = NULL;
 	Disciplina *disc = NULL;
 	DIS_tpCondRet ret;
 	if(GRC_buscaPorCodigo(codigo) == GRC_CondRetOk)
 		return GRC_CondRetIdJaCriado;
-	ret = DIS_gera_param(&disc, nome, codigo, creditos, bibliografia, ementa);
+	ret = DIS_gera_param(&disc, nome, codigo, creditos, bibliografia, ementa,criterio);
 	if(ret == DIS_CondRetFaltouMemoria) return GRC_CondRetNaoHaMemoria;
 	if(ret == DIS_CondRetParametroInvalido) return GRC_CondRetFormatoInvalido;
 	parD = (ParDisciplina*) malloc(sizeof(ParDisciplina));
@@ -311,12 +311,9 @@ GRC_tpCondRet GRC_removePreRequisitos(){
  *  ****/
 GRC_tpCondRet GRC_consultaNome(char *nome){
 	ParDisciplina *parD = NULL;
-	char *nomeTemp = NULL;
 	/* Recuperando disciplina da lista */
 	if(get_val_cursor(grc->parDisciplinas, (void**) &parD)== LIS_CondRetListaVazia) return GRC_CondRetGradeCurricularVazia;
-	DIS_get_nome(parD->disciplina, &nomeTemp);
-	strcpy(nome, nomeTemp);
-	free(nomeTemp);
+	DIS_get_nome(parD->disciplina, &nome);
 	return GRC_CondRetOk;
 }/* Fim função: GRC Consulta Nome */
 
@@ -326,12 +323,9 @@ GRC_tpCondRet GRC_consultaNome(char *nome){
  *  ****/
 GRC_tpCondRet GRC_consultaCodigo(char *codigo){
 	ParDisciplina *parD = NULL;
-	char *codigoTemp = NULL;
 	/* Recuperando disciplina da lista */
 	if(get_val_cursor(grc->parDisciplinas, (void**) &parD)== LIS_CondRetListaVazia) return GRC_CondRetGradeCurricularVazia;
-	DIS_get_codigo(parD->disciplina, &codigoTemp);
-	strcpy(codigo, codigoTemp);
-	free(codigoTemp);
+	DIS_get_codigo(parD->disciplina, &codigo);
 	return GRC_CondRetOk;
 }/* Fim função: GRC Consulta Codigo*/
 
@@ -355,12 +349,9 @@ GRC_tpCondRet GRC_consultaCreditos(int *creditos){
  *  ****/
 GRC_tpCondRet GRC_consultaBibliografia(char *bibliografia){
 	ParDisciplina *parD = NULL;
-	char *biblioTemp = NULL;
 	/* Recuperando disciplina da lista */
 	if(get_val_cursor(grc->parDisciplinas, (void**) &parD)== LIS_CondRetListaVazia) return GRC_CondRetGradeCurricularVazia;
-	DIS_get_bibliografia(parD->disciplina, &biblioTemp);
-	strcpy(bibliografia, biblioTemp);
-	free(biblioTemp);
+	DIS_get_bibliografia(parD->disciplina, &bibliografia);
 	return GRC_CondRetOk;
 }/* Fim função: GRC Consulta Bibliografia*/
 
@@ -371,12 +362,9 @@ GRC_tpCondRet GRC_consultaBibliografia(char *bibliografia){
  *  ****/
 GRC_tpCondRet GRC_consultaEmenta(char *ementa){
 	ParDisciplina *parD = NULL;
-	char *EmentaTemp = NULL;
 	/* Recuperando disciplina da lista */
 	if(get_val_cursor(grc->parDisciplinas, (void**) &parD)== LIS_CondRetListaVazia) return GRC_CondRetGradeCurricularVazia;
-	DIS_get_ementa(parD->disciplina, &EmentaTemp);
-	strcpy(ementa, EmentaTemp);
-	free(EmentaTemp);
+	DIS_get_ementa(parD->disciplina, &ementa);
 	return GRC_CondRetOk;
 }/* Fim função: GRC Consulta Ementa*/
 
