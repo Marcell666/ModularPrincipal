@@ -67,7 +67,8 @@ static int DIS_le_creditos(void);
 static char* DIS_le_nome(void);
 static char *DIS_le_ementa(void);
 static int DIS_le_critAprov(void);
-static char* converte_criterio(Disciplina* d);
+static int converte_criterio(Disciplina* d);
+
 /*****  Código das funções exportadas pelo módulo  *****/
 /***************************************************************************
 *
@@ -75,10 +76,10 @@ static char* converte_criterio(Disciplina* d);
 *  ****/
 DIS_tpCondRet DIS_exibe(Disciplina* d)
 {
-  char *criterio_string = converte_criterio(d);
+  int criterio = converte_criterio(d);
   if (d != NULL)
   {
-    printf("\nNOME: %s \n CODIGO: %s \n CREDITOS: %d \n BIBLIOGRAFIA: %s \n EMENTA: %s \n CRITERIO: %s\n",d->nome, d->codigo, d->creditos, d->bibliografia,d->ementa, criterio_string);
+    printf("\nNOME: %s \n CODIGO: %s \n CREDITOS: %d \n BIBLIOGRAFIA: %s \n EMENTA: %s \n CRITERIO: %d\n",d->nome, d->codigo, d->creditos, d->bibliografia,d->ementa, criterio);
     return DIS_CondRetOK;
   }
   return DIS_CondRetErroEstrutura;
@@ -87,18 +88,18 @@ DIS_tpCondRet DIS_exibe(Disciplina* d)
 *
 *  Função: DIS converte criterio para string
 *  ****/
-char* converte_criterio(Disciplina* d)
+int converte_criterio(Disciplina* d)
 {
 	if(d->criAprov == 	CRI_Criterio01)
-		return "Criterio 1";
+		return 1;
 		else if(d->criAprov == CRI_Criterio02)
-			return "Criterio 2";
+			return 2;
 			else if(d->criAprov == CRI_Criterio03)
-				return "Criterio 3";
+				return 3;
 				else if(d->criAprov == CRI_Criterio04)
-					return "Criterio 4";
+					return 4;
 					else if(d->criAprov == CRI_Criterio05)
-						return "criterio 5";
+						return 5;
 }
 /***************************************************************************
 * ngtgmp
@@ -328,7 +329,7 @@ DIS_tpCondRet DIS_get_creditos (Disciplina* dis, int *creditos)
       			return DIS_CondRetParametroInvalido;
 		}
 		dis->creditos=creditos;
-		return DIS_CondRetOK;	
+		return DIS_CondRetOK;
 	}
 	return DIS_CondRetErroEstrutura;
 }/* Fim função: DIS altera creditos */
@@ -501,13 +502,8 @@ DIS_tpCondRet DIS_exibe_todas_turmas(Disciplina **d){
   return DIS_CondRetOK;
 }
 /* Fim função: DIS exibe lista de turmas para a disciplina */
-/***************************************************************************
-*
-*  Função: DIS situacaoAluno atualiza por referência a media e a situacao do aluno
-*  ****/
 DIS_tpCondRet DIS_situacaoAluno(Disciplina* disc,float G1,float G2,float G3,float G4,float* media,int* situacao)
 {
-	return disc->criAprov(G1, G2, G3, G4, media, situacao);
+	disc->criAprov(G1, G2, G3, G4, media, situacao);
+	return DIS_CondRetOK;
 }
-/* Fim função: DIS exibe lista de turmas para a disciplina */
-
