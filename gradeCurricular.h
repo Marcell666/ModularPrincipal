@@ -113,7 +113,7 @@ GRC_tpCondRet GRC_cria();
 *
 ***********************************************************************/
 
-GRC_tpCondRet GRC_cadastra(char* nome, char* codigo, int creditos, char* bibliografia, char* ementa);
+GRC_tpCondRet GRC_cadastra(char* nome, char* codigo, int creditos, char* bibliografia, char* ementa,int criterio);
 
 /***********************************************************************
 *
@@ -413,7 +413,7 @@ GRC_tpCondRet GRC_consultaCreditos(int *creditos);
 *
 ***********************************************************************/
 
-GRC_tpCondRet GRC_consultaBibiliografia(char *bibiliografia);
+GRC_tpCondRet GRC_consultaBibliografia(char *bibiliografia); 
 
 /***********************************************************************
 *
