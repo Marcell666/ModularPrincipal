@@ -374,9 +374,9 @@ GRC_tpCondRet GRC_consultaEmenta(char *ementa){
  *  ****/
 GRC_tpCondRet GRC_devolveDisc(void** Disc) {
 	ParDisciplina *parDisc1;
+	
+	if (get_val_cursor(grc->parDisciplinas, (void**)&parDisc1) == LIS_CondRetListaVazia) return GRC_CondRetGradeCurricularVazia;
 	get_val_cursor(grc->parDisciplinas,&parDisc1);
-
 	*Disc = parDisc1->disciplina;
-
 	return GRC_CondRetOk;
 } /* Fim função:GRC_devolveDisc*/
