@@ -57,8 +57,8 @@ AMT_tpCondRet AMT_cria(void) {
 não estiver matriculado em nenhuma disciplina, aloca memória e o insere na lista, e então
 adiciona a disciplina à sua grade de horário na turma desejada. */
 AMT_tpCondRet AMT_matriculaNaDisc(unsigned int mat, char* codDisciplina, char* codTurma) {
-	
-	Aluno* aln=NULL;
+
+	Aluno* aln = NULL;
 	CDI_tpCondRet retBuscaCDI;
 	GRC_tpCondRet retBuscaGRC;
 	AMT_tpCondRet retBuscaAMT;
@@ -69,35 +69,35 @@ AMT_tpCondRet AMT_matriculaNaDisc(unsigned int mat, char* codDisciplina, char* c
 	Turma* tur;
 	int creditGRA, creditDIS;
 
-	retBuscaCDI = CDI_busca(mat,&aln);		// Busco o aluno no corpo discente
-	
+	retBuscaCDI = CDI_busca(mat, &aln);		// Busco o aluno no corpo discente
+
 	if (retBuscaCDI == CDI_CondRetAlunoNaoCadastrado) // Se o aluno não for encontrado
 		return AMT_CondRetAlunoNaoExiste;
-	
+
 	retBuscaGRC = GRC_buscaPorCodigo(codDisciplina);
 	GRC_devolveDisc((void**)&Disc); // Busco a disciplina, para pegar suas informações.
 	if (retBuscaGRC == GRC_CondRetDisciplinaNaoEncontrada)
 		return AMT_CondRetDisciplinaNaoEncontrada;
 
-	retBuscaAMT = AMT_BuscaAluno(mat,&AluGrad);
+	retBuscaAMT = AMT_BuscaAluno(mat, &AluGrad);
 	if (retBuscaAMT == AMT_CondRetAlunoNaoExiste) { // se o aluno ainda não existir no AMT, eu o insiro
 		AluGrad = (parAluGrad*)malloc(sizeof(parAluGrad));
 		AluGrad->aluno = aln;	// Referência a um aluno existente
 		GRA_CriaGradeHorario(&(AluGrad->grade)); // Crio a grade de horário do aluno
-		push_back(AluMatr->AMT,(void**)AluGrad); // Inserindo na lista
+		push_back(AluMatr->AMT, (void**)AluGrad); // Inserindo na lista
 	}
-	GRA_ConsultaCred(AluGrad->grade,&creditGRA);
-	DIS_get_creditos(Disc,&creditDIS);
+	GRA_ConsultaCred(AluGrad->grade, &creditGRA);
+	DIS_get_creditos(Disc, &creditDIS);
 	if (creditGRA + creditDIS > LIMT_CRED) {	// Verifico se somando os créditos da disc a ser inserida, o aluno ultrapassa o limite de créditos
 		return AMT_CondRetLimiteDeCredUlt;
 	}
 
-	retBuscaDIS = DIS_buscaTurma(Disc,codTurma,&tur);
+	retBuscaDIS = DIS_buscaTurma(Disc, codTurma, &tur);
 	if (retBuscaDIS == DIS_CondRetTurmaNaoExiste) {
 		return AMT_CondRetTurmaNaoExiste;
 	}
 
-	GRA_InsereGradeHorario(i,Disc,tur,AluGrad->grade); // Inserindo na grade de horário.
+	GRA_InsereGradeHorario(i, Disc, tur, AluGrad->grade); // Inserindo na grade de horário.
 
 	return AMT_CondRetOK;
 }
@@ -113,7 +113,7 @@ AMT_tpCondRet AMT_BuscaAluno(unsigned int matbusca, parAluGrad** parAluGradeBusc
 	first(AluMatr->AMT);	// Seto a lista para o primeiro nó
 	for (i = 0;i < size; i++) {
 		get_val_cursor(AluMatr->AMT, (void**)&parAluGrade);	// Pego o par aluno-grade atual
-		ALU_GetMat(parAluGrade->aluno , &mat2);	// Pego a matrícula do aluno
+		ALU_GetMat(parAluGrade->aluno, &mat2);	// Pego a matrícula do aluno
 		if (matbusca == mat2) {	// Vejo se a matrícula é igual à de busca
 			*parAluGradeBuscado = parAluGrade;
 			return AMT_CondRetAlunoJaCadastrado;	// se for, retorno ele.
@@ -125,17 +125,17 @@ AMT_tpCondRet AMT_BuscaAluno(unsigned int matbusca, parAluGrad** parAluGradeBusc
 /*Fim da função*/
 
 /*Início da função alteraFaltas*/
-/*Recebe uma matricula de aluno, o código de uma disciplina e o número de faltas a alterar 
+/*Recebe uma matricula de aluno, o código de uma disciplina e o número de faltas a alterar
 na mesma, busca pelo aluno e altera as faltas na disciplina informada. */
 AMT_tpCondRet AMT_alteraFaltas(unsigned int mat, int faltas, char* codDisciplina) {
 	InfoGradeHorario* disProcurada;
 	parAluGrad *AluGrad;
-	AMT_BuscaAluno(mat,&AluGrad);
+	AMT_BuscaAluno(mat, &AluGrad);
 	disProcurada = GRA_BuscaGradeHorario(AluGrad->grade, codDisciplina);
 	if (disProcurada == NULL) {
 		return AMT_CondRetDisciplinaNaoEncontrada;
 	}
-	GRA_AlteraFaltas(AluGrad->grade,codDisciplina,faltas);
+	GRA_AlteraFaltas(AluGrad->grade, codDisciplina, faltas);
 	return AMT_CondRetOK;
 }
 /*Fim da função*/
@@ -149,7 +149,7 @@ AMT_tpCondRet AMT_retiraDisc(unsigned int mat, char* codDisciplina) {
 	GRA_tpCondRet retEliminaGRA;
 	parAluGrad *AluGrad;
 
-	retBuscaAMT = AMT_BuscaAluno(mat,&AluGrad);
+	retBuscaAMT = AMT_BuscaAluno(mat, &AluGrad);
 	if (retBuscaAMT == AMT_CondRetAlunoNaoExiste)
 		return AMT_CondRetAlunoNaoExiste;
 
@@ -167,13 +167,13 @@ AMT_tpCondRet AMT_imprimeGrade(unsigned int mat) {
 	AMT_tpCondRet retBuscaAMT;
 	char nome[81];
 
-	retBuscaAMT = AMT_BuscaAluno(mat,&AluGrad);
+	retBuscaAMT = AMT_BuscaAluno(mat, &AluGrad);
 	if (retBuscaAMT == AMT_CondRetAlunoNaoExiste) {
 		return AMT_CondRetAlunoNaoExiste;
 	}
 	ALU_GetNome(AluGrad->aluno, nome);
-	printf("Grade de Horários de: %s\n",nome);
-	printf("Matrícula: %u\n\n", mat);
+	printf("Nome do Aluno: %s\n", nome);
+	printf("Matricula: %u\n", mat);
 	GRA_ExibeGradeHorario(AluGrad->grade);
 	return AMT_CondRetOK;
 }
@@ -181,13 +181,13 @@ AMT_tpCondRet AMT_imprimeGrade(unsigned int mat) {
 
 /*Início da função alteraTurma*/
 /* Fazer descrição */
-AMT_tpCondRet AMT_alteraTurma(unsigned int mat, char* codDisciplina, char* codTurma){
+AMT_tpCondRet AMT_alteraTurma(unsigned int mat, char* codDisciplina, char* codTurma) {
 	parAluGrad* AluGrad;
 	Disciplina* Disc;
 	Turma *turma;
 	InfoGradeHorario *i = NULL;
 	AMT_BuscaAluno(mat, &AluGrad); // Busca para saber se aluno está matrículado em alguma disciplina.
-	if (GRA_BuscaGradeHorario (AluGrad->grade, codDisciplina) == NULL)// Busca para saber se o aluno está matriculado naquela disciplina.
+	if (GRA_BuscaGradeHorario(AluGrad->grade, codDisciplina) == NULL)// Busca para saber se o aluno está matriculado naquela disciplina.
 		return AMT_CondRetDisciplinaNaoEncontrada;
 	GRC_buscaPorCodigo(codDisciplina); //Busca Disciplina
 	GRC_devolveDisc((void**)&Disc); //Recebe por referência o ponteiro para Disciplina
@@ -204,32 +204,18 @@ AMT_tpCondRet AMT_alteraTurma(unsigned int mat, char* codDisciplina, char* codTu
 
 /*Início da função insereNota*/
 /* Fazer descrição */
-AMT_tpCondRet AMT_insereNota(float g1, float g2, float g3, float g4, unsigned int mat, char* codDisciplina){
+AMT_tpCondRet AMT_insereNota(float g1, float g2, float g3, float g4, unsigned int mat, char* codDisciplina) {
 	parAluGrad* AluGrad;
+	AMT_tpCondRet retBuscaAMT;
 	float nota[4];
-	AMT_BuscaAluno(mat, &AluGrad); // Busca para saber se aluno está matrículado em alguma disciplina.
-	if (g1 != -1)
-		if (g1 >=0 && g1<=10)
-			nota[0] = g1;
-		else
-			return AMT_CondRetNotaErrada;
-	if (g2 != -1)
-		if (g2 >=0 && g2<=10)
-			nota[1] = g2;
-		else
-			return AMT_CondRetNotaErrada;
-		
-	if (g3 != -1)
-		if (g3 >=0 && g3<=10)
-			nota[2] = g3;
-		else
-			return AMT_CondRetNotaErrada;
-	if (g4 != -1)
-		if (g4 >= 0 && g4 <= 10)
-			nota[3] = g4;
-		else
-			return AMT_CondRetNotaErrada;
-	if (GRA_AlteraNota(AluGrad->grade, codDisciplina, nota) ==	GRA_CondRetDisciplinaNaoEncontrada)
+	retBuscaAMT = AMT_BuscaAluno(mat, &AluGrad); // Busca para saber se aluno está matrículado em alguma disciplina.
+	if (retBuscaAMT == AMT_CondRetAlunoNaoExiste)
+		return AMT_CondRetAlunoNaoExiste;
+	nota[0] = g1;
+	nota[1] = g2;
+	nota[2] = g3;
+	nota[3] = g4;
+	if (GRA_AlteraNota(AluGrad->grade, codDisciplina, nota) == GRA_CondRetDisciplinaNaoEncontrada)
 		return AMT_CondRetDisciplinaNaoEncontrada;
 	return AMT_CondRetOK;
 }
