@@ -71,7 +71,7 @@ int MEN_loginProfessor();
 ***********************************************************************/
 
 
-int MEN_loginAluno();
+int MEN_loginAluno(unsigned int *matricula);
 
 /***********************************************************************
 *
@@ -79,7 +79,7 @@ int MEN_loginAluno();
 *
 *  $ED Descrição da função
 *		Mostra o menu Aluno.
-*
+*Parâmentros: endereço da matricula que será recebida pelo usuario.
 ***********************************************************************/
 
 void MEN_adicionaAluno();
