@@ -199,3 +199,11 @@ DIS_tpCondRet DIS_limpa_turma(Disciplina **d);
 ***********************************************************************/
 DIS_tpCondRet DIS_exibe_todas_turmas(Disciplina **d);
 /***************************************************************************
+*
+*  $FC Função: DIS retornar media e situação do aluno
+*
+*  $ED Descrição da função
+*    retorna a media e a situação do aluno
+*
+*	*****/
+DIS_tpCondRet DIS_situacaoAluno(Disciplina* disc,float G1,float G2,float G3,float G4, float* media, int*situacao);
