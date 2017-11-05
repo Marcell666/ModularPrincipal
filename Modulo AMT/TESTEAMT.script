@@ -1,0 +1,69 @@
+// Script teste Grupo 3 Aluno Matriculado
+== Retorno
+=declararparm OK	int 0
+
+==Declaração de matricula
+=declararparm mat			int 1510622
+
+== Declaração dos Códigos de Turma
+
+=declararparm codTurmaUm		string "3WA"
+=declararparm codTurmaDois 		string "3WB"
+=declararparm codTurmaTres 		string "3WC"
+=declararparm codTurmaErro 		string "22398"
+
+
+== Declaração dos Códigos de Disciplina
+
+=declararparm discUm 		string "1007"
+=declararparm discDois		string "1005"
+=declararparm discTres 		string "1010"
+=declararparm discQuatro	string "1012"
+=declararparm discCinco 	string "1009"
+=declararparm discErro		string "100218721"
+
+== Declaração das Notas
+=declararparm notaUm		float 9.2
+=declararparm notaDois		float 1.0
+=declararparm notaTres		float 3.8
+=declararparm notaQuatro	float 6.8
+=declararparm notaCinco		float 10.0
+=declararparm notaErro1		float -20
+=declararparm notaErro2		float -14
+==declaração de faltas
+=declararparm falta1		int 12
+=declararparm falta2		int 11
+=declararparm faltaErro		int -10	
+
+== Verificar criar
+=criar OK
+
+== Verificar matricular
+=matricular	mat	discUm		turmaUm 	OK
+=matricular 	mat	discDois	turmaDois	OK
+=matricular 	mat	discTres	turmaDois	OK
+=matricular 	mat	discQuatro	turmaUm		OK
+=matricular 	mat	discCinco	turmaErro	OK
+=recuperar
+=matricular	matErro	discUm		turmaUm		OK
+=recuperar
+=imprimir	mat	OK
+
+== Verificar alterar falta
+=alterarfalta	mat	falta1		discUm		OK
+=alterarfalta	mat	falta2		discUm		OK
+=alterarfalta	mat	faltaErro	discUm		OK
+=recuperar
+
+== Verificar remover
+=remover	mat	discUm		OK
+=remover	mat	discDois	OK
+=imprimir	mat	OK
+
+== Verificar inserir nota
+=inserirnota	notaUm	notaDois	NotaTres	NotaQuatro	mat	discUm	OK
+=imprimir 	mat	OK
+
+== Verificar alterar turma
+=alterarturma	mat	discTres	turmaUm		OK
+=imprimir	mat	OK
