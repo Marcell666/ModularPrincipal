@@ -40,6 +40,7 @@
 #include "corpodiscente.h"
 #include "corpoDocente.h"
 #include "gradeCurricular.h"
+#include "HISTORICO.h"
 #include "menu.h"
 
 
@@ -60,19 +61,20 @@
 void menuAluno()
 {
 	int opcao = 0;
-
-	if(MEN_loginAluno() == 1) // Se volta 1, ok.
+	unsigned int matricula;
+	if(MEN_loginAluno(&matricula) == 1) // Se volta 1, ok.
 
 	do{
-		printf("\nMenu Aluno\n");
-		printf("\nDigite 0: sair\n");
+		printf("\nMenu Aluno - Matricula: %d\n", matricula);
+		printf("\nDigite 0: sair");
 		printf("\nDigite 1: ver grade curricular");
 		//printf("\nDigite 2: ver horarios");
 		//printf("\nDigite 3: ver nota");
-		//printf("\nDigite 4: ver historico");
+		
 		printf("\nDigite 2: modificar dados pessoais");
 		//printf("\nDigite 6: cancelar disciplina");
 		//printf("\nDigite 7: trancar a faculdade");
+		printf("\nDigite 3: ver historico\n");
 		scanf("%d", &opcao);
 
 		switch(opcao)
@@ -84,6 +86,11 @@ void menuAluno()
 			case 2:
 				system("cls");
 				MEN_modificaAluno();
+				break;
+
+			case 3:
+				system("cls");
+				HIS_printHistoricoCompleto(matricula);
 				break;
 			default:
 				if(opcao)
