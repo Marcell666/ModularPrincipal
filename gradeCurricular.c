@@ -221,34 +221,22 @@ GRC_tpCondRet GRC_libera(){
  *  Função: GRC Busca Por Codigo
  *  ****/
 
-GRC_tpCondRet GRC_buscaPorCodigo(char *chave){
+GRC_tpCondRet GRC_buscaPorCodigo(char *chave) {
 	ParDisciplina *parD = NULL;
-	char *codigo = NULL;	
+	char *codigo = NULL;
 	char *inicioCod = NULL;
-	int ret;
-	
-	get_val_cursor(grc->parDisciplinas, (void**) &parD);
-	if(get_val_cursor(grc->parDisciplinas, (void**) &parD) == LIS_CondRetListaVazia)
-		return GRC_CondRetGradeCurricularVazia;
-	DIS_get_codigo(parD->disciplina, &inicioCod);
+	int ret, i, size;
 
-	first(grc->parDisciplinas);
-	do{
-		if(get_val_cursor(grc->parDisciplinas, (void**) &parD) == LIS_CondRetListaVazia){
-			free(inicioCod);
-			return GRC_CondRetGradeCurricularVazia;
+	list_size(grc->parDisciplinas, &size);	// Pego o tamanho da lista
+	first(grc->parDisciplinas);	// Seto a lista para o primeiro nó
+	for (i = 0;i < size; i++) {
+		get_val_cursor(grc->parDisciplinas,(void**)&parD);	// Pego o aluno atual
+		DIS_get_codigo(parD->disciplina,&inicioCod);	// Pego sua matrícula
+		if (strcmp(inicioCod,chave) == 0) {	// Vejo se a matrícula é igual à de busca
+			return GRC_CondRetOk;	// se for, retorno ele.
 		}
-
-		DIS_get_codigo(parD->disciplina, &codigo);
-		ret = strcmp(chave, codigo);
-		free(codigo);
-		if(ret==0){
-			free(inicioCod);
-			return GRC_CondRetOk;
-		}
-	}while(next(grc->parDisciplinas)==LIS_CondRetOK);
-	GRC_buscaPorCodigo(inicioCod);
-	free(inicioCod);
+		next(grc->parDisciplinas); // caso não seja, vou para o próximo
+	}
 	return GRC_CondRetDisciplinaNaoEncontrada;
 }/* Fim função: GRC Busca Por Codigo */
 
