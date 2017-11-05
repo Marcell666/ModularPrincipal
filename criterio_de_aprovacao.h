@@ -46,7 +46,7 @@ typedef enum
 
 }CRI_tpCondRet;
 
-CRI_tpCondRet CRI_Cria(int criterio, );
+CRI_tpCondRet CRI_Cria(int criterio);
 
 /***********************************************************************
 *
