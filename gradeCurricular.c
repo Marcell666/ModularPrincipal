@@ -368,3 +368,15 @@ GRC_tpCondRet GRC_consultaEmenta(char *ementa){
 	return GRC_CondRetOk;
 }/* Fim função: GRC Consulta Ementa*/
 
+ /***************************************************************************
+ *
+ *  Função: GRC Devolve a Disciplina do cursor atual
+ *  ****/
+GRC_tpCondRet GRC_devolveDisc(void** Disc) {
+	ParDisciplina *parDisc1;
+	get_val_cursor(grc->parDisciplinas,&parDisc1);
+
+	*Disc = parDisc1->disciplina;
+
+	return GRC_CondRetOk;
+} /* Fim função:GRC_devolveDisc*/
