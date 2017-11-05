@@ -442,6 +442,31 @@ GRC_tpCondRet GRC_consultaBibiliografia(char *bibiliografia);
 
 GRC_tpCondRet GRC_consultaEmenta(char *ementa);
 
+/***********************************************************************
+*
+*  $FC Função: GRC Consulta Ementa
+*
+*  $ED Descrição da função
+*     Passa por referência a Disciplina do cursor atual na lista de Pares Disciplina Prerequisito
+*
+*  $EP Parâmetros     
+*     $P Disc - referência para Disciplina*
+*						
+*  $FV Valor retornado
+*     GRC_CondRetOk
+*     GRC_CondRetGradeCurricularVazia - Caso a Grade Curricular apontada esteja vazia 
+*
+*  Assertiva de Entrada: 
+*		- A Grade Curricular já foi instanciada através da função cria
+*		- O ponteiro para Disciplina* é valido
+*                    
+*  Assertiva de Saída: 
+*       -O conteudo referenciado por void** Disc é atualizado
+*
+***********************************************************************/
+
+GRC_tpCondRet GRC_devolveDisc(void** Disc);
+
 #endif
 
 /***********************************************************************/
