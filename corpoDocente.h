@@ -66,6 +66,10 @@ typedef enum{
 		/* Condicao de Retorno Formato Inválido, usada quando os parâmetros de uma certa função não estão de acordo com o que é esperado pelas funções auxiliares */ 
 } CDO_tpCondRet;
 
+//TODO Inserir comentario
+typedef CDO_tpCondRet (*CDO_alteraInt)(int);
+typedef CDO_tpCondRet (*CDO_alteraString)(char*);
+
 /***********************************************************************
 *
 *  $FC Função: CDO Cria

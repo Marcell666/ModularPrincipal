@@ -113,7 +113,7 @@ GRC_tpCondRet GRC_cria();
 *
 ***********************************************************************/
 
-GRC_tpCondRet GRC_cadastra(char* nome, char* codigo, int creditos, char* bibliografia, char* ementa);
+GRC_tpCondRet GRC_cadastra(char* nome, char* codigo, int creditos, char* bibliografia, char* ementa,int criterio);
 
 /***********************************************************************
 *
@@ -413,7 +413,7 @@ GRC_tpCondRet GRC_consultaCreditos(int *creditos);
 *
 ***********************************************************************/
 
-GRC_tpCondRet GRC_consultaBibiliografia(char *bibiliografia);
+GRC_tpCondRet GRC_consultaBibliografia(char *bibiliografia); 
 
 /***********************************************************************
 *
@@ -441,6 +441,31 @@ GRC_tpCondRet GRC_consultaBibiliografia(char *bibiliografia);
 ***********************************************************************/
 
 GRC_tpCondRet GRC_consultaEmenta(char *ementa);
+
+/***********************************************************************
+*
+*  $FC Função: GRC Devolve a Disciplina do cursor atual
+*
+*  $ED Descrição da função
+*     Passa por referência a Disciplina do cursor atual na lista de Pares Disciplina Prerequisito
+*
+*  $EP Parâmetros     
+*     $P Disc - referência para Disciplina*
+*						
+*  $FV Valor retornado
+*     GRC_CondRetOk
+*     GRC_CondRetGradeCurricularVazia - Caso a Grade Curricular apontada esteja vazia 
+*
+*  Assertiva de Entrada: 
+*		- A Grade Curricular já foi instanciada através da função cria
+*		- O ponteiro para Disciplina* é valido
+*                    
+*  Assertiva de Saída: 
+*       -O conteudo referenciado por void** Disc é atualizado
+*
+***********************************************************************/
+
+GRC_tpCondRet GRC_devolveDisc(void** Disc);
 
 #endif
 
