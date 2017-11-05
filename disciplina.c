@@ -502,8 +502,13 @@ DIS_tpCondRet DIS_exibe_todas_turmas(Disciplina **d){
   return DIS_CondRetOK;
 }
 /* Fim função: DIS exibe lista de turmas para a disciplina */
+/***************************************************************************
+*
+*  Função: DIS situacaoAluno atualiza por referência a media e a situacao do aluno
+*  ****/
 DIS_tpCondRet DIS_situacaoAluno(Disciplina* disc,float G1,float G2,float G3,float G4,float* media,int* situacao)
 {
 	return disc->criAprov(G1, G2, G3, G4, media, situacao);
 }
+/* Fim função: DIS exibe lista de turmas para a disciplina */
 
