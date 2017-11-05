@@ -444,7 +444,7 @@ GRC_tpCondRet GRC_consultaEmenta(char *ementa);
 
 /***********************************************************************
 *
-*  $FC Função: GRC Consulta Ementa
+*  $FC Função: GRC Devolve a Disciplina do cursor atual
 *
 *  $ED Descrição da função
 *     Passa por referência a Disciplina do cursor atual na lista de Pares Disciplina Prerequisito
