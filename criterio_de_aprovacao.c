@@ -9,28 +9,27 @@
 *  Arquivo da base de software:
 *
 *  Projeto: Sistema Acadêmico da turma 3WB
-*  Gestor:  Grupo 4 / Grupo 1
-*  Autores: pg - Pedro Gabriel Serodio Sales
-*           SaintL - Leonardo Abreu Santos
-*	    LL - Clayton Lucas Mendes Lima
-*	    mrol - Matheus Rodrigues de Oliveira Leal
-*	    Bruce Marcellino, BM
+*  Gestor:  Grupo 4
+*  Autores: 	pg - Pedro Gabriel Serodio Sales
+*         SaintL - Leonardo Abreu Santos
+*	      	    LL - Clayton Lucas Mendes Lima
+*						mrol - Matheus Rodrigues de Oliveira Leal
 *
 *
 *  $HA Histórico de evolução:
 *     Versão  Autor    Data      Observações
-*	1.10	BM	12/10/2017 Integração com Disciplina e Ponteiros para função.
+*     0.01    pg    29/09/2017  Início do desenvolvimento
+*     0.02 pg/SaintL/LL  30/09/2017 Merge dos três integrantes
 *     0.03    mrol  01/10/2017  Uniformização da interface das funções e
 *                               de todas as condições de retorno.
-*     0.02 pg/SaintL/LL  30/09/2017 Merge dos três integrantes
-*     0.01    pg    29/09/2017  Início do desenvolvimento
+*	  0.04 ngtgmp 28/10/2017  Integração com o modulo Disciplina
 *
 ***************************************************************************/
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include "criterio_de_aprovacao.h"
-/***** Protótipos das funções encapsuladas no módulo *****/
+/***** Protótipos das funções encapuladas no módulo *****/
 /*
 *				A Completar
 *
@@ -39,7 +38,7 @@
 *
 *  Função: CRI criterio 1
 *  ****/
-CRI_tpCondRet CRI_Criterio01(float G1, float G2, float G3, float* media, int* situacao)
+CRI_tpCondRet CRI_Criterio01(float G1, float G2, float G3, float G4, float* media, int* situacao)
 {
 	if(media !=NULL && situacao != NULL){
 
@@ -202,7 +201,7 @@ CRI_tpCondRet CRI_Criterio03 (float G1, float G2, float G3, float G4, float *med
 *
 *  Função: CRI criterio 4
 *  ****/
-CRI_tpCondRet CRI_Criterio04(float G1, float G2, float G3, float *media, int *situacao){
+CRI_tpCondRet CRI_Criterio04(float G1, float G2, float G3, float G4, float *media, int *situacao){
 	if(media !=NULL && situacao != NULL){
 		float maior1 = G1, maior2 = G2; 
 		*media = (G1 + G2)/2;
@@ -255,7 +254,7 @@ CRI_tpCondRet CRI_Criterio04(float G1, float G2, float G3, float *media, int *si
 *		
 *
 *  ****/
-CRI_tpCondRet CRI_Criterio05 (float G1, float G2, float *media, int *situacao ){
+CRI_tpCondRet CRI_Criterio05 (float G1, float G2, float G3, float G4, float *media, int *situacao ){
 	if(media !=NULL && situacao != NULL){
 		if(G2<3){
 			*media= (G1+(G2*3))/4;
