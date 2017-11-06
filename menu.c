@@ -35,12 +35,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <conio.h>
 
 #include "menu.h"
 #include "corpodiscente.h"
 #include "aluno.h"
 #include "corpoDocente.h"
 #include "gradeCurricular.h"
+
+
 
 
 /***** Declarações encapsuladas pelo módulo *****/
@@ -122,7 +125,7 @@ int MEN_loginProfessor()
 /*Assertivas: Retorno da função: Rertona 1, se foi encontrado a matricula.
 /			 Parâmentros: Estruturas de ponteiros.
 ***********************************************************************/
-int MEN_loginAluno()
+int MEN_loginAluno(unsigned int *matricula)
 {
 	int mat;
 
@@ -130,7 +133,16 @@ int MEN_loginAluno()
 
 	printf("\nDigite a matricula: ");
 	scanf("%d", &mat);
-	
+
+	if(mat < 0 )
+	{
+		printf("Matricula Invalida, pressione qualquer tecla para voltar ao menu principal..");
+		_getch();
+		system("cls");
+		return 0;
+	}
+
+	*matricula = mat;
 	system("cls");
 	return 1;
 }
