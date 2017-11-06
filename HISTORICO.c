@@ -238,7 +238,7 @@ HIS_tpCondRet HIS_getHistoricoDoPeriodo(HIS_tpHistorico * pHistorico, char* peri
 	copiaHistorico = *pHistorico;
 
 	// Apenas pra alocar o struct na memória
-	functionResponse = DIS_gera_param(&disciplina, "X", "X", 0, "X", "X");
+	functionResponse = DIS_gera_param(&disciplina, "X", "X", 0, "X", "X", 3);
 
 	if (functionResponse != DIS_CondRetOK) {
 		free(discPeriodo);
@@ -346,7 +346,7 @@ HIS_tpCondRet HIS_getCrTotal(HIS_tpHistorico * pHistorico, float* cr)
 	copiaHistorico = *pHistorico;
 
 	// Apenas pra alocar o struct na memória
-	functionResponse = DIS_gera_param(&disciplina, "X", "X", 0, "X", "X");
+	functionResponse = DIS_gera_param(&disciplina, "X", "X", 0, "X", "X",3);
 
 	if (functionResponse != DIS_CondRetOK) {
 		free(disciplina);
@@ -447,7 +447,7 @@ HIS_tpCondRet HIS_getCrDoPeriodo(HIS_tpHistorico * pHistorico, char * periodo, f
 	copiaHistorico = *pHistorico;
 
 	// Apenas pra alocar o struct na memória
-	DIS_gera_param(&disciplina, "X", "X", 0, "X", "X");
+	DIS_gera_param(&disciplina, "X", "X", 0, "X", "X",3);
 	DIC_criarDisciplinaCursada(&disciplinaCursada, disciplina, "AP", "2017.2", 10.0);
 
 	// Percorre a lista até que ela esteja vazia
@@ -500,7 +500,7 @@ HIS_tpCondRet HIS_getDisciplinasReprovadoPorFalta(HIS_tpHistorico * pHistorico, 
 	copiaHistorico = *pHistorico;
 
 	// Apenas pra alocar o struct na memória
-	DIS_gera_param(&disciplina, "X", "X", 0, "X", "X");
+	DIS_gera_param(&disciplina, "X", "X", 0, "X", "X",3);
 	DIC_criarDisciplinaCursada(&disciplinaCursada, disciplina, "AP", "2017.2", 10.0);
 
 	// Instancia uma nova lista vazia
@@ -549,7 +549,7 @@ HIS_tpCondRet HIS_getDisciplinasTrancadas(HIS_tpHistorico * pHistorico, List* di
 	copiaHistorico = *pHistorico;
 
 	// Apenas pra alocar o struct na memória
-	DIS_gera_param(&disciplina, "X", "X", 0, "X", "X");
+	DIS_gera_param(&disciplina, "X", "X", 0, "X", "X",3);
 	DIC_criarDisciplinaCursada(&disciplinaCursada, disciplina, "AP", "2017.2", 10.0);
 
 	// Instancia uma nova lista vazia
