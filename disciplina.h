@@ -24,6 +24,7 @@
 *     Ao iniciar a execução do programa não existe DISiplinas.
 *     Uma disciplina deverá ter um critério de avaliação, que será um código que se *refere a uma forma de calcular a média final para poder determinar se um aluno *está aprovado ou não.
 ***************************************************************************/
+#include "turma.h"
 typedef struct disciplina Disciplina;
 /***********************************************************************
 *
@@ -63,6 +64,15 @@ typedef struct disciplina Disciplina;
 DIS_tpCondRet DIS_get_creditos(Disciplina* dis, int* creditos);
 /***********************************************************************
 *
+*  $FC Função: DIS altera creditos
+*
+*  $ED Descrição da função
+*    Altera os creditos de uma disciplina.
+*
+***********************************************************************/
+DIS_tpCondRet DIS_altera_creditos(Disciplina* dis, int creditos);
+/***********************************************************************
+*
 *  $FC Função: DIS obter nome
 *
 *  $ED Descrição da função
@@ -90,13 +100,41 @@ DIS_tpCondRet DIS_get_codigo(Disciplina* dis, char** codigo);
 DIS_tpCondRet DIS_get_bibliografia(Disciplina* dis, char** bibliografia);
 /***********************************************************************
 *
+*  $FC Função: DIS altera bibliografia
+*
+*  $ED Descrição da função
+*    Altera a biliografia de uma disciplina.
+*
+***********************************************************************/
+DIS_tpCondRet DIS_altera_bibliografia(Disciplina* dis, char* bibliografia);
+/***********************************************************************
+*
 *  $FC Função: DIS obter ementa
 *
 *  $ED Descrição da função
 *    Retorna a ementa
 *
+*
 ***********************************************************************/
 DIS_tpCondRet DIS_get_ementa(Disciplina* dis, char** ementa);
+/***********************************************************************
+*
+*  $FC Função: DIS altera ementa
+*
+*  $ED Descrição da função
+*    Altera a ementa da disciplina.
+*
+***********************************************************************/
+DIS_tpCondRet DIS_altera_ementa(Disciplina *dis, char *ementa);
+/***********************************************************************
+*
+*  $FC Função: DIS altera criterio
+*
+*  $ED Descrição da função
+*    Altera o criterio de aprovação de uma disciplina.
+*
+***********************************************************************/
+DIS_tpCondRet DIS_altera_criterio(Disciplina *d, int critAprov);
 /***********************************************************************
 *
 *  $FC Função: DIS obter por meio do teclado
@@ -114,7 +152,7 @@ DIS_tpCondRet DIS_gera_cmd(Disciplina** d);
 *    DIS gera uma disciplina recebendo parâmetros externos
 *
 ***********************************************************************/
-DIS_tpCondRet DIS_gera_param(Disciplina** d, char* nome, char* codigo, int creditos, char* bibliografia, char* ementa);
+DIS_tpCondRet DIS_gera_param(Disciplina** d, char* nome, char* codigo, int creditos, char* bibliografia, char* ementa, int critAprov);
 /***********************************************************************
 *
 *  $FC Função: DIS exibe disciplina
@@ -133,3 +171,39 @@ DIS_tpCondRet DIS_exibe(Disciplina* d);
 *
 ***********************************************************************/
 DIS_tpCondRet DIS_deleta_Disciplina (Disciplina **d);
+/***********************************************************************
+*
+*  $FC Função: DIS insere turma para a disciplina
+*
+*  $ED Descrição da função
+*    Insere uma turma para a lista da disciplina
+*
+***********************************************************************/
+DIS_tpCondRet DIS_insere_turma(Disciplina **d, Turma **t);
+/***********************************************************************
+*
+*  $FC Função: DIS limpa lista de turmas para a disciplina
+*
+*  $ED Descrição da função
+*    Limpa a lista de turmas da disciplina
+*
+***********************************************************************/
+DIS_tpCondRet DIS_limpa_turma(Disciplina **d);
+/***********************************************************************
+*
+*  $FC Função: DIS exibe lista de turmas para a disciplina
+*
+*  $ED Descrição da função
+*    Exibe a lista de turmas da disciplina
+*
+***********************************************************************/
+DIS_tpCondRet DIS_exibe_todas_turmas(Disciplina **d);
+/***************************************************************************
+*
+*  $FC Função: DIS retornar media e situação do aluno
+*
+*  $ED Descrição da função
+*    retorna a media e a situação do aluno
+*
+*	*****/
+DIS_tpCondRet DIS_situacaoAluno(Disciplina* disc,float G1,float G2,float G3,float G4, float* media, int*situacao);

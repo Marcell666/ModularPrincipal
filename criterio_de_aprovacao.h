@@ -9,22 +9,20 @@
 *  Arquivo da base de software:
 *
 *  Projeto: Sistema Acadêmico da turma 3WB
-*  Gestor:  Grupo 4 / Grupo 1
+*  Gestor:  Grupo 4
 *  Autores: SaintL - Leonardo Abreu Santos
 *               LL - Clayton Lucas
 *               pg - Pedro Gabriel Serodio Sales
-*		mrol - Matheus Rodrigues de Oliveira Leal
-*	    Bruce Marcellino, BM
+*						  mrol - Matheus Rodrigues de Oliveira Leal
 *
 *
 *  $HA Histórico de evolução:
 *     Versão   Autor    Data        Observações
-*	1.10	BM	12/10/2017 Integração com Disciplina e Ponteiros para função.
+*       0.01	 SaintL  28/09/2017  Início do desenvolvimento
+*       0.02   LL      28/09/2017  Critérios 3 e 4
+*       0.03   pg      30/09/2017  Aplica critério
 *       0.04   mrol    01/10/2017  Uniformização da interface das funções e
 *                               	 de todas as condições de retorno.
-*       0.03   pg      30/09/2017  Aplica critério
-*       0.02   LL      28/09/2017  Critérios 3 e 4
-*       0.01	 SaintL  28/09/2017  Início do desenvolvimento
 *  $ED Descrição do módulo:
 *	  Este módulo implementa um conjunto de funções aritméticas
 *	  para calcular a média de um aluno e dizer se o mesmo foi
@@ -46,8 +44,7 @@ typedef enum
 
 }CRI_tpCondRet;
 
-CRI_tpCondRet CRI_Cria(int criterio);
-
+typedef CRI_tpCondRet (*CRI_funcCriterio)(float, float, float, float, float*, int*);
 /***********************************************************************
 *
 *  $FC Função: CRI criterio 1
@@ -62,7 +59,7 @@ CRI_tpCondRet CRI_Cria(int criterio);
 *  $Acertiva de Saída: Retorna situação e média do Aluno
 *
 ***********************************************************************/
-CRI_tpCondRet CRI_Criterio01(float G1, float G2, float G3, float* media, int* situacao);
+CRI_tpCondRet CRI_Criterio01(float G1, float G2, float G3, float G4, float* media, int* situacao);
 /***********************************************************************
 *
 *  $FC Função: CRI criterio 2
@@ -107,7 +104,7 @@ CRI_tpCondRet CRI_Criterio03 (float G1, float G2, float G3, float G4, float *med
 *  $Acertiva de Saída: Retorna situação e média do Aluno
 *
 ***********************************************************************/
-CRI_tpCondRet CRI_Criterio04(float G1, float G2, float G3, float *media, int *situacao);
+CRI_tpCondRet CRI_Criterio04(float G1, float G2, float G3, float G4, float *media, int *situacao);
 /***********************************************************************
 *
 *  $FC Função: CRI Verifica_Criterio01
@@ -121,6 +118,6 @@ CRI_tpCondRet CRI_Criterio04(float G1, float G2, float G3, float *media, int *si
 *    $Assertiva de Saída: Retorna a situação e a média do Aluno
 *
 ***********************************************************************/
-CRI_tpCondRet CRI_Criterio05(float G1, float G2, float *media, int *situacao);
+CRI_tpCondRet CRI_Criterio05(float G1, float G2, float G3, float G4, float *media, int *situacao);
 /***********************************************************************
 ***************************************************************/
