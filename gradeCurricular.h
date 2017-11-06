@@ -467,6 +467,31 @@ GRC_tpCondRet GRC_consultaEmenta(char *ementa);
 
 GRC_tpCondRet GRC_devolveDisc(void** Disc);
 
+/***********************************************************************
+*
+*  $FC Função: GRC Devolve a situação do aluno na disciplina corrente
+*
+*  $ED Descrição da função
+*     Retorna por referência a media e a situação do aluno na disciplina corrente
+*
+*  $EP Parâmetros     
+*     $P Disc - referência para Disciplina*
+*						
+*  $FV Valor retornado
+*     GRC_CondRetOk
+*     GRC_CondRetGradeCurricularVazia - Caso a Grade Curricular apontada esteja vazia 
+*
+*  Assertiva de Entrada: 
+*		- A Grade Curricular já foi instanciada através da função cria
+*		- O ponteiro para Disciplina* é valido
+*                    
+*  Assertiva de Saída: 
+*       -O conteudo referenciado por void** Disc é atualizado
+*
+***********************************************************************/
+
+GRC_tpCondRet GRC_attSituacaoDisCorrente(float G1,float G2,float G3,float G4,float* media, int *situacao);
+
 #endif
 
 /***********************************************************************/
