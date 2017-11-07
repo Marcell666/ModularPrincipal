@@ -35,7 +35,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <conio.h>
+//#include <conio.h> TODO retirar, está biblioteca não esa implementada no linux
 
 #include "menu.h"
 #include "corpodiscente.h"
@@ -137,7 +137,7 @@ int MEN_loginAluno(unsigned int *matricula)
 	if(mat < 0 )
 	{
 		printf("Matricula Invalida, pressione qualquer tecla para voltar ao menu principal..");
-		_getch();
+		scanf("%*s");
 		system("cls");
 		return 0;
 	}
@@ -466,7 +466,7 @@ void MEN_menuGradeCurricular()
 				scanf(" %s", bibliografia);
 				printf("\nDigite a ementa:\n");
 				scanf(" %s", ementa);
-				ret = GRC_cadastra(nome, codigo, creditos, bibliografia, ementa);
+				ret = GRC_cadastra(nome, codigo, creditos, bibliografia, ementa, 3);
 				break;
 			case 2:
 				GRC_mostraAtual();

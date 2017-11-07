@@ -40,7 +40,7 @@
 #include "corpodiscente.h"
 #include "corpoDocente.h"
 #include "gradeCurricular.h"
-#include "HISTORICO.h"
+#include "HISTORICO.H"
 #include "menu.h"
 
 

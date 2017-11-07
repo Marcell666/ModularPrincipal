@@ -38,13 +38,8 @@
 #include  <malloc.h>
 #include "listas.h"
 #include "disciplina.h"
-#include "DISCIPLINACURSADA.h"
-
-
-/* Inclusão do respectivo módulo de definição */
-#define HISTORICO_OWN
+#include "DISCIPLINACURSADA.H"
 #include "HISTORICO.H"
-#undef HISTORICO_OWN
 
 
 
