@@ -628,9 +628,11 @@ HIS_tpCondRet HIS_printHistoricoCompleto (unsigned int matricula){
 	float CR;
 	unsigned int creditos;
 	char periodo[tamPeriodo], disciplina[tamDisciplina], situacao[tamSituacao], grau[tamGrau], periodoCorrente[tamPeriodo] ;
-	
 	historico = fopen(HIS_montaNomeArq(matricula),"r");
-	if (historico == NULL) {printf("Nao foi encontrado registro de historico do aluno de matricula %u.\n",matricula); return HIS_CondRetErroAoAbrirArquivo;}
+	if (historico == NULL) {
+		printf("Nao foi encontrado registro de historico do aluno de matricula %u-%d.\n",matricula);
+		return HIS_CondRetErroAoAbrirArquivo;
+	}
 	
 	respostaCR = HIS_getCrAcumulado (historico,&CR);
 	if (respostaCR != HIS_CondRetOK) {fclose(historico); return respostaCR;}
@@ -774,9 +776,14 @@ static char* HIS_montaNomeArq (unsigned int matricula){
 	if (nomeArq == 	NULL) return NULL;
 
 	sprintf(mat,"%u",matricula);
+#ifdef __linux__
+	strcpy(nomeArq,"Historico/");
+#elif
 	strcpy(nomeArq,"Historico\\");
+#endif
 	strcat(mat,".txt");
 	strcat(nomeArq,mat);
+	printf("procurando por arquivo %s\n", nomeArq);
 	return nomeArq;
 }
 

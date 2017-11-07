@@ -35,7 +35,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-//#include <conio.h> TODO retirar, está biblioteca não esa implementada no linux
+//#include <conio.h> TODO retirar, está biblioteca não esta implementada no linux
 
 #include "menu.h"
 #include "corpodiscente.h"
@@ -66,9 +66,10 @@ int MEN_loginAdministrativo()
 {
 	char user[81];
 	char senha[81];
+	return 1;	// TODO retirar isto
 	printf("\nLogin Administrador\n");
 
-	printf("\t\t Dica: use \"admin\", \"admin\".\n");// TODO retirar isto
+	printf("\t\t Dica: use \"admin\", \"admin\".\n");	// TODO retirar isto
 
 	printf("\nDigite a user: ");
 	scanf(" %s", user);
