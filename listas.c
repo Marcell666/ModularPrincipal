@@ -158,7 +158,9 @@ LIS_tpCondRet pop_back(List* l, void** val)
 {
 	Node* tnode;
 	if(l->first == NULL) {
-	//	printf("\n\n <!><!><!> Lista Vazia! <!><!><!> \n\n");
+#ifdef _DEBUG	
+		printf("\n\n <!><!><!> Lista Vazia! <!><!><!> \n\n");
+#endif
 		return LIS_CondRetListaVazia;
 	}
 
@@ -268,13 +270,15 @@ LIS_tpCondRet get_val_cursor(List* l, void** val)
 LIS_tpCondRet list_size(List* l, unsigned int* size)
 {
 	Node* Tnode = l->first;
-	if(l->first == NULL)
-		return LIS_CondRetListaVazia;
 	*size = 0;
+	if(l->first == NULL){
+		*size = 0;
+		return LIS_CondRetListaVazia;
+	}
 	while(Tnode != NULL)
 	{
 		Tnode = Tnode->next;
-		*size = *size +1;
+		*size = *size + 1;
 	}
 	return LIS_CondRetOK;
 } /* Fim função: LIS list size */
