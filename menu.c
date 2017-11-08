@@ -43,12 +43,16 @@
 #include "corpoDocente.h"
 #include "gradeCurricular.h"
 
-
-
-
 /***** Declarações encapsuladas pelo módulo *****/
-
+/*TAMANHO MÁXIMO DE UMA STRING GENÉRICA*/
 #define MEN_TAM_STRING 80
+/*TAMANHOS MÁXIMOS DE STRINGS UTILIZADAS POR DISCIPLINA*/
+#define MAX_NOME 25
+#define MAX_CODIGO 8
+#define MAX_BIBLIOGRAFIA 300
+#define MAX_EMENTA 300
+#define MIN_CREDITOS 1
+#define MAX_CRITERIO 25
 
 /***********************************************************************
 *
@@ -439,19 +443,24 @@ void MEN_modificaProfessor()
 	}while(opcao);
 }
 
+/* MENU GRADE CURRICULAR */
+
 void MEN_menuGradeCurricular()
 {
-	char nomeFunc[][40] ={"sair", "adicionar disciplina" , "mostrar a disciplina atual", "buscar outra disciplina", "mostrar todas as disciplinas", "inserir um Pre-Requisito", "remover todos os Pre-Requisitos", "Limpar a grade Curricular"};
+	char nomeFunc[][40] ={"sair", "adicionar disciplina" , "mostrar a disciplina atual", "buscar outra disciplina", "mostrar todas as disciplinas", "inserir um Pre-Requisito", "remover todos os Pre-Requisitos", "Limpar a grade Curricular", "Inserir uma turma"};
 	int nItens = 8, i;
 	int creditos;
-	char nome[MEN_TAM_STRING], codigo[MEN_TAM_STRING], bibliografia[MEN_TAM_STRING], ementa[MEN_TAM_STRING];
+	char nome[MAX_NOME], codigo[MAX_CODIGO], bibliografia[MAX_BIBLIOGRAFIA], ementa[MAX_EMENTA], 
+	codTur[MEN_TAM_STRING], diaSem[MEN_TAM_STRING];
+	
+	int horIni, horTer, qtdVag;
 	int criterio;
 	GRC_tpCondRet ret;
 	int opcao;
 
 	printf("\nMenu Disciplina\n");
 	do{
-		for(i=0;i<nItens;i++)
+		for(i=0;i<=nItens;i++)
 			printf("Digite %d: %s.\n", i, nomeFunc[i]);
 		scanf("%d", &opcao);
 
@@ -481,6 +490,21 @@ void MEN_menuGradeCurricular()
 				break;
 			case 7:
 				GRC_limpa();
+				break;
+			case 8:
+				printf("Digite o código da disciplina em qual deseja inserir uma turma:\n");
+				scanf(" %s", codigo);
+				printf("Digite o código da turma:\n");
+				scanf(" %s", codTur);
+				printf("Digite o dia da semana da aula:\n");
+				scanf(" %s", diaSem);
+				printf("Digite a hora de inicio da aula:\n");
+				scanf(" %d", &horIni);
+				printf("Digita a hora do termino da aula:\n");
+				scanf(" %d", &horTer);
+				printf("Digite a quantidade de vagas");
+				scanf(" %d", &qtdVag);
+				GRC_insereTurma(codTur, horIni, horTer, diaSem, qtdVag, codigo);
 				break;
 			default:
 				if(opcao)
