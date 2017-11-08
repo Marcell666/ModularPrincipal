@@ -27,6 +27,12 @@
 #include "turma.h"
 #ifndef DISCIPLINA_H
 #define DISCIPLINA_H
+#define MAX_NOME 25
+#define MAX_CODIGO 8
+#define MAX_BIBLIOGRAFIA 300
+#define MAX_EMENTA 300
+#define MIN_CREDITOS 1
+#define MAX_CRITERIO 25
 
 typedef struct disciplina Disciplina;
 /***********************************************************************
@@ -146,7 +152,7 @@ DIS_tpCondRet DIS_altera_criterio(Disciplina *d, int critAprov);
 *    Função: DIS gera uma disciplina por input do teclado
 *
 ***********************************************************************/
-DIS_tpCondRet DIS_gera_cmd(Disciplina** d);
+DIS_tpCondRet DIS_gera_cmd(Disciplina** d, char cod[8]);
 /***********************************************************************
 *
 *  $FC Função: DIS gera por meio de parametros
