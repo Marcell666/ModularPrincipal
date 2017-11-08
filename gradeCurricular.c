@@ -112,11 +112,14 @@ GRC_tpCondRet GRC_cadastraCMD(){
 	Disciplina *disc = NULL;
 	char codigo[MAX_CODIGO];
 	DIS_tpCondRet ret;
+	
 	ret = DIS_gera_cmd(&disc, codigo);
+	if(ret == DIS_CondRetFaltouMemoria)
+		return GRC_CondRetNaoHaMemoria;
+	if(ret == DIS_CondRetParametroInvalido)
+		return GRC_CondRetFormatoInvalido;
 	if(GRC_buscaPorCodigo(codigo) == GRC_CondRetOk)
 		return GRC_CondRetIdJaCriado;
-	if(ret == DIS_CondRetFaltouMemoria) return GRC_CondRetNaoHaMemoria;
-	if(ret == DIS_CondRetParametroInvalido) return GRC_CondRetFormatoInvalido;
 	parD = (ParDisciplina*) malloc(sizeof(ParDisciplina));
 	parD->disciplina = disc;
 	createList(&parD->preRequisitos);
@@ -414,3 +417,19 @@ GRC_tpCondRet GRC_attSituacaoDisCorrente(float G1,float G2,float G3,float G4,flo
 	DIS_situacaoAluno(parDisc1->disciplina, G1, G2, G3, G4, media, situacao);	
 	return GRC_CondRetOk;
 } /* Fim função:GRC_devolveDisc*/
+
+GRC_tpCondRet GRC_insereTurma(char* codTur, int horIni, int horTer, char* diaSem, int qtdVag, char* codigo)
+{
+	Turma* novaTurma;
+	ParDisciplina* parDisc;
+	GRC_tpCondRet ret = GRC_buscaPorCodigo(codigo);
+	
+	if(TUR_CriaTurma (&novaTurma, codTur, horIni, horTer, diaSem, qtdVag )!= TUR_CondRetOk);
+		return GRC_CondRetFormatoInvalido;
+	if(ret != GRC_CondRetOk)
+		return ret;
+	get_val_cursor(grc->parDisciplinas, (void**) &parDisc);
+	DIS_insere_turma(parDisc->disciplina, novaTurma);
+	
+	return GRC_CondRetOk;
+}
