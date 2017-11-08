@@ -1,6 +1,6 @@
 /***************************************************************************
 *
-*  $MCD MÛdulo de definiÁ„o: MÛdulo Menu
+*  $MCD M√≥dulo de defini√ß√£o: M√≥dulo Menu
 *
 *  Arquivo gerado:              menu.c
 *  Letras identificadoras:      MEN
@@ -8,34 +8,34 @@
 *  Nome da base de software:
 *  Arquivo da base de software:
 *
-*  Projeto: Sistema AcadÍmico da turma 3WB
+*  Projeto: Sistema Acad√™mico da turma 3WB
 *  Gestor:  Grupo 2/ Grupo 1
 *  Autores:   Bruce Marcellino
 *	      Bruno Miranda Marinho
-*             Fl·vio Thiago Franco Vaz
-*             Jo„o Victor Cerqueira
+*             Fl√°vio Thiago Franco Vaz
+*             Jo√£o Victor Cerqueira
 *             Matheus Henrique Branco Zeitune
-*             VinÌcius Cortat
+*             Vin√≠cius Cortat
 *
-*  $HA HistÛrico de evoluÁ„o:
-*     Vers„o  Autor    Data			ObservaÁıes
-*     1.01    Bruce	07/10/2017	ReestruturaÁ„o
-*     1.00    Bruce	06/10/2017	Revis„o/finalizaÁ„o
+*  $HA Hist√≥rico de evolu√ß√£o:
+*     Vers√£o  Autor    Data			Observa√ß√µes
+*     1.01    Bruce	07/10/2017	Reestrutura√ß√£o
+*     1.00    Bruce	06/10/2017	Revis√£o/finaliza√ß√£o
 *     0.05    Bruce	05/10/2017	Modulo professor
-*     0.04    Matheus   04/10/2017  	Revis„o menu
+*     0.04    Matheus   04/10/2017  	Revis√£o menu
 *     0.03    Bruno	02/10/2017	Menu professor
-*     0.02    Fl·vio	02/10/2017  	Revis„o
-*     0.01    Matheus	01/10/2017	InÌcio do desenvolvimento
+*     0.02    Fl√°vio	02/10/2017  	Revis√£o
+*     0.01    Matheus	01/10/2017	In√≠cio do desenvolvimento
 *
-*  $ED DescriÁ„o do mÛdulo
-*     Este mÛdulo implementa o Menu do Sistema AcadÍmico a ser desenvolvido.
-*     O meu È a chamada dos modulos por interface.
+*  $ED Descri√ß√£o do m√≥dulo
+*     Este m√≥dulo implementa o Menu do Sistema Acad√™mico a ser desenvolvido.
+*     O meu √© a chamada dos modulos por interface.
 ***************************************************************************/
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-//#include <conio.h> TODO retirar, est· biblioteca n„o esta implementada no linux
+//#include <conio.h> TODO retirar, est√° biblioteca n√£o esta implementada no linux
 
 #include "menu.h"
 #include "corpodiscente.h"
@@ -46,20 +46,20 @@
 
 
 
-/***** DeclaraÁıes encapsuladas pelo mÛdulo *****/
+/***** Declara√ß√µes encapsuladas pelo m√≥dulo *****/
 
 #define MEN_TAM_STRING 80
 
 /***********************************************************************
 *
-*  $FC FunÁ„o: MEN_loginAdministrativo
+*  $FC Fun√ß√£o: MEN_loginAdministrativo
 *
-*  $ED DescriÁ„o da funÁ„o
+*  $ED Descri√ß√£o da fun√ß√£o
 *		Mostra o menu inicial.
 *
 ***********************************************************************/
-/*Assertivas: Retorno da funÁ„o: Retona 1, se os dados s„o validos.
-/			 Par‚mentros: Estruturas de ponteiros.
+/*Assertivas: Retorno da fun√ß√£o: Retona 1, se os dados s√£o validos.
+/			 Par√¢mentros: Estruturas de ponteiros.
 ***********************************************************************/
 
 int MEN_loginAdministrativo()
@@ -89,14 +89,14 @@ int MEN_loginAdministrativo()
 
 /***********************************************************************
 *
-*  $FC FunÁ„o: MEN_loginProfessor.
+*  $FC Fun√ß√£o: MEN_loginProfessor.
 *
-*  $ED DescriÁ„o da funÁ„o
+*  $ED Descri√ß√£o da fun√ß√£o
 *		Realiza a busca no corpo docente, se a matricula.
 *
 ***********************************************************************/
-/*Assertivas: Retorno da funÁ„o: Retorna 1, caso econtre e 0, senao.
-/			 Par‚mentros: Estruturas de ponteiros.
+/*Assertivas: Retorno da fun√ß√£o: Retorna 1, caso econtre e 0, senao.
+/			 Par√¢mentros: Estruturas de ponteiros.
 ***********************************************************************/
 int MEN_loginProfessor()
 {
@@ -117,14 +117,14 @@ int MEN_loginProfessor()
 
 /***********************************************************************
 *
-*  $FC FunÁ„o: MEN_loginAluno
+*  $FC Fun√ß√£o: MEN_loginAluno
 *
-*  $ED DescriÁ„o da funÁ„o
-*		Realiza a busca da matricula do aluno. (n„o implementado)
+*  $ED Descri√ß√£o da fun√ß√£o
+*		Realiza a busca da matricula do aluno. (n√£o implementado)
 *
 ***********************************************************************/
-/*Assertivas: Retorno da funÁ„o: Rertona 1, se foi encontrado a matricula.
-/			 Par‚mentros: Estruturas de ponteiros.
+/*Assertivas: Retorno da fun√ß√£o: Rertona 1, se foi encontrado a matricula.
+/			 Par√¢mentros: Estruturas de ponteiros.
 ***********************************************************************/
 int MEN_loginAluno(unsigned int *matricula)
 {
@@ -150,106 +150,86 @@ int MEN_loginAluno(unsigned int *matricula)
 
 /***********************************************************************
 *
-*  $FC FunÁ„o: MEN_adicionaAluno
+*  $FC Fun√ß√£o: MEN_adicionaAluno
 *
-*  $ED DescriÁ„o da funÁ„o
+*  $ED Descri√ß√£o da fun√ß√£o
 *		Mostra o menu inicial.
 *
 ***********************************************************************/
-/*Assertivas: Retorno da funÁ„o: Retona 1, se os dados s„o validos.
-/			 Par‚mentros: Estruturas de ponteiros.
+/*Assertivas: Retorno da fun√ß√£o: Retona 1, se os dados s√£o validos.
+/			 Par√¢mentros: Estruturas de ponteiros.
 ***********************************************************************/
 
 void MEN_adicionaAluno()
 {
 	char nome[81];
-	int mat, telefone;
+	unsigned int mat, telefone;
 	Data nasc; 
 	Endereco end;
-	char cpf_completo[12];
 	CPF cpf;
 
 	//adiciona aluno
 	system("cls");
 	printf("\nDigite o nome do aluno: \n");
-	scanf(" %80s", nome);
-
+	scanf(" %s", nome);
 	printf("\nDigite a matricula: \n");
 	scanf("%d", &mat);
-
-	printf("\nDigite o numero do telefone: \n");
+	printf("\nDigite a telefone: \n");
 	scanf("%d", &telefone);
-
 	printf("\nDigite a data de nacimento: \n");
-		printf("\nDia:"); 
-		scanf("%d", &nasc.dia);
-		printf("\nMes:");
-		scanf("%d", &nasc.mes);
-		printf("\nAno:\n");
-		scanf("%d", &nasc.ano);
+		printf("\ndia"); 
+		printf("\nmes"); 
+		printf("\nano\n");
+	scanf("%d", &nasc.dia);
+	scanf("%d", &nasc.mes);
+	scanf("%d", &nasc.ano);
 	while(!(nasc.dia > 0 && nasc.dia < 31 && nasc.mes > 0 && nasc.mes < 13 && nasc.ano > 1900 && nasc.ano < 2010))
 	{
 		printf("\nDigite a data de nacimento: \n");
-		printf("\nDia:"); 
+		printf("\ndia"); 
+		printf("\nmes"); 
+		printf("\nano\n");
 		scanf("%d", &nasc.dia);
-		printf("\nMes:");
 		scanf("%d", &nasc.mes);
-		printf("\nAno:\n");
 		scanf("%d", &nasc.ano);
 	}
-
-	printf("\nDigite o numero do CPF: \n");
-	scanf(" %11[0-9]s", &cpf_completo);
-	cpf.cod = atoi(cpf_completo+9);
-	cpf_completo[9] = '\0';
-	cpf.dig3 = atoi(cpf_completo+6);
-	cpf_completo[6] = '\0';
-	cpf.dig2 = atoi(cpf_completo+3);
-	cpf_completo[3] = '\0';
-	cpf.dig1 = atoi(cpf_completo);
+	printf("\nDigite o cpf: \n");
+	scanf("%d", &cpf.dig1);
+	scanf("%d", &cpf.dig2);
+	scanf("%d", &cpf.dig3);
+	scanf("%d", &cpf.cod);
 	while(!(cpf.dig1 > 0 && cpf.dig1 < 1000 && cpf.dig2 > 0 && cpf.dig2 < 1000 && cpf.dig3 > 0 && cpf.dig3 < 1000 && cpf.cod > 0 && cpf.cod < 100))
 	{
-		printf("\nDigite o numero do CPF: \n");
-		scanf(" %11[0-9]s", &cpf_completo);
-		
-		cpf.cod = atoi(cpf_completo+9);
-		cpf_completo[9] = '\0';
-		cpf.dig3 = atoi(cpf_completo+6);
-		cpf_completo[6] = '\0';
-		cpf.dig2 = atoi(cpf_completo+3);
-		cpf_completo[3] = '\0';
-		cpf.dig1 = atoi(cpf_completo);
-		
+		printf("\nDigite o cpf: \n");
+		scanf("%d", &cpf.dig1);
+		scanf("%d", &cpf.dig2);
+		scanf("%d", &cpf.dig3);
+		scanf("%d", &cpf.cod);
 	}
-	printf("\nDigite a sigla estado:\n");
-	scanf(" %2s", end.estado);
-
-	printf("\nDigite a cidade:\n");
+	printf("\nDigite o estado\n");
+	scanf(" %s", end.estado);
+	printf("\nDigite a cidade\n");
 	scanf(" %s", end.cidade);
-
-	printf("\nDigite o bairro:\n");
+	printf("\nDigite o bairro\n");
 	scanf(" %s", end.bairro);
-
-	printf("\nDigite a rua:\n");
+	printf("\nDigite a rua\n");
 	scanf(" %s", end.rua);
-
-	printf("\nDigite o complemento:\n");
+	printf("\nDigite o comp\n");
 	scanf(" %s", end.comp);
-
 	CDI_insere(nome, mat, &cpf, telefone, &nasc, &end);
 }
 
 
 /***********************************************************************
 *
-*  $FC FunÁ„o: MEN_modificaAluno
+*  $FC Fun√ß√£o: MEN_modificaAluno
 *
-*  $ED DescriÁ„o da funÁ„o
+*  $ED Descri√ß√£o da fun√ß√£o
 *		Mostra o menu inicial.
 *
 ***********************************************************************/
-/*Assertivas: Retorno da funÁ„o: Retona 1, se os dados s„o validos.
-/			 Par‚mentros: Estruturas de ponteiros.
+/*Assertivas: Retorno da fun√ß√£o: Retona 1, se os dados s√£o validos.
+/			 Par√¢mentros: Estruturas de ponteiros.
 ***********************************************************************/
 
 void MEN_modificaAluno()
@@ -259,87 +239,64 @@ void MEN_modificaAluno()
 	Data nasc; 
 	Endereco end;
 	CPF cpf;
-	char cpf_completo[12];
 
 	system("cls");
 	printf("\nDigite o nome do aluno: \n");
-	scanf(" %80s", nome);
-
+	scanf(" %s", nome);
 	printf("\nDigite a matricula: \n");
 	scanf("%d", &mat);
-
 	printf("\nDigite a telefone: \n");
 	scanf("%d", &telefone);
-
 	printf("\nDigite a data de nacimento: \n");
-	printf("\nDia:\n "); 
 	scanf("%d", &nasc.dia);
-	printf("\nMes:\n ");
 	scanf("%d", &nasc.mes);
-	printf("\nAno:\n ");
 	scanf("%d", &nasc.ano);
 	while(!(nasc.dia > 0 && nasc.dia < 31 && nasc.mes > 0 && nasc.mes < 13 && nasc.ano > 1900 && nasc.ano < 2010))
 	{
-		printf("\nDigite a data de nacimento: \n");
-		printf("\nDia:\n "); 
+		printf("\nDigite a data de nascimento: \n");
+		printf("\ndia"); 
+		printf("\nmes"); 
+		printf("\nano\n");
 		scanf("%d", &nasc.dia);
-		printf("\nMes:\n ");
 		scanf("%d", &nasc.mes);
-		printf("\nAno:\n ");
 		scanf("%d", &nasc.ano);
 	}
-
-	printf("\nDigite o numero do CPF: \n");
-	scanf(" %11[0-9]", &cpf_completo);
-	cpf.cod = atoi(cpf_completo+9);
-	cpf_completo[9] = '\0';
-	cpf.dig3 = atoi(cpf_completo+6);
-	cpf_completo[6] = '\0';
-	cpf.dig2 = atoi(cpf_completo+3);
-	cpf_completo[3] = '\0';
-	cpf.dig1 = atoi(cpf_completo);
-
+	printf("\nDigite o cpf: \n");
+	scanf("%d", &cpf.dig1);
+	scanf("%d", &cpf.dig2);
+	scanf("%d", &cpf.dig3);
+	scanf("%d", &cpf.cod);
 	while(!(cpf.dig1 > 0 && cpf.dig1 < 1000 && cpf.dig2 > 0 && cpf.dig2 < 1000 && cpf.dig3 > 0 && cpf.dig3 < 1000 && cpf.cod > 0 && cpf.cod < 100))
 	{
-		printf("\nDigite o numero do CPF: \n");
-		scanf(" %11[0-9]", &cpf_completo);
-		cpf.cod = atoi(cpf_completo+9);
-		cpf_completo[9] = '\0';
-		cpf.dig3 = atoi(cpf_completo+6);
-		cpf_completo[6] = '\0';
-		cpf.dig2 = atoi(cpf_completo+3);
-		cpf_completo[3] = '\0';
-		cpf.dig1 = atoi(cpf_completo);
+		printf("\nDigite o cpf: \n");
+		scanf("%d", &cpf.dig1);
+		scanf("%d", &cpf.dig2);
+		scanf("%d", &cpf.dig3);
+		scanf("%d", &cpf.cod);
 	}
-
-	printf("\nDigite o estado:\n");
-	scanf(" %2s", end.estado);
-
-	printf("\nDigite a cidade:\n");
+	printf("\nDigite o estado\n");
+	scanf(" %s", end.estado);
+	printf("\nDigite a cidade\n");
 	scanf(" %s", end.cidade);
-
-	printf("\nDigite o bairro:\n");
+	printf("\nDigite o bairro\n");
 	scanf(" %s", end.bairro);
-
-	printf("\nDigite a rua:\n");
+	printf("\nDigite a rua\n");
 	scanf(" %s", end.rua);
-
-	printf("\nDigite o complemento: \n");
+	printf("\nDigite o comp\n");
 	scanf(" %s", end.comp);
-
 	CDI_altera(mat, nome, mat, &cpf, telefone, &nasc, &end);
 }
 
 /***********************************************************************
 *
-*  $FC FunÁ„o: MEN_adicionaProfessor
+*  $FC Fun√ß√£o: MEN_adicionaProfessor
 *
-*  $ED DescriÁ„o da funÁ„o
+*  $ED Descri√ß√£o da fun√ß√£o
 *		Mostra o menu inicial.
 *
 ***********************************************************************/
-/*Assertivas: Retorno da funÁ„o: Retona 1, se os dados s„o validos.
-/			 Par‚mentros: Estruturas de ponteiros.
+/*Assertivas: Retorno da fun√ß√£o: Retona 1, se os dados s√£o validos.
+/			 Par√¢mentros: Estruturas de ponteiros.
 ***********************************************************************/
 
 void MEN_adicionaProfessor()
@@ -355,11 +312,11 @@ void MEN_adicionaProfessor()
 
 	//Adiciona professor
 	printf("Digite o nome: \n");
-	scanf(" %80s", nome);
-	printf("Digite o RG: \n");
+	scanf(" %s", nome);
+	printf("Digite o rg: \n");
 	scanf("%d", &rg);
-	printf("Digite o CPF: \n");
-	scanf(" %11[0-9]", cpf);
+	printf("Digite o cpf: \n");
+	scanf(" %s", cpf);
 	printf("Digite a matricula: \n");
 	scanf("%d", &matricula);
 	printf("Digite o telefone: \n");
@@ -372,20 +329,20 @@ void MEN_adicionaProfessor()
 	printf("Ano: \n");
 	scanf("%d", &ano);
 	printf("Digite o pais: \n");
-	scanf(" %2s", pais);
+	scanf(" %s", pais);
 	printf("Digite o email: \n");
 	scanf(" %s", email);
-	printf("Digite o estado:\n");
-	scanf(" %2s", uf);
-	printf("Digite a cidade:\n");
+	printf("Digite o estado\n");
+	scanf(" %s", uf);
+	printf("Digite a cidade\n");
 	scanf(" %s", cidade);
-	printf("Digite o bairro:\n");
+	printf("Digite o bairro\n");
 	scanf(" %s", bairro);
-	printf("Digite a rua:\n");
+	printf("Digite a rua\n");
 	scanf(" %s", rua);
-	printf("Digite a numero:\n");
+	printf("Digite a numero\n");
 	scanf("%d", &numero);
-	printf("Digite o complemento:\n");
+	printf("Digite o comp\n");
 	scanf(" %s", complemento);
 	ret = CDO_cadastra(nome, rg, cpf, matricula, email, telefone, dia, mes, ano, pais, uf, cidade, bairro, rua, numero, complemento);
 	if(ret == CDO_CondRetOk)
@@ -399,14 +356,14 @@ void MEN_adicionaProfessor()
 
 /***********************************************************************
 *
-*  $FC FunÁ„o: MEN_modificaProfessor
+*  $FC Fun√ß√£o: MEN_modificaProfessor
 *
-*  $ED DescriÁ„o da funÁ„o
+*  $ED Descri√ß√£o da fun√ß√£o
 *		Mostra o menu inicial.
 *
 ***********************************************************************/
-/*Assertivas: Retorno da funÁ„o: Retona 1, se os dados s„o validos.
-/			 Par‚mentros: Estruturas de ponteiros.
+/*Assertivas: Retorno da fun√ß√£o: Retona 1, se os dados s√£o validos.
+/			 Par√¢mentros: Estruturas de ponteiros.
 ***********************************************************************/
 
 void MEN_modificaProfessor()
@@ -424,10 +381,10 @@ void MEN_modificaProfessor()
 
 	printf("\nModificando Professor\n");
 
-	printf("Digite a matrÌcula do professor que deseja modificar:\n");
+	printf("Digite a matr√≠cula do professor que deseja modificar:\n");
 	scanf("%d", &paramInt);
 	if(CDO_buscaPorMatricula(paramInt)!=CDO_CondRetOk){
-		printf("N„o existe professor cadastrado com este numero de matricula %d, por favor tente novamente\n", paramInt);
+		printf("N√£o existe professor cadastrado com este numero de matricula %d, por favor tente novamente\n", paramInt);
 		return;
 	}
 	CDO_mostraAtual();
@@ -449,7 +406,7 @@ void MEN_modificaProfessor()
 			printf("\nDigite o novo pais:\n");
 			scanf(" %s", pais);
 			printf("\nDigite o novo estado:\n");
-			scanf(" %2s", uf);
+			scanf(" %s", uf);
 			printf("\nDigite a nova cidade:\n");
 			scanf(" %s", cidade);
 			printf("\nDigite o novo bairro:\n");
@@ -488,6 +445,7 @@ void MEN_menuGradeCurricular()
 	int nItens = 8, i;
 	int creditos;
 	char nome[MEN_TAM_STRING], codigo[MEN_TAM_STRING], bibliografia[MEN_TAM_STRING], ementa[MEN_TAM_STRING];
+	int criterio;
 	GRC_tpCondRet ret;
 	int opcao;
 
@@ -499,24 +457,13 @@ void MEN_menuGradeCurricular()
 
 		switch(opcao){
 			case 1:
-
-				printf("\nDigite o nome:\n");
-				scanf(" %s", nome);
-				printf("\nDigite o codigo:\n");
-				scanf(" %s", codigo);
-				printf("\nDigite o numero de creditos:\n");
-				scanf(" %d", &creditos);
-				printf("\nDigite a bibliografia:\n");
-				scanf(" %s", bibliografia);
-				printf("\nDigite a ementa:\n");
-				scanf(" %s", ementa);
-				ret = GRC_cadastra(nome, codigo, creditos, bibliografia, ementa, 3);
+				ret = GRC_cadastraCMD();
 				break;
 			case 2:
 				GRC_mostraAtual();
 				break;
 			case 3:
-				printf("Digite o cÛdigo da disciplina que deseja buscar:\n");
+				printf("Digite o c√≥digo da disciplina que deseja buscar:\n");
 				scanf(" %s", codigo);
 				ret = GRC_buscaPorCodigo(codigo);
 				GRC_mostraAtual();
@@ -525,7 +472,7 @@ void MEN_menuGradeCurricular()
 				GRC_mostraTodas();
 				break;
 			case 5:
-				printf("Digite o cÛdigo da disciplina que deseja configurar como pre-requisito:\n");
+				printf("Digite o c√≥digo da disciplina que deseja configurar como pre-requisito:\n");
 				scanf(" %s", codigo);
 				ret = GRC_inserePreRequisito(codigo);
 				break;
@@ -537,7 +484,7 @@ void MEN_menuGradeCurricular()
 				break;
 			default:
 				if(opcao)
-					printf("Opcao inv·lida!\n");
+					printf("Opcao inv√°lida!\n");
 				break;
 		}
 		if(ret == GRC_CondRetOk)
