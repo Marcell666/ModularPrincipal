@@ -105,7 +105,7 @@ int MEN_loginProfessor()
 	printf("\nLogin Professor\n");
 
 	printf("\nDigite a matricula: ");
-	scanf("%10d", &mat);
+	scanf("%d", &mat);
 	if(CDO_buscaPorMatricula(mat) == CDO_CondRetOk)
 	{
 		system("cls");
@@ -133,7 +133,7 @@ int MEN_loginAluno(unsigned int *matricula)
 	printf("\nLogin Aluno\n");
 
 	printf("\nDigite a matricula: ");
-	scanf("%10d", &mat);
+	scanf("%d", &mat);
 
 	if(mat < 0 )
 	{
@@ -175,27 +175,27 @@ void MEN_adicionaAluno()
 	scanf(" %80s", nome);
 
 	printf("\nDigite a matricula: \n");
-	scanf("%10d", &mat);
+	scanf("%d", &mat);
 
 	printf("\nDigite o numero do telefone: \n");
-	scanf("%9d", &telefone);
+	scanf("%d", &telefone);
 
 	printf("\nDigite a data de nacimento: \n");
 		printf("\nDia:"); 
-		scanf("%2d", &nasc.dia);
+		scanf("%d", &nasc.dia);
 		printf("\nMes:");
-		scanf("%2d", &nasc.mes);
+		scanf("%d", &nasc.mes);
 		printf("\nAno:\n");
-		scanf("%4d", &nasc.ano);
+		scanf("%d", &nasc.ano);
 	while(!(nasc.dia > 0 && nasc.dia < 31 && nasc.mes > 0 && nasc.mes < 13 && nasc.ano > 1900 && nasc.ano < 2010))
 	{
 		printf("\nDigite a data de nacimento: \n");
 		printf("\nDia:"); 
-		scanf("%2d", &nasc.dia);
+		scanf("%d", &nasc.dia);
 		printf("\nMes:");
-		scanf("%2d", &nasc.mes);
+		scanf("%d", &nasc.mes);
 		printf("\nAno:\n");
-		scanf("%4d", &nasc.ano);
+		scanf("%d", &nasc.ano);
 	}
 
 	printf("\nDigite o numero do CPF: \n");
@@ -266,27 +266,27 @@ void MEN_modificaAluno()
 	scanf(" %80s", nome);
 
 	printf("\nDigite a matricula: \n");
-	scanf("%10d", &mat);
+	scanf("%d", &mat);
 
 	printf("\nDigite a telefone: \n");
-	scanf("%9d", &telefone);
+	scanf("%d", &telefone);
 
 	printf("\nDigite a data de nacimento: \n");
 	printf("\nDia:\n "); 
-	scanf("%2d", &nasc.dia);
+	scanf("%d", &nasc.dia);
 	printf("\nMes:\n ");
-	scanf("%2d", &nasc.mes);
+	scanf("%d", &nasc.mes);
 	printf("\nAno:\n ");
-	scanf("%4d", &nasc.ano);
+	scanf("%d", &nasc.ano);
 	while(!(nasc.dia > 0 && nasc.dia < 31 && nasc.mes > 0 && nasc.mes < 13 && nasc.ano > 1900 && nasc.ano < 2010))
 	{
 		printf("\nDigite a data de nacimento: \n");
 		printf("\nDia:\n "); 
-		scanf("%2d", &nasc.dia);
+		scanf("%d", &nasc.dia);
 		printf("\nMes:\n ");
-		scanf("%2d", &nasc.mes);
+		scanf("%d", &nasc.mes);
 		printf("\nAno:\n ");
-		scanf("%4d", &nasc.ano);
+		scanf("%d", &nasc.ano);
 	}
 
 	printf("\nDigite o numero do CPF: \n");
@@ -357,20 +357,20 @@ void MEN_adicionaProfessor()
 	printf("Digite o nome: \n");
 	scanf(" %80s", nome);
 	printf("Digite o RG: \n");
-	scanf("%10d", &rg);
+	scanf("%d", &rg);
 	printf("Digite o CPF: \n");
 	scanf(" %11[0-9]", cpf);
 	printf("Digite a matricula: \n");
-	scanf("%10d", &matricula);
+	scanf("%d", &matricula);
 	printf("Digite o telefone: \n");
-	scanf("%9d", &telefone);
+	scanf("%d", &telefone);
 	printf("Digite a data de nascimento: \n");
 	printf("Dia: \n");
-	scanf("%2d", &dia);
+	scanf("%d", &dia);
 	printf("Mes: \n");
-	scanf("%2d", &mes);
+	scanf("%d", &mes);
 	printf("Ano: \n");
-	scanf("%2d", &ano);
+	scanf("%d", &ano);
 	printf("Digite o pais: \n");
 	scanf(" %2s", pais);
 	printf("Digite o email: \n");
@@ -439,11 +439,11 @@ void MEN_modificaProfessor()
 		else if( opcao==nAlteras-2){//data
 			printf("\nDigite a data de nascimento: \n");
 			printf("Dia: \n");
-			scanf("%2d", &dia);
+			scanf("%d", &dia);
 			printf("Mes: \n");
-			scanf("%2d", &mes);
+			scanf("%d", &mes);
 			printf("Ano: \n");
-			scanf("%4d", &ano);
+			scanf("%d", &ano);
 			ret = CDO_alteraDataNascimento(dia, mes, ano);
 		} else if( opcao==nAlteras-1){//endereco
 			printf("\nDigite o novo pais:\n");
