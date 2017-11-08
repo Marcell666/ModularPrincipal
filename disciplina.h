@@ -188,7 +188,7 @@ DIS_tpCondRet DIS_deleta_Disciplina (Disciplina **d);
 *    Insere uma turma para a lista da disciplina
 *
 ***********************************************************************/
-DIS_tpCondRet DIS_insere_turma(Disciplina **d, Turma **t);
+DIS_tpCondRet DIS_insere_turma(Disciplina *d, Turma *t);
 /***********************************************************************
 *
 *  $FC Função: DIS limpa lista de turmas para a disciplina
