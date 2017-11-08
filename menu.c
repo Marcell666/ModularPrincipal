@@ -105,7 +105,7 @@ int MEN_loginProfessor()
 	printf("\nLogin Professor\n");
 
 	printf("\nDigite a matricula: ");
-	scanf("%d", &mat);
+	scanf("%10d", &mat);
 	if(CDO_buscaPorMatricula(mat) == CDO_CondRetOk)
 	{
 		system("cls");
@@ -133,7 +133,7 @@ int MEN_loginAluno(unsigned int *matricula)
 	printf("\nLogin Aluno\n");
 
 	printf("\nDigite a matricula: ");
-	scanf("%d", &mat);
+	scanf("%10d", &mat);
 
 	if(mat < 0 )
 	{
@@ -163,59 +163,79 @@ int MEN_loginAluno(unsigned int *matricula)
 void MEN_adicionaAluno()
 {
 	char nome[81];
-	unsigned int mat, telefone;
+	int mat, telefone;
 	Data nasc; 
 	Endereco end;
+	char cpf_completo[12];
 	CPF cpf;
 
 	//adiciona aluno
 	system("cls");
 	printf("\nDigite o nome do aluno: \n");
-	scanf(" %s", nome);
+	scanf(" %80s", nome);
+
 	printf("\nDigite a matricula: \n");
-	scanf("%d", &mat);
-	printf("\nDigite a telefone: \n");
-	scanf("%d", &telefone);
+	scanf("%10d", &mat);
+
+	printf("\nDigite o numero do telefone: \n");
+	scanf("%9d", &telefone);
+
 	printf("\nDigite a data de nacimento: \n");
-		printf("\ndia"); 
-		printf("\nmes"); 
-		printf("\nano\n");
-	scanf("%d", &nasc.dia);
-	scanf("%d", &nasc.mes);
-	scanf("%d", &nasc.ano);
+		printf("\nDia:"); 
+		scanf("%2d", &nasc.dia);
+		printf("\nMes:");
+		scanf("%2d", &nasc.mes);
+		printf("\nAno:\n");
+		scanf("%4d", &nasc.ano);
 	while(!(nasc.dia > 0 && nasc.dia < 31 && nasc.mes > 0 && nasc.mes < 13 && nasc.ano > 1900 && nasc.ano < 2010))
 	{
 		printf("\nDigite a data de nacimento: \n");
-		printf("\ndia"); 
-		printf("\nmes"); 
-		printf("\nano\n");
-		scanf("%d", &nasc.dia);
-		scanf("%d", &nasc.mes);
-		scanf("%d", &nasc.ano);
+		printf("\nDia:"); 
+		scanf("%2d", &nasc.dia);
+		printf("\nMes:");
+		scanf("%2d", &nasc.mes);
+		printf("\nAno:\n");
+		scanf("%4d", &nasc.ano);
 	}
-	printf("\nDigite o cpf: \n");
-	scanf("%d", &cpf.dig1);
-	scanf("%d", &cpf.dig2);
-	scanf("%d", &cpf.dig3);
-	scanf("%d", &cpf.cod);
+
+	printf("\nDigite o numero do CPF: \n");
+	scanf(" %11[0-9]s", &cpf_completo);
+	cpf.cod = atoi(cpf_completo+9);
+	cpf_completo[9] = '\0';
+	cpf.dig3 = atoi(cpf_completo+6);
+	cpf_completo[6] = '\0';
+	cpf.dig2 = atoi(cpf_completo+3);
+	cpf_completo[3] = '\0';
+	cpf.dig1 = atoi(cpf_completo);
 	while(!(cpf.dig1 > 0 && cpf.dig1 < 1000 && cpf.dig2 > 0 && cpf.dig2 < 1000 && cpf.dig3 > 0 && cpf.dig3 < 1000 && cpf.cod > 0 && cpf.cod < 100))
 	{
-		printf("\nDigite o cpf: \n");
-		scanf("%d", &cpf.dig1);
-		scanf("%d", &cpf.dig2);
-		scanf("%d", &cpf.dig3);
-		scanf("%d", &cpf.cod);
+		printf("\nDigite o numero do CPF: \n");
+		scanf(" %11[0-9]s", &cpf_completo);
+		
+		cpf.cod = atoi(cpf_completo+9);
+		cpf_completo[9] = '\0';
+		cpf.dig3 = atoi(cpf_completo+6);
+		cpf_completo[6] = '\0';
+		cpf.dig2 = atoi(cpf_completo+3);
+		cpf_completo[3] = '\0';
+		cpf.dig1 = atoi(cpf_completo);
+		
 	}
-	printf("\nDigite o estado\n");
-	scanf(" %s", end.estado);
-	printf("\nDigite a cidade\n");
+	printf("\nDigite a sigla estado:\n");
+	scanf(" %2s", end.estado);
+
+	printf("\nDigite a cidade:\n");
 	scanf(" %s", end.cidade);
-	printf("\nDigite o bairro\n");
+
+	printf("\nDigite o bairro:\n");
 	scanf(" %s", end.bairro);
-	printf("\nDigite a rua\n");
+
+	printf("\nDigite a rua:\n");
 	scanf(" %s", end.rua);
-	printf("\nDigite o comp\n");
+
+	printf("\nDigite o complemento:\n");
 	scanf(" %s", end.comp);
+
 	CDI_insere(nome, mat, &cpf, telefone, &nasc, &end);
 }
 
@@ -239,51 +259,74 @@ void MEN_modificaAluno()
 	Data nasc; 
 	Endereco end;
 	CPF cpf;
+	char cpf_completo[12];
 
 	system("cls");
 	printf("\nDigite o nome do aluno: \n");
-	scanf(" %s", nome);
+	scanf(" %80s", nome);
+
 	printf("\nDigite a matricula: \n");
-	scanf("%d", &mat);
+	scanf("%10d", &mat);
+
 	printf("\nDigite a telefone: \n");
-	scanf("%d", &telefone);
+	scanf("%9d", &telefone);
+
 	printf("\nDigite a data de nacimento: \n");
-	scanf("%d", &nasc.dia);
-	scanf("%d", &nasc.mes);
-	scanf("%d", &nasc.ano);
+	printf("\nDia:\n "); 
+	scanf("%2d", &nasc.dia);
+	printf("\nMes:\n ");
+	scanf("%2d", &nasc.mes);
+	printf("\nAno:\n ");
+	scanf("%4d", &nasc.ano);
 	while(!(nasc.dia > 0 && nasc.dia < 31 && nasc.mes > 0 && nasc.mes < 13 && nasc.ano > 1900 && nasc.ano < 2010))
 	{
-		printf("\nDigite a data de nascimento: \n");
-		printf("\ndia"); 
-		printf("\nmes"); 
-		printf("\nano\n");
-		scanf("%d", &nasc.dia);
-		scanf("%d", &nasc.mes);
-		scanf("%d", &nasc.ano);
+		printf("\nDigite a data de nacimento: \n");
+		printf("\nDia:\n "); 
+		scanf("%2d", &nasc.dia);
+		printf("\nMes:\n ");
+		scanf("%2d", &nasc.mes);
+		printf("\nAno:\n ");
+		scanf("%4d", &nasc.ano);
 	}
-	printf("\nDigite o cpf: \n");
-	scanf("%d", &cpf.dig1);
-	scanf("%d", &cpf.dig2);
-	scanf("%d", &cpf.dig3);
-	scanf("%d", &cpf.cod);
+
+	printf("\nDigite o numero do CPF: \n");
+	scanf(" %11[0-9]", &cpf_completo);
+	cpf.cod = atoi(cpf_completo+9);
+	cpf_completo[9] = '\0';
+	cpf.dig3 = atoi(cpf_completo+6);
+	cpf_completo[6] = '\0';
+	cpf.dig2 = atoi(cpf_completo+3);
+	cpf_completo[3] = '\0';
+	cpf.dig1 = atoi(cpf_completo);
+
 	while(!(cpf.dig1 > 0 && cpf.dig1 < 1000 && cpf.dig2 > 0 && cpf.dig2 < 1000 && cpf.dig3 > 0 && cpf.dig3 < 1000 && cpf.cod > 0 && cpf.cod < 100))
 	{
-		printf("\nDigite o cpf: \n");
-		scanf("%d", &cpf.dig1);
-		scanf("%d", &cpf.dig2);
-		scanf("%d", &cpf.dig3);
-		scanf("%d", &cpf.cod);
+		printf("\nDigite o numero do CPF: \n");
+		scanf(" %11[0-9]", &cpf_completo);
+		cpf.cod = atoi(cpf_completo+9);
+		cpf_completo[9] = '\0';
+		cpf.dig3 = atoi(cpf_completo+6);
+		cpf_completo[6] = '\0';
+		cpf.dig2 = atoi(cpf_completo+3);
+		cpf_completo[3] = '\0';
+		cpf.dig1 = atoi(cpf_completo);
 	}
-	printf("\nDigite o estado\n");
-	scanf(" %s", end.estado);
-	printf("\nDigite a cidade\n");
+
+	printf("\nDigite o estado:\n");
+	scanf(" %2s", end.estado);
+
+	printf("\nDigite a cidade:\n");
 	scanf(" %s", end.cidade);
-	printf("\nDigite o bairro\n");
+
+	printf("\nDigite o bairro:\n");
 	scanf(" %s", end.bairro);
-	printf("\nDigite a rua\n");
+
+	printf("\nDigite a rua:\n");
 	scanf(" %s", end.rua);
-	printf("\nDigite o comp\n");
+
+	printf("\nDigite o complemento: \n");
 	scanf(" %s", end.comp);
+
 	CDI_altera(mat, nome, mat, &cpf, telefone, &nasc, &end);
 }
 
@@ -312,37 +355,37 @@ void MEN_adicionaProfessor()
 
 	//Adiciona professor
 	printf("Digite o nome: \n");
-	scanf(" %s", nome);
-	printf("Digite o rg: \n");
-	scanf("%d", &rg);
-	printf("Digite o cpf: \n");
-	scanf(" %s", cpf);
+	scanf(" %80s", nome);
+	printf("Digite o RG: \n");
+	scanf("%10d", &rg);
+	printf("Digite o CPF: \n");
+	scanf(" %11[0-9]", cpf);
 	printf("Digite a matricula: \n");
-	scanf("%d", &matricula);
+	scanf("%10d", &matricula);
 	printf("Digite o telefone: \n");
-	scanf("%d", &telefone);
+	scanf("%9d", &telefone);
 	printf("Digite a data de nascimento: \n");
 	printf("Dia: \n");
-	scanf("%d", &dia);
+	scanf("%2d", &dia);
 	printf("Mes: \n");
-	scanf("%d", &mes);
+	scanf("%2d", &mes);
 	printf("Ano: \n");
-	scanf("%d", &ano);
+	scanf("%2d", &ano);
 	printf("Digite o pais: \n");
-	scanf(" %s", pais);
+	scanf(" %2s", pais);
 	printf("Digite o email: \n");
 	scanf(" %s", email);
-	printf("Digite o estado\n");
-	scanf(" %s", uf);
-	printf("Digite a cidade\n");
+	printf("Digite o estado:\n");
+	scanf(" %2s", uf);
+	printf("Digite a cidade:\n");
 	scanf(" %s", cidade);
-	printf("Digite o bairro\n");
+	printf("Digite o bairro:\n");
 	scanf(" %s", bairro);
-	printf("Digite a rua\n");
+	printf("Digite a rua:\n");
 	scanf(" %s", rua);
-	printf("Digite a numero\n");
+	printf("Digite a numero:\n");
 	scanf("%d", &numero);
-	printf("Digite o comp\n");
+	printf("Digite o complemento:\n");
 	scanf(" %s", complemento);
 	ret = CDO_cadastra(nome, rg, cpf, matricula, email, telefone, dia, mes, ano, pais, uf, cidade, bairro, rua, numero, complemento);
 	if(ret == CDO_CondRetOk)
@@ -396,17 +439,17 @@ void MEN_modificaProfessor()
 		else if( opcao==nAlteras-2){//data
 			printf("\nDigite a data de nascimento: \n");
 			printf("Dia: \n");
-			scanf("%d", &dia);
+			scanf("%2d", &dia);
 			printf("Mes: \n");
-			scanf("%d", &mes);
+			scanf("%2d", &mes);
 			printf("Ano: \n");
-			scanf("%d", &ano);
+			scanf("%4d", &ano);
 			ret = CDO_alteraDataNascimento(dia, mes, ano);
 		} else if( opcao==nAlteras-1){//endereco
 			printf("\nDigite o novo pais:\n");
 			scanf(" %s", pais);
 			printf("\nDigite o novo estado:\n");
-			scanf(" %s", uf);
+			scanf(" %2s", uf);
 			printf("\nDigite a nova cidade:\n");
 			scanf(" %s", cidade);
 			printf("\nDigite o novo bairro:\n");
