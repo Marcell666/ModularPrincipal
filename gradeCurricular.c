@@ -102,6 +102,28 @@ GRC_tpCondRet GRC_cadastra(char* nome, char* codigo, int creditos, char* bibliog
 	return GRC_CondRetOk;
 }/* Fim função: GRC Cadastrar Disciplina */
 
+/***************************************************************************
+*
+*  Função: GRC Cadastra Disciplina pelo CMD
+
+*  ****/
+GRC_tpCondRet GRC_cadastraCMD(){
+	ParDisciplina *parD = NULL;
+	Disciplina *disc = NULL;
+	char codigo[MAX_CODIGO];
+	DIS_tpCondRet ret;
+	ret = DIS_gera_cmd(&disc, codigo);
+	if(GRC_buscaPorCodigo(codigo) == GRC_CondRetOk)
+		return GRC_CondRetIdJaCriado;
+	if(ret == DIS_CondRetFaltouMemoria) return GRC_CondRetNaoHaMemoria;
+	if(ret == DIS_CondRetParametroInvalido) return GRC_CondRetFormatoInvalido;
+	parD = (ParDisciplina*) malloc(sizeof(ParDisciplina));
+	parD->disciplina = disc;
+	createList(&parD->preRequisitos);
+	push_back(grc->parDisciplinas, parD);
+	return GRC_CondRetOk;
+}/* Fim função: GRC Cadastrar Disciplina pelo CMD */
+
 /***********************************************************************
 *
 *  $FC Função: GRC Mostra Pre-Requisitos
