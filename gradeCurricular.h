@@ -98,7 +98,8 @@ GRC_tpCondRet GRC_cria();
 *     $P creditos - Quantidade de Créditos da Disciplina
 *     $P Bibliografia - Bibliografia da Disciplina
 *     $P Ementa - Ementa da Disciplina
-*						
+*	  $P Criterio - Criterio da disciplina (1 a 5)
+*					
 *  $FV Valor retornado
 *     GRC_CondRetOk 
 *     GRC_CondRetIdJaCriado - Caso o Código da Disciplina que deseja cadastrar já esteja cadastrado nessa instância de Grade Curricular.
@@ -114,6 +115,37 @@ GRC_tpCondRet GRC_cria();
 ***********************************************************************/
 
 GRC_tpCondRet GRC_cadastra(char* nome, char* codigo, int creditos, char* bibliografia, char* ementa,int criterio);
+
+/***********************************************************************
+*
+*  $FC Função: GRC Cadastra
+*
+*  $ED Descrição da função
+*     Cadastra um Disciplina em Grade Curricular com os dados passados pelo usuário
+*
+*  $EP Parâmetros 
+*     $P nome - Nome do Disciplina que deseja cadastrar no Grade Curricular
+*     $P codigo - Código do Disciplina que deseja cadastrar no Grade Curricular
+*     $P creditos - Quantidade de Créditos da Disciplina
+*     $P Bibliografia - Bibliografia da Disciplina
+*     $P Ementa - Ementa da Disciplina
+*	  $P Criterio - Criterio da disciplina (1 a 5)
+*						
+*  $FV Valor retornado
+*     GRC_CondRetOk 
+*     GRC_CondRetIdJaCriado - Caso o Código da Disciplina que deseja cadastrar já esteja cadastrado nessa instância de Grade Curricular.
+*	  GRC_CondRetNaoHaMemoria - Caso não haja memória suficiente para cadastrar a Disciplina na Grade Curricular
+*     GRC_CondRetFormatoInvalido - Caso o formato dos parâmetros não esteja de acordo com o esperado pelo modulo Disciplina
+*
+*  Assertiva de Entrada: 
+*		-O Grade Curricular já foi instanciado
+*                    
+*  Assertiva de Saída: 
+*		-Uma Instância de Disciplina é cadastrada na Grade Curricular
+*
+***********************************************************************/
+
+GRC_tpCondRet GRC_cadastraCMD();
 
 /***********************************************************************
 *
