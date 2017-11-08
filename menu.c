@@ -499,11 +499,11 @@ void MEN_menuGradeCurricular()
 				printf("Digite o dia da semana da aula:\n");
 				scanf(" %s", diaSem);
 				printf("Digite a hora de inicio da aula:\n");
-				scanf(" %d", horIni);
+				scanf(" %d", &horIni);
 				printf("Digita a hora do termino da aula:\n");
-				scanf(" %d", horTer);
+				scanf(" %d", &horTer);
 				printf("Digite a quantidade de vagas");
-				scanf(" %d", qtdVag);
+				scanf(" %d", &qtdVag);
 				GRC_insereTurma(codTur, horIni, horTer, diaSem, qtdVag, codigo);
 				break;
 			default:
