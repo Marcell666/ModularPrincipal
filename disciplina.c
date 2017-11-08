@@ -107,9 +107,10 @@ char* converte_criterio(Disciplina* d)
 * ****/
 char* DIS_le_ementa(void){
   char* ementa = (char *)calloc(MAX_EMENTA, sizeof(char));
-  if(ementa == NULL)  { exit(1);  }
+  if(ementa == NULL) exit(1);
   printf("Digite a ementa\n");
-  scanf(" %300[^\n]s", ementa);
+  scanf(" %300s", ementa);
+  printf("chega aqui");
   return ementa;
 } /* Fim função: DIS ler bibliografia */
 /***************************************************************************
@@ -119,7 +120,11 @@ char* DIS_le_ementa(void){
 int DIS_le_creditos(void){
   int cred;
   printf("Digite a quantidade de creditos:\n");
+  do{
   scanf("%d", &cred);
+	if(cred<=0)
+		printf("Digite uma quantidade válida de creditos");
+  }while(cred<=0);
   return cred;
 } /* Fim função: DIS ler creditos */
 /***************************************************************************
@@ -158,20 +163,20 @@ char *DIS_le_Bib(void){
 *  ****/
 char* DIS_le_codigo(void) 				/* Codigo da disciplina no padrão inf0000 */
 {
-  char* cod1 = (char*)calloc(MAX_CODIGO, sizeof(char)); 	/*cod1 = prefixo*/
+  char* cod1 = (char*)calloc(MAX_CODIGO, sizeof(char));	/*cod1 = prefixo*/
   char* cod2 = (char*)calloc(5, sizeof(char));
+  strcat(cod1, "inf");
   if (cod1 == NULL)
   {
     printf("Memoria insuficiente!\n\n");
     exit(1);
   }
-  strcat(cod1, "inf");
   printf("Digite o codigo numerico da disciplina:\n");
   scanf("%4s", cod2); 				/* O usuario digitará apenas a parte numerica do codigo (4 Numerais no caso)*/
   /*ngtgmp - não deixa o usuário escrever algo que não sejam numerais*/
   while((int)cod2[0]<48 ||(int) cod2[0]>57 ||(int)cod2[1]<48 || (int)cod2[1]>57 || (int)cod2[2]<48 ||(int) cod2[2]>57 ||(int) cod2[3]<48 ||(int) cod2[3]>57 || strlen(cod2)<4)
   {
-    printf("Selecione caracteres validos (0 >= x <=9):");
+    printf("Selecione 4 caracteres validos (0 >= x <=9):");
     scanf("%4s", cod2);
   }
   strcat(cod1, cod2);	  			/* Concatena "inf" + 4 numerais no máximo */
@@ -184,7 +189,7 @@ char* DIS_le_codigo(void) 				/* Codigo da disciplina no padrão inf0000 */
 *  ****/
 int DIS_le_critAprov(void)
 {
-	int criterio=0;
+	int criterio;
 	do{
 	printf("Digite um criterio de aprovacao valido(de 1 a 5):\n");
 	scanf("%d", &criterio);
@@ -364,16 +369,18 @@ DIS_tpCondRet DIS_altera_criterio(Disciplina *d, int critAprov){
 *
 *  Função: DIS gera uma disciplina por input do teclado
 *  ****/
-DIS_tpCondRet DIS_gera_cmd(Disciplina** d)
+DIS_tpCondRet DIS_gera_cmd(Disciplina** d,char cod[MAX_CODIGO])
 {
-  (*d) = (Disciplina*) calloc(1, sizeof(Disciplina));
+  (*d) = (Disciplina*) calloc(1,sizeof(Disciplina));
   if((*d) == NULL)
 		return DIS_CondRetFaltouMemoria;
-  (*d)->creditos = DIS_le_creditos();
-  strcpy((*d)->bibliografia,DIS_le_Bib());
   strcpy((*d)->nome, DIS_le_nome());
   strcpy((*d)->codigo, DIS_le_codigo());
+  (*d)->creditos = DIS_le_creditos();
+  strcpy((*d)->codigo, DIS_le_codigo());
   strcpy((*d)->ementa, DIS_le_ementa());
+  strcpy((*d)->bibliografia,DIS_le_Bib());
+
   switch(DIS_le_critAprov())
   {
 	case 1:
@@ -393,6 +400,7 @@ DIS_tpCondRet DIS_gera_cmd(Disciplina** d)
 		break;
   }
   createList(&((*d)->turmas));
+  strcpy( cod, (*d)->codigo);
   return DIS_CondRetDisciplinaCriada;
 }/* Fim função: DIS gera uma disciplina por input do teclado */
 /*************************************************************************
