@@ -39,7 +39,7 @@
 #include "listas.h"
 #include "disciplina.h"
 #include "DISCIPLINACURSADA.H"
-#include "HISTORICO.H"
+#include "HISTORICO.h"
 
 
 
@@ -779,7 +779,7 @@ static char* HIS_montaNomeArq (unsigned int matricula){
 	sprintf(mat,"%u",matricula);
 #ifdef __linux__
 	strcpy(nomeArq,"Historico/");
-#elseif
+#elif
 	strcpy(nomeArq,"Historico\\");
 #endif
 	strcat(mat,".txt");
