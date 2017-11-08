@@ -76,7 +76,7 @@ GRC_tpCondRet GRC_mostraPreRequisitos(ParDisciplina *parD);
 *  ****/
 
 GRC_tpCondRet GRC_cria(){
-	grc = (GradeCurricular*) malloc(sizeof(GradeCurricular));
+	grc = (GradeCurricular*) calloc(1, sizeof(GradeCurricular));
 	createList(&grc->parDisciplinas);
 	return GRC_CondRetOk;
 }/* Fim função: GRC Criar Grade Curricular */
@@ -95,7 +95,7 @@ GRC_tpCondRet GRC_cadastra(char* nome, char* codigo, int creditos, char* bibliog
 	ret = DIS_gera_param(&disc, nome, codigo, creditos, bibliografia, ementa, criterio);
 	if(ret == DIS_CondRetFaltouMemoria) return GRC_CondRetNaoHaMemoria;
 	if(ret == DIS_CondRetParametroInvalido) return GRC_CondRetFormatoInvalido;
-	parD = (ParDisciplina*) malloc(sizeof(ParDisciplina));
+	parD = (ParDisciplina*) calloc(1, sizeof(ParDisciplina));
 	parD->disciplina = disc;
 	createList(&parD->preRequisitos);
 	push_back(grc->parDisciplinas, parD);
@@ -120,7 +120,7 @@ GRC_tpCondRet GRC_cadastraCMD(){
 		return GRC_CondRetFormatoInvalido;
 	if(GRC_buscaPorCodigo(codigo) == GRC_CondRetOk)
 		return GRC_CondRetIdJaCriado;
-	parD = (ParDisciplina*) malloc(sizeof(ParDisciplina));
+	parD = (ParDisciplina*) calloc(1, sizeof(ParDisciplina));
 	parD->disciplina = disc;
 	createList(&parD->preRequisitos);
 	push_back(grc->parDisciplinas, parD);
