@@ -25,6 +25,9 @@
 *     Uma disciplina deverá ter um critério de avaliação, que será um código que se *refere a uma forma de calcular a média final para poder determinar se um aluno *está aprovado ou não.
 ***************************************************************************/
 #include "turma.h"
+#ifndef DISCIPLINA_H
+#define DISCIPLINA_H
+
 typedef struct disciplina Disciplina;
 /***********************************************************************
 *
@@ -207,3 +210,5 @@ DIS_tpCondRet DIS_exibe_todas_turmas(Disciplina **d);
 *
 *	*****/
 DIS_tpCondRet DIS_situacaoAluno(Disciplina* disc,float G1,float G2,float G3,float G4, float* media, int*situacao);
+
+#endif
