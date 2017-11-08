@@ -109,7 +109,7 @@ char* DIS_le_ementa(void){
   char* ementa = (char *)calloc(MAX_EMENTA, sizeof(char));
   if(ementa == NULL) exit(1);
   printf("Digite a ementa\n");
-  scanf(" %300s", ementa);
+  scanf(" %300[^\n]s", ementa);
   return ementa;
 } /* Fim função: DIS ler bibliografia */
 /***************************************************************************
