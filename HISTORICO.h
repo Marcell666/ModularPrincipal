@@ -1,3 +1,7 @@
+#if ! defined( HISTORICO_ )
+#define HISTORICO_
+
+
 /****************************************************************
 *$AD Módulo de definição
 *	Arquivo: HISTORICO.h
@@ -36,8 +40,13 @@
 * 
 *$.***************************************************************************/
 
-#ifndef HISTORICO_H
-#define HISTORICO_H
+#include "listas.h"
+#include "disciplina.h"
+#if defined( HISTORICO_OWN )
+   #define HISTORICO_EXT
+#else
+   #define HISTORICO_EXT extern
+#endif
 
 #define tamDisciplina   8
 #define tamSituacao     3
@@ -277,7 +286,7 @@ HIS_tpCondRet HIS_getDisciplinasTrancadas(HIS_tpHistorico * pHistorico,  struct 
 *	valem as assertivas estruturais para listas encadeadas.
 *	disciplina corretamente adicionada ao historico
 *$.***********************************************************************/
-HIS_tpCondRet HIS_adicionaDisciplina(HIS_tpHistorico * pHistorico , struct disciplina *disciplina, char *situacao, char* periodo, float grau );
+HIS_tpCondRet HIS_adicionaDisciplina(HIS_tpHistorico * pHistorico , Disciplina *disciplina, char *situacao, char* periodo, float grau );
 
 /**************************************************************************
  *  
@@ -376,5 +385,10 @@ HIS_tpCondRet HIS_salvaHistoricoEmArquivo (HIS_tpHistorico ** pHistorico, unsign
 *$.***********************************************************************/
 HIS_tpCondRet HIS_getDisciplinasReprovadoPorFalta(HIS_tpHistorico * pHistorico, struct list * disciplinas);
 
+
+#undef HISTORICO_EXT
+
 /********** Fim do módulo de definição: Módulo Historico **********/
+
+#else
 #endif
