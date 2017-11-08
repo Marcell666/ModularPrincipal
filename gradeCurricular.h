@@ -524,6 +524,28 @@ GRC_tpCondRet GRC_devolveDisc(void** Disc);
 
 GRC_tpCondRet GRC_attSituacaoDisCorrente(float G1,float G2,float G3,float G4,float* media, int *situacao);
 
+/***********************************************************************
+*
+*  $FC Função: GRC Insere Turma em Disciplina
+*
+*  $ED Descrição da função
+*     Insere uma turma em uma disciplina do par Disciplina Prerequisitos
+*
+*  $EP Parâmetros --
+*						
+*  $FV Valor retornado
+*     GRC_CondRetOk 
+*
+*  Assertiva de Entrada: 
+*		-A função já foi chamada
+*                    
+*  Assertiva de Saída: 
+*		-Uma turma é inserida com valores, e formatos, corretos dentro de uma estrutura Disciplina
+*
+***********************************************************************/
+
+GRC_tpCondRet GRC_insereTurma(char* codTur, int horIni, int horTer, char* diaSem, int qtdVag, char* codigo);
+
 #endif
 
 /***********************************************************************/
