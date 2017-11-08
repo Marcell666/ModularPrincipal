@@ -110,7 +110,6 @@ char* DIS_le_ementa(void){
   if(ementa == NULL) exit(1);
   printf("Digite a ementa\n");
   scanf(" %300s", ementa);
-  printf("chega aqui");
   return ementa;
 } /* Fim função: DIS ler bibliografia */
 /***************************************************************************
@@ -377,7 +376,6 @@ DIS_tpCondRet DIS_gera_cmd(Disciplina** d,char cod[MAX_CODIGO])
   strcpy((*d)->nome, DIS_le_nome());
   strcpy((*d)->codigo, DIS_le_codigo());
   (*d)->creditos = DIS_le_creditos();
-  strcpy((*d)->codigo, DIS_le_codigo());
   strcpy((*d)->ementa, DIS_le_ementa());
   strcpy((*d)->bibliografia,DIS_le_Bib());
 
@@ -463,9 +461,9 @@ DIS_tpCondRet DIS_deleta_Disciplina (Disciplina **d)
 *
 *  Função: DIS insere turma para a disciplina
 *  ****/
-DIS_tpCondRet DIS_insere_turma (Disciplina **d, Turma **t){
-  if(*d != NULL){
-   push_back((*d)->turmas, (void * )*t);
+DIS_tpCondRet DIS_insere_turma (Disciplina *d, Turma *t){
+  if(d != NULL){
+   push_back(d->turmas, (void **) &t);
    return DIS_CondRetOK;
   }
   return DIS_CondRetErroEstrutura;
