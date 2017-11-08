@@ -22,6 +22,10 @@
 *
 ***************************************************************************/
 
+#ifndef TURMA_H
+#define TURMA_H
+
+
 /***** Declarações exportadas pelo módulo *****/
 
 /* Tipo referência para uma turma */
@@ -332,3 +336,5 @@
 	TUR_tpCondRet TUR_ExcluiTurma ( Turma * turma ) ;
 
 /********** Fim do módulo de definição: Módulo turma **********/
+
+#endif
