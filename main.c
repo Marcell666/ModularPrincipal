@@ -1,6 +1,6 @@
 /***************************************************************************
 *
-*  $MCD MÛdulo de definiÁ„o: MÛdulo Menu
+*  $MCD M√≥dulo de defini√ß√£o: M√≥dulo Menu
 *
 *  Arquivo gerado:              menu.c
 *  Letras identificadoras:      MEN
@@ -8,28 +8,28 @@
 *  Nome da base de software:
 *  Arquivo da base de software:
 *
-*  Projeto: Sistema AcadÍmico da turma 3WB
+*  Projeto: Sistema Acad√™mico da turma 3WB
 *  Gestor:  Grupo 2/ Grupo 1
 *  Autores:   Bruce Marcellino
 *	      Bruno Miranda Marinho
-*             Fl·vio Thiago Franco Vaz
-*             Jo„o Victor Cerqueira
+*             Fl√°vio Thiago Franco Vaz
+*             Jo√£o Victor Cerqueira
 *             Matheus Henrique Branco Zeitune
-*             VinÌcius Cortat
+*             Vin√≠cius Cortat
 *
-*  $HA HistÛrico de evoluÁ„o:
-*     Vers„o  Autor    Data			ObservaÁıes
-*     1.01    Bruce	07/10/2017	ReestruturaÁ„o
-*     1.00    Bruce	06/10/2017	Revis„o/finalizaÁ„o
+*  $HA Hist√≥rico de evolu√ß√£o:
+*     Vers√£o  Autor    Data			Observa√ß√µes
+*     1.01    Bruce	07/10/2017	Reestrutura√ß√£o
+*     1.00    Bruce	06/10/2017	Revis√£o/finaliza√ß√£o
 *     0.05    Bruce	05/10/2017	Modulo professor
-*     0.04    Matheus   04/10/2017  	Revis„o menu
+*     0.04    Matheus   04/10/2017  	Revis√£o menu
 *     0.03    Bruno	02/10/2017	Menu professor
-*     0.02    Fl·vio	02/10/2017  	Revis„o
-*     0.01    Matheus	01/10/2017	InÌcio do desenvolvimento
+*     0.02    Fl√°vio	02/10/2017  	Revis√£o
+*     0.01    Matheus	01/10/2017	In√≠cio do desenvolvimento
 *
-*  $ED DescriÁ„o do mÛdulo
-*     Este mÛdulo implementa o Menu do Sistema AcadÍmico a ser desenvolvido.
-*     O Principal È a chamada dos modulos.
+*  $ED Descri√ß√£o do m√≥dulo
+*     Este m√≥dulo implementa o Menu do Sistema Acad√™mico a ser desenvolvido.
+*     O Principal √© a chamada dos modulos.
 ***************************************************************************/
 
 #include <stdio.h>
@@ -44,18 +44,19 @@
 #include "menu.h"
 
 
-
+// int matriculaSTATUS= 0;
+// int cancelSTATUS= 0;
 
 /***********************************************************************
 *
-*  $FC FunÁ„o: MEN_menuAluno.
+*  $FC Fun√ß√£o: MEN_menuAluno.
 *
-*  $ED DescriÁ„o da funÁ„o
+*  $ED Descri√ß√£o da fun√ß√£o
 *		Mostra o menu para o aluno.
 *
 ***********************************************************************/
-/*Assertivas: Retorno da funÁ„o: n„o h· retorno.
-/			 Par‚mentros: Estruturas de ponteiros.
+/*Assertivas: Retorno da fun√ß√£o: n√£o h√° retorno.
+/			 Par√¢mentros: Estruturas de ponteiros.
 ***********************************************************************/
 
 void menuAluno()
@@ -68,13 +69,18 @@ void menuAluno()
 		printf("\nMenu Aluno - Matricula: %d\n", matricula);
 		printf("\nDigite 0: sair");
 		printf("\nDigite 1: ver grade curricular");
-		//printf("\nDigite 2: ver horarios");
-		//printf("\nDigite 3: ver nota");
-		
 		printf("\nDigite 2: modificar dados pessoais");
-		//printf("\nDigite 6: cancelar disciplina");
+		//printf("\nDigite 3: ver horarios");
+		//printf("\nDigite 4: ver nota");
+		/* if (matriculaSTATUS == 1) {
+			printf("\nDigite 5: fazer matr√≠cula em disciplina");
+		}
+		*/
+		/*if (cancelSTATUS == 1) {
+			printf("\nDigite 6: cancelar disciplina");
+		}*/
 		//printf("\nDigite 7: trancar a faculdade");
-		printf("\nDigite 3: ver historico\n");
+		printf("\nDigite 8: ver historico\n");
 		scanf("%d", &opcao);
 
 		switch(opcao)
@@ -105,14 +111,14 @@ void menuAluno()
 
 /***********************************************************************
 *
-*  $FC FunÁ„o: MEN_menuProfessor
+*  $FC Fun√ß√£o: MEN_menuProfessor
 *
-*  $ED DescriÁ„o da funÁ„o
+*  $ED Descri√ß√£o da fun√ß√£o
 *		Mostra o menu Professor.
 *
 ***********************************************************************/
-/*Assertivas: Retorno da funÁ„o: n„o h· retorno.
-/			 Par‚mentros: Estruturas de ponteiros.
+/*Assertivas: Retorno da fun√ß√£o: n√£o h√° retorno.
+/			 Par√¢mentros: Estruturas de ponteiros.
 ***********************************************************************/
 
 void menuProfessor()
@@ -167,14 +173,14 @@ void menuProfessor()
 
 /***********************************************************************
 *
-*  $FC FunÁ„o: MEN_menuPAdministrativo
+*  $FC Fun√ß√£o: MEN_menuPAdministrativo
 *
-*  $ED DescriÁ„o da funÁ„o
+*  $ED Descri√ß√£o da fun√ß√£o
 *		Mostra o menu Administrativo.
 *
 ***********************************************************************/
-/*Assertivas: Retorno da funÁ„o: n„o h· retorno.
-/			 Par‚mentros: Estruturas de ponteiros.
+/*Assertivas: Retorno da fun√ß√£o: n√£o h√° retorno.
+/			 Par√¢mentros: Estruturas de ponteiros.
 ***********************************************************************/
 
 void menuPAdministrativo()
@@ -205,6 +211,15 @@ void menuPAdministrativo()
 		printf("\nDigite 9: limpa corpo discente");
 		printf("\nDigite 10: limpa corpo docente");
 		printf("\nDigite 11: ver grade curricular");
+		/*if (matriculaSTATUS == 0)
+			printf("\nDigite 14: Habilitar matriculas");
+		else
+			printf("\nDigite 14: Desabilitar matriculas");
+		*/
+		/*if (cancelSTATUS == 0)
+			printf("\nDigite 15: Habilitar cancelamento de disciplina");
+		else
+			printf("\nDigite 15: Desabilitar cancelamento de disciplina");*/
 		scanf("%d", &opcao);
 
 		switch(opcao)
@@ -282,9 +297,9 @@ int main(void){
 	do{
 		printf("\nMenu SAU\n");
 		printf("\nDigite 0: para sair");
-		printf("\nDigite 1: ir menu Aluno");
-		printf("\nDigite 2: ir menu Professor");
-		printf("\nDigite 3: ir menu Administrativo\n");
+		printf("\nDigite 1: Menu Aluno");
+		printf("\nDigite 2: Menu Professor");
+		printf("\nDigite 3: Menu Administrativo\n");
 		scanf("%d", &opcao);
 
 		switch(opcao)
