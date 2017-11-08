@@ -78,7 +78,7 @@ DIS_tpCondRet DIS_exibe(Disciplina* d)
   char *criterio_string = converte_criterio(d);
   if (d != NULL)
   {
-    printf("\nNOME: %s \n CODIGO: %s \n CREDITOS: %d \n BIBLIOGRAFIA: %s \n EMENTA: %s \n CRITERIO: %s\n",d->nome, d->codigo, d->creditos, d->bibliografia,d->ementa, criterio_string);
+    printf("\n NOME: %s \n CODIGO: %s \n CREDITOS: %d \n BIBLIOGRAFIA: %s \n EMENTA: %s \n CRITERIO: %s\n",d->nome, d->codigo, d->creditos, d->bibliografia,d->ementa, criterio_string);
     return DIS_CondRetOK;
   }
   return DIS_CondRetErroEstrutura;
