@@ -779,7 +779,7 @@ static char* HIS_montaNomeArq (unsigned int matricula){
 	sprintf(mat,"%u",matricula);
 #ifdef __linux__
 	strcpy(nomeArq,"Historico/");
-#elif
+#else
 	strcpy(nomeArq,"Historico\\");
 #endif
 	strcat(mat,".txt");
