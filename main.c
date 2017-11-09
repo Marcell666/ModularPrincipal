@@ -74,7 +74,8 @@ void menuAluno()
 		printf("\nDigite 2: modificar dados pessoais");
 		//printf("\nDigite 6: cancelar disciplina");
 		//printf("\nDigite 7: trancar a faculdade");
-		printf("\nDigite 3: ver historico\n");
+		printf("\nDigite 3: ver historico");
+		printf("\nDigite 4: ver historico por periodo\n");
 		scanf("%d", &opcao);
 
 		switch(opcao)
@@ -91,6 +92,13 @@ void menuAluno()
 			case 3:
 				system("cls");
 				HIS_printHistoricoCompleto(matricula);
+				break;
+
+			case 4:
+				system("cls");
+				printf("Digite o periodo desejado:\texemplo: 2010.2\n");
+				scanf("%s[^\n]",&periodo);
+				HIS_printHistoricoPeriodo(matricula,periodo);
 				break;
 			default:
 				if(opcao)
