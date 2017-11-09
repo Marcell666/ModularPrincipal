@@ -447,8 +447,11 @@ void MEN_modificaProfessor()
 
 void MEN_menuGradeCurricular()
 {
-	char nomeFunc[][40] ={"sair", "adicionar disciplina" , "mostrar a disciplina atual", "buscar outra disciplina", "mostrar todas as disciplinas", "inserir um Pre-Requisito", "remover todos os Pre-Requisitos", "Limpar a grade Curricular", "Inserir uma turma"};
-	int nItens = 8, i;
+	char nomeFunc[][40] ={"sair", "adicionar disciplina" , "mostrar a disciplina atual", "buscar outra disciplina",
+	"mostrar todas as disciplinas", "inserir um Pre-Requisito", "remover todos os Pre-Requisitos", 
+	"Limpar a grade Curricular", "Inserir uma turma", "Exibe as turmas de uma disciplina"};
+	int nItens = 9, i;
+
 	int creditos;
 	char nome[MAX_NOME], codigo[MAX_CODIGO], bibliografia[MAX_BIBLIOGRAFIA], ementa[MAX_EMENTA], 
 	codTur[MEN_TAM_STRING], diaSem[MEN_TAM_STRING];
@@ -492,20 +495,25 @@ void MEN_menuGradeCurricular()
 				GRC_limpa();
 				break;
 			case 8:
-				printf("Digite o código da disciplina em qual deseja inserir uma turma:\n");
-				scanf(" %s", codigo);
-				printf("Digite o código da turma:\n");
-				scanf(" %s", codTur);
+
+				printf("Digite o código da disciplina em que deseja inserir uma turma:\n");
+				scanf("%s", codigo);
+ 				printf("Digite o código da turma:\n");
 				printf("Digite o dia da semana da aula:\n");
-				scanf(" %s", diaSem);
-				printf("Digite a hora de inicio da aula:\n");
-				scanf(" %d", &horIni);
-				printf("Digita a hora do termino da aula:\n");
-				scanf(" %d", &horTer);
-				printf("Digite a quantidade de vagas");
-				scanf(" %d", &qtdVag);
-				GRC_insereTurma(codTur, horIni, horTer, diaSem, qtdVag, codigo);
+				scanf("%s", diaSem);
+				printf("Digite a hora de inicio da aula(7 >= HorIni <= 21):\n");
+				scanf("%d", &horIni);
+				printf("Digita a hora do termino da aula (9 >=HorTer <= 23:\n");
+				scanf("%d", &horTer);
+				printf("Digite a quantidade de vagas:\n");
+				scanf("%d", &qtdVag);
+				ret = GRC_insereTurma(codTur, horIni, horTer, diaSem, qtdVag, codigo);
 				break;
+			case 9:
+				printf("Digite o códio da disciplina que deseja checar as turmas\n");
+				scanf("%s", codigo);
+				ret = GRC_exibeTurmas(codigo);
+
 			default:
 				if(opcao)
 					printf("Opcao inválida!\n");
