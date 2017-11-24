@@ -27,7 +27,6 @@ LL - Clayton Lucas Mendes Lima
 *	0.07 ngtgmp   28/09/2017  Conclusão da integração com Critério de Aprovação
 *       0.08 mrol     26/10/2017   Adicionar funções de lista de turmas
 *	0.09 LL       31/10/2017  Adicionar funções de alterar
-
 ***************************************************************************/
 #define _CRT_SECURE_NO_WARNINGS
 #pragma warning( disable : 4996 ) 
@@ -534,4 +533,3 @@ DIS_tpCondRet DIS_buscaTurma(Disciplina* d, char* codTurmaDesej, Turma** tur) {
 
 	return DIS_CondRetTurmaNaoExiste; // paleativo
 }
-
