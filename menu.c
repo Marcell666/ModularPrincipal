@@ -51,6 +51,15 @@
 #include "corpoDocente.h"
 #include "gradeCurricular.h"
 
+#ifdef __linux__
+	#define VK_ENTER 10
+	#define VK_BACKSPACE 127
+#else
+	
+	#define VK_ENTER 13
+	#define VK_BACKSPACE 8
+#endif
+
 /*****  Protótipos das funções encapsuladas no módulo  *****/
 
 	void MEN_leSoLetra ( char * cad_carac ) ;
@@ -885,13 +894,13 @@
 				cont++ ;
 			} 
 			else 
-				if (a==8 && cont) // 8 = BackSpace
+				if (a==VK_BACKSPACE && cont) // 8 = BackSpace
 				{
 					printf("\b \b") ;
 					cont-- ;
 					cad_carac [cont] = '\0' ;
 				} /* if */
-		} while ( cont == 0 || (a != 13 && cont <= MEN_TAM_STRING-1) ) ; // 13 = Enter
+		} while ( cont == 0 || (a != VK_ENTER && cont <= MEN_TAM_STRING-1) ) ; // 13 = Enter
 
 		cad_carac[cont] = '\0' ;
 
@@ -929,13 +938,13 @@
 				cont++ ;
 			} 
 			else
-				if (a==8 && cont) // 8 = BackSpace
+				if (a==VK_BACKSPACE && cont) // 8 = BackSpace
 				{
 					printf("\b \b") ;
 					cont-- ;
 					cpf[cont] = '\0' ;
 				} /* if */
-		} while ( cont < MEN_TAM_CPF-1 || (a != 13 && cont == MEN_TAM_CPF-1) ); // 13 = Enter
+		} while ( cont < MEN_TAM_CPF-1 || (a != VK_ENTER && cont == MEN_TAM_CPF-1) ); // 13 = Enter
 
 		cpf[cont] = '\0' ;
 
@@ -984,13 +993,13 @@
 						cont++ ;
 					} 
 					else
-						if (a==8 && cont) // 8 = BackSpace
+						if (a==VK_BACKSPACE && cont) // 8 = BackSpace
 						{
 							printf("\b \b") ;
 							cont-- ;
 							D_dia [cont] = '\0' ;
 						} /* if */
-				} while ( cont == 0 || (a != 13 && cont <= 2 ) ) ; // 13 = Enter
+				} while ( cont == 0 || (a != VK_ENTER && cont <= 2 ) ) ; // 13 = Enter
 
 				D_dia[cont] = '\0' ;
 				* dia = atoi(D_dia) ;
@@ -1018,13 +1027,13 @@
 						cont++ ;
 					} 
 					else
-						if ( a==8 && cont ) // 8 = BackSpace
+						if ( a==VK_BACKSPACE && cont ) // 8 = BackSpace
 						{
 							printf("\b \b") ;
 							cont-- ;
 							D_mes[cont] = '\0' ;
 						} /* if */
-				} while ( cont == 0 || (a != 13 && cont <= 2 ) ) ; // 13 = Enter
+				} while ( cont == 0 || (a != VK_ENTER && cont <= 2 ) ) ; // 13 = Enter
 
 				D_mes[cont] = '\0' ;
 				* mes = atoi(D_mes) ;
@@ -1061,13 +1070,13 @@
 					cont++ ;
 				} 
 				else
-					if ( a==8 && cont ) // 8 = BackSpace
+					if ( a==VK_BACKSPACE && cont ) // 8 = BackSpace
 					{
 						printf("\b \b") ;
 						cont-- ;
 						D_ano[cont] = '\0' ;
 					} /* if */
-			} while ( cont < 4 || (a != 13 && cont == 4) ) ; // 13 = Enter
+			} while ( cont < 4 || (a != VK_ENTER && cont == 4) ) ; // 13 = Enter
 
 			D_ano[cont] = '\0' ;
 			* ano = atoi(D_ano) ;
@@ -1121,13 +1130,13 @@
 					cont++ ;
 				} 
 				else
-					if (a==8 && cont) // 8 = BackSpace
+					if (a==VK_BACKSPACE && cont) // 8 = BackSpace
 					{
 						printf("\b \b") ;
 						cont-- ;
 						UF[cont] = '\0' ;
 					} /* if */
-			} while ( cont < MEN_TAM_UF-1 || (a != 13 && cont == MEN_TAM_UF-1 ) ) ; // 13 = Enter
+			} while ( cont < MEN_TAM_UF-1 || (a != VK_ENTER && cont == MEN_TAM_UF-1 ) ) ; // 13 = Enter
 
 		UF[cont] = '\0' ;
 
@@ -1181,13 +1190,13 @@
 				cont++ ;
 			} 
 			else 
-				if (a==8 && cont) // 8 = BackSpace
+				if (a==VK_BACKSPACE && cont) // 8 = BackSpace
 				{
 					printf("\b \b") ;
 					cont-- ;
 					logr [cont] = '\0' ;
 				} /* if */
-		} while ( cont == 0 || (a != 13 && cont <= MEN_TAM_STRING-1) ) ; // 13 = Enter
+		} while ( cont == 0 || (a != VK_ENTER && cont <= MEN_TAM_STRING-1) ) ; // 13 = Enter
 
 		logr[cont] = '\0' ;
 
@@ -1227,13 +1236,13 @@
 				cont++ ;
 			} 
 			else 
-				if (a==8 && cont) // 8 = BackSpace
+				if (a==VK_BACKSPACE && cont) // 8 = BackSpace
 				{
 					printf("\b \b") ;
 					cont-- ;
 					comp [cont] = '\0' ;
 				} /* if */
-		} while (a != 13 && cont <= MEN_TAM_STRING-1) ; // 13 = Enter
+		} while (a != VK_ENTER && cont <= MEN_TAM_STRING-1) ; // 13 = Enter
 
 		comp[cont] = '\0' ;
 		
@@ -1273,13 +1282,13 @@
 				cont++ ;
 			} 
 			else 
-				if (a==8 && cont) // 8 = BackSpace
+				if (a==VK_BACKSPACE && cont) // 8 = BackSpace
 				{
 					printf("\b \b") ;
 					cont-- ;
 					email [cont] = '\0' ;
 				} /* if */
-		} while ( cont < 5 || (a != 13 && cont <= MEN_TAM_STRING-1) ) ; // 13 = Enter
+		} while ( cont < 5 || (a != VK_ENTER && cont <= MEN_TAM_STRING-1) ) ; // 13 = Enter
 
 		email[cont] = '\0' ;
 		
@@ -1317,13 +1326,13 @@
 				cont++ ;
 			} 
 			else
-				if (a==8 && cont) // 8 = BackSpace
+				if (a==VK_BACKSPACE && cont) // 8 = BackSpace
 				{
 					printf("\b \b") ;
 					cont-- ;
 					mat[cont] = '\0' ;
 				} /* if */
-		} while ( cont < MEN_TAM_MAT-1 || (a != 13 && cont == MEN_TAM_MAT-1) ); // 13 = Enter
+		} while ( cont < MEN_TAM_MAT-1 || (a != VK_ENTER && cont == MEN_TAM_MAT-1) ); // 13 = Enter
 
 		mat[cont] = '\0' ;
 
@@ -1363,13 +1372,13 @@
 				cont++ ;
 			} 
 			else
-				if (a==8 && cont) // 8 = BackSpace
+				if (a==VK_BACKSPACE && cont) // 8 = BackSpace
 				{
 					printf("\b \b") ;
 					cont-- ;
 					num[cont] = '\0' ;
 				} /* if */
-		} while ( cont == 0 || (a != 13 && cont <= 8 ) ) ; // 13 = Enter
+		} while ( cont == 0 || (a != VK_ENTER && cont <= 8 ) ) ; // 13 = Enter
 
 		num[cont] = '\0' ;
 
@@ -1409,13 +1418,13 @@
 				cont++ ;
 			} 
 			else
-				if (a==8 && cont) // 8 = BackSpace
+				if (a==VK_BACKSPACE && cont) // 8 = BackSpace
 				{
 					printf("\b \b") ;
 					cont-- ;
 					num[cont] = '\0' ;
 				} /* if */
-		} while ( cont < MEN_TAM_TEL-2 || ( a != 13 && cont <= MEN_TAM_TEL-1 ) ) ; // 13 = Enter
+		} while ( cont < MEN_TAM_TEL-2 || ( a != VK_ENTER && cont <= MEN_TAM_TEL-1 ) ) ; // 13 = Enter
 
 		num[cont] = '\0' ;
 
@@ -1455,13 +1464,13 @@
 				cont++ ;
 			} 
 			else
-				if (a==8 && cont) // 8 = BackSpace
+				if (a==VK_BACKSPACE && cont) // 8 = BackSpace
 				{
 					printf("\b \b") ;
 					cont-- ;
 					mat[cont] = '\0' ;
 				} /* if */
-		} while ( cont < MEN_TAM_RG-1 || (a != 13 && cont == MEN_TAM_RG-1) ); // 13 = Enter
+		} while ( cont < MEN_TAM_RG-1 || (a != VK_ENTER && cont == MEN_TAM_RG-1) ); // 13 = Enter
 
 		mat[cont] = '\0' ;
 
