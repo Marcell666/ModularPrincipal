@@ -1,10 +1,10 @@
 /***************************************************************************
-*  $MCI Módulo de implementação: Módulo Corpo Docente
+*  $MCI MÃ³dulo de implementaÃ§Ã£o: MÃ³dulo Corpo Docente
 *
 *  Arquivo gerado:              corpoDocente.C
 *  Letras identificadoras:      CDO
 *
-*  Nome da base de software:    Fonte do Módulo Corpo Docente
+*  Nome da base de software:    Fonte do MÃ³dulo Corpo Docente
 *
 *  Projeto: Disciplina INF 1301
 *  Gestor:  DI/PUC-Rio
@@ -14,19 +14,19 @@
 *			Mariana Ruddy, MR
 *			Rodrigo Pumar, RP.  
 *
-*  $HA Histórico de evolução:
-*     Versão  Autor 	Data     	Observações
-*       0.52   BM/RP	04/10/2017	Revisão
-*       0.51   BM   	04/10/2017	Revisão
-*       0.50   RP   	03/10/2017	Documentação
-*		0.40   FA		03/10/2017	Funções busca adicionadas
-*       0.30   MR   	03/10/2017	Funções de consulta/altera adicionadas 
+*  $HA HistÃ³rico de evoluÃ§Ã£o:
+*     VersÃ£o  Autor 	Data     	ObservaÃ§Ãµes
+*       0.52   BM/RP	04/10/2017	RevisÃ£o
+*       0.51   BM   	04/10/2017	RevisÃ£o
+*       0.50   RP   	03/10/2017	DocumentaÃ§Ã£o
+*		0.40   FA		03/10/2017	FunÃ§Ãµes busca adicionadas
+*       0.30   MR   	03/10/2017	FunÃ§Ãµes de consulta/altera adicionadas 
 *       0.20   BM   	02/10/2017	Funcoes modelo adicionadas 
 *       0.10   BM	01/10/2017	Inicio do desenvolvimento 
 *
-*  $ED Descrição do módulo
-*     Este módulo contém as funções específicas para manipular os professores na lista de corpo docente.
-*     Este módulo utiliza funcões de interface do modulo professor.
+*  $ED DescriÃ§Ã£o do mÃ³dulo
+*     Este mÃ³dulo contÃ©m as funÃ§Ãµes especÃ­ficas para manipular os professores na lista de corpo docente.
+*     Este mÃ³dulo utiliza funcÃµes de interface do modulo professor.
 ***************************************************************************/
 
 
@@ -42,8 +42,8 @@
 *  $TC Tipo de dados: corpoDocente
 *
 *
-*  $ED Descrição do tipo
-*     Estrutura principal que armazena os dados de um corpo docente ao qual este módulo se dedica.
+*  $ED DescriÃ§Ã£o do tipo
+*     Estrutura principal que armazena os dados de um corpo docente ao qual este mÃ³dulo se dedica.
 *
 ***********************************************************************/
 
@@ -52,32 +52,32 @@ typedef struct corpoDocente{
 } CorpoDocente;
 
 
-/*****  Dados encapsulados no módulo  *****/
+/*****  Dados encapsulados no mÃ³dulo  *****/
 	
 static CorpoDocente *doc;
-	/* instância de corpo docente armazenada por este módulo */
+	/* instÃ¢ncia de corpo docente armazenada por este mÃ³dulo */
 
-/***** Protótipos das funções encapsuladas no módulo *****/
+/***** ProtÃ³tipos das funÃ§Ãµes encapsuladas no mÃ³dulo *****/
 
 CDO_tpCondRet buscaIdentificacao(int rgChave, char *cpfChave, int matriculaChave, char *emailChave);
 
 
-/*****  Código das funções exportadas pelo módulo  *****/
+/*****  CÃ³digo das funÃ§Ãµes exportadas pelo mÃ³dulo  *****/
 
 /***************************************************************************
 *
-*  Função: CDO Criar Lista de Corpo Docente
+*  FunÃ§Ã£o: CDO Criar Lista de Corpo Docente
 *  ****/
 
 CDO_tpCondRet CDO_cria(){
 	doc = (CorpoDocente*) malloc(sizeof(CorpoDocente));
 	createList(&doc->professores);
 	return CDO_CondRetOk;
-}/* Fim função: CDO Criar Lista de Corpo Docente */
+}/* Fim funÃ§Ã£o: CDO Criar Lista de Corpo Docente */
 
 /***************************************************************************
 *
-*  Função: CDO Cadastrar Professor
+*  FunÃ§Ã£o: CDO Cadastrar Professor
 *  ****/
 
 CDO_tpCondRet CDO_cadastra(char *nome, int rg, char *cpf, int matricula, char *email, int telefone, int dia, int mes, int ano, char *pais, char *uf, char *cidade, char *bairro, char *rua, int numero, char *complemento){
@@ -90,15 +90,15 @@ CDO_tpCondRet CDO_cadastra(char *nome, int rg, char *cpf, int matricula, char *e
 	if(ret == PRF_CondRetFormatoInvalido) return CDO_CondRetFormatoInvalido;
 	push_back(doc->professores, prof);
 	return CDO_CondRetOk;
-}/* Fim função: CDO Cadastrar Professor */
+}/* Fim funÃ§Ã£o: CDO Cadastrar Professor */
 
 /***********************************************************************
 *
-*  $FC Função: CDO Busca Identificacao
+*  $FC FunÃ§Ã£o: CDO Busca Identificacao
 *
 *  $FV Valor retornado
 *     Retorna CDO_CondRetIdJaCriado caso um professor com o mesmo valor de uma das chaves seja encontrado.
-*     Retorna PRF_CondRetOk caso contrário.
+*     Retorna PRF_CondRetOk caso contrÃ¡rio.
 *
 ***********************************************************************/
 CDO_tpCondRet buscaIdentificacao(int rgChave, char *cpfChave, int matriculaChave, char *emailChave){
@@ -119,13 +119,13 @@ CDO_tpCondRet buscaIdentificacao(int rgChave, char *cpfChave, int matriculaChave
 		if(strcmp(cpfChave, cpf)==0 || strcmp(emailChave, email)==0 || rgChave == rg || matriculaChave == matricula) return CDO_CondRetIdJaCriado;
 	}while(next(doc->professores)==LIS_CondRetOK);
 
-	/* Não encontrou */
+	/* NÃ£o encontrou */
 	return CDO_CondRetOk;
-}/* Fim função: CDO Busca Atual */
+}/* Fim funÃ§Ã£o: CDO Busca Atual */
 
 /***************************************************************************
 *
-*  Função: CDO Mostra Atual
+*  FunÃ§Ã£o: CDO Mostra Atual
 *  ****/
 
 CDO_tpCondRet CDO_mostraAtual(){
@@ -133,11 +133,11 @@ CDO_tpCondRet CDO_mostraAtual(){
 	if(get_val_cursor(doc->professores, (void**) &prof)== LIS_CondRetListaVazia) return CDO_CondRetCorpoDocenteVazio;
 	PRF_mostra(prof);
 	return CDO_CondRetOk;
-}/* Fim função: CDO Mostra Atual */
+}/* Fim funÃ§Ã£o: CDO Mostra Atual */
 
  /***************************************************************************
  *
- *  Função: CDO Mostra Todos Professores
+ *  FunÃ§Ã£o: CDO Mostra Todos Professores
  *  ****/
 
 CDO_tpCondRet CDO_mostraTodos(){
@@ -148,23 +148,25 @@ CDO_tpCondRet CDO_mostraTodos(){
 		PRF_mostra(prof);
 	}while(next(doc->professores)==LIS_CondRetOK);
 	return CDO_CondRetOk;
-}/* Fim função: CDO Mostra Todos Professores */
+}/* Fim funÃ§Ã£o: CDO Mostra Todos Professores */
 
  /***************************************************************************
  *
- *  Função: CDO Limpa Lista
+ *  FunÃ§Ã£o: CDO Limpa Lista
  *  ****/
 
 CDO_tpCondRet CDO_limpa(){
 	PRF_ptProfessor prof = NULL;
+	if(pop_back(doc->professores, (void**) &prof) == LIS_CondRetListaVazia) return CDO_CondRetCorpoDocenteVazio;
+	PRF_libera(&prof);
 	while(pop_back(doc->professores, (void**) &prof)==LIS_CondRetOK)
 		PRF_libera(&prof);
 	return CDO_CondRetOk;
-}/* Fim função: CDO Limpa Lista */
+}/* Fim funÃ§Ã£o: CDO Limpa Lista */
 
  /***************************************************************************
  *
- *  Função: CDO Retira da Lista
+ *  FunÃ§Ã£o: CDO Retira da Lista
  *  ****/
 
 CDO_tpCondRet CDO_retira(){
@@ -172,22 +174,22 @@ CDO_tpCondRet CDO_retira(){
 	if(pop_cursor(doc->professores, (void**) &prof) == LIS_CondRetListaVazia) return CDO_CondRetCorpoDocenteVazio;
 	PRF_libera(&prof);
 	return CDO_CondRetOk;
-}/* Fim função: CDO Retira da Lista */
+}/* Fim funÃ§Ã£o: CDO Retira da Lista */
 
  /***************************************************************************
  *
- *  Função: CDO Libera
+ *  FunÃ§Ã£o: CDO Libera
  *  ****/
 
 CDO_tpCondRet CDO_libera(){
 	CDO_limpa();
 	del(doc->professores);
 	return CDO_CondRetOk;
-}/* Fim função: CDO Libera */
+}/* Fim funÃ§Ã£o: CDO Libera */
 
  /***************************************************************************
  *
- *  Função: CDO Busca Por RG
+ *  FunÃ§Ã£o: CDO Busca Por RG
  *  ****/
 
 CDO_tpCondRet CDO_buscaPorRg(int chave){
@@ -205,11 +207,11 @@ CDO_tpCondRet CDO_buscaPorRg(int chave){
 	}while(next(doc->professores)==LIS_CondRetOK);
 
 	return CDO_CondRetProfessorNaoEncontrado;
-}/* Fim função: CDO Busca Por RG */
+}/* Fim funÃ§Ã£o: CDO Busca Por RG */
 
  /***************************************************************************
  *
- *  Função: CDO Busca Por CPF
+ *  FunÃ§Ã£o: CDO Busca Por CPF
  *  ****/
 CDO_tpCondRet CDO_buscaPorCpf(char *chave){
 	PRF_ptProfessor prof = NULL;
@@ -226,11 +228,11 @@ CDO_tpCondRet CDO_buscaPorCpf(char *chave){
 	}while(next(doc->professores)==LIS_CondRetOK);
 
 	return CDO_CondRetProfessorNaoEncontrado;
-}/* Fim função: CDO Busca Por CPF */
+}/* Fim funÃ§Ã£o: CDO Busca Por CPF */
 
  /***************************************************************************
  *
- *  Função: CDO Busca Por Matricula
+ *  FunÃ§Ã£o: CDO Busca Por Matricula
  *  ****/
 
 CDO_tpCondRet CDO_buscaPorMatricula(int chave){
@@ -248,11 +250,11 @@ CDO_tpCondRet CDO_buscaPorMatricula(int chave){
 	}while(next(doc->professores)==LIS_CondRetOK);
 
 	return CDO_CondRetProfessorNaoEncontrado;
-}/* Fim função: CDO Busca Por Matricula */
+}/* Fim funÃ§Ã£o: CDO Busca Por Matricula */
 
  /***************************************************************************
  *
- *  Função: CDO Busca Por Email
+ *  FunÃ§Ã£o: CDO Busca Por Email
  *  ****/
 
 CDO_tpCondRet CDO_buscaPorEmail(char *chave){
@@ -270,11 +272,11 @@ CDO_tpCondRet CDO_buscaPorEmail(char *chave){
 	}while(next(doc->professores)==LIS_CondRetOK);
 
 	return CDO_CondRetProfessorNaoEncontrado;
-}/* Fim função: CDO Busca Por Email */
+}/* Fim funÃ§Ã£o: CDO Busca Por Email */
 
  /***************************************************************************
  *
- *  Função: CDO Consulta Nome
+ *  FunÃ§Ã£o: CDO Consulta Nome
  *  ****/
 CDO_tpCondRet CDO_consultaNome(char *nome){
 	PRF_ptProfessor prof = NULL;
@@ -282,11 +284,11 @@ CDO_tpCondRet CDO_consultaNome(char *nome){
 			return CDO_CondRetCorpoDocenteVazio;
 	PRF_consultaNome(prof, nome);
 	return CDO_CondRetOk;
-}/* Fim função: CDO Consulta Nome*/
+}/* Fim funÃ§Ã£o: CDO Consulta Nome*/
 
  /***************************************************************************
  *
- *  Função: CDO Consulta RG
+ *  FunÃ§Ã£o: CDO Consulta RG
  *  ****/
 CDO_tpCondRet CDO_consultaRg(int *rg){
 	PRF_ptProfessor prof = NULL;
@@ -294,11 +296,11 @@ CDO_tpCondRet CDO_consultaRg(int *rg){
 			return CDO_CondRetCorpoDocenteVazio;
 	PRF_consultaRg(prof,rg);
 	return CDO_CondRetOk;
-}/* Fim função: CDO Consulta RG */
+}/* Fim funÃ§Ã£o: CDO Consulta RG */
 
  /***************************************************************************
  *
- *  Função: CDO Consulta CPF
+ *  FunÃ§Ã£o: CDO Consulta CPF
  *  ****/
 CDO_tpCondRet CDO_consultaCpf(char *cpf){
 	PRF_ptProfessor prof = NULL;
@@ -306,11 +308,11 @@ CDO_tpCondRet CDO_consultaCpf(char *cpf){
 			return CDO_CondRetCorpoDocenteVazio;
 	PRF_consultaCpf(prof, cpf);
 	return CDO_CondRetOk;
-}/* Fim função: CDO Consulta CPF*/
+}/* Fim funÃ§Ã£o: CDO Consulta CPF*/
 
  /***************************************************************************
  *
- *  Função: CDO Consulta Matricula
+ *  FunÃ§Ã£o: CDO Consulta Matricula
  *  ****/
 CDO_tpCondRet CDO_consultaMatricula(int *matricula){
 	PRF_ptProfessor prof = NULL;
@@ -318,11 +320,11 @@ CDO_tpCondRet CDO_consultaMatricula(int *matricula){
 			return CDO_CondRetCorpoDocenteVazio;
 	PRF_consultaMatricula(prof,matricula);
 	return CDO_CondRetOk;
-}/* Fim função: CDO Consulta Matricula*/
+}/* Fim funÃ§Ã£o: CDO Consulta Matricula*/
 
  /***************************************************************************
  *
- *  Função: CDO Consulta Email
+ *  FunÃ§Ã£o: CDO Consulta Email
  *  ****/
 CDO_tpCondRet CDO_consultaEmail(char *email){
 	PRF_ptProfessor prof = NULL;
@@ -330,11 +332,11 @@ CDO_tpCondRet CDO_consultaEmail(char *email){
 			return CDO_CondRetCorpoDocenteVazio;
 	PRF_consultaEmail(prof, email);
 	return CDO_CondRetOk;
-}/* Fim função: CDO Consulta Email*/
+}/* Fim funÃ§Ã£o: CDO Consulta Email*/
 
  /***************************************************************************
  *
- *  Função: CDO Consulta Telefone
+ *  FunÃ§Ã£o: CDO Consulta Telefone
  *  ****/
 CDO_tpCondRet CDO_consultaTelefone(int *tel){
 	PRF_ptProfessor prof = NULL;
@@ -342,11 +344,11 @@ CDO_tpCondRet CDO_consultaTelefone(int *tel){
 			return CDO_CondRetCorpoDocenteVazio;
 	PRF_consultaTelefone(prof, tel);
 	return CDO_CondRetOk;
-}/* Fim função: CDO Consulta Telefone*/
+}/* Fim funÃ§Ã£o: CDO Consulta Telefone*/
 
  /***************************************************************************
  *
- *  Função: CDO Consulta Data de Nascimento
+ *  FunÃ§Ã£o: CDO Consulta Data de Nascimento
  *  ****/
 CDO_tpCondRet CDO_consultaDataNascimento(int *dia, int *mes, int *ano){
 	PRF_ptProfessor prof = NULL;
@@ -356,11 +358,11 @@ CDO_tpCondRet CDO_consultaDataNascimento(int *dia, int *mes, int *ano){
 	PRF_consultaMesNascimento(prof, mes);
 	PRF_consultaAnoNascimento(prof, ano);
 	return CDO_CondRetOk;
-}/* Fim função: CDO Consulta Data de Nascimento*/
+}/* Fim funÃ§Ã£o: CDO Consulta Data de Nascimento*/
 
  /***************************************************************************
  *
- *  Função: CDO Consulta Endereço
+ *  FunÃ§Ã£o: CDO Consulta EndereÃ§o
  *  ****/
 CDO_tpCondRet CDO_consultaEndereco(char *pais, char *uf, char *cidade, char *bairro, char *rua, int *numero, char *complemento){
 	PRF_ptProfessor prof = NULL;
@@ -374,11 +376,11 @@ CDO_tpCondRet CDO_consultaEndereco(char *pais, char *uf, char *cidade, char *bai
 	PRF_consultaNumero(prof,numero);
 	PRF_consultaComplemento(prof,complemento);
 	return CDO_CondRetOk;
-}/* Fim função: CDO Consulta Endereço*/
+}/* Fim funÃ§Ã£o: CDO Consulta EndereÃ§o*/
 
  /***************************************************************************
  *
- *  Função: CDO Altera Nome
+ *  FunÃ§Ã£o: CDO Altera Nome
  *  ****/
 CDO_tpCondRet CDO_alteraNome(char *nome){
 	PRF_ptProfessor prof = NULL;
@@ -386,11 +388,11 @@ CDO_tpCondRet CDO_alteraNome(char *nome){
 			return CDO_CondRetCorpoDocenteVazio;
 	if(PRF_alteraNome(prof, nome)==PRF_CondRetFormatoInvalido) return CDO_CondRetFormatoInvalido;
 	return CDO_CondRetOk;
-}/* Fim função: CDO Altera Nome*/
+}/* Fim funÃ§Ã£o: CDO Altera Nome*/
 
  /***************************************************************************
  *
- *  Função: CDO Altera RG
+ *  FunÃ§Ã£o: CDO Altera RG
  *  ****/
 CDO_tpCondRet CDO_alteraRg(int rg){
 	PRF_ptProfessor prof = NULL;
@@ -403,11 +405,11 @@ CDO_tpCondRet CDO_alteraRg(int rg){
 	CDO_buscaPorMatricula(id);
 	if(PRF_alteraRg(prof,rg)==PRF_CondRetFormatoInvalido) return CDO_CondRetFormatoInvalido;
 	return CDO_CondRetOk;
-}/* Fim função: CDO Altera RG*/
+}/* Fim funÃ§Ã£o: CDO Altera RG*/
 
  /***************************************************************************
  *
- *  Função: CDO Altera CPF
+ *  FunÃ§Ã£o: CDO Altera CPF
  *  ****/
 CDO_tpCondRet CDO_alteraCpf(char *cpf){
 	PRF_ptProfessor prof = NULL;
@@ -420,11 +422,11 @@ CDO_tpCondRet CDO_alteraCpf(char *cpf){
 	CDO_buscaPorMatricula(id);
 	if(PRF_alteraCpf(prof, cpf)==PRF_CondRetFormatoInvalido) return CDO_CondRetFormatoInvalido;
 	return CDO_CondRetOk;
-}/* Fim função: CDO Altera CPF*/
+}/* Fim funÃ§Ã£o: CDO Altera CPF*/
 
  /***************************************************************************
  *
- *  Função: CDO Altera Matricula
+ *  FunÃ§Ã£o: CDO Altera Matricula
  *  ****/
 CDO_tpCondRet CDO_alteraMatricula(int matricula){
 	PRF_ptProfessor prof = NULL;
@@ -437,11 +439,11 @@ CDO_tpCondRet CDO_alteraMatricula(int matricula){
 	CDO_buscaPorMatricula(id);
 	if(PRF_alteraMatricula(prof, matricula)==PRF_CondRetFormatoInvalido) return CDO_CondRetFormatoInvalido;
 	return CDO_CondRetOk;
-}/* Fim função: CDO Altera Matricula*/
+}/* Fim funÃ§Ã£o: CDO Altera Matricula*/
 
  /***************************************************************************
  *
- *  Função: CDO Altera Email
+ *  FunÃ§Ã£o: CDO Altera Email
  *  ****/
 CDO_tpCondRet CDO_alteraEmail(char* email){
 	PRF_ptProfessor prof = NULL;
@@ -454,11 +456,11 @@ CDO_tpCondRet CDO_alteraEmail(char* email){
 	CDO_buscaPorMatricula(id);
 	if(PRF_alteraEmail(prof, email)==PRF_CondRetFormatoInvalido) return CDO_CondRetFormatoInvalido;
 	return CDO_CondRetOk;
-}/* Fim função: CDO Altera Email*/
+}/* Fim funÃ§Ã£o: CDO Altera Email*/
 
  /***************************************************************************
  *
- *  Função: CDO Altera Telefone
+ *  FunÃ§Ã£o: CDO Altera Telefone
  *  ****/
 CDO_tpCondRet CDO_alteraTelefone(int tel){
 	PRF_ptProfessor prof = NULL;
@@ -466,11 +468,11 @@ CDO_tpCondRet CDO_alteraTelefone(int tel){
 			return CDO_CondRetCorpoDocenteVazio;
 	if(PRF_alteraTelefone(prof, tel)==PRF_CondRetFormatoInvalido) return CDO_CondRetFormatoInvalido;
 	return CDO_CondRetOk;
-}/* Fim função: CDO Altera Telefone*/
+}/* Fim funÃ§Ã£o: CDO Altera Telefone*/
 
  /***************************************************************************
  *
- *  Função: CDO Altera Data de Nascimento
+ *  FunÃ§Ã£o: CDO Altera Data de Nascimento
  *  ****/
 CDO_tpCondRet CDO_alteraDataNascimento(int dia, int mes, int ano){
 	PRF_ptProfessor prof = NULL;
@@ -478,11 +480,11 @@ CDO_tpCondRet CDO_alteraDataNascimento(int dia, int mes, int ano){
 			return CDO_CondRetCorpoDocenteVazio;
 	if(PRF_alteraDataNascimento(prof, dia, mes, ano)==PRF_CondRetFormatoInvalido) return CDO_CondRetFormatoInvalido;
 	return CDO_CondRetOk;
-}/* Fim função: CDO Altera Data de Nascimento*/
+}/* Fim funÃ§Ã£o: CDO Altera Data de Nascimento*/
 
  /***************************************************************************
  *
- *  Função: CDO Altera Endereco
+ *  FunÃ§Ã£o: CDO Altera Endereco
  *  ****/
 CDO_tpCondRet CDO_alteraEndereco(char *pais, char *uf, char *cidade, char *bairro, char *rua, int numero, char *complemento){
 	PRF_ptProfessor prof = NULL;
@@ -496,6 +498,6 @@ CDO_tpCondRet CDO_alteraEndereco(char *pais, char *uf, char *cidade, char *bairr
 	if(PRF_alteraNumero(prof,numero)	==	PRF_CondRetFormatoInvalido) return CDO_CondRetFormatoInvalido;
 	if(PRF_alteraComplemento(prof,complemento)==	PRF_CondRetFormatoInvalido) return CDO_CondRetFormatoInvalido;
 	return CDO_CondRetOk;
-}/* Fim função: CDO Altera Endereco*/
+}/* Fim funÃ§Ã£o: CDO Altera Endereco*/
 
 
