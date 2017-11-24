@@ -48,6 +48,7 @@ ALN_tpCondRet ALU_CriaAluno(Aluno **a, char *nome, unsigned int mat, CPF *cpf, u
 	strcpy((*a)->end.comp, end->comp);
 	strcpy((*a)->end.estado, end->estado);
 	strcpy((*a)->end.rua, end->rua);
+	(*a)->end.numero = end->numero;
 
 	return ALN_CondRetOK;	// Retorno que tudo deu certo.
 }
@@ -116,6 +117,7 @@ ALN_tpCondRet ALU_AlteraDados(Aluno *a, char *nome, unsigned int mat, CPF *cpf, 
 		strcpy(a->end.cidade, end->cidade);
 		strcpy(a->end.bairro, end->bairro);
 		strcpy(a->end.rua, end->rua);
+		a->end.numero = end->numero;
 		strcpy(a->end.comp, end->comp);
 	}
 	return ALN_CondRetOK;
@@ -143,6 +145,7 @@ ALN_tpCondRet ALU_GetAll(Aluno *a, char *nome, unsigned int *mat, CPF *cpf, unsi
 	strcpy(endereco->bairro, a->end.bairro);
 	strcpy(endereco->rua, a->end.rua);
 	strcpy(endereco->comp, a->end.comp);
+	endereco->numero = a->end.numero;
 
 	return ALN_CondRetOK;
 }
@@ -158,7 +161,7 @@ ALN_tpCondRet ALU_imprimeAluno(Aluno *a) {
 	printf("CPF:  %03d.%03d.%03d-%02d\n", a->cpfA.dig1, a->cpfA.dig2, a->cpfA.dig3, a->cpfA.cod);
 	printf("Telefone: %d\n", a->telefone);
 	printf("Data de Nascimento: %02d/%02d/%d\n", a->nasc.dia, a->nasc.mes, a->nasc.ano);
-	printf("Endereco: %s, %s, %s, %s - %s\n", a->end.rua, a->end.comp, a->end.bairro, a->end.cidade, a->end.estado);
+	printf("Endereco: %s, %d, %s, %s, %s - %s\n", a->end.rua, a->end.numero, a->end.comp, a->end.bairro, a->end.cidade, a->end.estado);
 	return ALN_CondRetOK;
 }
 /*Fim da função*/

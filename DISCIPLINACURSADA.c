@@ -33,7 +33,7 @@
 #include  <string.h>
 #include  <malloc.h>
 #include "disciplina.h"
-#include "DISCIPLINACURSADA.H"
+#include "DISCIPLINACURSADA.h"
 
 
 /* Inclusao dos modulos dependentes */

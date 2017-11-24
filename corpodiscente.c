@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "listas.h"
-#include "corpodiscente.h"	
-#include "aluno.h"
+#include "corpodiscente.h"
 
 struct corpodisc {
 	List* Aluno;
@@ -10,7 +9,6 @@ struct corpodisc {
 
 static CorpoDisc *Corpo;
 
-Aluno* CDI_busca(unsigned int matbusca);
 
 /*Inicio da função CDI_cria*/
 /* Recebe um ponteiro para CorpoDisc e aloca memória para uma lista de alunos,
@@ -20,7 +18,7 @@ CDI_tpCondRet CDI_cria(void) {
 	// Aloco espaço para o corpo discente.
 	Corpo = (CorpoDisc*)malloc(sizeof(CorpoDisc));
 	// Se a lista não for criada com sucesso, retorno falha de memória.
-	if (createList(&(Corpo->Aluno)) != LIS_CondRetOK) {
+	if (createList(&Corpo->Aluno) != LIS_CondRetOK) {
 		return CDI_CondRetFaltouMemoria;
 	}
 	// Se tudo deu certo, retorno OK.
@@ -33,14 +31,15 @@ CDI_tpCondRet CDI_cria(void) {
 /*Função que recebe um vetor de ponteiros para aluno a ser inserido, o nome do aluno, sua matricula,seu cpf, seu telefone, sua data de nascimento, seu endereço e um ponteiro para uma estrutura Corpo Discente*/
 CDI_tpCondRet CDI_insere(char *nome, unsigned int mat, struct cpf *cpf, unsigned int telefone, struct data *nasc, struct endereco* end)
 {
-	Aluno *a;
-	if (CDI_busca(mat) != NULL)	// Se o aluno com esta matricula ja estiver cadastrado
+	Aluno *a = NULL;
+	CDI_busca(mat, &a);
+	if (a != NULL)	// Se o aluno com esta matricula ja estiver cadastrado
 		return CDI_CondRetAlunoJaCadastrado;
 	ALU_CriaAluno(&a, nome, mat, cpf, telefone, nasc, end); // senão eu crio esse aluno
 	if (a == NULL)	// verificando questão de memória
 		return CDI_CondRetFaltouMemoria;
 	else {
-		push_back(Corpo->Aluno, a);	// insiro no fim do corpo discente
+		push_back(Corpo->Aluno, (void *)a);	// insiro no fim do corpo discente
 		return CDI_CondRetOK;
 	}
 }
@@ -50,29 +49,30 @@ CDI_tpCondRet CDI_insere(char *nome, unsigned int mat, struct cpf *cpf, unsigned
 /*Função INTERNA que recebe um ponteiro para CorpoDisc e procura a matrícula fornecida por referência em matbusca na lista de alunos e caso encontre o aluno
 desejado retorna seus dados em alunodesejado que é um ponteiro para Aluno passado por referência.Caso não encontre,retorna a condição
 de erro de aluno não encontrado.*/
-Aluno* CDI_busca(unsigned int matbusca) {
+CDI_tpCondRet CDI_busca(unsigned int matbusca, Aluno** alu) {
 	unsigned int mat2=0, i=0, size;
 	Aluno *a = NULL;
 	list_size(Corpo->Aluno, &size);	// Pego o tamanho da lista
 	first(Corpo->Aluno);	// Seto a lista para o primeiro nó
 	for (i = 0;i < size; i++) {
-		get_val_cursor(Corpo->Aluno, (void**) &a);	// Pego o aluno atual
+		get_val_cursor(Corpo->Aluno, &a);	// Pego o aluno atual
 		ALU_GetMat(a, &mat2);	// Pego sua matrícula
 		if (matbusca == mat2) {	// Vejo se a matrícula é igual à de busca
-			return a;	// se for, retorno ele.
+			*alu = a;
+			return CDI_CondRetOK;	// se for, retorno ele.
 		}
 		next(Corpo->Aluno); // caso não seja, vou para o próximo
 	}
-	return NULL;	// Não encontrei
+	return CDI_CondRetAlunoNaoCadastrado;	// Não encontrei
 }
 /*Fim da função CDI_busca*/
 
 /*Início da função CDI_altera*/
 /*Função que altera os dados de um aluno do corpo docente.*/
 CDI_tpCondRet CDI_altera(int matbusca, char *nome, unsigned int mat, struct cpf *cpf, unsigned int telefone, struct data *nasc, struct endereco *end) {
-	Aluno *alndesejado;
+	Aluno *alndesejado = NULL;
 
-	alndesejado = CDI_busca(matbusca);	// busco o aluno no corpo discente
+	CDI_busca(matbusca, &alndesejado);	// busco o aluno no corpo discente
 
 	if (alndesejado == NULL)	// se não encontrei
 		return CDI_CondRetAlunoNaoCadastrado;	// aluno não está cadastrado.
@@ -86,12 +86,12 @@ CDI_tpCondRet CDI_altera(int matbusca, char *nome, unsigned int mat, struct cpf 
 /*Início da função CDI_remove*/
 /*Função que recebe como parâmetros a matrícula do aluno a ser removido, o ponteiro para a estrutura Corpo Discente e remove da Lista do Corpo Discente o Aluno com matrícula igual a recebida*/
 CDI_tpCondRet CDI_remove(unsigned int matbusca) {
-	Aluno *alndesejado;
-	alndesejado = CDI_busca(matbusca);	// Pego o ponteiro pro aluno, cuja matricula é matbusca
+	Aluno *alndesejado = NULL;
+	CDI_busca(matbusca, &alndesejado);	// Pego o ponteiro pro aluno, cuja matricula é matbusca
 	if (alndesejado == NULL)
 		return CDI_CondRetAlunoNaoCadastrado;
 	else {
-		pop_cursor(Corpo->Aluno, (void**) &alndesejado);//Remove da lista o elemento apontado pelo cursor
+		pop_cursor(Corpo->Aluno, &alndesejado);//Remove da lista o elemento apontado pelo cursor
 		return CDI_CondRetOK;
 	}
 }
@@ -131,7 +131,7 @@ CDI_tpCondRet CDI_deleta(void) {
 /*Função que limpa a lista e libera o Corpo Discente.
 (Este continua existindo, permitido novas inserções*/
 CDI_tpCondRet CDI_limpa(void) {
-	unsigned int size=0;
+	unsigned int size;
 	list_size(Corpo->Aluno,&size);
 	if (size == 0)
 		return CDI_CondRetCDIVazio;
@@ -143,8 +143,11 @@ CDI_tpCondRet CDI_limpa(void) {
 /*Início da função CDI_imprimeInfo*/
 /*Função que imprime a informação de um aluno, dada sua matrícula*/
 CDI_tpCondRet CDI_imprimeInfo(unsigned int matbusca) {
-	Aluno *a = CDI_busca(matbusca);	// Busco o aluno
-	if (a == NULL)
+	Aluno *a;
+	CDI_tpCondRet retBuscaCDI;
+
+	retBuscaCDI = CDI_busca(matbusca,&a);	// Busco o aluno
+	if (retBuscaCDI != CDI_CondRetOK)
 		return CDI_CondRetAlunoNaoCadastrado;
 	ALU_imprimeAluno(a);	// imprimo os seus dados.
 	return CDI_CondRetOK;

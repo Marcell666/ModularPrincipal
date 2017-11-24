@@ -40,8 +40,6 @@
 * 
 *$.***************************************************************************/
 
-#include "listas.h"
-#include "disciplina.h"
 #if defined( HISTORICO_OWN )
    #define HISTORICO_EXT
 #else
@@ -286,7 +284,7 @@ HIS_tpCondRet HIS_getDisciplinasTrancadas(HIS_tpHistorico * pHistorico,  struct 
 *	valem as assertivas estruturais para listas encadeadas.
 *	disciplina corretamente adicionada ao historico
 *$.***********************************************************************/
-HIS_tpCondRet HIS_adicionaDisciplina(HIS_tpHistorico * pHistorico , Disciplina *disciplina, char *situacao, char* periodo, float grau );
+HIS_tpCondRet HIS_adicionaDisciplina(HIS_tpHistorico * pHistorico , struct disciplina *disciplina, char *situacao, char* periodo, float grau );
 
 /**************************************************************************
  *  

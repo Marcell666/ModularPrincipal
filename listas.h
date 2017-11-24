@@ -28,9 +28,6 @@
 *	  Nós(node(s)) são estrutura contendo o próximo nó e o anterior (duplamente encadeada) e contém um ponteiro para um valor (void*)
 ***************************************************************************/
 
-#ifndef LISTAS_H
-#define LISTAS_H
-
 typedef struct node Node;
 
 typedef struct list List;
@@ -173,5 +170,3 @@ LIS_tpCondRet next(List* l);//atualiza o cursor para o próximo nó
 *
 ***********************************************************************/
 LIS_tpCondRet prev(List* l);//atualiza o cursor para o nó anterior
-
-#endif

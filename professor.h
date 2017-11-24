@@ -37,9 +37,9 @@
 /***** Declarações exportadas pelo módulo *****/
 
 #define  PRF_MIN_ANO  1850
-#define  PRF_TAM_STRING  80
+#define  PRF_TAM_STRING  81
 #define  PRF_TAM_UF 3
-#define  PRF_TAM_CPF 11
+#define  PRF_TAM_CPF 12
 
 
 /* Tipo professor */

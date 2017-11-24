@@ -1,3 +1,4 @@
+#pragma once
 /***************************************************************************
 *
 *  $MCD Módulo de definição: Módulo Corpo Discente
@@ -28,11 +29,6 @@
 ***************************************************************************/
 
 #include "aluno.h"
-
-#ifndef CORPODISCENTE_H
-#define CORPODISCENTE_H
-
-
 /***********************************************************************
 *
 *  $TC Tipo de dados: CDI Condições de retorno
@@ -50,7 +46,7 @@ typedef enum {
 /***********************************************************************
 *
 *  $TD	Typedef
-*			Para que outros módulos conheçam a existencia da estrutura.
+*			Para que outros módulos conheçam a existencia da struct.
 *
 ***********************************************************************/
 typedef struct corpodisc CorpoDisc;
@@ -108,7 +104,7 @@ CDI_tpCondRet CDI_imprime(void);
 /			 Parâmentros: Uma string para nome, um inteiro para matrícula, um ponteiro para CPF(struct) para cpf, um inteiro
 /                         para telefone,um ponteiro para Data(struct) para data de nascimento e um ponteiro para Endereco(struct) para endereço.
 ************************************************************************************************************************************************/
-CDI_tpCondRet CDI_insere(char *nome, unsigned int mat, CPF *cpf, unsigned int telefone, Data *nasc, Endereco* end);
+CDI_tpCondRet CDI_insere(char *nome, unsigned int mat, struct cpf *cpf, unsigned int telefone, struct data *nasc, struct endereco* end);
 /***********************************************************************
 *
 *  $FC Função: CDI altera
@@ -123,7 +119,7 @@ CDI_tpCondRet CDI_insere(char *nome, unsigned int mat, CPF *cpf, unsigned int te
 /			 Parâmentros: Um inteiro para matrícula a ser buscada, uma string para novo nome, um inteiro para nova matrícula, um ponteiro para novo CPF(struct) para cpf, um inteiro
 /                         para novo telefone, um ponteiro para nova Data(struct) para data de nascimento e um ponteiro para novo Endereco(struct) para endereço.
 ************************************************************************************************************************************************/
-CDI_tpCondRet CDI_altera(int matbusca, char *nome, unsigned int mat, CPF *cpf, unsigned int telefone, Data *nasc, Endereco *end);
+CDI_tpCondRet CDI_altera(int matbusca, char *nome, unsigned int mat, struct cpf *cpf, unsigned int telefone, struct data *nasc, struct endereco *end);
 /***********************************************************************
 *
 *  $FC Função: CDI deleta
@@ -162,4 +158,5 @@ CDI_tpCondRet CDI_imprimeInfo(unsigned int matbusca);
 /			 Parâmentros: Não há passagem de parâmetros.
 ************************************************************************************************************************************************/
 CDI_tpCondRet CDI_limpa(void);
-#endif
+
+CDI_tpCondRet CDI_busca(unsigned int matbusca, Aluno** alu);

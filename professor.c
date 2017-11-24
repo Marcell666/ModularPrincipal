@@ -58,7 +58,7 @@
 
 	typedef struct endereco{
 		char pais[PRF_TAM_STRING];
-		char uf[PRF_TAM_STRING]; 
+		char uf[PRF_TAM_UF]; 
 			/* Unidade Federativa - Estados */
 		char cidade[PRF_TAM_STRING];
 		char bairro[PRF_TAM_STRING];
@@ -80,7 +80,7 @@
 
 	struct prof{
 		char nome[PRF_TAM_STRING];
-		char cpf[PRF_TAM_STRING]; //Numero do Cadastro de Pessoas Físicas
+		char cpf[PRF_TAM_CPF]; //Numero do Cadastro de Pessoas Físicas
 		int matricula; //Numero identificador na Universidade
 		char email[PRF_TAM_STRING];
 		int telefone;
@@ -182,7 +182,7 @@ PRF_tpCondRet PRF_mostra(Prof* professor){
 	if(!professor) return PRF_CondRetNaoExisteProf; /* if */
 	if(!professor->dataNascimento) return PRF_CondRetNaoExisteProf; /* if */
 	if(!professor->endereco) return PRF_CondRetNaoExisteProf; /* if */
-	printf("Exibindo Professor...\n"); 
+	//printf("Exibindo Professor...\n"); 
 	printf("Nome: %s\n", professor->nome);
 	printf("CPF: %s\n", professor->cpf);
 	printf("RG: %d\n", professor->rg);
@@ -193,6 +193,7 @@ PRF_tpCondRet PRF_mostra(Prof* professor){
 	mostraData(professor->dataNascimento);
 	printf("Endereco:");
 	mostraEndereco(professor->endereco);
+	printf ("\n");
 	return PRF_CondRetOk;
 } /* Fim função: PRF Mostra professor */
 
@@ -706,7 +707,7 @@ PRF_tpCondRet PRF_alteraPais(Prof* professor, char* pais){
 
 	int verificaComplemento(char* complemento){
 		int tamComplemento = strlen(complemento);
-		if(complemento == NULL || tamComplemento == 0 || tamComplemento >= PRF_TAM_STRING)
+		if(/*complemento == NULL || tamComplemento == 0 ||*/ tamComplemento >= PRF_TAM_STRING)
 			return 0; /* if */
 		return 1;
 	} /* Fim função: Verifica complemento*/
@@ -811,7 +812,7 @@ PRF_tpCondRet PRF_alteraPais(Prof* professor, char* pais){
 ***********************************************************************/
 
 	int verificaCpf(char* cpf){
-		if(cpf == NULL || strlen(cpf) != PRF_TAM_CPF)
+		if(cpf == NULL || strlen(cpf) != PRF_TAM_CPF-1)
 			return 0; /* if */
 		return 1;
 	} /* Fim função: Verifica cpf*/

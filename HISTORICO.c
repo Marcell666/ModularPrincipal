@@ -38,7 +38,7 @@
 #include  <malloc.h>
 #include "listas.h"
 #include "disciplina.h"
-#include "DISCIPLINACURSADA.H"
+#include "DISCIPLINACURSADA.h"
 #include "HISTORICO.h"
 
 
@@ -545,7 +545,6 @@ HIS_tpCondRet HIS_getDisciplinasTrancadas(HIS_tpHistorico * pHistorico, List* di
 
 	// Apenas pra alocar o struct na memória
 	DIS_gera_param(&disciplina, "X", "X", 0, "X", "X",3);
-	DIS_gera_param(&disciplina, "X", "X", 0, "X", "X",3);
 	DIC_criarDisciplinaCursada(&disciplinaCursada, disciplina, "AP", "2017.2", 10.0);
 
 	// Instancia uma nova lista vazia
@@ -631,7 +630,7 @@ HIS_tpCondRet HIS_printHistoricoCompleto (unsigned int matricula){
 	char periodo[tamPeriodo], disciplina[tamDisciplina], situacao[tamSituacao], grau[tamGrau], periodoCorrente[tamPeriodo] ;
 	historico = fopen(HIS_montaNomeArq(matricula),"r");
 	if (historico == NULL) {
-		printf("Nao foi encontrado registro de historico do aluno de matricula %u.\n",matricula);
+		printf("Nao foi encontrado registro de historico do aluno de matricula %u-%d.\n",matricula);
 		return HIS_CondRetErroAoAbrirArquivo;
 	}
 	

@@ -49,6 +49,7 @@ typedef struct endereco {
 	char cidade[51];
 	char bairro[32];
 	char rua[81];
+	int numero;
 	char comp[32];
 } Endereco;
 /***********************************************************************
