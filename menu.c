@@ -767,12 +767,8 @@
 		GRC_tpCondRet ret;
 		int opcao;
 
-	
 		do {
 			printf("\nMenu Grade Curricular\n");
-			//TODO
-			printf("EM DESENVOLVIMENTO\n");
-			MEN_menuAnterior();
 			for (i = 0;i <= nItens;i++)
 				printf("Digite %d: %s.\n", i, nomeFunc[i]);
 			scanf("%d", &opcao);
@@ -780,7 +776,7 @@
 			switch (opcao) {
 			case 1:
 				system("cls");
-				//ret = GRC_cadastraCMD();
+				ret = GRC_cadastraCMD();
 				break;
 			case 2:
 				GRC_mostraAtual();
@@ -807,14 +803,14 @@
 				GRC_removePreRequisitos();
 				break;
 			case 7:
-				printf("\nDeseja mesmo apagar todo o corpo discente?\n1-Sim\n2-Nao\n");
+				printf("\nDeseja mesmo apagar toda a grade curricular?\n1-Sim\n2-Nao\n");
 				scanf("%d", &opcao);
 				if (opcao == 1) {
 					system("cls");
 					CDI_limpa();
-					printf("O corpo discente foi completamente apagado.\n");
+					printf("A grade curricular foi completamente apagada.\n");
 				}
-				GRC_limpa();
+				ret = GRC_limpa();//TODO verificar retorno
 				MEN_menuAnterior();
 				break;
 			case 8:
@@ -829,17 +825,17 @@
 					scanf("%d", &horIni);
 				} while (horIni > 21 || horIni <7);
 				do {
-					printf("Digita a hora do termino da aula (9 >= HorTer <= 23):\n");
+					printf("Digite a hora do termino da aula (9 >= HorTer <= 23):\n");
 					scanf("%d", &horTer);
 				} while (horTer >23 || horTer < 9);
 				printf("Digite a quantidade de vagas:\n");
 				scanf("%d", &qtdVag);
-				//ret = GRC_insereTurma(codTur, horIni, horTer, diaSem, qtdVag, codigo);
+				ret = GRC_insereTurma(codTur, horIni, horTer, diaSem, qtdVag, codigo);
 				break;
 			case 9:
 				printf("Digite o codigo da disciplina que deseja checar as turmas:\n");
 				scanf("%s", codigo);
-				//ret = GRC_exibeTurmas(codigo);
+				ret = GRC_exibeTurmas(codigo);
 				break;
 			default:
 				if (opcao)
