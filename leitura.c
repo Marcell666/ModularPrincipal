@@ -220,7 +220,7 @@ typedef int (*LER_Compara) (unsigned char) ;
 		
 			if ( * ano < LER_MIN_ANO )
 			{
-				printf( "\tAno invalido. Digite o ano novamente." ) ;
+				printf( "\tAno invalido. Digite o ano novamente.\n" ) ;
 			}
 
 		} while ( * ano < LER_MIN_ANO ) ;
