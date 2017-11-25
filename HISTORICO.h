@@ -1,6 +1,8 @@
 #if ! defined( HISTORICO_ )
 #define HISTORICO_
 
+#include "listas.h"
+#include "disciplina.h"
 
 /****************************************************************
 *$AD Módulo de definição
@@ -147,7 +149,7 @@ HIS_tpCondRet HIS_removeHistorico (HIS_tpHistorico ** pHistorico);
 *$P disciplinas: endereço do ponteiro para uma lista onde serão armazenadas as disciplinas do período
 *$.***********************************************************************/
 
-HIS_tpCondRet HIS_getHistoricoCompleto(HIS_tpHistorico * pHistorico, struct list** disciplinas);
+HIS_tpCondRet HIS_getHistoricoCompleto(HIS_tpHistorico * pHistorico, List** disciplinas);
 
 /***********************************************************************
 *$FC Função: HIS_getHistoricoDoPeriodo
@@ -176,7 +178,7 @@ HIS_tpCondRet HIS_getHistoricoCompleto(HIS_tpHistorico * pHistorico, struct list
 *
 *$.***********************************************************************/
 
-HIS_tpCondRet HIS_getHistoricoDoPeriodo(HIS_tpHistorico * pHistorico, char* periodo, struct list* disciplinas);
+HIS_tpCondRet HIS_getHistoricoDoPeriodo(HIS_tpHistorico * pHistorico, char* periodo, List* disciplinas);
 
 /***********************************************************************
 *$FC Função: HIS_getCrTotal
@@ -248,7 +250,7 @@ HIS_tpCondRet HIS_getCrDoPeriodo(HIS_tpHistorico * pHistorico, char * periodo, f
 *
 
 *$.***********************************************************************/
-HIS_tpCondRet HIS_getDisciplinasTrancadas(HIS_tpHistorico * pHistorico,  struct list* disciplinas);
+HIS_tpCondRet HIS_getDisciplinasTrancadas(HIS_tpHistorico * pHistorico,  List* disciplinas);
 
 
 // Agora encapsulada
@@ -284,7 +286,7 @@ HIS_tpCondRet HIS_getDisciplinasTrancadas(HIS_tpHistorico * pHistorico,  struct 
 *	valem as assertivas estruturais para listas encadeadas.
 *	disciplina corretamente adicionada ao historico
 *$.***********************************************************************/
-HIS_tpCondRet HIS_adicionaDisciplina(HIS_tpHistorico * pHistorico , struct disciplina *disciplina, char *situacao, char* periodo, float grau );
+HIS_tpCondRet HIS_adicionaDisciplina(HIS_tpHistorico * pHistorico , Disciplina *disciplina, char *situacao, char* periodo, float grau );
 
 /**************************************************************************
  *  
@@ -381,7 +383,7 @@ HIS_tpCondRet HIS_salvaHistoricoEmArquivo (HIS_tpHistorico ** pHistorico, unsign
  *		Valem as assertivas estruturais para listas duplamente encadeadas.
  *
 *$.***********************************************************************/
-HIS_tpCondRet HIS_getDisciplinasReprovadoPorFalta(HIS_tpHistorico * pHistorico, struct list * disciplinas);
+HIS_tpCondRet HIS_getDisciplinasReprovadoPorFalta(HIS_tpHistorico * pHistorico, List * disciplinas);
 
 
 #undef HISTORICO_EXT

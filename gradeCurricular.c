@@ -109,16 +109,16 @@ GRC_tpCondRet GRC_cadastra(char* nome, char* codigo, int creditos, char* bibliog
 GRC_tpCondRet GRC_cadastraCMD() {
 	ParDisciplina *parD = NULL;
 	Disciplina *disc = NULL;
-	//char codigo[MAX_CODIGO]; TODO entender isso
+	char codigo[MAX_CODIGO];
 	DIS_tpCondRet ret;
 
-	ret = DIS_gera_cmd(&disc);
+	ret = DIS_gera_cmd(&disc, codigo);
 	if (ret == DIS_CondRetFaltouMemoria)
 		return GRC_CondRetNaoHaMemoria;
 	if (ret == DIS_CondRetParametroInvalido)
 		return GRC_CondRetFormatoInvalido;
-	//if (GRC_buscaPorCodigo(codigo) == GRC_CondRetOk) //TODO entender isso
-	//	return GRC_CondRetIdJaCriado;
+	if (GRC_buscaPorCodigo(codigo) == GRC_CondRetOk)
+		return GRC_CondRetIdJaCriado;
 	parD = (ParDisciplina*)calloc(1, sizeof(ParDisciplina));
 	parD->disciplina = disc;
 	createList(&parD->preRequisitos);

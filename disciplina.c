@@ -361,13 +361,14 @@ DIS_tpCondRet DIS_altera_criterio(Disciplina *d, int critAprov) {
 *
 *  Função: DIS gera uma disciplina por input do teclado
 *  ****/
-DIS_tpCondRet DIS_gera_cmd(Disciplina** d)
+DIS_tpCondRet DIS_gera_cmd(Disciplina** d, char codigo[MAX_CODIGO])
 {
 	(*d) = (Disciplina*)calloc(1, sizeof(Disciplina));
 	if ((*d) == NULL)
 		return DIS_CondRetFaltouMemoria;
 	strcpy((*d)->nome, DIS_le_nome());
 	strcpy((*d)->codigo, DIS_le_codigo());
+	strcpy(codigo, (*d)->codigo);
 	(*d)->creditos = DIS_le_creditos();
 	strcpy((*d)->bibliografia, DIS_le_Bib());
 	strcpy((*d)->ementa, DIS_le_ementa());

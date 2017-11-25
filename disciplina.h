@@ -151,7 +151,7 @@ DIS_tpCondRet DIS_altera_criterio(Disciplina *d, int critAprov);
 *    Função: DIS gera uma disciplina por input do teclado
 *
 ***********************************************************************/
-DIS_tpCondRet DIS_gera_cmd(Disciplina** d);
+DIS_tpCondRet DIS_gera_cmd(Disciplina** d, char codigo[MAX_CODIGO]);
 /***********************************************************************
 *
 *  $FC Função: DIS gera por meio de parametros

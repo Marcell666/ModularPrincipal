@@ -27,6 +27,8 @@
 *	  Uma lista(list) contém um cabeçalho, com um nó apontanto para o primeiro item da lista, um apontando para o último e outro apontando para o nó cursor.
 *	  Nós(node(s)) são estrutura contendo o próximo nó e o anterior (duplamente encadeada) e contém um ponteiro para um valor (void*)
 ***************************************************************************/
+#ifndef LISTAS_H
+#define LISTAS_H
 
 typedef struct node Node;
 
@@ -170,3 +172,7 @@ LIS_tpCondRet next(List* l);//atualiza o cursor para o próximo nó
 *
 ***********************************************************************/
 LIS_tpCondRet prev(List* l);//atualiza o cursor para o nó anterior
+
+#endif
+
+/**********************************************************************/

@@ -55,7 +55,7 @@ CDI_tpCondRet CDI_busca(unsigned int matbusca, Aluno** alu) {
 	list_size(Corpo->Aluno, &size);	// Pego o tamanho da lista
 	first(Corpo->Aluno);	// Seto a lista para o primeiro nó
 	for (i = 0;i < size; i++) {
-		get_val_cursor(Corpo->Aluno, &a);	// Pego o aluno atual
+		get_val_cursor(Corpo->Aluno, (void**) &a);	// Pego o aluno atual
 		ALU_GetMat(a, &mat2);	// Pego sua matrícula
 		if (matbusca == mat2) {	// Vejo se a matrícula é igual à de busca
 			*alu = a;
@@ -91,7 +91,7 @@ CDI_tpCondRet CDI_remove(unsigned int matbusca) {
 	if (alndesejado == NULL)
 		return CDI_CondRetAlunoNaoCadastrado;
 	else {
-		pop_cursor(Corpo->Aluno, &alndesejado);//Remove da lista o elemento apontado pelo cursor
+		pop_cursor(Corpo->Aluno, (void**) &alndesejado);//Remove da lista o elemento apontado pelo cursor
 		return CDI_CondRetOK;
 	}
 }
