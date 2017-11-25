@@ -1,6 +1,6 @@
 /***************************************************************************
 *
-*  $MCD MÛdulo de definiÁ„o: MÛdulo Menu
+*  $MCD M√≥dulo de defini√ß√£o: M√≥dulo Menu
 *
 *  Arquivo gerado:              menu.c
 *  Letras identificadoras:      MEN
@@ -8,31 +8,31 @@
 *  Nome da base de software:
 *  Arquivo da base de software:
 *
-*  Projeto: Sistema AcadÍmico da turma 3WB
+*  Projeto: Sistema Acad√™mico da turma 3WB
 *  Gestor:  Grupo 1 / Grupo 2 / Grupo 5
 *  Autores:   Bruce Marcellino (Grupo 1)
 *			  Bruno Miranda Marinho (Grupo 2)
-*             Cristiane Ramalho Guimar„es (Grupo 5)
-*             Fl·vio Thiago Franco Vaz (Grupo 2)
-*             Jo„o Victor Cerqueira (Grupo 2)
+*             Cristiane Ramalho Guimar√£es (Grupo 5)
+*             Fl√°vio Thiago Franco Vaz (Grupo 2)
+*             Jo√£o Victor Cerqueira (Grupo 2)
 *             Matheus Henrique Branco Zeitune (Grupo 2)
-*             VinÌcius Cortat (Grupo 2)
+*             Vin√≠cius Cortat (Grupo 2)
 *
-*  $HA HistÛrico de evoluÁ„o:
-*     Vers„o  Autor         Data		ObservaÁıes
-*     1.03    Cristiane  14/11/2017     ReestruturaÁ„o
-*     1.02    Cristiane  08/11/2017     FunÁıes de leitura
-*     1.01    Bruce	     07/10/2017     ReestruturaÁ„o
-*     1.00    Bruce	     06/10/2017	    Revis„o/finalizaÁ„o
+*  $HA Hist√≥rico de evolu√ß√£o:
+*     Vers√£o  Autor         Data		Observa√ß√µes
+*     1.03    Cristiane  14/11/2017     Reestrutura√ß√£o
+*     1.02    Cristiane  08/11/2017     Fun√ß√µes de leitura
+*     1.01    Bruce	     07/10/2017     Reestrutura√ß√£o
+*     1.00    Bruce	     06/10/2017	    Revis√£o/finaliza√ß√£o
 *     0.05    Bruce	     05/10/2017	    Modulo professor
-*     0.04    Matheus    04/10/2017  	Revis„o menu
+*     0.04    Matheus    04/10/2017  	Revis√£o menu
 *     0.03    Bruno	     02/10/2017	    Menu professor
-*     0.02    Fl·vio     02/10/2017  	Revis„o
-*     0.01    Matheus    01/10/2017	    InÌcio do desenvolvimento
+*     0.02    Fl√°vio     02/10/2017  	Revis√£o
+*     0.01    Matheus    01/10/2017	    In√≠cio do desenvolvimento
 *
-*  $ED DescriÁ„o do mÛdulo
-*     Este mÛdulo implementa o Menu do Sistema AcadÍmico a ser desenvolvido.
-*     O meu È a chamada dos modulos por interface.
+*  $ED Descri√ß√£o do m√≥dulo
+*     Este m√≥dulo implementa o Menu do Sistema Acad√™mico a ser desenvolvido.
+*     O meu √© a chamada dos modulos por interface.
 ***************************************************************************/
 
 #include <stdio.h>
@@ -60,7 +60,7 @@
 	#define VK_BACKSPACE 8
 #endif
 
-/*****  ProtÛtipos das funÁıes encapsuladas no mÛdulo  *****/
+/*****  Prot√≥tipos das fun√ß√µes encapsuladas no m√≥dulo  *****/
 
 	void MEN_leSoLetra ( char * cad_carac ) ;
 	void MEN_leCPF ( char * cpf ) ;
@@ -75,14 +75,14 @@
 
 /***********************************************************************
 *
-*  $FC FunÁ„o: MEN_loginAdministrativo
+*  $FC Fun√ß√£o: MEN_loginAdministrativo
 *
-*  $ED DescriÁ„o da funÁ„o
+*  $ED Descri√ß√£o da fun√ß√£o
 *		Mostra o menu inicial.
 *
 ***********************************************************************/
-/*Assertivas: Retorno da funÁ„o: Retona 1, se os dados s„o validos.
-/			 Par‚mentros: Estruturas de ponteiros.
+/*Assertivas: Retorno da fun√ß√£o: Retona 1, se os dados s√£o validos.
+/			 Par√¢mentros: Estruturas de ponteiros.
 ***********************************************************************/
 
 	int MEN_loginAdministrativo()
@@ -112,14 +112,14 @@
 
 /***********************************************************************
 *
-*  $FC FunÁ„o: MEN_loginProfessor.
+*  $FC Fun√ß√£o: MEN_loginProfessor.
 *
-*  $ED DescriÁ„o da funÁ„o
+*  $ED Descri√ß√£o da fun√ß√£o
 *		Realiza a busca no corpo docente, se a matricula.
 *
 ***********************************************************************/
-/*Assertivas: Retorno da funÁ„o: Retorna 1, caso econtre e 0, senao.
-/			 Par‚mentros: Estruturas de ponteiros.
+/*Assertivas: Retorno da fun√ß√£o: Retorna 1, caso econtre e 0, senao.
+/			 Par√¢mentros: Estruturas de ponteiros.
 ***********************************************************************/
 
 	int MEN_loginProfessor()
@@ -142,14 +142,14 @@
 
 /***********************************************************************
 *
-*  $FC FunÁ„o: MEN_loginAluno
+*  $FC Fun√ß√£o: MEN_loginAluno
 *
-*  $ED DescriÁ„o da funÁ„o
-*		Realiza a busca da matricula do aluno. (n„o implementado)
+*  $ED Descri√ß√£o da fun√ß√£o
+*		Realiza a busca da matricula do aluno. (n√£o implementado)
 *
 ***********************************************************************/
-/*Assertivas: Retorno da funÁ„o: Rertona 1, se foi encontrado a matricula.
-/			 Par‚mentros: Estruturas de ponteiros.
+/*Assertivas: Retorno da fun√ß√£o: Rertona 1, se foi encontrado a matricula.
+/			 Par√¢mentros: Estruturas de ponteiros.
 ***********************************************************************/
 
 	int MEN_loginAluno(unsigned int *matricula)
@@ -179,14 +179,14 @@
 
 /***********************************************************************
 *
-*  $FC FunÁ„o: MEN_adicionaAluno
+*  $FC Fun√ß√£o: MEN_adicionaAluno
 *
-*  $ED DescriÁ„o da funÁ„o
+*  $ED Descri√ß√£o da fun√ß√£o
 *		Mostra o menu inicial.
 *
 ***********************************************************************/
-/*Assertivas: Retorno da funÁ„o: Retona 1, se os dados s„o validos.
-/			 Par‚mentros: Estruturas de ponteiros.
+/*Assertivas: Retorno da fun√ß√£o: Retona 1, se os dados s√£o validos.
+/			 Par√¢mentros: Estruturas de ponteiros.
 ***********************************************************************/
 
 	void MEN_adicionaAluno()
@@ -266,14 +266,14 @@
 
 /***********************************************************************
 *
-*  $FC FunÁ„o: MEN_modificaAluno
+*  $FC Fun√ß√£o: MEN_modificaAluno
 *
-*  $ED DescriÁ„o da funÁ„o
+*  $ED Descri√ß√£o da fun√ß√£o
 *		Mostra o menu inicial.
 *
 ***********************************************************************/
-/*Assertivas: Retorno da funÁ„o: Retona 1, se os dados s„o validos.
-/			 Par‚mentros: Estruturas de ponteiros.
+/*Assertivas: Retorno da fun√ß√£o: Retona 1, se os dados s√£o validos.
+/			 Par√¢mentros: Estruturas de ponteiros.
 ***********************************************************************/
 
 	void MEN_modificaAluno()
@@ -397,14 +397,14 @@
 
 /***********************************************************************
 *
-*  $FC FunÁ„o: MEN_adicionaProfessor
+*  $FC Fun√ß√£o: MEN_adicionaProfessor
 *
-*  $ED DescriÁ„o da funÁ„o
+*  $ED Descri√ß√£o da fun√ß√£o
 *		Mostra o menu inicial.
 *
 ***********************************************************************/
-/*Assertivas: Retorno da funÁ„o: Retona 1, se os dados s„o validos.
-/			 Par‚mentros: Estruturas de ponteiros.
+/*Assertivas: Retorno da fun√ß√£o: Retona 1, se os dados s√£o validos.
+/			 Par√¢mentros: Estruturas de ponteiros.
 ***********************************************************************/
 
 	void MEN_adicionaProfessor ( void )
@@ -487,14 +487,14 @@
 
 /***********************************************************************
 *
-*  $FC FunÁ„o: MEN_modificaProfessor
+*  $FC Fun√ß√£o: MEN_modificaProfessor
 *
-*  $ED DescriÁ„o da funÁ„o
+*  $ED Descri√ß√£o da fun√ß√£o
 *		Mostra o menu inicial.
 *
 ***********************************************************************/
-/*Assertivas: Retorno da funÁ„o: Retona 1, se os dados s„o validos.
-/			 Par‚mentros: Estruturas de ponteiros.
+/*Assertivas: Retorno da fun√ß√£o: Retona 1, se os dados s√£o validos.
+/			 Par√¢mentros: Estruturas de ponteiros.
 ***********************************************************************/
 
 	void MEN_modificaProfessor()
@@ -628,14 +628,14 @@
 
 /***********************************************************************
 *
-*  $FC FunÁ„o: MEN_removeProfessor
+*  $FC Fun√ß√£o: MEN_removeProfessor
 *
-*  $ED DescriÁ„o da funÁ„o
+*  $ED Descri√ß√£o da fun√ß√£o
 *		Mostra o menu inicial.
 *
 ***********************************************************************/
-/*Assertivas: Retorno da funÁ„o: Retona 1, se os dados s„o validos.
-/			 Par‚mentros: Estruturas de ponteiros.
+/*Assertivas: Retorno da fun√ß√£o: Retona 1, se os dados s√£o validos.
+/			 Par√¢mentros: Estruturas de ponteiros.
 ***********************************************************************/
 
 	void MEN_removeProfessor ( void )
@@ -695,14 +695,14 @@
 
 /***********************************************************************
 *
-*  $FC FunÁ„o: MEN_removeProfessor
+*  $FC Fun√ß√£o: MEN_removeProfessor
 *
-*  $ED DescriÁ„o da funÁ„o
+*  $ED Descri√ß√£o da fun√ß√£o
 *		Mostra o menu inicial.
 *
 ***********************************************************************/
-/*Assertivas: Retorno da funÁ„o: Retona 1, se os dados s„o validos.
-/			 Par‚mentros: Estruturas de ponteiros.
+/*Assertivas: Retorno da fun√ß√£o: Retona 1, se os dados s√£o validos.
+/			 Par√¢mentros: Estruturas de ponteiros.
 ***********************************************************************/
 
 	void MEN_removeTodosProfessores ( void )
@@ -743,9 +743,9 @@
 
 /***********************************************************************
 *
-*  $FC FunÁ„o: MEN_menuGradeCurricular
+*  $FC Fun√ß√£o: MEN_menuGradeCurricular
 *
-*  $ED DescriÁ„o da funÁ„o
+*  $ED Descri√ß√£o da fun√ß√£o
 *		Mostra o menu Grade Curricular.
 *
 ***********************************************************************/
@@ -769,7 +769,6 @@
 
 		do {
 			printf("\nMenu Grade Curricular\n");
-			printf("EM DESENVOLVIMENTO\n");
 			for (i = 0;i <= nItens;i++)
 				printf("Digite %d: %s.\n", i, nomeFunc[i]);
 			scanf("%d", &opcao);
@@ -785,7 +784,7 @@
 				break;
 			case 3:
 				system("cls");
-				printf("Digite o cÛdigo da disciplina que deseja buscar:\n");
+				printf("Digite o c√≥digo da disciplina que deseja buscar:\n");
 				scanf(" %s", codigo);
 				ret = GRC_buscaPorCodigo(codigo);
 				GRC_mostraAtual();
@@ -797,7 +796,7 @@
 				break;
 			case 5:
 				system("cls");
-				printf("Digite o cÛdigo da disciplina que deseja configurar como pre-requisito:\n");
+				printf("Digite o c√≥digo da disciplina que deseja configurar como pre-requisito:\n");
 				scanf(" %s", codigo);
 				ret = GRC_inserePreRequisito(codigo);
 				break;
@@ -845,7 +844,7 @@
 				break;
 			default:
 				if (opcao)
-					printf("Opcao inv·lida!\n");
+					printf("Opcao inv√°lida!\n");
 				break;
 			}
 			if (ret == GRC_CondRetOk)
@@ -870,12 +869,12 @@
 
 /***********************************************************************
 *
-*  $FC FunÁ„o: MEN_leSoLetra
+*  $FC Fun√ß√£o: MEN_leSoLetra
 *
-*  $ED DescriÁ„o da funÁ„o
-*	  Efetua a leitura do teclado permitindo digitar letras (mai˙scula ou min˙scula) e espaÁo (Space).
-*     Limita a quantidade de caracteres em no m·ximo 80.
-*     A cadeia de caracteres n„o pode ficar vazia.     
+*  $ED Descri√ß√£o da fun√ß√£o
+*	  Efetua a leitura do teclado permitindo digitar letras (mai√∫scula ou min√∫scula) e espa√ßo (Space).
+*     Limita a quantidade de caracteres em no m√°ximo 80.
+*     A cadeia de caracteres n√£o pode ficar vazia.     
 *
 ***********************************************************************/
 /*Assertivas: 
@@ -915,11 +914,11 @@
 	
 /***********************************************************************
 *
-*  $FC FunÁ„o: MEN_leCPF
+*  $FC Fun√ß√£o: MEN_leCPF
 *
-*  $ED DescriÁ„o da funÁ„o
-*	  Efetua a leitura do teclado permitindo digitar apenas n˙meros (1,2,3,4,5,6,7,8,9,0).
-*     SÛ finaliza a leitura apÛs digitar, obrigatoriamente, so 11 dÌgitos correspondentes ao CPF.
+*  $ED Descri√ß√£o da fun√ß√£o
+*	  Efetua a leitura do teclado permitindo digitar apenas n√∫meros (1,2,3,4,5,6,7,8,9,0).
+*     S√≥ finaliza a leitura ap√≥s digitar, obrigatoriamente, so 11 d√≠gitos correspondentes ao CPF.
 *
 ***********************************************************************/
 /*Assertivas: 
@@ -957,16 +956,16 @@
 
 /***********************************************************************
 *
-*  $FC FunÁ„o: MEN_leData                       
+*  $FC Fun√ß√£o: MEN_leData                       
 *
-*  $ED DescriÁ„o da funÁ„o
-*	  Efetua a leitura do teclado permitindo digitar apenas n˙meros (1,2,3,4,5,6,7,8,9,0).
+*  $ED Descri√ß√£o da fun√ß√£o
+*	  Efetua a leitura do teclado permitindo digitar apenas n√∫meros (1,2,3,4,5,6,7,8,9,0).
 *     Efetua a leitura do dia, obrigatoriamente, menor ou igual 31.
-*     Efetua a leitura do mÍs, obrigatoriamente, menor ou igual 12.
-*     Verifica se o dia informado ultrapassa o n˙mero de dias corresponde ao mÍs informado, 
-*          caso ultrapasse solicita novamente o dia e o mÍs. 
+*     Efetua a leitura do m√™s, obrigatoriamente, menor ou igual 12.
+*     Verifica se o dia informado ultrapassa o n√∫mero de dias corresponde ao m√™s informado, 
+*          caso ultrapasse solicita novamente o dia e o m√™s. 
 *     Efetua a leitura do ano, obrigatoriamente, maior ou igual a 1850.
-*     Verifica se o ano informado È menor que 1850, caso seja solicita o ano.      		
+*     Verifica se o ano informado √© menor que 1850, caso seja solicita o ano.      		
 *
 ***********************************************************************/
 /*Assertivas: 
@@ -980,10 +979,10 @@
 		char D_dia[3], D_mes [3], D_ano [5] ; 
 		int cont = 0 ;
 
-		do // verifica se o n˙mero do dia corresponde ao n˙mero m·ximo de dias do mÍs informado
+		do // verifica se o n√∫mero do dia corresponde ao n√∫mero m√°ximo de dias do m√™s informado
 		{
 			// DIA
-			do // verifica se o dia È maior que 31
+			do // verifica se o dia √© maior que 31
 			{
 				printf("   Dia: ") ; 
 				do
@@ -1099,13 +1098,13 @@
 	
 /***********************************************************************
 *
-*  $FC FunÁ„o: MEN_leUF
+*  $FC Fun√ß√£o: MEN_leUF
 *
-*  $ED DescriÁ„o da funÁ„o
-*	  Efetua a leitura do teclado permitindo digitar letras (mai˙scula ou min˙scula), 
-*          caso seja digitado letra min˙scula, troca-se para mani˙scula. 
-*     … obrigatÛrio digitar as duas letras correspondentes a sigla de uma UF v·lida,
-*          caso informe uma UF inv·lida solicita novamente a sigla da UF.	
+*  $ED Descri√ß√£o da fun√ß√£o
+*	  Efetua a leitura do teclado permitindo digitar letras (mai√∫scula ou min√∫scula), 
+*          caso seja digitado letra min√∫scula, troca-se para mani√∫scula. 
+*     √â obrigat√≥rio digitar as duas letras correspondentes a sigla de uma UF v√°lida,
+*          caso informe uma UF inv√°lida solicita novamente a sigla da UF.	
 *
 ***********************************************************************/
 /*Assertivas: 
@@ -1153,7 +1152,7 @@
 
 		if ( i == MEN_QTD_EST )
 		{
-			printf ("\nEsta sigla de estado n„o existe. Digite uma sigla correspondente a um estado brasileiro.\n\n") ;
+			printf ("\nEsta sigla de estado n√£o existe. Digite uma sigla correspondente a um estado brasileiro.\n\n") ;
 			cont = 0 ;
 		} /* if */
 
@@ -1165,13 +1164,13 @@
 
 /***********************************************************************
 *
-*  $FC FunÁ„o: MEN_leLogradouro
+*  $FC Fun√ß√£o: MEN_leLogradouro
 *
-*  $ED DescriÁ„o da funÁ„o
-*	  Efetua a leitura do teclado permitindo digitar letras (mai˙scula ou min˙scula), n˙meros (1,2,3,4,5,6,7,8,9,0),
-*          espaÁo (Space), ponto final (.) e sinal de menos (-).
-*     Limita a quantidade de caracteres em no m·ximo 80.
-*     A cadeia de caracteres n„o pode ficar vazia.     	
+*  $ED Descri√ß√£o da fun√ß√£o
+*	  Efetua a leitura do teclado permitindo digitar letras (mai√∫scula ou min√∫scula), n√∫meros (1,2,3,4,5,6,7,8,9,0),
+*          espa√ßo (Space), ponto final (.) e sinal de menos (-).
+*     Limita a quantidade de caracteres em no m√°ximo 80.
+*     A cadeia de caracteres n√£o pode ficar vazia.     	
 *
 ***********************************************************************/
 /*Assertivas: 
@@ -1210,12 +1209,12 @@
 
 /***********************************************************************
 *
-*  $FC FunÁ„o: MEN_leComplemento
+*  $FC Fun√ß√£o: MEN_leComplemento
 *
-*  $ED DescriÁ„o da funÁ„o
-*	  Efetua a leitura do teclado permitindo digitar letras (mai˙scula ou min˙scula), n˙meros (1,2,3,4,5,6,7,8,9,0),
-*          espaÁo (Space), ponto final (.), vÌrgula (,), ponto e vÌrgula (;), parÍnteses (()) e sinal de menos (-).
-*     Limita a quantidade de caracteres em no m·ximo 80.
+*  $ED Descri√ß√£o da fun√ß√£o
+*	  Efetua a leitura do teclado permitindo digitar letras (mai√∫scula ou min√∫scula), n√∫meros (1,2,3,4,5,6,7,8,9,0),
+*          espa√ßo (Space), ponto final (.), v√≠rgula (,), ponto e v√≠rgula (;), par√™nteses (()) e sinal de menos (-).
+*     Limita a quantidade de caracteres em no m√°ximo 80.
 *     A cadeia de caracteres pode ficar vazia.     	
 *
 ***********************************************************************/
@@ -1256,13 +1255,13 @@
 	
 /***********************************************************************
 *
-*  $FC FunÁ„o: MEN_leEmail
+*  $FC Fun√ß√£o: MEN_leEmail
 *
-*  $ED DescriÁ„o da funÁ„o
-*	  Efetua a leitura do teclado permitindo digitar letras min˙scula, n˙meros (1,2,3,4,5,6,7,8,9,0),
-*          ponto final (.), vÌrgula (,), ponto e vÌrgula (;), parenteses (()) e sinal de menos (-).
-*     Limita a quantidade de caracteres em no m·ximo 80.
-*     A cadeia de caracteres n„o pode ficar vazia.     		
+*  $ED Descri√ß√£o da fun√ß√£o
+*	  Efetua a leitura do teclado permitindo digitar letras min√∫scula, n√∫meros (1,2,3,4,5,6,7,8,9,0),
+*          ponto final (.), v√≠rgula (,), ponto e v√≠rgula (;), parenteses (()) e sinal de menos (-).
+*     Limita a quantidade de caracteres em no m√°ximo 80.
+*     A cadeia de caracteres n√£o pode ficar vazia.     		
 *
 ***********************************************************************/
 /*Assertivas: 
@@ -1302,11 +1301,11 @@
 
 /***********************************************************************
 *
-*  $FC FunÁ„o: MEN_leMatricula
+*  $FC Fun√ß√£o: MEN_leMatricula
 *
-*  $ED DescriÁ„o da funÁ„o
+*  $ED Descri√ß√£o da fun√ß√£o
 *	  Efetua a leitura do teclado permitindo digitar apenas numeros (1,2,3,4,5,6,7,8,9,0).
-*     SÛ finaliza a leitura apÛs digitar, obrigatoriamente, os 8 digitos correspondentes a matricula.	
+*     S√≥ finaliza a leitura ap√≥s digitar, obrigatoriamente, os 8 digitos correspondentes a matricula.	
 *
 ***********************************************************************/
 /*Assertivas: 
@@ -1348,11 +1347,11 @@
 
 /***********************************************************************
 *
-*  $FC FunÁ„o: MEN_leNumero
+*  $FC Fun√ß√£o: MEN_leNumero
 *
-*  $ED DescriÁ„o da funÁ„o
+*  $ED Descri√ß√£o da fun√ß√£o
 *	  Efetua a leitura do teclado permitindo digitar apenas numeros (1,2,3,4,5,6,7,8,9,0).
-*     SÛ finaliza a leitura apÛs digitar, obrigatoriamente, um n˙mero de atÈ 8 casas.	
+*     S√≥ finaliza a leitura ap√≥s digitar, obrigatoriamente, um n√∫mero de at√© 8 casas.	
 *
 ***********************************************************************/
 /*Assertivas: 
@@ -1394,11 +1393,11 @@
 	
 /***********************************************************************
 *
-*  $FC FunÁ„o: MEN_leTelefone
+*  $FC Fun√ß√£o: MEN_leTelefone
 *
-*  $ED DescriÁ„o da funÁ„o
+*  $ED Descri√ß√£o da fun√ß√£o
 *	  Efetua a leitura do teclado permitindo digitar apenas numeros (1,2,3,4,5,6,7,8,9,0).
-*     SÛ finaliza a leitura apÛs digitar, obrigatoriamente, o n˙mero de telefone com 8 ou 9 dÌgitos.		
+*     S√≥ finaliza a leitura ap√≥s digitar, obrigatoriamente, o n√∫mero de telefone com 8 ou 9 d√≠gitos.		
 *
 ***********************************************************************/
 /*Assertivas: 
@@ -1440,11 +1439,11 @@
 
 /***********************************************************************
 *
-*  $FC FunÁ„o: MEN_leRG
+*  $FC Fun√ß√£o: MEN_leRG
 *
-*  $ED DescriÁ„o da funÁ„o
+*  $ED Descri√ß√£o da fun√ß√£o
 *	  Efetua a leitura do teclado permitindo digitar apenas numeros (1,2,3,4,5,6,7,8,9,0).
-*     SÛ finaliza a leitura apÛs digitar, obrigatoriamente, os 9 dÌgitos correspondente ao n˙mero de identidade.		
+*     S√≥ finaliza a leitura ap√≥s digitar, obrigatoriamente, os 9 d√≠gitos correspondente ao n√∫mero de identidade.		
 *
 ***********************************************************************/
 /*Assertivas: 
@@ -1485,9 +1484,9 @@
 
 /***********************************************************************
 *
-*  $FC FunÁ„o: MEN_menuAnterior
+*  $FC Fun√ß√£o: MEN_menuAnterior
 *
-*  $ED DescriÁ„o da funÁ„o
+*  $ED Descri√ß√£o da fun√ß√£o
 *	  		
 *
 ***********************************************************************/
@@ -1505,4 +1504,4 @@
 		
 	}
 
-/********** Fim do mÛdulo de implementaÁ„o: MEN Menu **********/
+/********** Fim do m√≥dulo de implementa√ß√£o: MEN Menu **********/
