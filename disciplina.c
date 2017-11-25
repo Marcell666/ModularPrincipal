@@ -28,8 +28,6 @@ LL - Clayton Lucas Mendes Lima
 *       0.08 mrol     26/10/2017   Adicionar funções de lista de turmas
 *	0.09 LL       31/10/2017  Adicionar funções de alterar
 ***************************************************************************/
-#define _CRT_SECURE_NO_WARNINGS
-#pragma warning( disable : 4996 ) 
 
 #include <string.h>
 #include <stdio.h>
@@ -470,9 +468,10 @@ DIS_tpCondRet DIS_insere_turma(Disciplina *d, Turma *t) {
 *  Função: DIS limpa lista de turmas para a disciplina
 *  ****/
 DIS_tpCondRet DIS_limpa_turma(Disciplina **d) {
+	LIS_tpCondRet ret;
 	if (*d != NULL) {
-		LIS_tpCondRet ret = clear((*d)->turmas);
-		return DIS_CondRetOK;
+		ret = clear((*d)->turmas);
+		return ret;
 	}
 	return DIS_CondRetErroEstrutura;
 }
