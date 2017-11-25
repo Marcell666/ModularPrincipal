@@ -15,8 +15,8 @@
 *
 *  $HA Histórico de evolução:
 *     Versão  Autor         Data		Observações
-*     0.02    Cris/Bruce  25/11/2017  	Revisão
-*     0.01    Cris/Bruce  25/11/2017    Início do desenvolvimento
+*     0.02    Bruce/Cris  25/11/2017  	Revisão
+*     0.01    Bruce/Cris  25/11/2017    Início do desenvolvimento
 *
 *  $ED Descrição do módulo
 *     Este módulo efetura leitura.
