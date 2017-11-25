@@ -148,7 +148,7 @@
 		do{
 			printf("\nMenu Professor\n");
 			printf("\nDigite 0: sair\n");
-			//printf("\nDigite 1: ver grade curricular");
+			printf("\nDigite 1: ver grade curricular");
 			//printf("\nDigite X: ver nota");
 			//printf("\nDigite X: ver turmas");
 			printf("\nDigite 5: modificar dados pessoais");
@@ -157,10 +157,10 @@
 
 			switch(opcao)
 			{	
-	/*			case 1:
+				case 1:
 					system("cls");
 					MEN_menuGradeCurricular();
-					break; */
+					break; 
 				case 2:
 					system("cls");
 					// Ir menu Aluno. Area onde o aluno realizar o menu
@@ -238,7 +238,7 @@
 			//printf("\nDigite 12: adicionar turma");
 			//printf("\nDigite 13: modificar grade");
 			//printf("\nDigite 4: ver criterio de aprovacao");
-			//printf("\nDigite 11: ver grade curricular\n\n");
+			//printf("\nDigite 11: Para ver a ver grade curricular\n\n");
 
 			printf( "\n\nDigite 0: Para sair do Menu Administrativo.\n\n" ) ;
 

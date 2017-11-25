@@ -767,7 +767,6 @@
 		GRC_tpCondRet ret;
 		int opcao;
 
-	
 		do {
 			printf("\nMenu Grade Curricular\n");
 			printf("EM DESENVOLVIMENTO\n");
@@ -813,9 +812,9 @@
 				if (opcao == 1) {
 					system("cls");
 					CDI_limpa();
-					printf("O corpo discente foi completamente apagado.\n");
+					printf("A grade curricular foi completamente apagada.\n");
 				}
-				GRC_limpa();
+				ret = GRC_limpa();//TODO verificar retorno
 				MEN_menuAnterior();
 				break;
 			case 8:
@@ -831,7 +830,7 @@
 					scanf("%d", &horIni);
 				} while (horIni > 21 || horIni <7);
 				do {
-					printf("Digita a hora do termino da aula (9 >= HorTer <= 23):\n");
+					printf("Digite a hora do termino da aula (9 >= HorTer <= 23):\n");
 					scanf("%d", &horTer);
 				} while (horTer >23 || horTer < 9);
 				printf("Digite a quantidade de vagas:\n");
