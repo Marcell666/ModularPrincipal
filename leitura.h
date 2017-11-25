@@ -6,7 +6,8 @@
 #define LER_TAM_UF 2
 #define LER_TAM_CPF 11
 #define LER_TAM_MAT 8
-#define LER_TAM_TEL 9
+#define LER_MIN_TEL 8
+#define LER_MAX_TEL 9
 #define LER_QTD_EST 27
 #define LER_TAM_RG 9
 
@@ -20,18 +21,24 @@
 #endif
 
 
-typedef int (*LER_Compara)(unsigned char);
+	typedef int (*LER_Compara)(unsigned char) ;
 
-void LER_leString ( char * leValor, int min, int max, LER_Compara compara);
-void LER_leInteiro( int * leValor,int min, int max, LER_Compara compara);
+	void LER_leString ( char * leValor, int min, int max, LER_Compara compara, int converte ) ;
 
-void LER_leUF ( char * UF );
-void LER_leData ( int * dia, int * mes, int * ano );
+	void LER_leInteiro( int * leValor,int min, int max, LER_Compara compara) ;
 
-int LER_comparaLeSoLetra(unsigned char a);
-int LER_comparaLeSoNumero(unsigned char a);
-int LER_comparaLeLogradouro(unsigned char a);
-int LER_comparaLeComplemento(unsigned char a);
-int LER_comparaLeEmail(unsigned char a);
+	void LER_leUF ( char * UF ) ;
+
+	void LER_leData ( int * dia, int * mes, int * ano );
+
+	int LER_comparaLeSoLetra ( unsigned char a ) ;
+
+	int LER_comparaLeSoNumero ( unsigned char a ) ;
+
+	int LER_comparaLeLogradouro ( unsigned char a ) ;
+
+	int LER_comparaLeComplemento ( unsigned char a ) ;
+
+	int LER_comparaLeEmail ( unsigned char a ) ;
 
 #endif

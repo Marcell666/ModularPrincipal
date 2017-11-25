@@ -23,41 +23,62 @@ int  main(void){
 	
 	//le data
 	LER_leData ( &dia, &mes, &ano );
-	printf("%d/%d/%d\n", dia, mes, ano);
+	printf("O que voce digitou: %d/%d/%d\n", dia, mes, ano);
+
 	//le uf
-	printf("Digite o uf\n");
+	printf("Digite o UF\n");
 	LER_leUF ( uf );
-	printf("%s\n", uf);
+	printf("O que voce digitou: %s\n", uf);
+
+	//Le so letra 
+	printf("\nFale sobre voce:\n");
+	LER_leString(b, 0, LER_TAM_STRING, LER_comparaLeSoLetra, 0);
+	printf("O que voce digitou: %s\n", b);
+
 	//Le so letra
-	printf("Fale sobre voce\n");
-	LER_leString(b, 0, LER_TAM_STRING, LER_comparaLeSoLetra);
-	printf("%s\n", b);
+	printf("\nGrite sobre voce:\n");
+	LER_leString(b, 0, LER_TAM_STRING, LER_comparaLeSoLetra, 1);
+	printf("O que voce digitou: %s\n", b);
+
+	//Le so letra
+	printf("\nSussurre sobre voce:\n");
+	LER_leString(b, 0, LER_TAM_STRING, LER_comparaLeSoLetra, -1);
+	printf("O que voce digitou: %s\n", b);
+
 	//le matricula
-	printf("Digite a matricula\n");
+	printf("\nDigite a matricula:\n");
 	LER_leInteiro(&a, LER_TAM_MAT, LER_TAM_MAT, LER_comparaLeSoNumero);
-	printf("%d\n", a);
+	printf("O que voce digitou: %d\n", a);
+
 	// le cpf
-	printf("Digite o cpf\n");
-	LER_leString(b, LER_TAM_CPF, LER_TAM_CPF, LER_comparaLeSoNumero);
-	printf("%s\n", b);
+	printf("\nDigite o CPF:\n");
+	LER_leString(b, LER_TAM_CPF, LER_TAM_CPF, LER_comparaLeSoNumero, 0);
+	printf("O que voce digitou: %s\n", b);
+
 	// le logradouro
-	printf("Digite o logradouro\n");
-	LER_leString(b, 0, LER_TAM_STRING, LER_comparaLeLogradouro);
-	printf("%s\n", b);
+	printf("\nDigite o logradouro:\n");
+	LER_leString(b, 0, LER_TAM_STRING, LER_comparaLeLogradouro, 0);
+	printf("O que voce digitou: %s\n", b);
+
 	// le complemento
-	printf("Digite o complemento\n");
-	LER_leString(b, 0, LER_TAM_STRING, LER_comparaLeComplemento);
+	printf("\nDigite o complemento:\n");
+	LER_leString(b, 0, LER_TAM_STRING, LER_comparaLeComplemento, 0);
+	printf("O que voce digitou: %s\n", b);
+
 	// le email
-	printf("Digite o email\n");
-	LER_leString(b, 5, 20, LER_comparaLeEmail);
-	printf("%s\n", b);
+	printf("\nDigite o email:\n");
+	LER_leString(b, 5, 20, LER_comparaLeEmail, 0);
+	printf("O que voce digitou: %s\n", b);
+
 	//le telefone
-	printf("Digite o telefone\n");
-	LER_leInteiro(&a, LER_TAM_TEL, LER_TAM_TEL, LER_comparaLeSoNumero);
-	printf("%d\n", a);
+	printf("\nDigite o telefone:\n");
+	LER_leInteiro(&a, LER_MIN_TEL, LER_MAX_TEL, LER_comparaLeSoNumero);
+	printf("O que voce digitou: %d\n", a);
+
 	//le rg
-	printf("Digite rg\n");
+	printf("\nDigite RG:\n");
 	LER_leInteiro(&a, LER_TAM_RG, LER_TAM_RG, LER_comparaLeSoNumero);
-	printf("%d\n", a);
+	printf("O que voce digitou: %d\n", a);
+
 	return 0;
 }
