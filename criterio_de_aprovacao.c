@@ -225,13 +225,13 @@ CRI_tpCondRet CRI_Criterio04(float G1, float G2, float G3, float G4, float *medi
 			*situacao = 1;
 			return CRI_CondRetOK;
 		}
-				else if(G1 >= 3.0 && G2>= 3.0 || ((G1 < 3.0 || G2 < 3.0) && G3 >=3.0)){
+				else if((G1 >= 3.0 && G2>= 3.0) || ((G1 < 3.0 || G2 < 3.0) && G3 >=3.0)){
 
 					*media = (maior1 + maior2)/2;
 
 		}else
 
-		if(G1 < 3.0 || G2 < 3.0 && G3 < 3.0)
+		if((G1 < 3.0 || G2 < 3.0) && G3 < 3.0)
 		*media = (G1 + G2 + (G3*2))/4;
 
 
