@@ -187,8 +187,6 @@ typedef int (*LER_Compara) (unsigned char) ;
 
 		} while ( i == LER_QTD_EST ) ;
 
-		printf( "\n" ) ;
-
 	} /* Fim função: LER  &Compara Le UF */
 
 /***************************************************************************
