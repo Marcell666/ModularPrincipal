@@ -630,7 +630,7 @@ HIS_tpCondRet HIS_printHistoricoCompleto (unsigned int matricula){
 	char periodo[tamPeriodo], disciplina[tamDisciplina], situacao[tamSituacao], grau[tamGrau], periodoCorrente[tamPeriodo] ;
 	historico = fopen(HIS_montaNomeArq(matricula),"r");
 	if (historico == NULL) {
-		printf("Nao foi encontrado registro de historico do aluno de matricula %u-%d.\n",matricula);
+		printf("Nao foi encontrado registro de historico do aluno de matricula %u.\n",matricula);
 		return HIS_CondRetErroAoAbrirArquivo;
 	}
 	
