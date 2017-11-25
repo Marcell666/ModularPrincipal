@@ -770,9 +770,7 @@
 	
 		do {
 			printf("\nMenu Grade Curricular\n");
-			//TODO
 			printf("EM DESENVOLVIMENTO\n");
-			MEN_menuAnterior();
 			for (i = 0;i <= nItens;i++)
 				printf("Digite %d: %s.\n", i, nomeFunc[i]);
 			scanf("%d", &opcao);
@@ -780,9 +778,10 @@
 			switch (opcao) {
 			case 1:
 				system("cls");
-				//ret = GRC_cadastraCMD();
+				ret = GRC_cadastraCMD();
 				break;
 			case 2:
+				system("cls");
 				GRC_mostraAtual();
 				break;
 			case 3:
@@ -804,9 +803,11 @@
 				ret = GRC_inserePreRequisito(codigo);
 				break;
 			case 6:
+				system("cls");
 				GRC_removePreRequisitos();
 				break;
 			case 7:
+				system("cls");
 				printf("\nDeseja mesmo apagar todo o corpo discente?\n1-Sim\n2-Nao\n");
 				scanf("%d", &opcao);
 				if (opcao == 1) {
@@ -818,12 +819,13 @@
 				MEN_menuAnterior();
 				break;
 			case 8:
+				system("cls");
 				printf("Digite o codigo da disciplina em que deseja inserir uma turma:\n");
-				scanf("%s", codigo);
+				scanf(" %s", codigo);
 				printf("Digite o codigo da turma:\n");
-				scanf("%s", codTur);
+				scanf(" %s", codTur);
 				printf("Digite o dia da semana da aula:\n");
-				scanf("%s", diaSem);
+				scanf(" %s", diaSem);
 				do {
 					printf("Digite a hora de inicio da aula(7 >= HorIni <= 21):\n");
 					scanf("%d", &horIni);
@@ -834,12 +836,13 @@
 				} while (horTer >23 || horTer < 9);
 				printf("Digite a quantidade de vagas:\n");
 				scanf("%d", &qtdVag);
-				//ret = GRC_insereTurma(codTur, horIni, horTer, diaSem, qtdVag, codigo);
+				ret = GRC_insereTurma(codTur, horIni, horTer, diaSem, qtdVag, codigo);
 				break;
 			case 9:
+				system("cls");
 				printf("Digite o codigo da disciplina que deseja checar as turmas:\n");
-				scanf("%s", codigo);
-				//ret = GRC_exibeTurmas(codigo);
+				scanf(" %s", codigo);
+				ret = GRC_exibeTurmas(codigo);
 				break;
 			default:
 				if (opcao)
@@ -847,7 +850,9 @@
 				break;
 			}
 			if (ret == GRC_CondRetOk)
+			{
 				printf("Operacao realizada com sucesso!\n");
+			}
 			else if (ret == GRC_CondRetNaoHaMemoria)
 				printf("ERRO. Nao ha memoria suficiente.\n");
 			else if (ret == GRC_CondRetGradeCurricularVazia)

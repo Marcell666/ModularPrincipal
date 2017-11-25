@@ -229,8 +229,8 @@
 			printf( "\nDigite 9: Para deletar um professor." ) ;
 			printf( "\nDigite 10: Para apagar os dados de todos os professores." ) ;
 
-			//printf( "\n\nGRADE CURRICULAR" ) ;
-			//printf( "\nDigite 11: Para acessar o menu da Grade Curricular." ) ;
+			printf( "\n\nGRADE CURRICULAR" ) ;
+			printf( "\nDigite 11: Para acessar o menu da Grade Curricular." ) ;
 
 			//printf("\nDigite 9: deletar sala");
 			//printf("\nDigite 10: adicionar sala");
@@ -300,9 +300,9 @@
 					//remove todos os professores
 					MEN_removeTodosProfessores() ;
 					break ;
-				//case 11:
-				//	MEN_menuGradeCurricular() ;
-				//	break ;
+				case 11:
+					MEN_menuGradeCurricular() ;
+					break ;
 				default:
 					if ( opcao )
 					{
