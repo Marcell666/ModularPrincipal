@@ -62,7 +62,7 @@
 *		Mostra o menu inicial.
 *
 ***********************************************************************/
-/*Assertivas: Retorno da função: Rertona 1, se os dados são validos.
+/*Assertivas: Retorno da função: Retorna 1, se os dados são validos.
 /			 Parâmentros: Estruturas de ponteiros.
 ***********************************************************************/
 	
@@ -173,6 +173,14 @@
 ***********************************************************************/
 
 	void MEN_removeTodosProfessores ( void ) ;
+
+/* TODO adicionar comentario */
+			
+	void MEN_adicionaDisciplina();
+	void MEN_modificaDisciplina();
+	void MEN_removeDisciplina();
+	void MEN_removeTodasDisciplinas();
+
 
 /***********************************************************************
 *

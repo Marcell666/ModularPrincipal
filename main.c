@@ -49,6 +49,7 @@
 #include "gradeCurricular.h"
 #include "HISTORICO.h"
 #include "menu.h"
+#include "leitura.h"
 
 /***********************************************************************
 *
@@ -100,7 +101,7 @@
 			//printf("\nDigite 6: cancelar disciplina");
 			//printf("\nDigite 7: trancar a faculdade");
 			printf( "\nDigite 3: ver historico\n" ) ;
-			opcao = MEN_leNumero() ;
+			//opcao = MEN_leNumero() ;
 
 			switch ( opcao )
 			{
@@ -153,7 +154,7 @@
 			//printf("\nDigite X: ver turmas");
 			printf("\nDigite 5: modificar dados pessoais");
 			
-			opcao = MEN_leNumero() ;
+			//opcao = MEN_leNumero() ;
 
 			switch(opcao)
 			{	
@@ -230,7 +231,12 @@
 			printf( "\nDigite 10: Para apagar os dados de todos os professores." ) ;
 
 			printf( "\n\nGRADE CURRICULAR" ) ;
-			printf( "\nDigite 11: Para acessar o menu da Grade Curricular." ) ;
+//			printf( "\nDigite 11: Para acessar o menu da Grade Curricular." ) ;
+			printf( "\nDigite 11: Para exibir a relacao de disciplinas." ) ;
+			printf( "\nDigite 12: Para cadastrar uma disciplina." ) ;
+			printf( "\nDigite 13: Para modificar uma disciplina." ) ;
+			printf( "\nDigite 14: Para remover uma disciplina." ) ;
+			printf( "\nDigite 15: Para apagar os dados de todas as disciplinas." ) ;
 
 			//printf("\nDigite 9: deletar sala");
 			//printf("\nDigite 10: adicionar sala");
@@ -242,7 +248,7 @@
 
 			printf( "\n\nDigite 0: Para sair do Menu Administrativo.\n\n" ) ;
 
-			opcao = MEN_leNumero() ;
+			LER_leInteiro(&opcao, 1, 2, LER_comparaLeSoNumero) ;
 			system( "cls" ) ;
 
 			switch( opcao )
@@ -252,7 +258,7 @@
 					printf( "*********** RELACAO DE ALUNOS CADASTRADOS ***********\n\n" ) ;
 					if ( CDI_imprime() != CDI_CondRetOK ) 
 					{
-						printf( "Nenhum professor cadastrado!\n\n" ) ; 
+						printf( "Nenhum aluno cadastrado!\n\n" ) ; 
 					} /* if */
 					menuAnterior() ;
 					break ;
@@ -267,7 +273,7 @@
 				case 4:
 					//remove um aluno
 					printf( "\nDigite a matricula: \n" ) ;
-					mat = MEN_leMatricula() ;
+					LER_leInteiro(&mat, LER_TAM_MAT, LER_TAM_MAT, LER_comparaLeSoNumero) ;
 					CDI_remove( mat ) ;
 					menuAnterior() ;
 					break;
@@ -301,8 +307,26 @@
 					MEN_removeTodosProfessores() ;
 					break ;
 				case 11:
-					MEN_menuGradeCurricular() ;
+					printf( "*********** RELACAO DE DISCIPLINAS CADASTRADAS ***********\n\n" ) ;
+					if ( GRC_mostraTodas() != GRC_CondRetOk ) 
+					{
+						printf( "Nenhuma disciplina cadastrada!\n\n" ) ; 
+					} /* if */
+					menuAnterior() ;
+					break ;				
+				case 12:
+					MEN_adicionaDisciplina();
+					//GRC_cadastraCMD();
 					break ;
+				case 13:
+					MEN_modificaDisciplina();
+					break ;
+				case 14:
+					MEN_removeDisciplina();
+					break ;
+				case 15:
+					MEN_removeTodasDisciplinas();
+					break ;			
 				default:
 					if ( opcao )
 					{
@@ -366,7 +390,8 @@
 			printf("\nDigite 2: Para acessar Menu do Professor" ) ;
 			printf( "\nDigite 3: Para acessar Menu Administrativo" ) ;
 			printf( "\n\nDigite 0: Para sair\n\n" ) ;
-			opcao = MEN_leNumero() ;
+			
+			LER_leInteiro(&opcao, 1, 2, LER_comparaLeSoNumero);
 
 			switch ( opcao )
 			{
