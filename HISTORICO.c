@@ -127,6 +127,8 @@ HIS_tpCondRet HIS_salvaHistoricoEmArquivo (HIS_tpHistorico ** pHistorico, unsign
 	
 
 	HIS_tpCondRet ret = HIS_getHistoricoCompleto(*pHistorico, &list);
+	if(ret != HIS_CondRetOk)
+		return ret;
 
 	createList(&listAux);
  
@@ -598,7 +600,6 @@ HIS_tpCondRet HIS_adicionaDisciplina(HIS_tpHistorico * pHistorico , Disciplina *
 
 	DIC_tpDisciplinaCursada * disciplinaCursada;
 	DIC_tpCondRet retCriacao;
-	HIS_tpCondRet retAdicaoDisciplinaCursada;
 	
 	if (pHistorico == NULL || disciplina == NULL) {
 		return HIS_CondRetRecebeuPonteiroNulo;
@@ -711,10 +712,9 @@ HIS_tpCondRet HIS_printHistoricoPeriodo (unsigned int matricula, char *periodo){
  **************************************************************************/
 
 static HIS_tpCondRet HIS_getCrAcumulado (FILE *historico, float *CR){
-	char lixo[10];
 	float grau, cred, somaCred=0, somaGrau=0;
 
-	while (fscanf(historico,"%s %s %f %s %f",&lixo,&lixo,&grau,&lixo,&cred) == 5){
+	while (fscanf(historico,"%*s %*s %f %*s %f", &grau, &cred) == 5){
 		somaGrau += grau*cred;
 		somaCred += cred;
 	}
@@ -745,7 +745,7 @@ static HIS_tpCondRet HIS_getCrPeriodo (FILE *historico, char *periodo, float *CR
 
 	if (periodo == NULL) return  HIS_CondRetErroInterno;
 
-	while (fscanf(historico," %s %s %f %s %f",&periodoaux,&lixo,&grau,&lixo,&cred) == 5){
+	while (fscanf(historico," %s %*s %f %*s %f", periodoaux, &grau, &cred) == 5){
 		if (!strcmp(periodoaux,periodo)){
 			somaGrau += grau*cred;
 			somaCred += cred;
