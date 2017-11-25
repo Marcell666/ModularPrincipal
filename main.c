@@ -20,6 +20,7 @@
 *
 *  $HA Histórico de evolução:
 *     Versão  Autor         Data		Observações
+*     1.03    Bruce/Cris 25/11/2017     Revisão/finalização
 *     1.02    Cristiane  15/11/2017     Revisão/Reestruturação
 *     1.01    Bruce	     07/10/2017	    Reestruturação
 *     1.00    Bruce	     06/10/2017     Revisão/finalização
@@ -86,46 +87,50 @@
 	void menuAluno ( void )
 	{
 		int opcao = 0 ;
-		unsigned int matricula ;
-		if ( MEN_loginAluno(&matricula) == 1 ) // Se volta 1, ok.
-
-		do 
-		{
-			printf( "\nMenu Aluno - Matricula: %d\n", matricula ) ;
-			printf( "\nDigite 0: sair" ) ; 
-			printf( "\nDigite 1: ver grade curricular" ) ;
-			//printf("\nDigite 2: ver horarios");
-			//printf("\nDigite 3: ver nota");
+		unsigned int matricula ; 
 		
-			printf( "\nDigite 2: modificar dados pessoais" ) ;
-			//printf("\nDigite 6: cancelar disciplina");
-			//printf("\nDigite 7: trancar a faculdade");
-			printf( "\nDigite 3: ver historico\n" ) ;
-			//opcao = MEN_leNumero() ;
-
-			switch ( opcao )
+		if ( MEN_loginAluno(&matricula) == 1 ) // Se retornar 1 o aluno esta cadastrado.
+		{ 
+			do 
 			{
-				case 1:
-					system("cls");
-					GRC_mostraTodas();
-					break;
-				case 2:
-					system("cls");
-					MEN_modificaAluno();
-					break;
-				case 3:
-					system("cls");
-					HIS_printHistoricoCompleto(matricula);
-					break;
-				default:
-					if(opcao)
-					{
-						system("cls");
-						printf("\n\nOPCAO INVALIDA!!!!!\n\n");
-					}
-					break;
-			}
-		}while(opcao);
+				printf( "\n*********** MENU ALUNO - MATRICULA: %d ***********\n", matricula ) ;
+			
+				printf( "\nDigite 1: Para alterar seus dados pessoais." ) ;
+				printf( "\nDigite 2: Para a ver grade curricular." ) ;
+				//printf("\nDigite 2: ver horarios");
+				//printf("\nDigite 3: ver nota");
+		
+				//printf("\nDigite 6: cancelar disciplina");
+				//printf("\nDigite 7: trancar a faculdade");
+				printf( "\nDigite 3: Para ver historico.\n" ) ;
+				printf( "\n\nDigite 0: Para sair do Menu Aluno.\n\n" ) ; 
+
+				LER_leInteiro( &opcao, 1, 1, LER_comparaLeSoNumero ) ;
+
+				switch ( opcao )
+				{
+					case 1:
+						system( "cls" ) ;
+						MEN_modificaAluno();
+						break;
+					case 2:
+						system( "cls" ) ;
+						GRC_mostraTodas();
+						break ;
+					case 3:
+						system( "cls" ) ;
+						HIS_printHistoricoCompleto(matricula) ;
+						break ;
+					default:
+						if ( opcao )
+						{
+							system( "cls" ) ;
+							printf( "\n\nOPCAO INVALIDA!!!!!\n\n" ) ;
+						}
+						break ;
+				}
+			} while ( opcao ) ;
+		}
 	}
 
 /***********************************************************************
@@ -140,43 +145,34 @@
 /			 Parâmentros: Estruturas de ponteiros.
 ***********************************************************************/
 
-	void menuProfessor()
+	void menuProfessor ( void )
 	{
-		int opcao = 0;
+		int opcao = 0 , matricula;
 
-		if(MEN_loginProfessor() == 1) // Se volta 1, ok.
+		if ( MEN_loginProfessor(&matricula) == 1 ) // Se volta 1, ok.
 
-		do{
-			printf("\nMenu Professor\n");
-			printf("\nDigite 0: sair\n");
-			printf("\nDigite 1: ver grade curricular");
+		do
+		{
+			printf( "\n*********** MENU PROFESSOR - MATRICULA: %d ***********\n", matricula ) ;
+			
+			printf( "\nDigite 1: Para alterar seus dados pessoais." ) ;
+			printf( "\nDigite 2: Para ver a grade curricular" ) ;
 			//printf("\nDigite X: ver nota");
 			//printf("\nDigite X: ver turmas");
-			printf("\nDigite 5: modificar dados pessoais");
-			
-			//opcao = MEN_leNumero() ;
+			//printf("\nDigite 5: modificar dados pessoais");
+			printf( "\n\nDigite 0: Para sair do Menu Professor.\n\n" ) ; 
+
+			LER_leInteiro( &opcao, 1, 1, LER_comparaLeSoNumero ) ;
 
 			switch(opcao)
 			{	
 				case 1:
 					system("cls");
-					MEN_menuGradeCurricular();
+					MEN_modificaProfessor();
 					break; 
 				case 2:
 					system("cls");
-					// Ir menu Aluno. Area onde o aluno realizar o menu
-					break;
-				case 3:
-					system("cls");
-					// Ir menu Aluno. Area onde o aluno realizar o menu
-					break;
-				case 4:
-					system("cls");
-					// Ir menu Aluno. Area onde o aluno realizar o menu
-					break;
-				case 5:
-					system("cls");
-					MEN_modificaProfessor();
+					MEN_menuGradeCurricular();
 					break;
 				default:
 					if(opcao)
@@ -240,15 +236,13 @@
 
 			//printf("\nDigite 9: deletar sala");
 			//printf("\nDigite 10: adicionar sala");
-			
 			//printf("\nDigite 12: adicionar turma");
-			//printf("\nDigite 13: modificar grade");
 			//printf("\nDigite 4: ver criterio de aprovacao");
-			//printf("\nDigite 11: Para ver a ver grade curricular\n\n");
 
 			printf( "\n\nDigite 0: Para sair do Menu Administrativo.\n\n" ) ;
 
-			LER_leInteiro(&opcao, 1, 2, LER_comparaLeSoNumero) ;
+			LER_leInteiro( &opcao, 1, 1, LER_comparaLeSoNumero ) ;
+			
 			system( "cls" ) ;
 
 			switch( opcao )
@@ -256,10 +250,7 @@
 				case 1:
 					//mostra relação de alunos
 					printf( "*********** RELACAO DE ALUNOS CADASTRADOS ***********\n\n" ) ;
-					if ( CDI_imprime() != CDI_CondRetOK ) 
-					{
-						printf( "Nenhum aluno cadastrado!\n\n" ) ; 
-					} /* if */
+					CDI_imprime() ;
 					menuAnterior() ;
 					break ;
 				case 2:
@@ -273,7 +264,7 @@
 				case 4:
 					//remove um aluno
 					printf( "\nDigite a matricula: \n" ) ;
-					LER_leInteiro(&mat, LER_TAM_MAT, LER_TAM_MAT, LER_comparaLeSoNumero) ;
+					LER_leInteiro( &mat, LER_TAM_MAT, LER_TAM_MAT, LER_comparaLeSoNumero ) ;
 					CDI_remove( mat ) ;
 					menuAnterior() ;
 					break;
@@ -391,7 +382,7 @@
 			printf( "\nDigite 3: Para acessar Menu Administrativo" ) ;
 			printf( "\n\nDigite 0: Para sair\n\n" ) ;
 			
-			LER_leInteiro(&opcao, 1, 2, LER_comparaLeSoNumero);
+			LER_leInteiro( &opcao, 1, 1, LER_comparaLeSoNumero ) ;
 
 			switch ( opcao )
 			{
