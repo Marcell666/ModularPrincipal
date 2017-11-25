@@ -225,8 +225,6 @@ typedef int (*LER_Compara) (unsigned char) ;
 
 		} while ( * ano < LER_MIN_ANO ) ;
 
-		printf( "\n" ) ;
-
 	} /* Fim função: LER  &Compara Le UF */
 
 
