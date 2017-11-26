@@ -243,7 +243,7 @@
 *  Função: MEN  &Modifica Aluno
 *  ****/
 
-	void MEN_modificaAluno(int matAnt)
+	void MEN_modificaAluno(unsigned int matAnt)
 	{
 
 		char nome[MEN_TAM_STRING], cpf_completo[MEN_TAM_CPF] ;
@@ -259,7 +259,7 @@
 		do
 		{
 			printf( "\nDados do aluno que deseja modificar os dados:\n" ) ;
-			CDI_imprimeInfo( (unsigned int)matAnt ) ;
+			CDI_imprimeInfo( matAnt ) ;
 			printf( "\n\nEscolha o dado a ser alterado: \n\n" ) ;
 			printf( "Digite 1: Nome\n" ) ;
 			printf( "Digite 2: Matricula\n" ) ;

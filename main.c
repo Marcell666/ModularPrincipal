@@ -1,6 +1,6 @@
 /***************************************************************************
 *
-*  $MCD M√≥dulo de defini√ß√£o: M√≥dulo Main
+*  $MCD MÛdulo de definiÁ„o: MÛdulo Main
 *
 *  Arquivo gerado:              main.c
 *  Letras identificadoras:      MAI
@@ -8,31 +8,31 @@
 *  Nome da base de software:
 *  Arquivo da base de software:
 *
-*  Projeto: Sistema Acad√™mico da turma 3WB
+*  Projeto: Sistema AcadÍmico da turma 3WB
 *  Gestor:  Grupo 1 / Grupo 2 / Grupo 5
 *  Autores:   Bruce Marcellino (Grupo 1)
 *			  Bruno Miranda Marinho (Grupo 2)
-*             Cristiane Ramalho Guimar√£es (Grupo 5)
-*             Fl√°vio Thiago Franco Vaz (Grupo 2)
-*             Jo√£o Victor Cerqueira (Grupo 2)
+*             Cristiane Ramalho Guimar„es (Grupo 5)
+*             Fl·vio Thiago Franco Vaz (Grupo 2)
+*             Jo„o Victor Cerqueira (Grupo 2)
 *             Matheus Henrique Branco Zeitune (Grupo 2)
-*             Vin√≠cius Cortat (Grupo 2)
+*             VinÌcius Cortat (Grupo 2)
 *
-*  $HA Hist√≥rico de evolu√ß√£o:
-*     Vers√£o  Autor         Data		Observa√ß√µes
-*     1.03    Bruce/Cris 25/11/2017     Revis√£o/finaliza√ß√£o
-*     1.02    Cristiane  15/11/2017     Revis√£o/Reestrutura√ß√£o
-*     1.01    Bruce	     07/10/2017	    Reestrutura√ß√£o
-*     1.00    Bruce	     06/10/2017     Revis√£o/finaliza√ß√£o
+*  $HA HistÛrico de evoluÁ„o:
+*     Vers„o  Autor         Data		ObservaÁıes
+*     1.03    Bruce/Cris 25/11/2017     Revis„o/finalizaÁ„o
+*     1.02    Cristiane  15/11/2017     Revis„o/ReestruturaÁ„o
+*     1.01    Bruce	     07/10/2017	    ReestruturaÁ„o
+*     1.00    Bruce	     06/10/2017     Revis„o/finalizaÁ„o
 *     0.05    Bruce	     05/10/2017	    Modulo professor
-*     0.04    Matheus    04/10/2017  	Revis√£o menu
+*     0.04    Matheus    04/10/2017  	Revis„o menu
 *     0.03    Bruno      02/10/2017	    Menu professor
-*     0.02    Fl√°vio	 02/10/2017  	Revis√£o
-*     0.01    Matheus	 01/10/2017	    In√≠cio do desenvolvimento
+*     0.02    Fl·vio	 02/10/2017  	Revis„o
+*     0.01    Matheus	 01/10/2017	    InÌcio do desenvolvimento
 *
-*  $ED Descri√ß√£o do m√≥dulo
-*     Este m√≥dulo implementa o Menu do Sistema Acad√™mico a ser desenvolvido.
-*     O Principal √© a chamada dos modulos.
+*  $ED DescriÁ„o do mÛdulo
+*     Este mÛdulo implementa o Menu do Sistema AcadÍmico a ser desenvolvido.
+*     O Principal È a chamada dos modulos.
 ***************************************************************************/
 
 #include <stdio.h>
@@ -55,14 +55,14 @@
 
 /***********************************************************************
 *
-*  $FC Fun√ß√£o: MEN_menuAluno.
+*  $FC FunÁ„o: MEN_menuAluno.
 *
-*  $ED Descri√ß√£o da fun√ß√£o
+*  $ED DescriÁ„o da funÁ„o
 *		Mostra o menu para o aluno.
 *
 ***********************************************************************/
-/*Assertivas: Retorno da fun√ß√£o: n√£o h√° retorno.
-/			 Par√¢mentros: Estruturas de ponteiros.
+/*Assertivas: Retorno da funÁ„o: n„o h· retorno.
+/			 Par‚mentros: Estruturas de ponteiros.
 ***********************************************************************/
 
 	void menuAluno ( void )
@@ -92,7 +92,7 @@
 				{
 					case 1:
 						system( "cls" ) ;
-						MEN_modificaAluno((int) matricula);
+						MEN_modificaAluno(matricula);
 						break;
 					case 2:
 						system( "cls" ) ;
@@ -116,21 +116,21 @@
 
 /***********************************************************************
 *
-*  $FC Fun√ß√£o: MEN_menuProfessor
+*  $FC FunÁ„o: MEN_menuProfessor
 *
-*  $ED Descri√ß√£o da fun√ß√£o
+*  $ED DescriÁ„o da funÁ„o
 *		Mostra o menu Professor.
 *
 ***********************************************************************/
-/*Assertivas: Retorno da fun√ß√£o: n√£o h√° retorno.
-/			 Par√¢mentros: Estruturas de ponteiros.
+/*Assertivas: Retorno da funÁ„o: n„o h· retorno.
+/			 Par‚mentros: Estruturas de ponteiros.
 ***********************************************************************/
 
 	void menuProfessor ( void )
 	{
 		int opcao = 0, matricula ;
 
-		if ( !MEN_loginProfessor(&matricula)){ // Se volta 0, n√£o ok.
+		if ( !MEN_loginProfessor(&matricula)){ // Se volta 0, n„o ok.
 			printf( "Nao existe professor cadastrado com este numero de matricula %d, por favor tente novamente\n", matricula ) ;
 			MEN_menuAnterior();
 			return;
@@ -173,14 +173,14 @@
 	
 /***********************************************************************
 *
-*  $FC Fun√ß√£o: MEN_menuPAdministrativo
+*  $FC FunÁ„o: MEN_menuPAdministrativo
 *
-*  $ED Descri√ß√£o da fun√ß√£o
+*  $ED DescriÁ„o da funÁ„o
 *		Mostra o menu Administrativo.
 *
 ***********************************************************************/
-/*Assertivas: Retorno da fun√ß√£o: n√£o h√° retorno.
-/			 Par√¢mentros: Estruturas de ponteiros.
+/*Assertivas: Retorno da funÁ„o: n„o h· retorno.
+/			 Par‚mentros: Estruturas de ponteiros.
 ***********************************************************************/
 
 	void menuPAdministrativo()
@@ -234,7 +234,7 @@
 			switch( opcao )
 			{
 				case 1:
-					//mostra rela√ß√£o de alunos
+					//mostra relaÁ„o de alunos
 					printf( "*********** RELACAO DE ALUNOS CADASTRADOS ***********\n\n" ) ;
 					CDI_imprime() ;
 					MEN_menuAnterior() ;
@@ -247,7 +247,7 @@
 					//altera os dados de um aluno
 
 					if(MEN_loginAluno(&uMat))
-						MEN_modificaAluno((int) uMat) ; 
+						MEN_modificaAluno(uMat) ; 
 					else
 						printf( "Nao existe aluno cadastrado com este numero de matricula %d, por favor tente novamente\n", mat) ;
 					break ;
@@ -263,7 +263,7 @@
 					CDI_limpa() ;
 					break ;
 				case 6:
-					//mostra rela√ß√£o de professores
+					//mostra relaÁ„o de professores
 					printf( "*********** RELACAO DE PROFESSORES CADASTRADOS ***********\n\n" ) ;
 					if ( CDO_mostraTodos() != CDO_CondRetOk ) 
 					{
@@ -328,14 +328,14 @@
 
 /***********************************************************************
 *
-*  $FC Fun√ß√£o: exibeTelaInicial
+*  $FC FunÁ„o: exibeTelaInicial
 *
-*  $ED Descri√ß√£o da fun√ß√£o
+*  $ED DescriÁ„o da funÁ„o
 *		Mostra o menu Administrativo.
 *
 ***********************************************************************/
-/*Assertivas: Retorno da fun√ß√£o: n√£o h√° retorno.
-/			 Par√¢mentros: Estruturas de ponteiros.
+/*Assertivas: Retorno da funÁ„o: n„o h· retorno.
+/			 Par‚mentros: Estruturas de ponteiros.
 ***********************************************************************/
 
 	void exibeTelaInicial() 
