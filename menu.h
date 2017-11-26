@@ -81,7 +81,7 @@
 /			 Parâmentros: Estruturas de ponteiros.
 ***********************************************************************/
 
-	int MEN_loginProfessor ( int matricula ) ;
+	int MEN_loginProfessor ( int *matricula ) ;
 	
 /***********************************************************************
 *
