@@ -106,21 +106,21 @@
 *  ****/
 
 	int MEN_loginProfessor ( int * matricula )
-	
-	{	
+
+	{
 
 		printf( "*********** LOGIN PROFESSOR ***********\n\n" ) ;
 
-		printf("\nDigite a matricula (8 digitos): ");
-		LER_leInteiro(matricula, LER_TAM_MAT, LER_TAM_MAT, LER_comparaLeSoNumero);
+		printf( "\nDigite a matricula (8 digitos): " ) ;
+		LER_leInteiro( matricula, LER_MIN_TEL, LER_MAX_TEL, LER_comparaLeSoNumero ) ;
 		printf("\n");
-		if(CDO_buscaPorMatricula(*matricula) == CDO_CondRetOk)
+		if( CDO_buscaPorMatricula(*matricula) == CDO_CondRetOk )
 		{
 			system( "cls" ) ;
-			return 1;
+			return 1 ;
 		}
 
-		return 0;
+		return 0 ;
 
 	} /* Fim função: MEN  &Login Professor */
 
@@ -129,16 +129,16 @@
 *  Função: MEN  &Login Aluno
 *  ****/
 
-	int MEN_loginAluno ( unsigned int *matricula )
+	int MEN_loginAluno ( unsigned int * matricula )
 	{
-		int mat;
-		Aluno* Al;
+		int mat ;
+		Aluno* Al ;
 
 		printf( "*********** LOGIN ALUNO ***********\n\n" ) ;
 
 		printf( "\nDigite a matricula (8 digitos): " ) ;
-		LER_leInteiro(&mat, LER_TAM_MAT, LER_TAM_MAT, LER_comparaLeSoNumero ) ;
-		printf("\n");
+		LER_leInteiro( &mat, LER_MIN_TEL, LER_MAX_TEL, LER_comparaLeSoNumero ) ;
+		printf( "\n" ) ;
 
 		if( CDI_busca(mat,&Al) == CDI_CondRetAlunoNaoCadastrado )
 		{
@@ -149,9 +149,9 @@
 			return 0;
 		}
 
-		*matricula = (unsigned int) mat;
-		system("cls");
-		return 1;
+		* matricula = (unsigned int) mat ;
+		system( "cls" ) ;
+		return 1 ;
 
 	} /* Fim função: MEN  &Login Aluno */
 
@@ -242,14 +242,15 @@
 *  Função: MEN  &Modifica Aluno
 *  ****/
 
-	void MEN_modificaAluno(unsigned int matAnt)
+	void MEN_modificaAluno ( int matAnt )
 	{
 
 		char nome[MEN_TAM_STRING], cpf_completo[MEN_TAM_CPF] ;
-		int mat, telefone;
+		int mat, telefone ;
 		Data nasc ; 
 		Endereco end ;
 		CPF cpf ;
+		Aluno * Alu ;
 		int opcao ;
 		CDI_tpCondRet ret ;
 
@@ -258,7 +259,7 @@
 		do
 		{
 			printf( "\nDados do aluno que deseja modificar os dados:\n" ) ;
-			CDI_imprimeInfo( matAnt ) ;
+			CDI_imprimeInfo( (unsigned int)matAnt ) ;
 			printf( "\n\nEscolha o dado a ser alterado: \n\n" ) ;
 			printf( "Digite 1: Nome\n" ) ;
 			printf( "Digite 2: Matricula\n" ) ;
@@ -441,8 +442,9 @@
 *  Função: MEN  &Modifica Professor
 *  ****/
 
-	void MEN_modificaProfessor()
+	void MEN_modificaProfessor ( void )
 	{
+
 		char nomeFunc[][30] = { "Para voltar ao menu anterior.", "Nome", "RG", "CPF", "Matricula", "Email", "Telefone", "Data", "Endereco" } ;
 		int nAlteras = 9, i ;
 		CDO_alteraInt funcInt[] = { NULL, NULL, CDO_alteraRg, NULL, CDO_alteraMatricula, NULL,CDO_alteraTelefone, NULL, NULL } ;
@@ -456,7 +458,7 @@
 
 		system( "cls" ) ;
 		printf( "\n*********** EDITAR DADOS DE PROFESSOR(A) ***********\n" ) ;
-		
+				
 		do
 		{
 			printf( "Dados do professor que deseja modificar os dados:\n" ) ;
@@ -554,7 +556,7 @@
 				{
 					printf( "ERRO. Formato de dados invalido.\n" ) ;
 				} else
-					if( ret == CDO_CondRetIdJaCriado )
+					if ( ret == CDO_CondRetIdJaCriado )
 					{
 						printf( "ERRO. Ja existe um professor com este valor de identificacao.\n" ) ;
 					} /* if */
@@ -645,7 +647,7 @@
 				{
 					case 1:
 						CDO_limpa() ;
-						printf ("\nTodos os dados de todos os professores foram removidos com sucesso!\n");
+						printf ("\nTodos os dados de todos os professores foram remivos com sucesso!\n");
 						MEN_menuAnterior() ;
 						return ;
 						//break ;
@@ -1149,21 +1151,10 @@
 	
 	} /* Fim função: MEN  &Menu Grade Curricular */
 
-
-/*****  Código das funções encapsuladas no módulo  *****/
-
-
-/***********************************************************************
+/***************************************************************************
 *
-*  $FC Função: MEN  -Menu Anterior
-*
-*  $ED Descrição da função
-*	  		
-*
-***********************************************************************/
-/*Assertivas: 
-/			 
-***********************************************************************/
+*  Função: MEN  &Menu Anterior
+*  ****/
 
 	void MEN_menuAnterior (void) 
 	{
@@ -1174,6 +1165,9 @@
 		
 	} /* Fim função: MEN  -Menu Anterior */
 
+
+/*****  Código das funções encapsuladas no módulo  *****/
+	
 /***********************************************************************
 *
 *  $FC Função: MEN  -Compara Le Codigo GRC

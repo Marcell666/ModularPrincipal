@@ -92,7 +92,7 @@
 				{
 					case 1:
 						system( "cls" ) ;
-						MEN_modificaAluno(matricula);
+						MEN_modificaAluno((int) matricula);
 						break;
 					case 2:
 						system( "cls" ) ;
@@ -128,13 +128,14 @@
 
 	void menuProfessor ( void )
 	{
-		int opcao = 0, matricula ;
+		int opcao = 0 , matricula ;
 
-		if ( !MEN_loginProfessor(&matricula)){ // Se volta 0, não ok.
+		if ( !MEN_loginProfessor(&matricula))
+		{ // Se volta 0, não ok.
 			printf( "Nao existe professor cadastrado com este numero de matricula %d, por favor tente novamente\n", matricula ) ;
 			MEN_menuAnterior();
 			return;
-		}
+		} /* if */
 
 		do
 		{
@@ -245,11 +246,13 @@
 					break ;
 				case 3:
 					//altera os dados de um aluno
-
-					if(MEN_loginAluno(&uMat))
-						MEN_modificaAluno(uMat) ; 
-					else
+					if ( MEN_loginAluno(&uMat) )
+					{
+						MEN_modificaAluno( (int) uMat ) ; 
+					} else
+					{
 						printf( "Nao existe aluno cadastrado com este numero de matricula %d, por favor tente novamente\n", mat) ;
+					}
 					break ;
 				case 4:
 					//remove um aluno
@@ -277,7 +280,6 @@
 					break ;
 				case 8:
 					//altera os dados de um professor
-
 					if(MEN_loginProfessor(&mat))
 						MEN_modificaProfessor() ;
 					else
@@ -413,4 +415,5 @@
 		} while ( opcao ) ;
 		
 		return 0 ;
-}
+	}
+

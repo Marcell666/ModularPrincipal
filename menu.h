@@ -81,7 +81,7 @@
 /			 Parâmentros: Estruturas de ponteiros.
 ***********************************************************************/
 
-	int MEN_loginProfessor (int * matricula) ;
+	int MEN_loginProfessor ( int * matricula ) ;
 	
 /***********************************************************************
 *
@@ -117,7 +117,7 @@
 *
 ***********************************************************************/
 
-	void MEN_modificaAluno ( unsigned int matAnt ) ;
+	void MEN_modificaAluno ( int matAnt ) ;
 
 /***********************************************************************
 *
@@ -254,7 +254,7 @@
 *
 ***********************************************************************/
 /*Assertivas: Retorno da função: não há retorno.
-/			 Parâmetros: não há parametros.
+/			 Parâmentros: Estruturas de ponteiros.
 ***********************************************************************/
 
 	void MEN_menuAnterior (void) ;
