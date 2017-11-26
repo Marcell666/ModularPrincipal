@@ -8,6 +8,8 @@
 #define LER_TAM_MAT 8
 #define LER_MIN_TEL 8
 #define LER_MAX_TEL 9
+#define LER_MIN_NUM 1
+#define LER_MAX_NUM 8
 #define LER_QTD_EST 27
 #define LER_TAM_RG 9
 
