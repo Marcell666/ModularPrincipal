@@ -130,7 +130,7 @@
 *  Função: MEN  &Login Aluno
 *  ****/
 
-	int MEN_loginAluno ( unsigned int *matricula )
+	int MEN_loginAluno ( unsigned int * matricula )
 	{
 		int mat;
 		Aluno* Al;
@@ -145,13 +145,13 @@
 		{
 			printf("Matricula invalida\n");
 			printf("\nPressione qualquer tecla para voltar para o menu anterior.\n") ;
-			getch();
-			system("cls");
+			getch() ;
+			system( "cls" ) ;
 			return 0;
 		}
 
-		*matricula = mat;
-		system("cls");
+		*matricula = mat ;
+		system( "cls" ) ;
 		return 1;
 
 	} /* Fim função: MEN  &Login Aluno */
@@ -269,7 +269,7 @@
 
 		do
 		{
-			printf( "Dados do aluno que deseja modificar os dados:\n" ) ;
+			printf( "\nDados do aluno que deseja modificar os dados:\n" ) ;
 			CDI_imprimeInfo( (unsigned int)matAnt ) ;
 			printf( "\n\nEscolha o dado a ser alterado: \n\n" ) ;
 			printf( "Digite 1: Nome\n" ) ;
@@ -297,7 +297,7 @@
 					ret = CDI_altera( matAnt, NULL, (unsigned int)mat, NULL, 0, NULL, NULL ) ;
 					break ;
 				case 3:
-					printf( "\nDigite o novo telefone do aluno: \n" ) ;
+					printf( "\nDigite o novo telefone do aluno (8 ou 9 digitos): \n" ) ;
 					LER_leInteiro( &telefone, LER_MIN_TEL, LER_MAX_TEL, LER_comparaLeSoNumero ) ;
 					ret = CDI_altera( matAnt, NULL, 0, NULL, (unsigned int)telefone, NULL, NULL ) ;
 					break ;
