@@ -243,29 +243,18 @@
 *  Função: MEN  &Modifica Aluno
 *  ****/
 
-	void MEN_modificaAluno()
+	void MEN_modificaAluno(int matAnt)
 	{
 
 		char nome[MEN_TAM_STRING], cpf_completo[MEN_TAM_CPF] ;
-		int mat, telefone, matAnt ;
+		int mat, telefone;
 		Data nasc ; 
 		Endereco end ;
 		CPF cpf ;
-		Aluno * Alu ;
 		int opcao ;
 		CDI_tpCondRet ret ;
 
 		printf( "\n*********** EDITAR DADOS DE ALUNO ***********\n\n" ) ;
-
-		printf( "Digite a matricula do aluno para alterar seus dados: " ) ;
-
-		LER_leInteiro( &matAnt, LER_TAM_MAT, LER_TAM_MAT, LER_comparaLeSoNumero ) ;
-
-		if ( CDI_busca( (unsigned int)matAnt, &Alu ) != CDI_CondRetOK ) 
-		{
-			printf( "Nao existe aluno cadastrado com este numero de matricula %d.\n", matAnt ) ;
-			MEN_menuAnterior() ;
-		}
 
 		do
 		{

@@ -92,7 +92,7 @@
 				{
 					case 1:
 						system( "cls" ) ;
-						MEN_modificaAluno();
+						MEN_modificaAluno((int) matricula);
 						break;
 					case 2:
 						system( "cls" ) ;
@@ -227,7 +227,7 @@
 
 			printf( "\n\nDigite 0: Para sair do Menu Administrativo.\n\n" ) ;
 
-			LER_leInteiro( &opcao, 1, 1, LER_comparaLeSoNumero ) ;
+			LER_leInteiro( &opcao, 1, 2, LER_comparaLeSoNumero ) ;
 			
 			system( "cls" ) ;
 
@@ -247,7 +247,7 @@
 					//altera os dados de um aluno
 
 					if(MEN_loginAluno(&uMat))
-						MEN_modificaAluno() ; 
+						MEN_modificaAluno((int) uMat) ; 
 					else
 						printf( "Nao existe aluno cadastrado com este numero de matricula %d, por favor tente novamente\n", mat) ;
 					break ;
