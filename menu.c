@@ -65,6 +65,7 @@
 /*****  Protótipos das funções encapsuladas no módulo  *****/
 
 	void MEN_menuAnterior (void) ;
+	int MEN_comparaLeCodigoGRC ( unsigned char c ) ;
 
 /*****  Código das funções exportadas pelo módulo  *****/
 
@@ -73,7 +74,7 @@
 *  Função: MEN  &Login Administrativo
 *  ****/
 
-	int MEN_loginAdministrativo()
+	int MEN_loginAdministrativo ( void )
 	{
 
 		char user[MEN_TAM_STRING];
@@ -129,18 +130,18 @@
 *  Função: MEN  &Login Aluno
 *  ****/
 
-	int MEN_loginAluno(unsigned int *matricula)
+	int MEN_loginAluno ( unsigned int *matricula )
 	{
 		int mat;
 		Aluno* Al;
 
 		printf( "*********** LOGIN ALUNO ***********\n\n" ) ;
 
-		printf("\nDigite a matricula (8 digitos): ");
-		LER_leInteiro(&mat, LER_MIN_TEL, LER_MAX_TEL, LER_comparaLeSoNumero);
+		printf( "\nDigite a matricula (8 digitos): " ) ;
+		LER_leInteiro( &mat, LER_MIN_TEL, LER_MAX_TEL, LER_comparaLeSoNumero ) ;
 		printf("\n");
 
-		if(CDI_busca(mat,&Al) == CDI_CondRetAlunoNaoCadastrado)
+		if( CDI_busca(mat,&Al) == CDI_CondRetAlunoNaoCadastrado )
 		{
 			printf("Matricula invalida\n");
 			printf("\nPressione qualquer tecla para voltar para o menu anterior.\n") ;
@@ -924,7 +925,7 @@
 *  Função: MEN  &Remove Disciplina
 *  ****/
 
-	void MEN_removeDisciplina()
+	void MEN_removeDisciplina ( void )
 	{
 
 		int opcao ;
@@ -1016,6 +1017,7 @@
 
 		printf ( "\nNenhum dado de nenhuma disciplina foi removido.\n" ) ; 
 		MEN_menuAnterior() ;
+
 	} /* Fim função: MEN  &Remove Todas Disciplina */
 
 /***************************************************************************
@@ -1198,5 +1200,24 @@
 		return ;
 		
 	} /* Fim função: MEN  -Menu Anterior */
+
+/***********************************************************************
+*
+*  $FC Função: MEN  -Compara Le Codigo GRC
+*
+*  $ED Descrição da função
+*	  		
+*
+***********************************************************************/
+/*Assertivas: 
+/			 
+***********************************************************************/
+
+	int MEN_comparaLeCodigoGRC ( unsigned char c )
+	{
+
+		return isalpha(c) || isdigit(c) || c==' ' || c== '-' ;
+
+	} /* Fim função: MEN  -Compara Le Codigo GRC */
 
 /********** Fim do módulo de implementação: MEN Menu **********/
