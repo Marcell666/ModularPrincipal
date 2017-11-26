@@ -20,6 +20,7 @@
 *
 *  $HA Histórico de evolução:
 *     Versão  Autor         Data		Observações
+*     1.03    Bruce/Cris 25/11/2017     Revisão/finalização
 *     1.02    Cristiane  15/11/2017	    Revisão                                        
 *     1.01    Bruce	     07/10/2017	    Reestruturação
 *     1.00    Bruce	     06/10/2017	    Revisão/finalização
@@ -62,7 +63,7 @@
 *		Mostra o menu inicial.
 *
 ***********************************************************************/
-/*Assertivas: Retorno da função: Retorna 1, se os dados são validos.
+/*Assertivas: Retorno da função: Rertona 1, se os dados são validos.
 /			 Parâmentros: Estruturas de ponteiros.
 ***********************************************************************/
 	
@@ -80,7 +81,7 @@
 /			 Parâmentros: Estruturas de ponteiros.
 ***********************************************************************/
 
-	int MEN_loginProfessor ( void ) ;
+	int MEN_loginProfessor ( int matricula ) ;
 	
 /***********************************************************************
 *
@@ -174,13 +175,61 @@
 
 	void MEN_removeTodosProfessores ( void ) ;
 
-/* TODO adicionar comentario */
-			
-	void MEN_adicionaDisciplina();
-	void MEN_modificaDisciplina();
-	void MEN_removeDisciplina();
-	void MEN_removeTodasDisciplinas();
+/***********************************************************************
+*
+*  $FC Função: MEN_removeProfessor
+*
+*  $ED Descrição da função
+*		
+*
+***********************************************************************/
+/*Assertivas: Retorno da função: não há retorno.
+/			 Parâmentros: Estruturas de ponteiros.
+***********************************************************************/
 
+	void MEN_adicionaDisciplina ( void ) ;
+
+/***********************************************************************
+*
+*  $FC Função: MEN_removeProfessor
+*
+*  $ED Descrição da função
+*		
+*
+***********************************************************************/
+/*Assertivas: Retorno da função: não há retorno.
+/			 Parâmentros: Estruturas de ponteiros.
+***********************************************************************/
+	
+	void MEN_modificaDisciplina ( void ) ;
+
+/***********************************************************************
+*
+*  $FC Função: MEN_removeProfessor
+*
+*  $ED Descrição da função
+*		
+*
+***********************************************************************/
+/*Assertivas: Retorno da função: não há retorno.
+/			 Parâmentros: Estruturas de ponteiros.
+***********************************************************************/
+
+	void MEN_removeDisciplina ( void ) ;
+
+/***********************************************************************
+*
+*  $FC Função: MEN_removeProfessor
+*
+*  $ED Descrição da função
+*		
+*
+***********************************************************************/
+/*Assertivas: Retorno da função: não há retorno.
+/			 Parâmentros: Estruturas de ponteiros.
+***********************************************************************/
+
+	void MEN_removeTodasDisciplinas ( void ) ;
 
 /***********************************************************************
 *
@@ -196,30 +245,4 @@
 
 	void MEN_menuGradeCurricular ( void ) ;
 
-/***********************************************************************
-*
-*  $FC Função: MEN_leNumero
-*
-*  $ED Descrição da função
-*		
-*
-***********************************************************************/
-/*Assertivas: Retorno da função: não há retorno.
-/			 Parâmentros: Estruturas de ponteiros.
-***********************************************************************/
-
-	int MEN_leNumero ( void ) ;
-
-/***********************************************************************
-*
-*  $FC Função: MEN_leMatricula 
-*
-*  $ED Descrição da função
-*		
-*
-***********************************************************************/
-/*Assertivas: Retorno da função: não há retorno.
-/			 Parâmentros: Estruturas de ponteiros.
-***********************************************************************/
-
-	int MEN_leMatricula ( void ) ;
+/********** Fim do módulo de definição: Módulo Menu **********/
