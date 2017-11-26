@@ -1,6 +1,6 @@
 /***************************************************************************
 *
-*  $MCD MÛdulo de definiÁ„o: MÛdulo Main
+*  $MCD M√≥dulo de defini√ß√£o: M√≥dulo Main
 *
 *  Arquivo gerado:              main.c
 *  Letras identificadoras:      MAI
@@ -8,31 +8,31 @@
 *  Nome da base de software:
 *  Arquivo da base de software:
 *
-*  Projeto: Sistema AcadÍmico da turma 3WB
+*  Projeto: Sistema Acad√™mico da turma 3WB
 *  Gestor:  Grupo 1 / Grupo 2 / Grupo 5
 *  Autores:   Bruce Marcellino (Grupo 1)
 *			  Bruno Miranda Marinho (Grupo 2)
-*             Cristiane Ramalho Guimar„es (Grupo 5)
-*             Fl·vio Thiago Franco Vaz (Grupo 2)
-*             Jo„o Victor Cerqueira (Grupo 2)
+*             Cristiane Ramalho Guimar√£es (Grupo 5)
+*             Fl√°vio Thiago Franco Vaz (Grupo 2)
+*             Jo√£o Victor Cerqueira (Grupo 2)
 *             Matheus Henrique Branco Zeitune (Grupo 2)
-*             VinÌcius Cortat (Grupo 2)
+*             Vin√≠cius Cortat (Grupo 2)
 *
-*  $HA HistÛrico de evoluÁ„o:
-*     Vers„o  Autor         Data		ObservaÁıes
-*     1.03    Bruce/Cris 25/11/2017     Revis„o/finalizaÁ„o
-*     1.02    Cristiane  15/11/2017     Revis„o/ReestruturaÁ„o
-*     1.01    Bruce	     07/10/2017	    ReestruturaÁ„o
-*     1.00    Bruce	     06/10/2017     Revis„o/finalizaÁ„o
+*  $HA Hist√≥rico de evolu√ß√£o:
+*     Vers√£o  Autor         Data		Observa√ß√µes
+*     1.03    Bruce/Cris 25/11/2017     Revis√£o/finaliza√ß√£o
+*     1.02    Cristiane  15/11/2017     Revis√£o/Reestrutura√ß√£o
+*     1.01    Bruce	     07/10/2017	    Reestrutura√ß√£o
+*     1.00    Bruce	     06/10/2017     Revis√£o/finaliza√ß√£o
 *     0.05    Bruce	     05/10/2017	    Modulo professor
-*     0.04    Matheus    04/10/2017  	Revis„o menu
+*     0.04    Matheus    04/10/2017  	Revis√£o menu
 *     0.03    Bruno      02/10/2017	    Menu professor
-*     0.02    Fl·vio	 02/10/2017  	Revis„o
-*     0.01    Matheus	 01/10/2017	    InÌcio do desenvolvimento
+*     0.02    Fl√°vio	 02/10/2017  	Revis√£o
+*     0.01    Matheus	 01/10/2017	    In√≠cio do desenvolvimento
 *
-*  $ED DescriÁ„o do mÛdulo
-*     Este mÛdulo implementa o Menu do Sistema AcadÍmico a ser desenvolvido.
-*     O Principal È a chamada dos modulos.
+*  $ED Descri√ß√£o do m√≥dulo
+*     Este m√≥dulo implementa o Menu do Sistema Acad√™mico a ser desenvolvido.
+*     O Principal √© a chamada dos modulos.
 ***************************************************************************/
 
 #include <stdio.h>
@@ -55,14 +55,14 @@
 
 /***********************************************************************
 *
-*  $FC FunÁ„o: MEN_menuAluno.
+*  $FC Fun√ß√£o: MEN_menuAluno.
 *
-*  $ED DescriÁ„o da funÁ„o
+*  $ED Descri√ß√£o da fun√ß√£o
 *		Mostra o menu para o aluno.
 *
 ***********************************************************************/
-/*Assertivas: Retorno da funÁ„o: n„o h· retorno.
-/			 Par‚mentros: Estruturas de ponteiros.
+/*Assertivas: Retorno da fun√ß√£o: n√£o h√° retorno.
+/			 Par√¢mentros: Estruturas de ponteiros.
 ***********************************************************************/
 
 	void menuAluno ( void )
@@ -116,21 +116,21 @@
 
 /***********************************************************************
 *
-*  $FC FunÁ„o: MEN_menuProfessor
+*  $FC Fun√ß√£o: MEN_menuProfessor
 *
-*  $ED DescriÁ„o da funÁ„o
+*  $ED Descri√ß√£o da fun√ß√£o
 *		Mostra o menu Professor.
 *
 ***********************************************************************/
-/*Assertivas: Retorno da funÁ„o: n„o h· retorno.
-/			 Par‚mentros: Estruturas de ponteiros.
+/*Assertivas: Retorno da fun√ß√£o: n√£o h√° retorno.
+/			 Par√¢mentros: Estruturas de ponteiros.
 ***********************************************************************/
 
 	void menuProfessor ( void )
 	{
 		int opcao = 0, matricula ;
 
-		if ( !MEN_loginProfessor(&matricula)){ // Se volta 0, n„o ok.
+		if ( !MEN_loginProfessor(&matricula)){ // Se volta 0, n√£o ok.
 			printf( "Nao existe professor cadastrado com este numero de matricula %d, por favor tente novamente\n", matricula ) ;
 			MEN_menuAnterior();
 			return;
@@ -173,14 +173,14 @@
 	
 /***********************************************************************
 *
-*  $FC FunÁ„o: MEN_menuPAdministrativo
+*  $FC Fun√ß√£o: MEN_menuPAdministrativo
 *
-*  $ED DescriÁ„o da funÁ„o
+*  $ED Descri√ß√£o da fun√ß√£o
 *		Mostra o menu Administrativo.
 *
 ***********************************************************************/
-/*Assertivas: Retorno da funÁ„o: n„o h· retorno.
-/			 Par‚mentros: Estruturas de ponteiros.
+/*Assertivas: Retorno da fun√ß√£o: n√£o h√° retorno.
+/			 Par√¢mentros: Estruturas de ponteiros.
 ***********************************************************************/
 
 	void menuPAdministrativo()
@@ -234,7 +234,7 @@
 			switch( opcao )
 			{
 				case 1:
-					//mostra relaÁ„o de alunos
+					//mostra rela√ß√£o de alunos
 					printf( "*********** RELACAO DE ALUNOS CADASTRADOS ***********\n\n" ) ;
 					CDI_imprime() ;
 					MEN_menuAnterior() ;
@@ -251,8 +251,6 @@
 					else
 						printf( "Nao existe aluno cadastrado com este numero de matricula %d, por favor tente novamente\n", mat) ;
 					break ;
-
-					break ;
 				case 4:
 					//remove um aluno
 					printf( "\nDigite a matricula: \n" ) ;
@@ -265,7 +263,7 @@
 					CDI_limpa() ;
 					break ;
 				case 6:
-					//mostra relaÁ„o de professores
+					//mostra rela√ß√£o de professores
 					printf( "*********** RELACAO DE PROFESSORES CADASTRADOS ***********\n\n" ) ;
 					if ( CDO_mostraTodos() != CDO_CondRetOk ) 
 					{
@@ -330,14 +328,14 @@
 
 /***********************************************************************
 *
-*  $FC FunÁ„o: exibeTelaInicial
+*  $FC Fun√ß√£o: exibeTelaInicial
 *
-*  $ED DescriÁ„o da funÁ„o
+*  $ED Descri√ß√£o da fun√ß√£o
 *		Mostra o menu Administrativo.
 *
 ***********************************************************************/
-/*Assertivas: Retorno da funÁ„o: n„o h· retorno.
-/			 Par‚mentros: Estruturas de ponteiros.
+/*Assertivas: Retorno da fun√ß√£o: n√£o h√° retorno.
+/			 Par√¢mentros: Estruturas de ponteiros.
 ***********************************************************************/
 
 	void exibeTelaInicial() 
