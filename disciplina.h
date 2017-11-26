@@ -27,6 +27,7 @@
 ***************************************************************************/
 
 #include "turma.h"
+
 #define MAX_NOME 25
 #define MAX_CODIGO 8
 #define MAX_BIBLIOGRAFIA 300

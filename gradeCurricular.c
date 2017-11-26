@@ -247,9 +247,9 @@ GRC_tpCondRet GRC_libera() {
 
 GRC_tpCondRet GRC_buscaPorCodigo(char *chave) {
 	ParDisciplina *parD = NULL;
-	char *codigo = NULL;
 	char *inicioCod = NULL;
-	int ret, i, size;
+	int i;
+	unsigned int size;
 
 	list_size(grc->parDisciplinas, &size);	// Pego o tamanho da lista
 	first(grc->parDisciplinas);	// Seto a lista para o primeiro nó

@@ -127,7 +127,7 @@ HIS_tpCondRet HIS_salvaHistoricoEmArquivo (HIS_tpHistorico ** pHistorico, unsign
 	
 
 	HIS_tpCondRet ret = HIS_getHistoricoCompleto(*pHistorico, &list);
-	if(ret != HIS_CondRetOk)
+	if(ret != HIS_CondRetOK)
 		return ret;
 
 	createList(&listAux);
@@ -740,7 +740,7 @@ static HIS_tpCondRet HIS_getCrAcumulado (FILE *historico, float *CR){
  **************************************************************************/
 
 static HIS_tpCondRet HIS_getCrPeriodo (FILE *historico, char *periodo, float *CR){
-	char lixo[10], periodoaux[tamPeriodo];
+	char periodoaux[tamPeriodo];
 	float grau, cred, somaCred=0, somaGrau=0;
 
 	if (periodo == NULL) return  HIS_CondRetErroInterno;

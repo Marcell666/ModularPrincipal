@@ -697,10 +697,10 @@
 	{
 
 		//TODO trocar isso por define
-		char nome[25] ;
-		char codigo[8] ;
-		char bibliografia[300] ;
-		char ementa[300] ;
+		char nome[MEN_MAX_NOME] ;
+		char codigo[MEN_MAX_CODIGO] ;
+		char bibliografia[MEN_MAX_BIBLIOGRAFIA] ;
+		char ementa[MEN_MAX_EMENTA] ;
 		int creditos ;
 		int criterio ;
 		GRC_tpCondRet ret ;
@@ -710,17 +710,17 @@
 				
 		//adiciona aluno
 		printf( "\nDigite o nome da disciplina: \n" ) ;
-		LER_leString( nome, 0, 25, LER_comparaLeSoLetra, 0 ) ;
+		LER_leString( nome, 1, MEN_MAX_NOME, LER_comparaLeSoLetra, 0 ) ;
 
 
 		printf( "\nDigite o codigo da disciplina: \n" ) ;
 		LER_leString( codigo, 4, 8, MEN_comparaLeCodigoGRC, 1 ) ;
 
 		printf( "\nDigite a bibliografia da disciplina: \n" ) ;
-		LER_leString( bibliografia, 1, 300, LER_comparaLeSoLetra, 0 ) ;
+		LER_leString( bibliografia, 1, MEN_MAX_BIBLIOGRAFIA, LER_comparaLeSoLetra, 0 ) ;
 
 		printf( "\nDigite a ementa da disciplina: \n" ) ;
-		LER_leString( ementa, 1, 300, LER_comparaLeSoLetra, 0 ) ;
+		LER_leString( ementa, 1, MEN_MAX_BIBLIOGRAFIA, LER_comparaLeSoLetra, 0 ) ;
 	
 		printf( "\nDigite a quantidade de creditos da disciplina: \n" ) ;
 		LER_leInteiro(&creditos, 1, 2, LER_comparaLeSoNumero) ;
@@ -774,8 +774,7 @@
 				"inserir uma turma",
 				"exibir as turmas de uma disciplina"
 		} ;
-		//TODO trocar por define
-		char nome[MEN_MAX_NOME], codigo[MEN_MAX_CODIGO], codTur[MEN_COD_TUR], diaSem[MEN_DIA_SEMANA] ;
+		char codigo[MEN_MAX_CODIGO], codTur[MEN_COD_TUR], diaSem[MEN_DIA_SEMANA] ;
 
 		int horIni, horTer, qtdVag ;
 		int nOpcoes = 7, i ;
@@ -901,17 +900,17 @@
 					break ;
 			} /* switch */
 					
-			if ( ret == CDO_CondRetOk )
+			if ( ret == GRC_CondRetOk )
 			{
 				system( "cls" ) ;
 				printf( "Alteracao realizada com sucesso!\n\n" ) ;
-				CDO_mostraAtual() ;
+				GRC_mostraAtual() ;
 			} else
-				if ( ret == CDO_CondRetFormatoInvalido )
+				if ( ret == GRC_CondRetFormatoInvalido )
 				{
 					printf( "ERRO. Formato de dados invalido.\n" ) ;
 				} else
-					if( ret == CDO_CondRetIdJaCriado )
+					if( ret == GRC_CondRetIdJaCriado )
 					{
 						printf( "ERRO. Ja existe um professor com este valor de identificacao.\n" ) ;
 					} /* if */
@@ -1044,12 +1043,9 @@
 			"Mostrar todas as disciplinas", "Inserir um Pre-Requisito", "Remover todos os Pre-Requisitos",
 			"Limpar a grade Curricular", "Inserir uma turma", "Exibe as turmas de uma disciplina" } ;
 		int nItens = 9, i ;
-		int creditos ;
-		char nome[MEN_MAX_NOME], codigo[MEN_MAX_CODIGO], bibliografia[MEN_MAX_BIBLIOGRAFIA], ementa[MEN_MAX_EMENTA],
-			codTur[MEN_COD_TUR], diaSem[MEN_DIA_SEMANA] ;
+		char  codigo[MEN_MAX_CODIGO], codTur[MEN_COD_TUR], diaSem[MEN_DIA_SEMANA] ;
 
 		int horIni, horTer, qtdVag ;
-		int criterio ;
 		GRC_tpCondRet ret ;
 		int opcao ;
 
