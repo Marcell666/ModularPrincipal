@@ -107,17 +107,17 @@
 *  ****/
 
 	int MEN_loginProfessor ( int * matricula )
-
-	{
+	
+	{	
 
 		printf( "*********** LOGIN PROFESSOR ***********\n\n" ) ;
 
 		printf("\nDigite a matricula (8 digitos): ");
-		LER_leInteiro(matricula, LER_MIN_TEL, LER_MAX_TEL, LER_comparaLeSoNumero);
+		LER_leInteiro(matricula, LER_TAM_MAT, LER_TAM_MAT, LER_comparaLeSoNumero);
 		printf("\n");
 		if(CDO_buscaPorMatricula(*matricula) == CDO_CondRetOk)
 		{
-			system("cls");
+			system( "cls" ) ;
 			return 1;
 		}
 
@@ -130,7 +130,7 @@
 *  Função: MEN  &Login Aluno
 *  ****/
 
-	int MEN_loginAluno ( unsigned int * matricula )
+	int MEN_loginAluno ( unsigned int *matricula )
 	{
 		int mat;
 		Aluno* Al;
@@ -138,7 +138,7 @@
 		printf( "*********** LOGIN ALUNO ***********\n\n" ) ;
 
 		printf( "\nDigite a matricula (8 digitos): " ) ;
-		LER_leInteiro( &mat, LER_MIN_TEL, LER_MAX_TEL, LER_comparaLeSoNumero ) ;
+		LER_leInteiro(&mat, LER_TAM_MAT, LER_TAM_MAT, LER_comparaLeSoNumero ) ;
 		printf("\n");
 
 		if( CDI_busca(mat,&Al) == CDI_CondRetAlunoNaoCadastrado )
@@ -150,8 +150,8 @@
 			return 0;
 		}
 
-		*matricula = mat ;
-		system( "cls" ) ;
+		*matricula = (unsigned int) mat;
+		system("cls");
 		return 1;
 
 	} /* Fim função: MEN  &Login Aluno */
@@ -468,16 +468,6 @@
 
 		system( "cls" ) ;
 		printf( "\n*********** EDITAR DADOS DE PROFESSOR(A) ***********\n" ) ;
-		printf( "\nDigite a matricula do professor que deseja modificar (8 digitos):\n" ) ;
-
-		LER_leInteiro( &paramInt, LER_TAM_MAT, LER_TAM_MAT, LER_comparaLeSoNumero ) ;
-		
-		if ( CDO_buscaPorMatricula(paramInt) != CDO_CondRetOk )
-		{
-			printf( "Nao existe professor cadastrado com este numero de matricula %d, por favor tente novamente\n", paramInt ) ;
-			MEN_menuAnterior() ;
-			return ;
-		} /* if */
 		
 		do
 		{
@@ -667,7 +657,7 @@
 				{
 					case 1:
 						CDO_limpa() ;
-						printf ("\nTodos os dados de todos os professores foram remivos com sucesso!\n");
+						printf ("\nTodos os dados de todos os professores foram removidos com sucesso!\n");
 						MEN_menuAnterior() ;
 						return ;
 						//break ;
@@ -786,7 +776,7 @@
 		
 		do
 		{
-			printf( "Dados da disciplina que deseja modificar os dados:\n" ) ;
+			printf( "\nDados da disciplina que deseja modificar os dados:\n" ) ;
 			GRC_mostraAtual() ;
 			printf( "\n\nEscolha o dado a ser alterado: \n\n" ) ;
 
@@ -1193,7 +1183,6 @@
 		printf("\nPressione qualquer tecla para voltar para o menu anterior.\n") ;
 		getch() ;
 		system("cls") ;
-		return ;
 		
 	} /* Fim função: MEN  -Menu Anterior */
 

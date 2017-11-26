@@ -52,25 +52,6 @@
 #include "menu.h"
 #include "leitura.h"
 
-/***********************************************************************
-*
-*  $FC Função: menuAnterior
-*
-*  $ED Descrição da função
-*		Mostra o menu Administrativo.
-*
-***********************************************************************/
-/*Assertivas: Retorno da função: não há retorno.
-/			 Parâmentros: Estruturas de ponteiros.
-***********************************************************************/
-
-	void menuAnterior (void) 
-	{
-		printf("\nPressione qualquer tecla para voltar para o menu anterior.\n") ;
-		getch() ;
-		system("cls") ;
-	}
-
 
 /***********************************************************************
 *
@@ -147,9 +128,13 @@
 
 	void menuProfessor ( void )
 	{
-		int opcao = 0 , matricula;
+		int opcao = 0, matricula ;
 
-		if ( MEN_loginProfessor(&matricula) == 1 ) // Se volta 1, ok.
+		if ( !MEN_loginProfessor(&matricula)){ // Se volta 0, não ok.
+			printf( "Nao existe professor cadastrado com este numero de matricula %d, por favor tente novamente\n", matricula ) ;
+			MEN_menuAnterior();
+			return;
+		}
 
 		do
 		{
@@ -201,6 +186,7 @@
 	void menuPAdministrativo()
 	{
 		int opcao = 0, mat ;
+		unsigned int uMat;
 
 		if ( !MEN_loginAdministrativo() )
 		{
@@ -251,7 +237,7 @@
 					//mostra relação de alunos
 					printf( "*********** RELACAO DE ALUNOS CADASTRADOS ***********\n\n" ) ;
 					CDI_imprime() ;
-					menuAnterior() ;
+					MEN_menuAnterior() ;
 					break ;
 				case 2:
 					//adiciona um aluno
@@ -259,14 +245,20 @@
 					break ;
 				case 3:
 					//altera os dados de um aluno
-					MEN_modificaAluno() ; 
+
+					if(MEN_loginAluno(&uMat))
+						MEN_modificaAluno() ; 
+					else
+						printf( "Nao existe aluno cadastrado com este numero de matricula %d, por favor tente novamente\n", mat) ;
+					break ;
+
 					break ;
 				case 4:
 					//remove um aluno
 					printf( "\nDigite a matricula: \n" ) ;
 					LER_leInteiro( &mat, LER_TAM_MAT, LER_TAM_MAT, LER_comparaLeSoNumero ) ;
 					CDI_remove( mat ) ;
-					menuAnterior() ;
+					MEN_menuAnterior() ;
 					break;
 				case 5:
 					//remove todos os alunos
@@ -279,7 +271,7 @@
 					{
 						printf( "Nenhum professor cadastrado!\n\n" ) ; 
 					} /* if */
-					menuAnterior() ;
+					MEN_menuAnterior() ;
 					break ;
 				case 7:
 					//adiciona um professor
@@ -287,7 +279,11 @@
 					break ;
 				case 8:
 					//altera os dados de um professor
-					MEN_modificaProfessor() ;
+
+					if(MEN_loginProfessor(&mat))
+						MEN_modificaProfessor() ;
+					else
+						printf( "Nao existe professor cadastrado com este numero de matricula %d, por favor tente novamente\n", mat ) ;
 					break ;
 				case 9:
 					//remove um professor
@@ -303,7 +299,7 @@
 					{
 						printf( "Nenhuma disciplina cadastrada!\n\n" ) ; 
 					} /* if */
-					menuAnterior() ;
+					MEN_menuAnterior() ;
 					break ;				
 				case 12:
 					MEN_adicionaDisciplina();

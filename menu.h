@@ -81,7 +81,7 @@
 /			 Parâmentros: Estruturas de ponteiros.
 ***********************************************************************/
 
-	int MEN_loginProfessor ( int *matricula ) ;
+	int MEN_loginProfessor (int * matricula) ;
 	
 /***********************************************************************
 *
@@ -244,5 +244,19 @@
 ***********************************************************************/
 
 	void MEN_menuGradeCurricular ( void ) ;
+
+/***********************************************************************
+*
+*  $FC Função: MEN_menuAnterior
+*
+*  $ED Descrição da função
+*		
+*
+***********************************************************************/
+/*Assertivas: Retorno da função: não há retorno.
+/			 Parâmetros: não há parametros.
+***********************************************************************/
+
+	void MEN_menuAnterior (void) ;
 
 /********** Fim do módulo de definição: Módulo Menu **********/
