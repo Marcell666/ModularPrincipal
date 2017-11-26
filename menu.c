@@ -64,7 +64,6 @@
 
 /*****  Protótipos das funções encapsuladas no módulo  *****/
 
-	void MEN_menuAnterior (void) ;
 	int MEN_comparaLeCodigoGRC ( unsigned char c ) ;
 
 /*****  Código das funções exportadas pelo módulo  *****/
