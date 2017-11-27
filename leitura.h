@@ -13,6 +13,10 @@
 #define LER_QTD_EST 27
 #define LER_TAM_RG 9
 
+#define LER_TOUPPER 1
+#define LER_NORMAL 0
+#define LER_TOLOWER -1
+
 /* TODO isso nao vai ficar aqui, é só por enquanto*/
 #ifdef __linux__
 	#define VK_ENTER 10
@@ -25,7 +29,9 @@
 
 	typedef int (*LER_Compara)(unsigned char) ;
 
-	void LER_leString ( char * leValor, int min, int max, LER_Compara compara, int converte ) ;
+	void LER_leStringConverte ( char * leValor, int min, int max, LER_Compara compara, int converte ) ;
+
+	void LER_leString ( char * leValor, int min, int max, LER_Compara compara ) ;
 
 	void LER_leInteiro( int * leValor,int min, int max, LER_Compara compara) ;
 

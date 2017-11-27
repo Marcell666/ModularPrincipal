@@ -43,10 +43,10 @@ typedef int (*LER_Compara) (unsigned char) ;
 /*****  Código das funções exportadas pelo módulo  *****/
 
 /***************************************************************************
-* Função: LER  &Le String
+* Função: LER  &Le String Converte
 *  ****/
 
-	void LER_leString ( char * leValor, int min, int max, LER_Compara compara, int converte )
+	void LER_leStringConverte ( char * leValor, int min, int max, LER_Compara compara, int converte )
 	{
 
 		unsigned char a ;
@@ -86,6 +86,14 @@ typedef int (*LER_Compara) (unsigned char) ;
 	}  /* Fim função: LER  &Le string */
 
 /***************************************************************************
+* Função: LER  &Le String
+*  ****/
+
+	void LER_leString ( char * leValor, int min, int max, LER_Compara compara){
+		LER_leString (leValor, min, max, compara, LER_NORMAL);
+	}
+
+/***************************************************************************
 *
 * Função: LER  &Le Inteiro
 *  ****/
@@ -94,7 +102,7 @@ typedef int (*LER_Compara) (unsigned char) ;
 	{
 
 		char cad_carac[LER_TAM_STRING+1] ;
-		LER_leString( cad_carac, min, max, compara, 0 ) ;
+		LER_leString( cad_carac, min, max, compara, LER_NORMAL ) ;
 		* leValor = atoi( cad_carac ) ;
 
 	} /* Fim função: LER  &Le Inteiro */
@@ -172,7 +180,7 @@ typedef int (*LER_Compara) (unsigned char) ;
 			"PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO" } ;
 
 		do {
-			LER_leString( UF, LER_TAM_UF, LER_TAM_UF, LER_comparaLeSoLetra, 1 ) ;
+			LER_leString( UF, LER_TAM_UF, LER_TAM_UF, LER_comparaLeSoLetra, LER_TOUPPER ) ;
 			i = 0 ;
 
 			while ( i < LER_QTD_EST && strcmp( UF, estados[i] ) )

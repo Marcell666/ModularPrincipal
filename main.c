@@ -92,7 +92,7 @@
 				{
 					case 1:
 						system( "cls" ) ;
-						MEN_modificaAluno((int) matricula);
+						MEN_modificaAluno(matricula);
 						break;
 					case 2:
 						system( "cls" ) ;
@@ -248,7 +248,7 @@
 					//altera os dados de um aluno
 					if ( MEN_loginAluno(&uMat) )
 					{
-						MEN_modificaAluno( (int) uMat ) ; 
+						MEN_modificaAluno( uMat ) ; 
 					} else
 					{
 						printf( "Nao existe aluno cadastrado com este numero de matricula %d, por favor tente novamente\n", mat) ;

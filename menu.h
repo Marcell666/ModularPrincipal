@@ -117,7 +117,7 @@
 *
 ***********************************************************************/
 
-	void MEN_modificaAluno ( int matAnt ) ;
+	void MEN_modificaAluno ( unsigned int matAnt ) ;
 
 /***********************************************************************
 *
@@ -240,7 +240,7 @@
 *
 ***********************************************************************/
 /*Assertivas: Retorno da função: não há retorno.
-/			 Parâmentros: Estruturas de ponteiros.
+/			 Parâmetros: não há parametros.
 ***********************************************************************/
 
 	void MEN_menuGradeCurricular ( void ) ;
