@@ -500,4 +500,60 @@ CDO_tpCondRet CDO_alteraEndereco(char *pais, char *uf, char *cidade, char *bairr
 	return CDO_CondRetOk;
 }/* Fim função: CDO Altera Endereco*/
 
+CDO_tpCondRet CDO_salvaDados(char *path){
+	PRF_ptProfessor prof = NULL;
+
+	/*
+		TODO salvar posicao do cursor para que ele volte para o mesmo lugar
+	*/
+
+	first(doc->professores);
+	do{
+		if(get_val_cursor(doc->professores, (void**) &prof) == LIS_CondRetListaVazia)
+			return CDO_CondRetCorpoDocenteVazio;
+
+		PRF_salvaDados(prof, path);
+	}while(next(doc->professores)==LIS_CondRetOK);
+
+	return CDO_CondRetProfessorNaoEncontrado;
+}
+
+CDO_tpCondRet CDO_leDados(char *path){
+	int rg, matricula, telefone ;
+	int dia, mes, ano ;
+	char nome[PRF_TAM_STRING], cpf[PRF_TAM_CPF], email[PRF_TAM_STRING] ;
+	char pais[PRF_TAM_STRING], uf[PRF_TAM_UF], cidade[PRF_TAM_STRING], bairro[PRF_TAM_STRING], rua[PRF_TAM_STRING], complemento[PRF_TAM_STRING] ;
+	int numero ;
+	CDO_tpCondRet ret;
+
+	FILE *f;
+	f = fopen(path, "rt");
+	if(!f)
+		printf("erro\n");
+
+	
+	while(fscanf(f, "\'%[^\']\' %s %d %s %d %d %d %d %d %s %s \'%[^\']\' \'%[^\']\' \'%[^\']\' %d \'%[^\']\'\n",
+			nome, cpf, &matricula, email, &telefone, &rg,
+			&dia, &mes, &ano,
+			pais, uf, cidade, bairro, rua, &numero, complemento
+		)>0){
+		printf("entrei\n");
+		printf("%s %s %d %s %d %d %d %d %d %s %s %s %s %s %d %s \n",
+			nome, cpf, matricula, email, telefone, rg, dia, mes, ano, pais, uf, cidade, bairro, rua, numero, complemento);
+		printf("mostrei\n");
+
+		ret = CDO_cadastra(nome, rg, cpf, matricula, email, telefone, dia, mes, ano, pais, uf, cidade, bairro, rua, numero, complemento);
+		if(ret != CDO_CondRetOk){
+#ifdef _DEBUG_
+			printf("Erro ao cadastrar Professor\n");
+#endif
+		}
+	}
+
+	return ret;
+}
+
+
+
+
 

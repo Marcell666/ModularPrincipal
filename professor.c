@@ -68,6 +68,7 @@
 		char complemento[PRF_TAM_STRING];
 			/*apartamento ou casa com numero //ex: apt 101 */
 	} Endereco;
+
 /***********************************************************************
 *
 *  $TC Tipo de dados: prof
@@ -884,3 +885,50 @@ PRF_tpCondRet PRF_alteraPais(Prof* professor, char* pais){
 			return 0; /* if */
 		return 1;
 	} /* Fim função: Verifica rg*/
+
+
+
+PRF_tpCondRet PRF_salvaDados(Prof *prof, char *path){
+		FILE *f;
+		f = fopen(path,"at");
+		if(!f){
+			printf("Erro ao salvar historico de Professor.\n");
+			return PRF_CondRetFormatoInvalido;
+		}
+			/*
+
+				"\'%s\' %s %d %s %d %d 
+				%d %d %d
+				%s %s \'%s\' \'%s\' \'%s\' %d \'%s\'
+
+*/
+
+		fprintf(f,
+				"\'%s\' %s %d %s %d %d %d %d %d %s %s \'%s\' \'%s\' \'%s\' %d \'%s\' \n",
+
+
+
+			prof->nome,
+			prof->cpf,
+			prof->matricula,
+			prof->email,
+			prof->telefone,
+			prof->rg,
+
+			prof->dataNascimento->dia,
+			prof->dataNascimento->mes,
+			prof->dataNascimento->ano,
+
+			prof->endereco->pais,
+			prof->endereco->uf,
+			prof->endereco->cidade,
+			prof->endereco->bairro,
+			prof->endereco->rua,
+			prof->endereco->numero,
+			prof->endereco->complemento
+		);
+
+		fclose(f);
+		printf("historico de professor salvo com sucesso! Cheque o arquivo %s\n", path);
+		return PRF_CondRetOk;
+}
