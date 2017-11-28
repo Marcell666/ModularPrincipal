@@ -23,7 +23,6 @@
 *     instância de um professor.
 ***************************************************************************/
 
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -886,49 +885,59 @@ PRF_tpCondRet PRF_alteraPais(Prof* professor, char* pais){
 		return 1;
 	} /* Fim função: Verifica rg*/
 
+/***************************************************************************
+*
+*  Função: PRF Salva Dados
+*  ****/
+ 
+	PRF_tpCondRet PRF_salvaDados ( Prof * prof, char * path )
+	{
+			FILE *f ;
+			f = fopen(path,"at") ;
+		
+			if ( !f )
+			{
+				#ifdef _DEBUG	
+					printf("Erro ao abrir arquivo do dados pessoais dos professores.\n") ;
+				#endif
+				return PRF_CondRetErroAbrirArquivo ;
+			} /* if */
+				/*
+					"\'%s\' %s %d %s %d %d 
+					%d %d %d
+					%s %s \'%s\' \'%s\' \'%s\' %d \'%s\'
+				*/
 
+			fprintf(f,
+					"\'%s\' %s %d %s %d %d %d %d %d %s %s \'%s\' \'%s\' \'%s\' %d \'%s\' \n",
 
-PRF_tpCondRet PRF_salvaDados(Prof *prof, char *path){
-		FILE *f;
-		f = fopen(path,"at");
-		if(!f){
-			printf("Erro ao salvar historico de Professor.\n");
-			return PRF_CondRetFormatoInvalido;
-		}
-			/*
+				prof->nome,
+				prof->cpf,
+				prof->matricula,
+				prof->email,
+				prof->telefone,
+				prof->rg,
 
-				"\'%s\' %s %d %s %d %d 
-				%d %d %d
-				%s %s \'%s\' \'%s\' \'%s\' %d \'%s\'
+				prof->dataNascimento->dia,
+				prof->dataNascimento->mes,
+				prof->dataNascimento->ano,
 
-*/
+				prof->endereco->pais,
+				prof->endereco->uf,
+				prof->endereco->cidade,
+				prof->endereco->bairro,
+				prof->endereco->rua,
+				prof->endereco->numero,
+				prof->endereco->complemento
+			) ;
 
-		fprintf(f,
-				"\'%s\' %s %d %s %d %d %d %d %d %s %s \'%s\' \'%s\' \'%s\' %d \'%s\' \n",
+			fclose(f) ;
 
+			#ifdef _DEBUG	
+				printf("Dados de professor salvo com sucesso! Confira no arquivo %s\n", path);
+			#endif
 
+			return PRF_CondRetOk ;
 
-			prof->nome,
-			prof->cpf,
-			prof->matricula,
-			prof->email,
-			prof->telefone,
-			prof->rg,
+	} /* Fim função: PRF Salva Dados */
 
-			prof->dataNascimento->dia,
-			prof->dataNascimento->mes,
-			prof->dataNascimento->ano,
-
-			prof->endereco->pais,
-			prof->endereco->uf,
-			prof->endereco->cidade,
-			prof->endereco->bairro,
-			prof->endereco->rua,
-			prof->endereco->numero,
-			prof->endereco->complemento
-		);
-
-		fclose(f);
-		printf("historico de professor salvo com sucesso! Cheque o arquivo %s\n", path);
-		return PRF_CondRetOk;
-}
