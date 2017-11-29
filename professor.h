@@ -1051,7 +1051,7 @@ PRF_tpCondRet PRF_alteraComplemento(Prof* professor, char* complemento);
 *
 ***********************************************************************/
 
-PRF_tpCondRet PRF_salvaDados(Prof *professor, char *path);
+PRF_tpCondRet PRF_salvaDados(Prof *professor, FILE *f);
 
 /********** Fim do módulo de definição: Módulo Professor **********/
 

@@ -368,6 +368,7 @@
 		CDI_cria() ;
 		GRC_cria() ;
 
+
 		printf("Ret: %d\n", CDO_leDados(CDO_DADOS_PATH));
 
 		exibeTelaInicial() ;

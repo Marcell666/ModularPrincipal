@@ -607,7 +607,7 @@
 
 			*/
 			#ifdef __linux__
-				mkdir("Dados",0777);
+				mkdir("Dados",0666);
 			#else
 				_mkdir("Dados");
 			#endif

@@ -890,21 +890,22 @@ PRF_tpCondRet PRF_alteraPais(Prof* professor, char* pais){
 *  Função: PRF Salva Dados
 *  ****/
  
-	PRF_tpCondRet PRF_salvaDados ( Prof * prof, char * path )
+	PRF_tpCondRet PRF_salvaDados ( Prof * prof, FILE *f )
 	{
-			FILE *f ;
-			f = fopen(path,"at") ;
-		
 			if ( !f )
 			{
 				#ifdef _DEBUG	
-					printf("Erro ao abrir arquivo do dados pessoais dos professores.\n") ;
+					printf("Erro ao abrir arquivo de dados pessoais dos professores.\n") ;
 				#endif
 				return PRF_CondRetErroAbrirArquivo ;
 			} /* if */
 				/*
-					"\'%s\' %s %d %s %d %d 
+					Formato de escrita/leitura
+					Dados de professor:
+					"\'%s\' %s %d %s %d %d
+					data:
 					%d %d %d
+					endereco:
 					%s %s \'%s\' \'%s\' \'%s\' %d \'%s\'
 				*/
 
@@ -931,10 +932,8 @@ PRF_tpCondRet PRF_alteraPais(Prof* professor, char* pais){
 				prof->endereco->complemento
 			) ;
 
-			fclose(f) ;
-
 			#ifdef _DEBUG	
-				printf("Dados de professor salvo com sucesso! Confira no arquivo %s\n", path);
+				printf("Dados de professor salvos com sucesso! Confira no arquivo %s\n", path);
 			#endif
 
 			return PRF_CondRetOk ;
