@@ -689,20 +689,28 @@
 				
 		//adiciona aluno
 		printf( "\nDigite o nome da disciplina: \n" ) ;
-		LER_leString( nome, 1, MEN_MAX_NOME, LER_comparaLeSoLetra) ;
+		LER_leString( nome, 1, MEN_MAX_NOME-1, LER_comparaLeSoLetra) ;
 
 
 		printf( "\nDigite o codigo da disciplina: \n" ) ;
-		LER_leStringConverte( codigo, 4, 8, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ;
+		LER_leStringConverte( codigo, 4, MEN_MAX_CODIGO-1, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ;
 
 		printf( "\nDigite a bibliografia da disciplina: \n" ) ;
-		LER_leString( bibliografia, 1, MEN_MAX_BIBLIOGRAFIA, LER_comparaLeSoLetra) ;
+		LER_leString( bibliografia, 1, MEN_MAX_BIBLIOGRAFIA-1, LER_comparaLeSoLetra) ;
 
 		printf( "\nDigite a ementa da disciplina: \n" ) ;
-		LER_leString( ementa, 1, MEN_MAX_BIBLIOGRAFIA, LER_comparaLeSoLetra) ;
-	
-		printf( "\nDigite a quantidade de creditos da disciplina: \n" ) ;
-		LER_leInteiro(&creditos, 1, 2, LER_comparaLeSoNumero) ;
+		LER_leString( ementa, 1, MEN_MAX_EMENTA-1, LER_comparaLeSoLetra) ;
+
+		do
+		{
+			printf( "\nDigite a quantidade de creditos da disciplina: \n" ) ;
+			LER_leInteiro(&creditos, 1, 2, LER_comparaLeSoNumero) ;
+			if ( creditos < 1 )
+			{
+				printf( "Creditos deve ser um numero maior que 0.\n" ) ;
+			}
+		} while( creditos < 1 ) ;
+
 
 		do
 		{
@@ -796,7 +804,7 @@
 					//inserir um Pre-Requisito
 					system( "cls" ) ;
 					printf( "Digite o código da disciplina que deseja configurar como pre-requisito:\n" ) ;
-					LER_leStringConverte( codigo, 0, LER_TAM_STRING, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ;
+					LER_leStringConverte( codigo, 1, MEN_MAX_CODIGO-1, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ;
 					ret = GRC_inserePreRequisito( codigo ) ;
 					if( ret != GRC_CondRetOk )
 						printf( "Erro ao cadastrar\n" ) ;
@@ -840,13 +848,13 @@
 					//inserir uma turma
 					system( "cls" ) ;
 					printf( "Digite o codigo da disciplina em que deseja inserir uma turma:\n" ) ;
-					LER_leStringConverte( codigo, 0, LER_TAM_STRING, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ;
+					LER_leStringConverte( codigo, 1, MEN_MAX_CODIGO -1, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ;
 					printf( "Digite o codigo da turma:\n" ) ;				
-					LER_leStringConverte( codTur, 0, LER_TAM_STRING, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ;
+					LER_leStringConverte( codTur, 1, MEN_COD_TUR -1, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ;
 					printf( "Digite o dia da semana da aula:\n" ) ;
 					// Pode nao parecer coerente pelo nome da funcao usa-la aqui, mas na verdade os caracteres sao quase os mesmos
 					// Talvez fosse bom renomear essas funções para que uso delas fosse mais intuitivo
-					LER_leStringConverte( diaSem, 0, LER_TAM_STRING, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ;
+					LER_leStringConverte( diaSem, 1, MEN_DIA_SEMANA -1, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ;
 					do 
 					{
 						printf( "Digite a hora de inicio da aula(7 >= HorIni <= 21):\n" ) ;
@@ -860,7 +868,7 @@
 						//scanf("%d", &horTer);
 					} while ( horTer > 23 || horTer < 9 ) ;
 					printf( "Digite a quantidade de vagas:\n" ) ;
-					LER_leInteiro( &qtdVag, 0, 2, LER_comparaLeSoNumero ) ;
+					LER_leInteiro( &qtdVag, 1, 2, LER_comparaLeSoNumero ) ;
 					ret = GRC_insereTurma( codTur, horIni, horTer, diaSem, qtdVag, codigo ) ;
 					break ;
 				case 6:
@@ -907,14 +915,14 @@
 	{
 
 		int opcao ;
-		char codigo[LER_TAM_STRING+1] ;
+		char codigo[MEN_MAX_CODIGO] ;
 		GRC_tpCondRet ret ;
 
 		printf( "\n*********** REMOVE DISCIPLINA ***********\n" ) ;
 		
 		printf( "\nDigite a codigo da disciplina que deseja remover permanentemente da relacao de disciplinas: \n" ) ;
 
-		LER_leStringConverte(codigo, 0, LER_TAM_STRING, MEN_comparaLeCodigoGRC, LER_TOUPPER);
+		LER_leStringConverte(codigo, 1, MEN_MAX_CODIGO-1, MEN_comparaLeCodigoGRC, LER_TOUPPER);
 	
 		if ( GRC_buscaPorCodigo(codigo) != GRC_CondRetOk )
 		{
