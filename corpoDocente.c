@@ -37,6 +37,17 @@
 #include "professor.h"
 #include "listas.h"
 
+//bibliotecas para criação de pastas
+#ifdef __linux__
+	#include <sys/stat.h>
+	#include <sys/types.h>
+	#include <fcntl.h>
+#else
+	#include <direct.h>
+#endif
+
+#define _DEBUG_
+
 /***********************************************************************
 *
 *  $TC Tipo de dados: corpoDocente
@@ -508,7 +519,28 @@
 	CDO_tpCondRet CDO_salvaDados( char * path )
 	{
 
+		FILE *f;
+		char pathComPasta[81];
+
+		//colcocando pasta no inicio do path
+		#ifdef __linux__
+			strcpy(pathComPasta,"Dados/");
+		#else
+			strcpy(pathComPasta,"Dados\\");
+		#endif
+		strcat(pathComPasta, path);
+		printf("PATH:%s\n", pathComPasta);
+
+
+		f = fopen(path,"wt") ;
 		PRF_ptProfessor prof = NULL;
+
+		if(!f){
+			#ifdef _DEBUG_	
+				printf("Erro ao salvar arquivo de dados pessoais dos professores no módulo Corpo Docente. %s\n", pathComPasta) ;
+			#endif
+			return CDO_CondRetErroAbrirArquivo;
+		}
 
 		/*
 			TODO salvar posicao do cursor para que ele volte para o mesmo lugar
@@ -517,11 +549,14 @@
 		first(doc->professores);
 		do
 		{
-			if(get_val_cursor(doc->professores, (void**) &prof) == LIS_CondRetListaVazia)
+			if(get_val_cursor(doc->professores, (void**) &prof) == LIS_CondRetListaVazia){
+				fclose(f);
 				return CDO_CondRetCorpoDocenteVazio ;
+			}
 
-			PRF_salvaDados(prof, path);
+			PRF_salvaDados(prof, f);
 		} while(next(doc->professores)==LIS_CondRetOK) ;
+		fclose(f);
 
 		return CDO_CondRetProfessorNaoEncontrado ;
 
@@ -539,15 +574,46 @@
 		char pais[PRF_TAM_STRING], uf[PRF_TAM_UF], cidade[PRF_TAM_STRING], bairro[PRF_TAM_STRING], rua[PRF_TAM_STRING], complemento[PRF_TAM_STRING] ;
 		int numero ;
 		CDO_tpCondRet ret;
-
 		FILE *f;
-		f = fopen(path, "rt");
+		
+		
+		char pathComPasta[81];
+
+		//colcocando pasta no inicio do path
+		#ifdef __linux__
+			strcpy(pathComPasta,"Dados/");
+		#else
+			strcpy(pathComPasta,"Dados\\");
+		#endif
+		strcat(pathComPasta, path);
+		printf("PATH:%s\n", pathComPasta);
+		
+		//abrindo arquivo
+		f = fopen(pathComPasta, "rt");
 		if ( !f )
 		{
-			#ifdef _DEBUG	
-				printf("Erro ao abrir arquivo do dados pessoais dos professores no módulo Corpo Docente.\n") ;
+			#ifdef _DEBUG_	
+				printf("Erro ao abrir arquivo de dados pessoais dos professores no módulo Corpo Docente. %s\n", pathComPasta) ;
 			#endif
-			return CDO_CondRetErroAbrirArquivo ;
+			
+			//nao deu para abrir, criar pasta
+
+			/*
+				Não deve existir a possibilidade de abrir a pasta e não ter nenhum arquivo dentro dela.
+				Se não existe pasta, é a primeira vez que o o programa funciona, e portanto não tem arquivos.
+				Se existe pasta, já não é a primeira vez e tem algum arquivo la dentro, mesmoq ue esteja vazio.
+
+				A não ser que o usuário delete os arquivos da pasta manualmente, mas então, por isso eu não mes responsabilizo. Afinal estamos possibilitando que ele remova os dados atraves do proprio programa, o que não causa erros.
+
+			*/
+			/*
+			#ifdef __linux__
+				mkdir("Dados",0666);
+			#else
+				_mkdir("Dados");
+			#endif
+			*/
+			return CDO_CondRetOk ;
 		} /* if */
 
 	
@@ -556,10 +622,10 @@
 				&dia, &mes, &ano,
 				pais, uf, cidade, bairro, rua, &numero, complemento
 			)>0){
-			printf("entrei\n");
+	#ifdef _DEBUG_
 			printf("%s %s %d %s %d %d %d %d %d %s %s %s %s %s %d %s \n",
 				nome, cpf, matricula, email, telefone, rg, dia, mes, ano, pais, uf, cidade, bairro, rua, numero, complemento);
-			printf("mostrei\n");
+	#endif
 
 			ret = CDO_cadastra(nome, rg, cpf, matricula, email, telefone, dia, mes, ano, pais, uf, cidade, bairro, rua, numero, complemento);
 			if(ret != CDO_CondRetOk){
@@ -568,6 +634,7 @@
 	#endif
 			}
 		}
+		fclose(f);
 
 		return ret;
 	} /* Fim função: CDO Le Dados */

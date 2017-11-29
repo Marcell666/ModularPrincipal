@@ -40,6 +40,9 @@
 #ifndef CORPODOCENTE_H
 #define CORPODOCENTE_H
 
+/***** Declarações exportadas pelo módulo *****/
+
+#define  CDO_DADOS_PATH "dadosCDO.txt"
 
 /***********************************************************************
 *
