@@ -606,13 +606,11 @@
 				A não ser que o usuário delete os arquivos da pasta manualmente, mas então, por isso eu não mes responsabilizo. Afinal estamos possibilitando que ele remova os dados atraves do proprio programa, o que não causa erros.
 
 			*/
-			/*
 			#ifdef __linux__
-				mkdir("Dados",0666);
+				mkdir("Dados",0777);
 			#else
 				_mkdir("Dados");
 			#endif
-			*/
 			return CDO_CondRetOk ;
 		} /* if */
 
