@@ -62,8 +62,10 @@ typedef enum{
 		/* Condicao de Retorno Professor Não Encontrado, usada quando o Professor não é encontrado numa busca ou quando a lista está vazia quando percorrida */ 
 	CDO_CondRetIdJaCriado,
 		/* Condicao de Retorno Id Já Criado, usada quando existe outra Instância de Professor no Corpo Docente com o mesmo RG/CPF/matricula/email */ 
-	CDO_CondRetFormatoInvalido 
+	CDO_CondRetFormatoInvalido, 
 		/* Condicao de Retorno Formato Inválido, usada quando os parâmetros de uma certa função não estão de acordo com o que é esperado pelas funções auxiliares */ 
+	CDO_CondRetErroAbrirArquivo
+	    /* Condicao de Retorno Erro Abrir Arquivo, usada quando ocorrer erro ao abrir arquivo com os dados pessoais dos professores. */
 } CDO_tpCondRet;
 
 //TODO Inserir comentario
@@ -798,6 +800,14 @@ CDO_tpCondRet CDO_alteraDataNascimento(int dia, int mes, int ano);
 ***********************************************************************/
 
 CDO_tpCondRet CDO_alteraEndereco(char *pais, char *uf, char *cidade, char *bairro, char *rua, int numero, char *complemento);
+
+
+CDO_tpCondRet CDO_leDados(char *path) ;
+
+
+CDO_tpCondRet CDO_salvaDados(char *path) ;
+
+
 
 #endif
 
