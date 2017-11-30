@@ -29,6 +29,11 @@
 ***************************************************************************/
 
 #include "aluno.h"
+
+/***** Declarações exportadas pelo módulo *****/
+
+	#define  CDI_DADOS_PATH "dadosCDI.txt"
+
 /***********************************************************************
 *
 *  $TC Tipo de dados: CDI Condições de retorno
@@ -41,7 +46,9 @@ typedef enum {
 	CDI_CondRetAlunoJaCadastrado,	// O aluno já foi cadastrado
 	CDI_CondRetAlunoNaoEncontrado, // O aluno não foi encontrado
 	CDI_CondRetFaltouMemoria,	// Faltou memória ao alocar dados
-	CDI_CondRetCDIVazio // Corpo Discente vazio
+	CDI_CondRetCDIVazio, // Corpo Discente vazio
+	CDI_CondRetErroAbrirArquivo
+		/* Condicao de Retorno Erro Abrir Arquivo, usada quando ocorrer erro ao abrir arquivo com os dados pessoais dos alunos. */
 } CDI_tpCondRet;
 /***********************************************************************
 *
@@ -160,3 +167,8 @@ CDI_tpCondRet CDI_imprimeInfo(unsigned int matbusca);
 CDI_tpCondRet CDI_limpa(void);
 
 CDI_tpCondRet CDI_busca(unsigned int matbusca, Aluno** alu);
+
+CDI_tpCondRet CDI_leDados(char *path) ;
+
+CDI_tpCondRet CDI_salvaDados(char *path) ;
+

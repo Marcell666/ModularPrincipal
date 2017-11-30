@@ -27,6 +27,9 @@
 #ifndef ALUNO_H
 #define ALUNO_H
 
+#define  ALN_TAM_STRING  81
+#define  ALN_TAM_UF 3
+
 /***********************************************************************
 *
 *  $TD	Typedef 
@@ -45,12 +48,12 @@ typedef struct data {
 *
 ***********************************************************************/
 typedef struct endereco {
-	char estado[51];
-	char cidade[51];
-	char bairro[32];
-	char rua[81];
+	char estado[ALN_TAM_UF];
+	char cidade[ALN_TAM_STRING];
+	char bairro[ALN_TAM_STRING];
+	char rua[ALN_TAM_STRING];
 	int numero;
-	char comp[32];
+	char comp[ALN_TAM_STRING];
 } Endereco;
 /***********************************************************************
 *
@@ -64,6 +67,7 @@ typedef struct cpf {
 	int dig3;
 	int cod;
 } CPF;
+
 /***********************************************************************
 *
 *  $TC Tipo de dados: ALU Condições de retorno
@@ -73,7 +77,9 @@ typedef struct cpf {
 typedef enum {
 	ALN_CondRetOK,	// Executou corretamente
 	ALN_CondRetAlunoNaoExiste,	// O aluno não existe
-	ALN_CondRetFaltouMemoria	// Faltou memória ao alocar um aluno
+	ALN_CondRetFaltouMemoria,	// Faltou memória ao alocar um aluno
+	ALN_CondRetErroAbrirArquivo
+		/* Condicao de Retorno Erro Abrir Arquivo, usada quando ocorrer erro ao abrir arquivo com os dados pessoais dos alunos. */
 } ALN_tpCondRet;
 /***********************************************************************
 *
@@ -182,4 +188,9 @@ ALN_tpCondRet ALU_GetAll(Aluno *a, char *nome, unsigned int *mat, CPF *cpf, unsi
 /			 Parâmentros: Um ponteiro para Aluno (struct).
 ****************************************************************************************************/
 ALN_tpCondRet ALU_imprimeAluno(Aluno *a);
+
+
+	ALN_tpCondRet ALN_salvaDados ( Aluno * alu, FILE *f ) ;
+
+
 #endif

@@ -1,7 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "listas.h"
 #include "corpodiscente.h"
+
+
+//bibliotecas para criação de pastas
+#ifdef __linux__
+	#include <sys/stat.h>
+	#include <sys/types.h>
+	#include <fcntl.h>
+#else
+	#include <direct.h>
+#endif
+
 
 struct corpodisc {
 	List* Aluno;
@@ -153,3 +165,139 @@ CDI_tpCondRet CDI_imprimeInfo(unsigned int matbusca) {
 	return CDI_CondRetOK;
 }
 /*Fim da função CDI_imprimeInfo*/
+
+
+ /***************************************************************************
+ *
+ *  Função: CDI Salva Dados
+ *  ****/
+
+	CDI_tpCondRet CDI_salvaDados( char * path )
+	{
+
+		Aluno * alu = NULL ;
+
+		FILE * f ;
+		char pathComPasta[ALN_TAM_STRING] ;
+
+		//colocando pasta no inicio do path
+		#ifdef __linux__
+			strcpy(pathComPasta,"Dados/");
+		#else
+			strcpy(pathComPasta,"Dados\\") ;
+		#endif
+
+		strcat(pathComPasta, path) ;
+
+		#ifdef _DEBUG_	
+			printf("PATH: %s\n", pathComPasta) ;
+		#endif
+
+		f = fopen(pathComPasta,"wt") ;
+
+		if ( !f )
+		{
+			#ifdef _DEBUG_	
+				printf( "Erro ao salvar arquivo de dados pessoais dos professores no módulo Corpo Docente. %s\n", pathComPasta ) ;
+			#endif
+			return CDI_CondRetErroAbrirArquivo ;
+		} /* if */
+
+		first( Corpo->Aluno ) ;
+		do
+		{
+			if( get_val_cursor(Corpo->Aluno, (void**) &alu) == LIS_CondRetListaVazia )
+			{
+				fclose(f) ;
+				return CDI_CondRetCDIVazio ;
+			}
+			ALN_salvaDados(alu, f);
+		} while( next(Corpo->Aluno)==LIS_CondRetOK ) ;
+		
+		fclose(f) ;
+
+		return CDI_CondRetOK ;
+
+	}  /* Fim função: CDO Salva Dados */
+
+ /***************************************************************************
+ *
+ *  Função: CDO Le Dados
+ *  ****/
+
+	CDI_tpCondRet CDI_leDados ( char * path )
+	{
+
+		int rg ;
+		unsigned int matricula, telefone ;
+		Data nasc ;
+		CPF cpf; 
+		char nome[ALN_TAM_STRING] ;
+		Endereco end ; 
+		CDI_tpCondRet ret ;
+		FILE * f ;
+				
+		char pathComPasta[ALN_TAM_STRING] ;
+
+		//colcocando pasta no inicio do path
+		#ifdef __linux__
+			strcpy( pathComPasta,"Dados/" ) ;
+		#else
+			strcpy( pathComPasta,"Dados\\" ) ;
+		#endif
+
+		strcat( pathComPasta, path ) ;
+
+		#ifdef _DEBUG_	
+			printf( "PATH: %s\n", pathComPasta ) ;
+		#endif
+
+		//abrindo arquivo
+		f = fopen( pathComPasta, "rt" ) ;
+
+		if ( !f )
+		{
+			#ifdef _DEBUG_	
+				printf("Erro ao abrir arquivo de dados pessoais dos alunos no módulo Corpo Dicente.\n PATH: %s\n", pathComPasta) ;
+			#endif
+			//nao deu para abrir, criar pasta
+			/*
+				Não deve existir a possibilidade de abrir a pasta e não ter nenhum arquivo dentro dela.
+				Se não existe pasta, é a primeira vez que o o programa funciona, e portanto não tem arquivos.
+				Se existe pasta, já não é a primeira vez e tem algum arquivo la dentro, mesmoq ue esteja vazio.
+				A não ser que o usuário delete os arquivos da pasta manualmente, mas então, por isso eu não mes responsabilizo. Afinal estamos possibilitando que ele remova os dados atraves do proprio programa, o que não causa erros.
+			*/
+			#ifdef __linux__
+				mkdir( "Dados",0666 ) ;
+			#else
+				_mkdir( "Dados" ) ;
+			#endif
+			return CDI_CondRetOK ;
+		} /* if */
+	
+		while( fscanf(f, "\'%[^\']\' %d %d %d %d %u %u %d %d %d %s \'%[^\']\' \'%[^\']\' \'%[^\']\' %d \'%[^\']\'\n",
+						nome, &cpf.dig1, &cpf.dig2, &cpf.dig3, &cpf.cod, &matricula, &telefone, &nasc.dia,
+						&nasc.mes, &nasc.ano, &end.estado, &end.cidade, &end.bairro, &end.comp, &end.numero, &end.rua )>0 )
+		{
+			#ifdef _DEBUG_
+				printf( "%s %d.%d.%d-%d %u %u %d %d %d %s %s %s %s %d %s \n",
+					nome, cpf.dig1, cpf.dig2, cpf.dig3, cpf.cod, matricula, telefone, nasc.dia,
+					nasc.mes, nasc.ano, end.estado, end.cidade, end.bairro, end.comp, end.numero, end.rua ) ;
+			#endif
+
+			ret = CDI_insere( nome, matricula, &cpf, telefone, &nasc, &end ) ;
+			
+			if(ret != CDI_CondRetOK)
+			{
+				#ifdef _DEBUG_
+					printf("Erro ao cadastrar Professor\n") ;
+				#endif
+			}
+		} /* while */
+
+		fclose(f) ;
+
+		return ret ;
+
+	} /* Fim função: CDO Le Dados */
+
