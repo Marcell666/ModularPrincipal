@@ -519,46 +519,54 @@
 	CDO_tpCondRet CDO_salvaDados( char * path )
 	{
 
-		FILE *f;
-		char pathComPasta[81];
+		PRF_ptProfessor prof = NULL ;
+
+		FILE *f ;
+		char pathComPasta[81] ;
 
 		//colcocando pasta no inicio do path
 		#ifdef __linux__
 			strcpy(pathComPasta,"Dados/");
 		#else
-			strcpy(pathComPasta,"Dados\\");
+			strcpy(pathComPasta,"Dados\\") ;
 		#endif
-		strcat(pathComPasta, path);
-		printf("PATH:%s\n", pathComPasta);
 
+		strcat(pathComPasta, path) ;
 
-		f = fopen(path,"wt") ;
-		PRF_ptProfessor prof = NULL;
+		#ifdef _DEBUG_	
+			printf("PATH: %s\n", pathComPasta) ;
+		#endif
 
-		if(!f){
+		f = fopen(pathComPasta,"wt") ;
+
+		if ( !f )
+		{
 			#ifdef _DEBUG_	
-				printf("Erro ao salvar arquivo de dados pessoais dos professores no módulo Corpo Docente. %s\n", pathComPasta) ;
+				printf( "Erro ao salvar arquivo de dados pessoais dos professores no módulo Corpo Docente. %s\n", pathComPasta ) ;
 			#endif
-			return CDO_CondRetErroAbrirArquivo;
-		}
+			return CDO_CondRetErroAbrirArquivo ;
+		} /* if */
 
 		/*
 			TODO salvar posicao do cursor para que ele volte para o mesmo lugar
+
+			Obs. CRIS: Não entendi o comentário acima...
 		*/
 
-		first(doc->professores);
+		first( doc->professores ) ;
 		do
 		{
-			if(get_val_cursor(doc->professores, (void**) &prof) == LIS_CondRetListaVazia){
-				fclose(f);
+			if( get_val_cursor(doc->professores, (void**) &prof) == LIS_CondRetListaVazia )
+			{
+				fclose(f) ;
 				return CDO_CondRetCorpoDocenteVazio ;
 			}
-
 			PRF_salvaDados(prof, f);
-		} while(next(doc->professores)==LIS_CondRetOK) ;
-		fclose(f);
+		} while( next(doc->professores)==LIS_CondRetOK ) ;
+		
+		fclose(f) ;
 
-		return CDO_CondRetProfessorNaoEncontrado ;
+		return CDO_CondRetOk ;
 
 	}  /* Fim função: CDO Salva Dados */
 
@@ -567,77 +575,78 @@
  *  Função: CDO Le Dados
  *  ****/
 
-	CDO_tpCondRet CDO_leDados(char *path){
+	CDO_tpCondRet CDO_leDados ( char * path )
+	{
+
 		int rg, matricula, telefone ;
 		int dia, mes, ano ;
 		char nome[PRF_TAM_STRING], cpf[PRF_TAM_CPF], email[PRF_TAM_STRING] ;
 		char pais[PRF_TAM_STRING], uf[PRF_TAM_UF], cidade[PRF_TAM_STRING], bairro[PRF_TAM_STRING], rua[PRF_TAM_STRING], complemento[PRF_TAM_STRING] ;
 		int numero ;
-		CDO_tpCondRet ret;
-		FILE *f;
-		
-		
-		char pathComPasta[81];
+		CDO_tpCondRet ret ;
+		FILE *f ;
+				
+		char pathComPasta[81] ;
 
 		//colcocando pasta no inicio do path
 		#ifdef __linux__
-			strcpy(pathComPasta,"Dados/");
+			strcpy( pathComPasta,"Dados/" ) ;
 		#else
-			strcpy(pathComPasta,"Dados\\");
+			strcpy( pathComPasta,"Dados\\" ) ;
 		#endif
-		strcat(pathComPasta, path);
-		printf("PATH:%s\n", pathComPasta);
-		
+
+		strcat( pathComPasta, path ) ;
+
+		#ifdef _DEBUG_	
+			printf( "PATH: %s\n", pathComPasta ) ;
+		#endif
+
 		//abrindo arquivo
-		f = fopen(pathComPasta, "rt");
+		f = fopen( pathComPasta, "rt" ) ;
+
 		if ( !f )
 		{
 			#ifdef _DEBUG_	
-				printf("Erro ao abrir arquivo de dados pessoais dos professores no módulo Corpo Docente. %s\n", pathComPasta) ;
+				printf("Erro ao abrir arquivo de dados pessoais dos professores no módulo Corpo Docente.\n PATH: %s\n", pathComPasta) ;
 			#endif
-			
 			//nao deu para abrir, criar pasta
-
 			/*
 				Não deve existir a possibilidade de abrir a pasta e não ter nenhum arquivo dentro dela.
 				Se não existe pasta, é a primeira vez que o o programa funciona, e portanto não tem arquivos.
 				Se existe pasta, já não é a primeira vez e tem algum arquivo la dentro, mesmoq ue esteja vazio.
-
 				A não ser que o usuário delete os arquivos da pasta manualmente, mas então, por isso eu não mes responsabilizo. Afinal estamos possibilitando que ele remova os dados atraves do proprio programa, o que não causa erros.
-
 			*/
 			#ifdef __linux__
-				mkdir("Dados",0666);
+				mkdir( "Dados",0666 ) ;
 			#else
-				_mkdir("Dados");
+				_mkdir( "Dados" ) ;
 			#endif
 			return CDO_CondRetOk ;
 		} /* if */
 
 	
-		while(fscanf(f, "\'%[^\']\' %s %d %s %d %d %d %d %d %s %s \'%[^\']\' \'%[^\']\' \'%[^\']\' %d \'%[^\']\'\n",
-				nome, cpf, &matricula, email, &telefone, &rg,
-				&dia, &mes, &ano,
-				pais, uf, cidade, bairro, rua, &numero, complemento
-			)>0){
-	#ifdef _DEBUG_
-			printf("%s %s %d %s %d %d %d %d %d %s %s %s %s %s %d %s \n",
-				nome, cpf, matricula, email, telefone, rg, dia, mes, ano, pais, uf, cidade, bairro, rua, numero, complemento);
-	#endif
+		while( fscanf(f, "\'%[^\']\' %s %d %s %d %d %d %d %d %s %s \'%[^\']\' \'%[^\']\' \'%[^\']\' %d \'%[^\']\'\n",
+				nome, cpf, &matricula, email, &telefone, &rg, &dia, &mes, &ano,
+				pais, uf, cidade, bairro, rua, &numero, complemento )>0 )
+		{
+			#ifdef _DEBUG_
+				printf( "%s %s %d %s %d %d %d %d %d %s %s %s %s %s %d %s \n",
+					nome, cpf, matricula, email, telefone, rg, dia, mes, ano, pais, uf, cidade, bairro, rua, numero, complemento ) ;
+			#endif
 
-			ret = CDO_cadastra(nome, rg, cpf, matricula, email, telefone, dia, mes, ano, pais, uf, cidade, bairro, rua, numero, complemento);
-			if(ret != CDO_CondRetOk){
-	#ifdef _DEBUG_
-				printf("Erro ao cadastrar Professor\n");
-	#endif
+			ret = CDO_cadastra( nome, rg, cpf, matricula, email, telefone, dia, mes, ano, pais, uf, cidade, bairro, rua, numero, complemento ) ;
+			
+			if(ret != CDO_CondRetOk)
+			{
+				#ifdef _DEBUG_
+					printf("Erro ao cadastrar Professor\n") ;
+				#endif
 			}
-		}
-		fclose(f);
+		} /* while */
 
-		return ret;
+		fclose(f) ;
+
+		return ret ;
+
 	} /* Fim função: CDO Le Dados */
-
-
-
-
 

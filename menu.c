@@ -175,13 +175,13 @@
 		printf( "\n*********** CADASTRO DE ALUNO ***********\n" ) ;
 				
 		//adiciona aluno
-		printf( "\nDigite o nome do aluno: \n" ) ;
+		printf( "\nNome: \n" ) ;
 		LER_leString( nome, 1, LER_TAM_STRING, LER_comparaLeSoLetra) ;
 
-		printf( "\nDigite o numero da matricula (8 digitos): \n" ) ;
+		printf( "\nNumero da matricula (8 digitos): \n" ) ;
 		LER_leInteiro( &mat, LER_TAM_MAT, LER_TAM_MAT, LER_comparaLeSoNumero ) ;
 
-		printf( "\nDigite o numero do CPF (11 digitos): \n" ) ;
+		printf( "\nNumero do CPF (11 digitos): \n" ) ;
 		LER_leString( cpf_completo, LER_TAM_CPF, LER_TAM_CPF, LER_comparaLeSoNumero) ;
 		cpf.cod = atoi( cpf_completo+9 ) ;
 		cpf_completo[9] = '\0' ;
@@ -191,29 +191,29 @@
 		cpf_completo[3] = '\0' ; 
 		cpf.dig1 = atoi( cpf_completo ) ;
 
-		printf( "\nDigite a data de nascimento:\n" ) ;
+		printf( "\nData de nascimento:\n" ) ;
 		LER_leData( &nasc.dia, &nasc.mes, &nasc.ano ) ;
 
-		printf( "\nDigite o numero do telefone (8 ou 9 digitos):\n" ) ;
+		printf( "\nNumero do telefone (8 ou 9 digitos):\n" ) ;
 		LER_leInteiro( &telefone, LER_MIN_TEL, LER_MAX_TEL, LER_comparaLeSoNumero ) ;
 
 		printf( "\nInforme o endereco:" );
-		printf( "\nDigite o logradouro:\n" ) ;
+		printf( "\nLogradouro:\n" ) ;
 		LER_leString( end.rua, 1, LER_TAM_STRING, LER_comparaLeLogradouro) ;
 
-		printf( "\nDigite o numero:\n" ) ;
+		printf( "\nNumero:\n" ) ;
 		LER_leInteiro( &end.numero, LER_MIN_NUM, LER_MAX_NUM, LER_comparaLeSoNumero ) ;
 		
-		printf( "\nDigite o complemento:\n" ) ;
+		printf( "\nComplemento:\n" ) ;
 		LER_leString( end.comp, 0, LER_TAM_STRING, LER_comparaLeComplemento) ;
 
-		printf( "\nDigite o bairro:\n" ) ;
+		printf( "\nBairro:\n" ) ;
 		LER_leString( end.bairro, 1, LER_TAM_STRING, LER_comparaLeSoLetra) ;
 
-		printf( "\nDigite a cidade:\n" ) ;
+		printf( "\nCidade:\n" ) ;
 		LER_leString( end.cidade, 1, LER_TAM_STRING, LER_comparaLeSoLetra) ;		
 
-		printf( "\nDigite a sigla estado:\n") ;
+		printf( "\nEstado (sigla):\n") ;
 		LER_leUF( end.estado ) ;
 
 		retBusca = CDI_insere( nome, (unsigned int)mat, &cpf, (unsigned int)telefone, &nasc, &end ) ;
@@ -257,16 +257,16 @@
 
 		do
 		{
-			printf( "\nDados do aluno que deseja modificar os dados:\n" ) ;
+			printf( "\nALUNO:\n" ) ;
 			CDI_imprimeInfo( (unsigned int)matAnt ) ;
 			printf( "\n\nEscolha o dado a ser alterado: \n\n" ) ;
-			printf( "Digite 1: Nome\n" ) ;
-			printf( "Digite 2: Matricula\n" ) ;
-			printf( "Digite 3: Telefone\n" ) ;
-			printf( "Digite 4: Data de nascimento\n" ) ;
-			printf( "Digite 5: CPF\n" ) ;
-			printf( "Digite 6: Endereco\n" ) ;
-			printf( "\nDigite 0: Para voltar ao menu anterior\n" ) ;
+			printf( "1: Nome\n" ) ;
+			printf( "2: Matricula\n" ) ;
+			printf( "3: Telefone\n" ) ;
+			printf( "4: Data de nascimento\n" ) ;
+			printf( "5: CPF\n" ) ;
+			printf( "6: Endereco\n" ) ;
+			printf( "\n0: Voltar ao menu anterior\n" ) ;
 			
 			LER_leInteiro( &opcao, 1, 1, LER_comparaLeSoNumero ) ;
 
@@ -275,27 +275,27 @@
 			switch( opcao )
 			{
 				case 1: 
-					printf( "\nDigite o novo nome do aluno: \n" ) ;
+					printf( "\nNovo nome: \n" ) ;
 					LER_leString( nome, 1, LER_TAM_STRING, LER_comparaLeSoLetra) ;
 					ret = CDI_altera( matAnt, nome, 0, NULL, 0, NULL, NULL ) ;
 					break ;
 				case 2:
-					printf( "\nDigite a nova matricula do aluno (8 digitos): \n" ) ;
+					printf( "\nNova matricula (8 digitos): \n" ) ;
 					LER_leInteiro( &mat, LER_TAM_MAT, LER_TAM_MAT, LER_comparaLeSoNumero ) ;
 					ret = CDI_altera( matAnt, NULL, (unsigned int)mat, NULL, 0, NULL, NULL ) ;
 					break ;
 				case 3:
-					printf( "\nDigite o novo telefone do aluno (8 ou 9 digitos): \n" ) ;
+					printf( "\nNovo telefone (8 ou 9 digitos): \n" ) ;
 					LER_leInteiro( &telefone, LER_MIN_TEL, LER_MAX_TEL, LER_comparaLeSoNumero ) ;
 					ret = CDI_altera( matAnt, NULL, 0, NULL, (unsigned int)telefone, NULL, NULL ) ;
 					break ;
 				case 4:
-					printf( "\nDigite a nova data de nascimento do aluno: \n" ) ;
+					printf( "\nNova data de nascimento: \n" ) ;
 					LER_leData( &nasc.dia, &nasc.mes, &nasc.ano ) ;
 					ret = CDI_altera( matAnt, NULL, 0, NULL, 0, &nasc, NULL ) ;
 					break ;
 				case 5:
-					printf( "\nDigite o novo CPF do aluno (11 digitos): \n" ) ;
+					printf( "\nNovo CPF (11 digitos): \n" ) ;
 					LER_leString( cpf_completo, LER_TAM_CPF, LER_TAM_CPF, LER_comparaLeSoNumero) ;
 					cpf.cod = atoi( cpf_completo+9 ) ;
 					cpf_completo[9] = '\0' ;
@@ -308,17 +308,17 @@
 					break ;
 				case 6:
 					printf( "\nInforme o novo endereco do aluno:" ) ;
-					printf( "\nDigite o logradouro:\n" ) ;
+					printf( "\nLogradouro:\n" ) ;
 					LER_leString( end.rua, 1, LER_TAM_STRING, LER_comparaLeLogradouro) ;
-					printf( "\nDigite o numero:\n" ) ;
+					printf( "\nNumero:\n" ) ;
 					LER_leInteiro( &end.numero, LER_MIN_NUM, LER_MAX_NUM, LER_comparaLeSoNumero ) ;
-					printf( "\nDigite o complemento:\n" ) ;
+					printf( "\nComplemento:\n" ) ;
 					LER_leString( end.comp, 0, LER_TAM_STRING, LER_comparaLeComplemento) ;
-					printf( "\nDigite o bairro: \n" ) ;
+					printf( "\nBairro: \n" ) ;
 					LER_leString( end.bairro, 1, LER_TAM_STRING, LER_comparaLeSoLetra) ;
-					printf( "\nDigite a cidade: \n" ) ;
+					printf( "\nCidade: \n" ) ;
 					LER_leString( end.cidade, 1, LER_TAM_STRING, LER_comparaLeSoLetra) ;	
-					printf( "\nDigite a sigla do estado: \n" ) ;
+					printf( "\nEstado (sigla): \n" ) ;
 					LER_leUF( end.estado ) ;
 					ret = CDI_altera( matAnt, NULL, 0, NULL, 0 , NULL, &end ) ;
 					break ;
@@ -370,47 +370,47 @@
 		printf( "\n*********** CADASTRO DE PROFESSOR(A) ***********\n\n" ) ;
 
 		//Adiciona professor
-		printf( "Digite o nome: \n" ) ;
+		printf( "Nome: \n" ) ;
 		LER_leString( nome, 1, LER_TAM_STRING, LER_comparaLeSoLetra) ;
 
-		printf( "\nDigite o numero do RG (9 digitos): \n") ;
+		printf( "\nNumero do RG (9 digitos): \n") ;
 		LER_leInteiro( &rg, LER_TAM_RG, LER_TAM_RG, LER_comparaLeSoNumero ) ;
 
-		printf( "\nDigite o numero do CPF (11 digitos): \n" ) ;
+		printf( "\nNumero do CPF (11 digitos): \n" ) ;
 		LER_leString( cpf, LER_TAM_CPF, LER_TAM_CPF, LER_comparaLeSoNumero) ;
 
-		printf( "\nDigite o numero da matricula (8 digitos): \n" ) ;
+		printf( "\nNumero da matricula (8 digitos): \n" ) ;
 		LER_leInteiro( &matricula, LER_TAM_MAT, LER_TAM_MAT, LER_comparaLeSoNumero ) ;
 
-		printf( "\nDigite a data de nascimento: \n" ) ;
+		printf( "\nData de nascimento: \n" ) ;
 		LER_leData( &dia, &mes, &ano ) ;
 
-		printf("\nDigite o numero do telefone (8 ou 9 digitos): \n") ;
+		printf("\nNumero do telefone (8 ou 9 digitos): \n") ;
 		LER_leInteiro( &telefone, LER_MIN_TEL, LER_MAX_TEL, LER_comparaLeSoNumero ) ;
 
-		printf( "\nDigite o email: \n" ) ;
+		printf( "\nEmail: \n" ) ;
 		LER_leString( email, 5, LER_TAM_STRING, LER_comparaLeEmail) ;
 
 		printf( "\nInforme o endereco:" ) ;
-		printf( "\nDigite o logradouro:\n" ) ;
+		printf( "\nLogradouro:\n" ) ;
 		LER_leString( rua, 1, LER_TAM_STRING, LER_comparaLeLogradouro) ;
 
-		printf( "\nDigite o numero:\n" ) ;
+		printf( "\nNumero:\n" ) ;
 		LER_leInteiro( &numero, LER_MIN_NUM, LER_MAX_NUM, LER_comparaLeSoNumero ) ;
 
-		printf( "\nDigite o complemento:\n" ) ;
+		printf( "\nComplemento:\n" ) ;
 		LER_leString( complemento, 0, LER_TAM_STRING, LER_comparaLeComplemento) ;
 
-		printf( "\nDigite o bairro:\n" ) ;
+		printf( "\nBairro:\n" ) ;
 		LER_leString( bairro, 1, LER_TAM_STRING, LER_comparaLeSoLetra) ;
 
-		printf( "\nDigite a cidade:\n" ) ;
+		printf( "\nCidade:\n" ) ;
 		LER_leString( cidade, 1, LER_TAM_STRING, LER_comparaLeSoLetra) ;	
 
-		printf( "\nDigite a sigla do estado:\n" ) ;
+		printf( "\nEstado (sigla):\n" ) ;
 		LER_leUF( uf ) ;
 
-		printf( "\nDigite o pais: \n" ) ;
+		printf( "\nPais: \n" ) ;
 		LER_leString( pais, 1, LER_TAM_STRING, LER_comparaLeSoLetra) ;	
 
 		ret = CDO_cadastra( nome, rg, cpf, matricula, email, telefone, dia, mes, ano, pais, uf, cidade, bairro, rua, numero, complemento ) ;
@@ -444,7 +444,17 @@
 	void MEN_modificaProfessor ( void )
 	{
 
-		char nomeFunc[][30] = { "Para voltar ao menu anterior.", "Nome", "RG", "CPF", "Matricula", "Email", "Telefone", "Data", "Endereco" } ;
+		char nomeFunc[][30] = { 
+					"Voltar ao menu anterior.", 
+					"Nome", 
+					"RG", 
+					"CPF", 
+					"Matricula", 
+					"Email", 
+					"Telefone", 
+					"Data", 
+					"Endereco" 
+		} ;
 		int nAlteras = 9, i ;
 		CDO_alteraInt funcInt[] = { NULL, NULL, CDO_alteraRg, NULL, CDO_alteraMatricula, NULL,CDO_alteraTelefone, NULL, NULL } ;
 		CDO_alteraString funcString[] = {NULL, CDO_alteraNome, NULL, CDO_alteraCpf, NULL, CDO_alteraEmail, NULL, NULL, NULL } ; 
@@ -460,16 +470,16 @@
 				
 		do
 		{
-			printf( "Dados do professor que deseja modificar os dados:\n" ) ;
+			printf( "PROFESSOR:\n" ) ;
 			CDO_mostraAtual() ;
 			printf( "\nEscolha o dado a ser alterado: \n\n" ) ;
 
 			for ( i = 1; i < nAlteras; i++ )
 			{
-				printf( "Digite %d: %s.\n", i, nomeFunc[i] ) ;
+				printf( "%d: %s.\n", i, nomeFunc[i] ) ;
 			} /* for */
 
-			printf( "\nDigite 0: %s.\n\n", nomeFunc[0] ) ;
+			printf( "\n0: %s.\n\n", nomeFunc[0] ) ;
 
 			LER_leInteiro( &opcao, 1, 1, LER_comparaLeSoNumero ) ;
 			
@@ -477,62 +487,62 @@
 			{
 				case 1:
 					//Nome
-					printf( "\nDigite o novo valor para %s.\n", nomeFunc[opcao] ) ;
+					printf( "\nNovo %s:\n", nomeFunc[opcao] ) ;
 					LER_leString( paramString, 1, LER_TAM_STRING, LER_comparaLeSoLetra) ;
 					ret = funcString[opcao](paramString) ;
 					break ;
 				case 2: 
 					//RG
-					printf( "\nDigite o novo valor para %s.\n", nomeFunc[opcao] ) ;
+					printf( "\nNovo %s:\n", nomeFunc[opcao] ) ;
 					LER_leInteiro( &paramInt, LER_TAM_RG, LER_TAM_RG, LER_comparaLeSoNumero ) ;
 					ret = funcInt[opcao](paramInt) ;
 					break ;
 				case 3:
 					//CPF
-					printf( "\nDigite o novo valor para %s.\n", nomeFunc[opcao] ) ;
+					printf( "\nNovo %s:\n", nomeFunc[opcao] ) ;
 					LER_leString( paramString, LER_TAM_CPF, LER_TAM_CPF, LER_comparaLeSoNumero) ;
 					ret = funcString[opcao](paramString) ;
 					break ;
 				case 4: 
 					//Matricula
-					printf( "\nDigite o novo valor para %s.\n", nomeFunc[opcao] ) ;
+					printf( "\nNovo %s:\n", nomeFunc[opcao] ) ;
 					LER_leInteiro( &paramInt, LER_TAM_MAT, LER_TAM_MAT, LER_comparaLeSoNumero ) ;
 					ret = funcInt[opcao](paramInt) ;
 					break ;
 				case 5: 
 					//Email
-					printf( "\nDigite o novo valor para %s.\n", nomeFunc[opcao] ) ;
+					printf( "\nNovo %s:\n", nomeFunc[opcao] ) ;
 					LER_leString( paramString, 5, LER_TAM_STRING, LER_comparaLeEmail) ;
 					ret = funcString[opcao](paramString) ;
 					break ;
 				case 6: 
 					//Telefone
-					printf( "\nDigite o novo valor para %s.\n", nomeFunc[opcao] ) ;
+					printf( "\nNovo %s:\n", nomeFunc[opcao] ) ;
 					LER_leInteiro( &paramInt, LER_MIN_TEL, LER_MAX_TEL, LER_comparaLeSoNumero ) ;
 					ret = funcInt[opcao](paramInt) ;
 					break ;
 				case 7:
 					//Data
-					printf( "\nDigite a nova data de nascimento: \n" ) ;
+					printf( "\nNova data de nascimento: \n" ) ;
 					LER_leData( &dia, &mes, &ano ) ;
 					ret = CDO_alteraDataNascimento( dia, mes, ano ) ;
 					break ;
 				case 8:
 					//Nascimento
 					printf( "\nInforme o novo endereco:" ) ;
-					printf("\nDigite o logradouro:\n") ;
+					printf("\nLogradouro:\n") ;
 					LER_leString( rua, 1, LER_TAM_STRING, LER_comparaLeLogradouro) ;
-					printf( "\nDigite o novo numero:\n" ) ;
+					printf( "\nNumero:\n" ) ;
 					LER_leInteiro( &numero, LER_MIN_NUM, LER_MAX_NUM, LER_comparaLeSoNumero ) ;
-					printf( "\nDigite o novo complemento:\n" ) ;
+					printf( "\nComplemento:\n" ) ;
 					LER_leString( complemento, 0, LER_TAM_STRING, LER_comparaLeComplemento) ;
-					printf( "\nDigite o novo bairro:\n" ) ;
+					printf( "\nBairro:\n" ) ;
 					LER_leString( bairro, 1, LER_TAM_STRING, LER_comparaLeSoLetra) ;
-					printf( "\nDigite a nova cidade:\n" ) ;
+					printf( "\nCidade:\n" ) ;
 					LER_leString( cidade, 1, LER_TAM_STRING, LER_comparaLeSoLetra) ;	
-					printf( "\nDigite o novo estado:\n" ) ;
+					printf( "\nEstado (sigla):\n" ) ;
 					LER_leUF( uf ) ;
-					printf( "\nDigite o novo pais:\n" ) ;
+					printf( "\nPais:\n" ) ;
 					LER_leString( pais, 1, LER_TAM_STRING, LER_comparaLeSoLetra) ;	
 					ret = CDO_alteraEndereco( pais, uf, cidade, bairro, rua, numero, complemento ) ;
 					break ;
@@ -590,9 +600,10 @@
 			{
 				printf ("\nPROFESSOR(A):\n") ;
 				CDO_mostraAtual() ;
-				printf ("TEM CERTEZA QUE DESEJA REMOVER PERMANENTEMENTE TODOS OS DADOS DESTE PROFESSOR?\n\n") ;
-				printf ("Digite 1: Para SIM.\n") ;
-				printf ("Digite 0: Para NAO.\n\n") ;
+				printf("TEM CERTEZA QUE DESEJA REMOVER PERMANENTEMENTE TODOS OS DADOS DESTE PROFESSOR?\n\n") ;
+				printf( "\nDigite: \n" ) ;
+				printf("1: Para SIM.\n") ;
+				printf("0: Para NAO.\n\n") ;
 
 				LER_leInteiro( &opcao, 1, 1, LER_comparaLeSoNumero ) ;
 
@@ -637,8 +648,9 @@
 		do
 			{
 				printf ("TEM CERTEZA QUE DESEJA REMOVER PERMANENTEMENTE TODOS OS DADOS DE TODOS OS PROFESSORES CADASTRADOS?\n\n") ;
-				printf ("Digite 1: Para SIM.\n") ;
-				printf ("Digite 0: Para NAO.\n\n") ;
+				printf( "\nDigite: \n" ) ;
+				printf("1: Para SIM.\n") ;
+				printf("0: Para NAO.\n\n") ;
 
 				LER_leInteiro( &opcao, 1, 1, LER_comparaLeSoNumero ) ;
 
@@ -688,37 +700,29 @@
 		printf( "\n*********** CADASTRO DE DISCIPLINA ***********\n" ) ;
 				
 		//adiciona aluno
-		printf( "\nDigite o nome da disciplina: \n" ) ;
-		LER_leString( nome, 1, MEN_MAX_NOME-1, LER_comparaLeSoLetra) ;
+		printf( "\nNome da disciplina: \n" ) ;
+		LER_leString( nome, 1, MEN_MAX_NOME, LER_comparaLeSoLetra) ;
 
 
-		printf( "\nDigite o codigo da disciplina: \n" ) ;
-		LER_leStringConverte( codigo, 4, MEN_MAX_CODIGO-1, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ;
+		printf( "\nCodigo da disciplina: \n" ) ;
+		LER_leStringConverte( codigo, 4, 8, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ;
 
-		printf( "\nDigite a bibliografia da disciplina: \n" ) ;
-		LER_leString( bibliografia, 1, MEN_MAX_BIBLIOGRAFIA-1, LER_comparaLeSoLetra) ;
+		printf( "\nBibliografia da disciplina: \n" ) ;
+		LER_leString( bibliografia, 1, MEN_MAX_BIBLIOGRAFIA, LER_comparaLeSoLetra) ;
 
-		printf( "\nDigite a ementa da disciplina: \n" ) ;
-		LER_leString( ementa, 1, MEN_MAX_EMENTA-1, LER_comparaLeSoLetra) ;
-
-		do
-		{
-			printf( "\nDigite a quantidade de creditos da disciplina: \n" ) ;
-			LER_leInteiro(&creditos, 1, 2, LER_comparaLeSoNumero) ;
-			if ( creditos < 1 )
-			{
-				printf( "Creditos deve ser um numero maior que 0.\n" ) ;
-			}
-		} while( creditos < 1 ) ;
-
+		printf( "\nEmenta da disciplina: \n" ) ;
+		LER_leString( ementa, 1, MEN_MAX_BIBLIOGRAFIA, LER_comparaLeSoLetra) ;
+	
+		printf( "\nQuantidade de creditos da disciplina: \n" ) ;
+		LER_leInteiro(&creditos, 1, 2, LER_comparaLeSoNumero) ;
 
 		do
 		{
-			printf( "\nDigite o criterio da disciplina: \n" ) ;
+			printf( "\nCriterio da disciplina: \n" ) ;
 			LER_leInteiro( &criterio, 1, 1, LER_comparaLeSoNumero ) ;
 			if ( criterio < 1 || 5 < criterio )
 			{
-				printf( "Criterio deve ser um numero de 1 ate 5.\n" ) ;
+				printf( "O Criterio deve ser um numero de 1 ate 5.\n" ) ;
 			}
 		} while( criterio < 1 || 5 < criterio ) ;
 		
@@ -731,7 +735,7 @@
 		{
 			if ( ret == GRC_CondRetNaoHaMemoria )
 			{
-				printf( "Erro de memoria ao cadastrar." ) ;
+				printf( "Erro de memoria ao cadastrar disciplina." ) ;
 			} else
 			{
 				system( "cls" ) ;
@@ -773,16 +777,16 @@
 		
 		do
 		{
-			printf( "\nDados da disciplina que deseja modificar os dados:\n" ) ;
+			printf( "\nDisciplina:\n" ) ;
 			GRC_mostraAtual() ;
 			printf( "\n\nEscolha o dado a ser alterado: \n\n" ) ;
 
 			for ( i = 1; i < nOpcoes; i++ )
 			{
-				printf( "Digite %d: %s.\n", i, nomeFunc[i] ) ;
+				printf( "%d: %s.\n", i, nomeFunc[i] ) ;
 			} /* for */
 
-			printf( "\nDigite 0: %s.\n", nomeFunc[0] ) ;
+			printf( "\n0: %s.\n", nomeFunc[0] ) ;
 			LER_leInteiro(&opcao, 1, 1, LER_comparaLeSoNumero) ;
 			
 			switch( opcao )
@@ -804,7 +808,7 @@
 					//inserir um Pre-Requisito
 					system( "cls" ) ;
 					printf( "Digite o código da disciplina que deseja configurar como pre-requisito:\n" ) ;
-					LER_leStringConverte( codigo, 1, MEN_MAX_CODIGO-1, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ;
+					LER_leStringConverte( codigo, 0, LER_TAM_STRING, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ;
 					ret = GRC_inserePreRequisito( codigo ) ;
 					if( ret != GRC_CondRetOk )
 						printf( "Erro ao cadastrar\n" ) ;
@@ -848,13 +852,13 @@
 					//inserir uma turma
 					system( "cls" ) ;
 					printf( "Digite o codigo da disciplina em que deseja inserir uma turma:\n" ) ;
-					LER_leStringConverte( codigo, 1, MEN_MAX_CODIGO -1, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ;
+					LER_leStringConverte( codigo, 0, LER_TAM_STRING, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ;
 					printf( "Digite o codigo da turma:\n" ) ;				
-					LER_leStringConverte( codTur, 1, MEN_COD_TUR -1, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ;
+					LER_leStringConverte( codTur, 0, LER_TAM_STRING, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ;
 					printf( "Digite o dia da semana da aula:\n" ) ;
 					// Pode nao parecer coerente pelo nome da funcao usa-la aqui, mas na verdade os caracteres sao quase os mesmos
 					// Talvez fosse bom renomear essas funções para que uso delas fosse mais intuitivo
-					LER_leStringConverte( diaSem, 1, MEN_DIA_SEMANA -1, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ;
+					LER_leStringConverte( diaSem, 0, LER_TAM_STRING, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ;
 					do 
 					{
 						printf( "Digite a hora de inicio da aula(7 >= HorIni <= 21):\n" ) ;
@@ -868,7 +872,7 @@
 						//scanf("%d", &horTer);
 					} while ( horTer > 23 || horTer < 9 ) ;
 					printf( "Digite a quantidade de vagas:\n" ) ;
-					LER_leInteiro( &qtdVag, 1, 2, LER_comparaLeSoNumero ) ;
+					LER_leInteiro( &qtdVag, 0, 2, LER_comparaLeSoNumero ) ;
 					ret = GRC_insereTurma( codTur, horIni, horTer, diaSem, qtdVag, codigo ) ;
 					break ;
 				case 6:
@@ -915,14 +919,14 @@
 	{
 
 		int opcao ;
-		char codigo[MEN_MAX_CODIGO] ;
+		char codigo[LER_TAM_STRING+1] ;
 		GRC_tpCondRet ret ;
 
 		printf( "\n*********** REMOVE DISCIPLINA ***********\n" ) ;
 		
 		printf( "\nDigite a codigo da disciplina que deseja remover permanentemente da relacao de disciplinas: \n" ) ;
 
-		LER_leStringConverte(codigo, 1, MEN_MAX_CODIGO-1, MEN_comparaLeCodigoGRC, LER_TOUPPER);
+		LER_leStringConverte(codigo, 0, LER_TAM_STRING, MEN_comparaLeCodigoGRC, LER_TOUPPER);
 	
 		if ( GRC_buscaPorCodigo(codigo) != GRC_CondRetOk )
 		{
@@ -935,8 +939,9 @@
 				printf ("\nDISCIPLINA:\n") ;
 				GRC_mostraAtual() ;
 				printf ("TEM CERTEZA QUE DESEJA REMOVER PERMANENTEMENTE TODOS OS DADOS DESTE PROFESSOR?\n\n") ;
-				printf ("Digite 1: Para SIM.\n") ;
-				printf ("Digite 0: Para NAO.\n\n") ;
+				printf( "\nDigite: \n" ) ;
+				printf("1: Para SIM.\n") ;
+				printf("0: Para NAO.\n\n") ;
 
 				LER_leInteiro( &opcao, 1, 1, LER_comparaLeSoNumero ) ;
 
@@ -979,9 +984,10 @@
 		while ( 1 )
 		{
 			printf ( "TEM CERTEZA QUE DESEJA REMOVER PERMANENTEMENTE TODOS OS DADOS DE TODAS AS DISCIPLINAS CADASTRADAS?\n\n" ) ;
-			printf ( "Digite 1: Para SIM.\n" ) ;
-			printf ( "Digite 0: Para NAO.\n\n" ) ;
-			
+			printf( "\nDigite: \n" ) ;
+			printf("1: Para SIM.\n") ;
+			printf("0: Para NAO.\n\n") ;
+
 			LER_leInteiro(&opcao, 1, 1, LER_comparaLeSoNumero) ;
 
 			if( opcao == 1 )
@@ -1026,9 +1032,17 @@
 	void MEN_menuGradeCurricular ( void )
 	{
 
-		char nomeFunc[][40] = { "Sair", "Adicionar disciplina" , "Mostrar a disciplina atual", "Buscar outra disciplina",
-			"Mostrar todas as disciplinas", "Inserir um Pre-Requisito", "Remover todos os Pre-Requisitos",
-			"Limpar a grade Curricular", "Inserir uma turma", "Exibe as turmas de uma disciplina" } ;
+		char nomeFunc[][40] = { 
+				"Sair", 
+				"Adicionar disciplina" , 
+				"Mostrar a disciplina atual", 
+				"Buscar outra disciplina",
+				"Mostrar todas as disciplinas", 
+				"Inserir um Pre-Requisito", 
+				"Remover todos os Pre-Requisitos",
+				"Limpar a grade Curricular", 
+				"Inserir uma turma", 
+				"Exibe as turmas de uma disciplina" } ;
 		int nItens = 9, i ;
 		char  codigo[MEN_MAX_CODIGO], codTur[MEN_COD_TUR], diaSem[MEN_DIA_SEMANA] ;
 
@@ -1038,10 +1052,10 @@
 
 		do 
 		{
-			printf( "\nMenu Grade Curricular\n" ) ;
+			printf( "\n*********** MENU GRADE CURRICULAR ***********\n" ) ;
 			for ( i = 0; i <= nItens; i++ )
 			{
-				printf("Digite %d: %s.\n", i, nomeFunc[i]) ;
+				printf("%d: %s.\n", i, nomeFunc[i]) ;
 			} /* for */
 
 			LER_leInteiro( &opcao, 1, 2, LER_comparaLeSoNumero ) ;
@@ -1080,7 +1094,7 @@
 					break ;
 				case 7:
 					system( "cls" ) ;
-					printf( "\nDeseja mesmo apagar toda a grade curricular?\n1-Sim\n2-Nao\n" ) ;				
+					printf( "\nDeseja mesmo apagar toda a grade curricular?\n1:Sim\n2-Nao\n" ) ;				
 					LER_leInteiro( &opcao, 0, 1, LER_comparaLeSoNumero ) ;
 					if ( opcao == 1 ) 
 					{

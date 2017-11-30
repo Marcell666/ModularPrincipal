@@ -113,7 +113,6 @@ LIS_tpCondRet push_back(List* l, void* val)
 	if(l->first == NULL)//Se a lista estiver vazia, primeiro nó = último nó = nó cursor.
 	{
 		l->first = Nnode;
-		l->cursor = Nnode;
 		Nnode->prev = NULL;
 	}
 	else
@@ -122,6 +121,7 @@ LIS_tpCondRet push_back(List* l, void* val)
 		l->last->next = Nnode;
 	}
 	l->last = Nnode;
+	l->cursor = Nnode;
 	return LIS_CondRetOK;
 } /* Fim função: LIS push back */
 /***************************************************************************
@@ -139,7 +139,6 @@ LIS_tpCondRet push_front(List* l, void* val)
 	if(l->first == NULL)
 	{
 		l->last = Nnode;
-		l->cursor = Nnode;
 		Nnode->next = NULL;
 	}
 	else
@@ -148,6 +147,7 @@ LIS_tpCondRet push_front(List* l, void* val)
 		l->first->prev = Nnode;
 	}
 	l->first = Nnode;
+	l->cursor = Nnode;
 	return LIS_CondRetOK;
 } /* Fim função: LIS push front */
 /***************************************************************************

@@ -933,7 +933,7 @@ PRF_tpCondRet PRF_alteraPais(Prof* professor, char* pais){
 			) ;
 
 			#ifdef _DEBUG	
-				printf("Dados de professor salvos com sucesso! Confira no arquivo %s\n", path);
+			printf("Dados de professor de matricula %d salvos com sucesso!\n", prof->matricula);
 			#endif
 
 			return PRF_CondRetOk ;

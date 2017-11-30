@@ -75,16 +75,17 @@
 			do 
 			{
 				printf( "\n*********** MENU ALUNO - MATRICULA: %d ***********\n", matricula ) ;
-			
-				printf( "\nDigite 1: Para alterar seus dados pessoais." ) ;
-				printf( "\nDigite 2: Para a ver grade curricular." ) ;
-				//printf("\nDigite 2: ver horarios");
-				//printf("\nDigite 3: ver nota");
+				printf( "\nEscolha uma das opcoes abaixo:\n" ) ;
+
+				printf( "\n1: Alterar seus dados pessoais." ) ;
+				printf( "\n2: Ver grade curricular." ) ;
+				//printf("\n2: ver horarios");
+				//printf("\n3: ver nota");
 		
-				//printf("\nDigite 6: cancelar disciplina");
-				//printf("\nDigite 7: trancar a faculdade");
-				printf( "\nDigite 3: Para ver historico.\n" ) ;
-				printf( "\n\nDigite 0: Para sair do Menu Aluno.\n\n" ) ; 
+				//printf("\n6: cancelar disciplina");
+				//printf("\n7: trancar a faculdade");
+				printf( "\n3: Ver historico.\n" ) ;
+				printf( "\n\n0: Sair do Menu Aluno.\n\n" ) ; 
 
 				LER_leInteiro( &opcao, 1, 1, LER_comparaLeSoNumero ) ;
 
@@ -140,13 +141,14 @@
 		do
 		{
 			printf( "\n*********** MENU PROFESSOR - MATRICULA: %d ***********\n", matricula ) ;
-			
-			printf( "\nDigite 1: Para alterar seus dados pessoais." ) ;
-			printf( "\nDigite 2: Para ver a grade curricular" ) ;
+			printf( "\nEscolha uma das opcoes abaixo:\n" ) ;
+
+			printf( "\n1: Alterar seus dados pessoais." ) ;
+			printf( "\n2: Ver a grade curricular" ) ;
 			//printf("\nDigite X: ver nota");
 			//printf("\nDigite X: ver turmas");
 			//printf("\nDigite 5: modificar dados pessoais");
-			printf( "\n\nDigite 0: Para sair do Menu Professor.\n\n" ) ; 
+			printf( "\n\n0: Sair do Menu Professor.\n\n" ) ; 
 
 			LER_leInteiro( &opcao, 1, 1, LER_comparaLeSoNumero ) ;
 
@@ -198,35 +200,36 @@
 		do
 		{
 			printf( "\n*********** MENU ADMINISTRATIVO ***********\n" ) ;
-			
+			printf( "\nEscolha uma das opcoes abaixo:\n" );
+
 			printf( "\nALUNO" ) ;
-			printf( "\nDigite 1: Para exibir a relacao de alunos." ) ;
-			printf( "\nDigite 2: Para cadastrar um aluno." ) ;
-			printf( "\nDigite 3: Para modificar os dados pessoais de um aluno." ) ;
-			printf( "\nDigite 4: Para deletar um aluno." ) ;
-			printf( "\nDigite 5: Para apagar os dados de todos os alunos." ) ;
+			printf( "\n1: Exibir a relacao de alunos." ) ;
+			printf( "\n2: Cadastrar um aluno." ) ;
+			printf( "\n3: Modificar os dados pessoais de um aluno." ) ;
+			printf( "\n4: Deletar um aluno." ) ;
+			printf( "\n5: Apagar os dados de todos os alunos." ) ;
 			
 			printf( "\n\nPROFESSOR" ) ;
-			printf( "\nDigite 6: Para exibir a relacao de professores." ) ;
-			printf( "\nDigite 7: Para cadastrar um professor." ) ;
-			printf( "\nDigite 8: Para modificar os dados pessoais de um professor." ) ;
-			printf( "\nDigite 9: Para deletar um professor." ) ;
-			printf( "\nDigite 10: Para apagar os dados de todos os professores." ) ;
+			printf( "\n6: Exibir a relacao de professores." ) ;
+			printf( "\n7: Cadastrar um professor." ) ;
+			printf( "\n8: Modificar os dados pessoais de um professor." ) ;
+			printf( "\n9: Deletar um professor." ) ;
+			printf( "\n10: Apagar os dados de todos os professores." ) ;
 
 			printf( "\n\nGRADE CURRICULAR" ) ;
-//			printf( "\nDigite 11: Para acessar o menu da Grade Curricular." ) ;
-			printf( "\nDigite 11: Para exibir a relacao de disciplinas." ) ;
-			printf( "\nDigite 12: Para cadastrar uma disciplina." ) ;
-			printf( "\nDigite 13: Para modificar uma disciplina." ) ;
-			printf( "\nDigite 14: Para remover uma disciplina." ) ;
-			printf( "\nDigite 15: Para apagar os dados de todas as disciplinas." ) ;
+//			printf( "\n11: Acessar o menu da Grade Curricular." ) ;
+			printf( "\n11: Exibir a relacao de disciplinas." ) ;
+			printf( "\n12: Cadastrar uma disciplina." ) ;
+			printf( "\n13: Modificar uma disciplina." ) ;
+			printf( "\n14: Remover uma disciplina." ) ;
+			printf( "\n15: Apagar os dados de todas as disciplinas." ) ;
 
-			//printf("\nDigite 9: deletar sala");
-			//printf("\nDigite 10: adicionar sala");
-			//printf("\nDigite 12: adicionar turma");
-			//printf("\nDigite 4: ver criterio de aprovacao");
+			//printf("\n9: deletar sala");
+			//printf("\n10: adicionar sala");
+			//printf("\n12: adicionar turma");
+			//printf("\n4: ver criterio de aprovacao");
 
-			printf( "\n\nDigite 0: Para sair do Menu Administrativo.\n\n" ) ;
+			printf( "\n\n0: Sair do Menu Administrativo.\n\n" ) ;
 
 			LER_leInteiro( &opcao, 1, 2, LER_comparaLeSoNumero ) ;
 			
@@ -236,7 +239,7 @@
 			{
 				case 1:
 					//mostra relação de alunos
-					printf( "*********** RELACAO DE ALUNOS CADASTRADOS ***********\n\n" ) ;
+					printf( "*********** ALUNOS CADASTRADOS ***********\n\n" ) ;
 					CDI_imprime() ;
 					MEN_menuAnterior() ;
 					break ;
@@ -267,7 +270,7 @@
 					break ;
 				case 6:
 					//mostra relação de professores
-					printf( "*********** RELACAO DE PROFESSORES CADASTRADOS ***********\n\n" ) ;
+					printf( "*********** PROFESSORES CADASTRADOS ***********\n\n" ) ;
 					if ( CDO_mostraTodos() != CDO_CondRetOk ) 
 					{
 						printf( "Nenhum professor cadastrado!\n\n" ) ; 
@@ -294,7 +297,7 @@
 					MEN_removeTodosProfessores() ;
 					break ;
 				case 11:
-					printf( "*********** RELACAO DE DISCIPLINAS CADASTRADAS ***********\n\n" ) ;
+					printf( "*********** DISCIPLINAS CADASTRADAS ***********\n\n" ) ;
 					if ( GRC_mostraTodas() != GRC_CondRetOk ) 
 					{
 						printf( "Nenhuma disciplina cadastrada!\n\n" ) ; 
@@ -368,18 +371,18 @@
 		CDI_cria() ;
 		GRC_cria() ;
 
-
-		printf("Ret: %d\n", CDO_leDados(CDO_DADOS_PATH));
+		CDO_leDados(CDO_DADOS_PATH);
 
 		exibeTelaInicial() ;
 
 		do
 		{
 			printf( "\n*********** SISTEMA ACADEMICO ***********\n" ) ;
-			printf( "\nDigite 1: Para acessar Menu do Aluno" ) ;
-			printf("\nDigite 2: Para acessar Menu do Professor" ) ;
-			printf( "\nDigite 3: Para acessar Menu Administrativo" ) ;
-			printf( "\n\nDigite 0: Para sair\n\n" ) ;
+			printf( "\nEscolha uma das opcoes abaixo:\n" );
+			printf( "\n1: Menu do Aluno" ) ;
+			printf("\n2: Menu do Professor" ) ;
+			printf( "\n3: Menu Administrativo" ) ;
+			printf( "\n\n0: Sair\n\n" ) ;
 			
 			LER_leInteiro( &opcao, 1, 1, LER_comparaLeSoNumero ) ;
 
@@ -388,6 +391,7 @@
 				case 0:
 					system( "cls" ) ;
 					printf( "\n\nFechando programa...\n\n" ) ;
+					CDO_salvaDados(CDO_DADOS_PATH);
 					CDO_libera() ;
 					GRC_libera() ;
 					exit(0) ;
@@ -411,14 +415,12 @@
 					if( opcao )
 					{
 						system( "cls" ) ;
-						printf( "\n\nOPCAO INVALIDA!!!!!\n\n" ) ;
+						printf( "\n\nOPCAO INVALIDA!\n\n" ) ;
 					} /* if */
 					break ;
 			}
 		} while ( opcao ) ;
 		
-		//CDO_salvaDados(CDO_DADOS_PATH);
-
 		return 0 ;
 	}
 
