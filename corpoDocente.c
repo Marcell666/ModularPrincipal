@@ -46,7 +46,6 @@
 	#include <direct.h>
 #endif
 
-#define _DEBUG_
 
 /***********************************************************************
 *
@@ -522,7 +521,7 @@
 		PRF_ptProfessor prof = NULL ;
 
 		FILE *f ;
-		char pathComPasta[81] ;
+		char pathComPasta[PRF_TAM_STRING] ;
 
 		//colcocando pasta no inicio do path
 		#ifdef __linux__
@@ -550,7 +549,16 @@
 		/*
 			TODO salvar posicao do cursor para que ele volte para o mesmo lugar
 
-			Obs. CRIS: Não entendi o comentário acima...
+			A função first(), muda a posição do cursor para o primeiro elemento da lista.
+			Pode ser importante para algum outro par de funções A e B, chamar esta função entre a chamada delas. Mas enquanto A coloca o cursor numa determinada posição pode ser que B não espere que esta função mude a posição, gerando assim uma incoerência, que pode ser so incoveniente para o usuário, ou pode coloca-lo numa situação em que apesar de não gerar um erro de execução ele não possui acesso a determinado recurso. Por isso, é importante que funções que alteram a posição do cursor por necessidade, e não porque essa é o papel delas, retornem o cursor para onde ela estava quando ela foi chamada.
+
+			E agora depois desta explicação toda, eu digo que provalmente aqui não precisa fazer isso.
+			Afinal essa função so é chamada no final do programa.
+			
+			Exemplos de funções cujo proposito é mudar a posição do cursor são as buscas neste mesmo modulo.
+			No modulo gradeCurricular.c está a função GRC_inserePreRequisito é um exemplo de uma função onde restauro a posição do cursor antes de retornar.
+
+			
 		*/
 
 		first( doc->professores ) ;
@@ -586,9 +594,9 @@
 		CDO_tpCondRet ret ;
 		FILE *f ;
 				
-		char pathComPasta[81] ;
+		char pathComPasta[PRF_TAM_STRING] ;
 
-		//colcocando pasta no inicio do path
+		//colocando pasta no inicio do path
 		#ifdef __linux__
 			strcpy( pathComPasta,"Dados/" ) ;
 		#else
@@ -597,7 +605,7 @@
 
 		strcat( pathComPasta, path ) ;
 
-		#ifdef _DEBUG_	
+		#ifdef _DEBUG
 			printf( "PATH: %s\n", pathComPasta ) ;
 		#endif
 
@@ -606,18 +614,19 @@
 
 		if ( !f )
 		{
-			#ifdef _DEBUG_	
+			#ifdef _DEBUG
 				printf("Erro ao abrir arquivo de dados pessoais dos professores no módulo Corpo Docente.\n PATH: %s\n", pathComPasta) ;
 			#endif
-			//nao deu para abrir, criar pasta
 			/*
+				Falha na abertura, criar pasta.
+	
 				Não deve existir a possibilidade de abrir a pasta e não ter nenhum arquivo dentro dela.
 				Se não existe pasta, é a primeira vez que o o programa funciona, e portanto não tem arquivos.
-				Se existe pasta, já não é a primeira vez e tem algum arquivo la dentro, mesmoq ue esteja vazio.
+				Se existe pasta, já não é a primeira vez e tem algum arquivo la dentro, mesmo que esteja vazio.
 				A não ser que o usuário delete os arquivos da pasta manualmente, mas então, por isso eu não mes responsabilizo. Afinal estamos possibilitando que ele remova os dados atraves do proprio programa, o que não causa erros.
 			*/
 			#ifdef __linux__
-				mkdir( "Dados",0666 ) ;
+				mkdir( "Dados", 0777 ) ;
 			#else
 				_mkdir( "Dados" ) ;
 			#endif
@@ -629,7 +638,7 @@
 				nome, cpf, &matricula, email, &telefone, &rg, &dia, &mes, &ano,
 				pais, uf, cidade, bairro, rua, &numero, complemento )>0 )
 		{
-			#ifdef _DEBUG_
+			#ifdef _DEBUG
 				printf( "%s %s %d %s %d %d %d %d %d %s %s %s %s %s %d %s \n",
 					nome, cpf, matricula, email, telefone, rg, dia, mes, ano, pais, uf, cidade, bairro, rua, numero, complemento ) ;
 			#endif
@@ -638,7 +647,7 @@
 			
 			if(ret != CDO_CondRetOk)
 			{
-				#ifdef _DEBUG_
+				#ifdef _DEBUG
 					printf("Erro ao cadastrar Professor\n") ;
 				#endif
 			}
