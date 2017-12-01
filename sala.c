@@ -573,4 +573,47 @@ SAL_tpCondRet SAL_printDisponibilidade(SAL_tpSala * pSala) {
 
 /* Fim funcao: Sal reset disponibilidade Sala */
 
+/***************************************************************************
+*
+*  Função: SAL Salva Dados
+*  ****/
+
+	SAL_tpCondRet SAL_salvaDados (SAL_tpSala * pSala,  FILE *f )
+	{
+			int i, e;
+			if ( !f )
+			{
+				#ifdef _DEBUG	
+					printf("Erro ao abrir arquivo de dados das salas.\n") ;
+				#endif
+				return SAL_CondRetErroAbrirArquivo ;
+			} /* if */
+				/*
+					Formato de escrita/leitura
+					Dados da sala:
+					%s %d %d
+					disponibilidade:
+					%d %d ....
+				*/
+
+			fprintf(f, "%s %d %d\n",
+				pSala->codigo,
+				pSala->maxAlunos,
+				pSala->eLaboratorio,
+			) ;
+			for(i=0;i<HORARIOS;i++){
+				for(e=0;e<DIAS;e++){
+					fprintf("%d ", pSala->disponibilidade[i][e]);
+				}
+			}
+
+			#ifdef _DEBUG	
+			printf("Dados da sala de codigo %s salvos com sucesso!\n", pSala->codigo);
+			#endif
+
+			return SAL_CondRetOK ;
+
+	} /* Fim função: SAL Salva Dados */
+
+
 /********** Fim do modulo de implementacao: Modulo Sala **********/

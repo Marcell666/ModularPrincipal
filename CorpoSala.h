@@ -64,6 +64,9 @@
 		
 		CDS_CondRetParametroInvalido
 		/* Recebeu parametro invalidos para cadastrar uma sala */
+		
+		CDS_CondRetErroAbrirArquivo
+		/* Erro ao salvar ou ler dados */
     
 	} CDS_tpCondRet ;
 

@@ -409,4 +409,140 @@
         
 	}/* Fim funcao: CDS &Reserva Sala */
 
+/***************************************************************************
+ *
+ *  Função: CDO Salva Dados
+ *  ****/
+
+	CDO_tpCondRet CDO_salvaDados( char * path )
+	{
+
+		SAL_tpSala * pSala,
+
+		FILE *f ;
+		char pathComPasta[CDS_TAM_STRING] ;
+
+		//colcocando pasta no inicio do path
+		#ifdef __linux__
+			strcpy(pathComPasta,"Dados/");
+		#else
+			strcpy(pathComPasta,"Dados\\") ;
+		#endif
+
+		strcat(pathComPasta, path) ;
+
+		#ifdef _DEBUG_	
+			printf("PATH: %s\n", pathComPasta) ;
+		#endif
+
+		f = fopen(pathComPasta,"wt") ;
+
+		if ( !f )
+		{
+			#ifdef _DEBUG_	
+				printf( "Erro ao salvar arquivo de dados das salas no módulo CDS. %s\n", pathComPasta ) ;
+			#endif
+			return CDS_CondRetErroAbrirArquivo ;
+		} /* if */
+
+		first( CorpoS->Sala ) 
+		do
+		{
+			if( get_val_cursor( CorpoS->Sala , (void**) &prof) == LIS_CondRetListaVazia )
+			{
+				fclose(f) ;
+				return CDO_CondRetCorpoDocenteVazio ;
+			}
+			PRF_salvaDados(prof, f);
+		} while( next(doc->professores)==LIS_CondRetOK ) ;
+		
+		fclose(f) ;
+
+		return CDO_CondRetOk ;
+
+	}  /* Fim função: CDO Salva Dados */
+
+ /***************************************************************************
+ *
+ *  Função: CDO Le Dados
+ *  ****/
+
+	CDO_tpCondRet CDO_leDados ( char * path )
+	{
+
+		int rg, matricula, telefone ;
+		int dia, mes, ano ;
+		char nome[PRF_TAM_STRING], cpf[PRF_TAM_CPF], email[PRF_TAM_STRING] ;
+		char pais[PRF_TAM_STRING], uf[PRF_TAM_UF], cidade[PRF_TAM_STRING], bairro[PRF_TAM_STRING], rua[PRF_TAM_STRING], complemento[PRF_TAM_STRING] ;
+		int numero ;
+		CDO_tpCondRet ret ;
+		FILE *f ;
+				
+		char pathComPasta[PRF_TAM_STRING] ;
+
+		//colocando pasta no inicio do path
+		#ifdef __linux__
+			strcpy( pathComPasta,"Dados/" ) ;
+		#else
+			strcpy( pathComPasta,"Dados\\" ) ;
+		#endif
+
+		strcat( pathComPasta, path ) ;
+
+		#ifdef _DEBUG
+			printf( "PATH: %s\n", pathComPasta ) ;
+		#endif
+
+		//abrindo arquivo
+		f = fopen( pathComPasta, "rt" ) ;
+
+		if ( !f )
+		{
+			#ifdef _DEBUG
+				printf("Erro ao abrir arquivo de dados pessoais dos professores no módulo Corpo Docente.\n PATH: %s\n", pathComPasta) ;
+			#endif
+			/*
+				Falha na abertura, criar pasta.
+	
+				Não deve existir a possibilidade de abrir a pasta e não ter nenhum arquivo dentro dela.
+				Se não existe pasta, é a primeira vez que o o programa funciona, e portanto não tem arquivos.
+				Se existe pasta, já não é a primeira vez e tem algum arquivo la dentro, mesmo que esteja vazio.
+				A não ser que o usuário delete os arquivos da pasta manualmente, mas então, por isso eu não me responsabilizo. Afinal estamos possibilitando que ele remova os dados atraves do proprio programa, o que não causa erros.
+			*/
+			#ifdef __linux__
+				mkdir( "Dados", 0777 ) ;
+			#else
+				_mkdir( "Dados" ) ;
+			#endif
+			return CDS_CondRetOK ;
+		} /* if */
+
+	
+		while( fscanf(f, "\'%[^\']\' %s %d %s %d %d %d %d %d %s %s \'%[^\']\' \'%[^\']\' \'%[^\']\' %d \'%[^\']\'\n",
+				nome, cpf, &matricula, email, &telefone, &rg, &dia, &mes, &ano,
+				pais, uf, cidade, bairro, rua, &numero, complemento )>0 )
+		{
+			#ifdef _DEBUG
+				printf( "%s %s %d %s %d %d %d %d %d %s %s %s %s %s %d %s \n",
+					nome, cpf, matricula, email, telefone, rg, dia, mes, ano, pais, uf, cidade, bairro, rua, numero, complemento ) ;
+			#endif
+
+			ret = CDO_cadastra( nome, rg, cpf, matricula, email, telefone, dia, mes, ano, pais, uf, cidade, bairro, rua, numero, complemento ) ;
+			
+			if(ret != CDO_CondRetOk)
+			{
+				#ifdef _DEBUG
+					printf("Erro ao cadastrar Professor\n") ;
+				#endif
+			}
+		} /* while */
+
+		fclose(f) ;
+
+		return ret ;
+
+	} /* Fim função: CDO Le Dados */
+
+
+
 /********** Fim do modulo de implementacao: CDS Corpo de Salas **********/
