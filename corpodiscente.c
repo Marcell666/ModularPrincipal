@@ -233,8 +233,6 @@ de erro de aluno não encontrado.*/
 
 	CDI_tpCondRet CDI_leDados ( char * path )
 	{
-
-		int rg ;
 		unsigned int matricula, telefone ;
 		Data nasc ;
 		CPF cpf; 
@@ -283,7 +281,7 @@ de erro de aluno não encontrado.*/
 	
 		while( fscanf(f, "\'%[^\']\' %d %d %d %d %u %u %d %d %d %s \'%[^\']\' \'%[^\']\' \'%[^\']\' %d \'%[^\']\'\n",
 						nome, &cpf.dig1, &cpf.dig2, &cpf.dig3, &cpf.cod, &matricula, &telefone, &nasc.dia,
-						&nasc.mes, &nasc.ano, &end.estado, &end.cidade, &end.bairro, &end.comp, &end.numero, &end.rua )>0 )
+						&nasc.mes, &nasc.ano, end.estado, end.cidade, end.bairro, end.comp, &end.numero, end.rua )>0 )
 		{
 			#ifdef _DEBUG
 				printf( "%s %d.%d.%d-%d %u %u %d %d %d %s %s %s %s %d %s \n",

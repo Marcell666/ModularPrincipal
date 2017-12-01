@@ -62,7 +62,7 @@
 		CDS_CondRetCDSVazio,
 		/* O corpo de salas esta vazio */
 		
-		CDS_CondRetParametroInvalido
+		CDS_CondRetParametroInvalido,
 		/* Recebeu parametro invalidos para cadastrar uma sala */
 		
 		CDS_CondRetErroAbrirArquivo

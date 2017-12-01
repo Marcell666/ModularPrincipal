@@ -27,6 +27,13 @@
 #include "sala.h"
 #include "listas.h"
 #include "CorpoSala.h"
+#ifdef __linux__
+	#include <sys/stat.h>
+	#include <sys/types.h>
+	#include <fcntl.h>
+#else
+	#include <direct.h>
+#endif
 
 /***********************************************************************
 *
@@ -419,7 +426,7 @@
 	CDS_tpCondRet CDS_salvaDados( char * path )
 	{
 
-		SAL_tpSala * pSala,
+		SAL_tpSala * pSala;
 
 		FILE *f ;
 		char pathComPasta[CDS_TAM_STRING] ;
@@ -447,13 +454,13 @@
 			return CDS_CondRetErroAbrirArquivo ;
 		} /* if */
 
-		first( CorpoS->Sala ) 
+		first( CorpoS->Sala ) ;
 		do
 		{
-			if( get_val_cursor( CorpoS->Sala , (void**) &prof) == LIS_CondRetListaVazia )
+			if( get_val_cursor( CorpoS->Sala , (void**) &pSala) == LIS_CondRetListaVazia )
 			{
 				fclose(f) ;
-				return CDS_CondRetCorpoDocenteVazio ;
+				return CDS_CondRetCDSVazio;
 			}
 			SAL_salvaDados(pSala, f);
 		} while( next(CorpoS->Sala)==LIS_CondRetOK ) ;
@@ -518,22 +525,29 @@
 	
 		do{
 
-			ret = SAL_cadastra(pSala, "F123", 1, 1);
+			/*
+				A sala não disponibiliza uma maneira de mudar a matriz de disponibilidade (Sim, é isso mesmo. A matriz de disponibilidade nao estao disponivel.)
+				Por isso, a matriz gravada em arquivo precisa ser lida pela propria sala, pois aqui os dados dela estao encapsulados.
+				Então estou cadastrando uma sala com dados quaisquer, e passando para a sala. La ela le de um arquivo os daodos que precisa e os atribui a sala passada. Aqui, eu coloco a sala na lista.
+				
+			*/
+			ret = SAL_criarSala(&pSala, "F123", 1, 1);
 			
 			#ifdef _DEBUG
 				if(ret != CDS_CondRetOK)
 				{
-					printf("Erro ao ler cadastrar Sala\n") ;
+					printf("Erro ao cadastrar Sala\n") ;
 				}
 			#endif
-			ret = CDS_leDados(pSala, f);
+			ret = SAL_leDados(pSala, f);
 			#ifdef _DEBUG
 				if(ret != CDS_CondRetOK)
 				{
 					printf("Erro ao ler Sala\n") ;
 				}
 			#endif
-		} while( fscanf(f, "\n")>0 )
+			push_back( CorpoS->Sala, (void**) &pSala) ;
+		} while( fscanf(f, "\n")>0 ) ;
 
 		fclose(f) ;
 

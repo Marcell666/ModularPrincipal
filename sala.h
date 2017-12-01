@@ -97,10 +97,10 @@ typedef enum {
 	SAL_CondRetErroAoReservar = 5 ,
 	/* Enviada quando uma sala ja esta reservada */
 
-	SAL_CondRetErroAoLiberar = 6
+	SAL_CondRetErroAoLiberar = 6 ,
 	/* Erro ao tentar liberar sala */
 	
-	SAL_CondRetErroAbrirArquivo ;
+	SAL_CondRetErroAbrirArquivo 
 	/* Erro ao tentar abrir tentar salvar os dados em um arquivo */
 
 } SAL_tpCondRet ;

@@ -599,11 +599,11 @@ SAL_tpCondRet SAL_printDisponibilidade(SAL_tpSala * pSala) {
 			fprintf(f, "%s %d %d\n",
 				pSala->codigo,
 				pSala->maxAlunos,
-				pSala->eLaboratorio,
+				pSala->eLaboratorio
 			) ;
 			for(i=0;i<HORARIOS;i++){
 				for(e=0;e<DIAS;e++){
-					fprintf("%d ", pSala->disponibilidade[i][e]);
+					fprintf(f, "%d ", pSala->disponibilidade[i][e]);
 				}
 			}
 
@@ -642,11 +642,11 @@ SAL_tpCondRet SAL_printDisponibilidade(SAL_tpSala * pSala) {
 			fscanf(f, "%s %d %d\n",
 				pSala->codigo,
 				&pSala->maxAlunos,
-				pSala->eLaboratorio,
+				&pSala->eLaboratorio
 			) ;
 			for(i=0;i<HORARIOS;i++){
 				for(e=0;e<DIAS;e++){
-					fscanf("%d ", pSala->disponibilidade[i] + e );
+					fscanf(f, "%d ", pSala->disponibilidade[i] + e );
 				}
 			}
 
