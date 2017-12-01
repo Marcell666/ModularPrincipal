@@ -9,10 +9,12 @@
 *
 *  Projeto: INF 1301 / 1628 Automatiza??o dos testes de modulos C
 *  Gestor:  LES/DI/PUC-Rio
-*  Autores: cgln - Cristiane - Guilherme - Leonardo - Nathalia
+*  Autores: cgln - Cristiane - Guilherme - Leonardo - Nathalia 
+*	BM - Bruce Marcellino
 *
 *  $HA Hist?rico de evolu??o:
 *     Vers?o  Autor    Data     Observacoes
+*	3.01	BM	01/dez/2017	Persistencia de dados de sala
 *     3       cgln  04/nov/2017 manutencao das funcoes do modulo
 *     2       cgln  02/nov/2017 unificacao de todos os modulos em um so projeto
 *     1       cgln  31/out/2017 inicio desenvolvimento
@@ -411,10 +413,10 @@
 
 /***************************************************************************
  *
- *  Função: CDO Salva Dados
+ *  Função: CDS Salva Dados
  *  ****/
 
-	CDO_tpCondRet CDO_salvaDados( char * path )
+	CDS_tpCondRet CDS_salvaDados( char * path )
 	{
 
 		SAL_tpSala * pSala,
@@ -451,34 +453,30 @@
 			if( get_val_cursor( CorpoS->Sala , (void**) &prof) == LIS_CondRetListaVazia )
 			{
 				fclose(f) ;
-				return CDO_CondRetCorpoDocenteVazio ;
+				return CDS_CondRetCorpoDocenteVazio ;
 			}
-			PRF_salvaDados(prof, f);
-		} while( next(doc->professores)==LIS_CondRetOK ) ;
+			SAL_salvaDados(pSala, f);
+		} while( next(CorpoS->Sala)==LIS_CondRetOK ) ;
 		
 		fclose(f) ;
 
-		return CDO_CondRetOk ;
+		return CDS_CondRetOK ;
 
-	}  /* Fim função: CDO Salva Dados */
+	}  /* Fim função: CDS Salva Dados */
 
  /***************************************************************************
  *
- *  Função: CDO Le Dados
+ *  Função: CDS Le Dados
  *  ****/
 
-	CDO_tpCondRet CDO_leDados ( char * path )
+	CDS_tpCondRet CDS_leDados ( char * path )
 	{
 
-		int rg, matricula, telefone ;
-		int dia, mes, ano ;
-		char nome[PRF_TAM_STRING], cpf[PRF_TAM_CPF], email[PRF_TAM_STRING] ;
-		char pais[PRF_TAM_STRING], uf[PRF_TAM_UF], cidade[PRF_TAM_STRING], bairro[PRF_TAM_STRING], rua[PRF_TAM_STRING], complemento[PRF_TAM_STRING] ;
-		int numero ;
-		CDO_tpCondRet ret ;
+		SAL_tpSala *pSala;
+		CDS_tpCondRet ret ;
 		FILE *f ;
 				
-		char pathComPasta[PRF_TAM_STRING] ;
+		char pathComPasta[CDS_TAM_STRING] ;
 
 		//colocando pasta no inicio do path
 		#ifdef __linux__
@@ -499,7 +497,7 @@
 		if ( !f )
 		{
 			#ifdef _DEBUG
-				printf("Erro ao abrir arquivo de dados pessoais dos professores no módulo Corpo Docente.\n PATH: %s\n", pathComPasta) ;
+				printf("Erro ao abrir arquivo de dados pessoais das Sala no modulo Corpo de Salas.\n PATH: %s\n", pathComPasta) ;
 			#endif
 			/*
 				Falha na abertura, criar pasta.
@@ -518,30 +516,30 @@
 		} /* if */
 
 	
-		while( fscanf(f, "\'%[^\']\' %s %d %s %d %d %d %d %d %s %s \'%[^\']\' \'%[^\']\' \'%[^\']\' %d \'%[^\']\'\n",
-				nome, cpf, &matricula, email, &telefone, &rg, &dia, &mes, &ano,
-				pais, uf, cidade, bairro, rua, &numero, complemento )>0 )
-		{
-			#ifdef _DEBUG
-				printf( "%s %s %d %s %d %d %d %d %d %s %s %s %s %s %d %s \n",
-					nome, cpf, matricula, email, telefone, rg, dia, mes, ano, pais, uf, cidade, bairro, rua, numero, complemento ) ;
-			#endif
+		do{
 
-			ret = CDO_cadastra( nome, rg, cpf, matricula, email, telefone, dia, mes, ano, pais, uf, cidade, bairro, rua, numero, complemento ) ;
+			ret = SAL_cadastra(pSala, "F123", 1, 1);
 			
-			if(ret != CDO_CondRetOk)
-			{
-				#ifdef _DEBUG
-					printf("Erro ao cadastrar Professor\n") ;
-				#endif
-			}
-		} /* while */
+			#ifdef _DEBUG
+				if(ret != CDS_CondRetOK)
+				{
+					printf("Erro ao ler cadastrar Sala\n") ;
+				}
+			#endif
+			ret = CDS_leDados(pSala, f);
+			#ifdef _DEBUG
+				if(ret != CDS_CondRetOK)
+				{
+					printf("Erro ao ler Sala\n") ;
+				}
+			#endif
+		} while( fscanf(f, "\n")>0 )
 
 		fclose(f) ;
 
 		return ret ;
 
-	} /* Fim função: CDO Le Dados */
+	} /* Fim função: CDS Le Dados */
 
 
 

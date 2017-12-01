@@ -381,7 +381,7 @@ SAL_tpCondRet SAL_printDisponibilidade(SAL_tpSala * pSala);
 SAL_tpCondRet SAL_getHorarioNoDia(SAL_tpSala * pSala, int dia, int horarioInicio, int horarioFim);
 
 SAL_tpCondRet SAL_salvaDados (SAL_tpSala * pSala,  FILE *f );
-
+SAL_tpCondRet SAL_leDados (SAL_tpSala * pSala,  FILE *f );
 #undef SALA_EXT
 
 /********** Fim do m€dulo de defini¡Ño: M€dulo Sala **********/
