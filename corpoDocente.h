@@ -255,32 +255,6 @@ CDO_tpCondRet CDO_libera();
 
 /***********************************************************************
 *
-*  $FC Função: CDO Busca por RG
-*
-*  $ED Descrição da função
-*     Busca no Corpo Docente (Lista de Professores) um Professor pelo RG
-*
-*  $EP Parâmetros
-*     
-*     $P chave - RG do Professor que deseja buscar no corpo Docente
-*						
-*  $FV Valor retornado
-*     CDO_CondRetOk 
-*     CDO_CondRetProfessorNaoEncontrado - Instância de professor desejada não encontrada no Corpo Docente
-*     CDO_CondRetCorpoDocenteVazio - Caso o Corpo Docente apontado esteja vazio 
-*
-*  Assertiva de Entrada: 
-*		-O corpo docente ja foi instanciado
-*                    
-*  Assertiva de Saída: 
-*		-o cursor passa a aponta para um professor que armazena aquele valor
-*
-***********************************************************************/
-
-CDO_tpCondRet CDO_buscaPorRg(int chave);
-
-/***********************************************************************
-*
 *  $FC Função: CDO Busca por CPF
 *
 *  $ED Descrição da função
