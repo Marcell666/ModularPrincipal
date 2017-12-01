@@ -711,10 +711,10 @@
 		LER_leStringConverte( codigo, 4, 8, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ;
 
 		printf( "\nBibliografia da disciplina: \n" ) ;
-		LER_leString( bibliografia, 1, MEN_MAX_BIBLIOGRAFIA, LER_comparaLeSoLetra) ;
+		LER_leString( bibliografia, 1, MEN_MAX_BIBLIOGRAFIA, LER_comparaLeComplemento) ;
 
 		printf( "\nEmenta da disciplina: \n" ) ;
-		LER_leString( ementa, 1, MEN_MAX_BIBLIOGRAFIA, LER_comparaLeSoLetra) ;
+		LER_leString( ementa, 1, MEN_MAX_EMENTA, LER_comparaLeLogradouro) ;
 	
 		printf( "\nQuantidade de creditos da disciplina: \n" ) ;
 		LER_leInteiro(&creditos, 1, 2, LER_comparaLeSoNumero) ;
