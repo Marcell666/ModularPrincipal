@@ -69,7 +69,7 @@
 
 /***** Protótipos das funções encapsuladas no módulo *****/
 
-	CDO_tpCondRet buscaIdentificacao(int rgChave, char *cpfChave, int matriculaChave, char *emailChave);
+	CDO_tpCondRet buscaIdentificacao(char *cpfChave, int matriculaChave, char *emailChave);
 
 
 /*****  Código das funções exportadas pelo módulo  *****/
@@ -93,7 +93,7 @@
 	CDO_tpCondRet CDO_cadastra(char *nome, int rg, char *cpf, int matricula, char *email, int telefone, int dia, int mes, int ano, char *pais, char *uf, char *cidade, char *bairro, char *rua, int numero, char *complemento){
 		PRF_ptProfessor prof = NULL;
 		PRF_tpCondRet ret;
-		if(buscaIdentificacao(rg, cpf, matricula, email) != CDO_CondRetOk)
+		if(buscaIdentificacao(cpf, matricula, email) != CDO_CondRetOk)
 			return CDO_CondRetIdJaCriado;
 		ret = PRF_cria(&prof, nome, rg, cpf, matricula, email, telefone, dia, mes, ano, pais, uf, cidade, bairro, rua, numero, complemento);
 		if(ret == PRF_CondRetNaoHaMemoria) return CDO_CondRetNaoHaMemoria;
@@ -111,22 +111,29 @@
 *     Retorna PRF_CondRetOk caso contrário.
 *
 ***********************************************************************/
-	CDO_tpCondRet buscaIdentificacao(int rgChave, char *cpfChave, int matriculaChave, char *emailChave){
+	CDO_tpCondRet buscaIdentificacao(char *cpfChave, int matriculaChave, char *emailChave){
 		PRF_ptProfessor prof = NULL;
 		char cpf[PRF_TAM_STRING];
 		char email[PRF_TAM_STRING];
 		int matricula;
-		int rg;
+		int ret;
 		first(doc->professores);
 		do{
 			if(get_val_cursor(doc->professores, (void**) &prof) == LIS_CondRetListaVazia)
 				return CDO_CondRetOk;
 
 			PRF_consultaCpf(prof, cpf);
-			PRF_consultaRg(prof, &rg);
 			PRF_consultaEmail(prof, email);
 			PRF_consultaMatricula(prof, &matricula);
-			if(strcmp(cpfChave, cpf)==0 || strcmp(emailChave, email)==0 || rgChave == rg || matriculaChave == matricula) return CDO_CondRetIdJaCriado;
+			ret = 0;
+			if(ret+=(strcmp(cpfChave, cpf)==0))
+				printf("CPF duplicado ao cadastrar professor. Por favor tente novamente com outra identificação.\n");
+			if(ret+=(strcmp(emailChave, email)==0))
+				printf("Email duplicado ao cadastrar professor. Por favor tente novamente com outra identificação.\n");
+			if(ret+=(matriculaChave == matricula))
+				printf("Matricula duplicada ao cadastrar professor. Por favor tente novamente com outra identificação.\n"); 
+			if(ret)
+				return CDO_CondRetIdJaCriado;
 		}while(next(doc->professores)==LIS_CondRetOK);
 
 		/* Não encontrou */
@@ -196,28 +203,6 @@
 		del(doc->professores);
 		return CDO_CondRetOk;
 	}/* Fim função: CDO Libera */
-
- /***************************************************************************
- *
- *  Função: CDO Busca Por RG
- *  ****/
-
-	CDO_tpCondRet CDO_buscaPorRg(int chave){
-		PRF_ptProfessor prof = NULL;
-		int rg;
-
-		first(doc->professores);
-		do{
-			if(get_val_cursor(doc->professores, (void**) &prof) == LIS_CondRetListaVazia)
-				return CDO_CondRetCorpoDocenteVazio;
-
-			PRF_consultaRg(prof, &rg);
-			if(chave == rg) 
-				return CDO_CondRetOk;
-		}while(next(doc->professores)==LIS_CondRetOK);
-
-		return CDO_CondRetProfessorNaoEncontrado;
-	}/* Fim função: CDO Busca Por RG */
 
  /***************************************************************************
  *
