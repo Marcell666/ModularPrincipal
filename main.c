@@ -20,6 +20,7 @@
 *
 *  $HA Histórico de evolução:
 *     Versão  Autor         Data		Observações
+*	1.04	Bruce	04/11/2017	Inicio da persistencia de dados
 *     1.03    Bruce/Cris 25/11/2017     Revisão/finalização
 *     1.02    Cristiane  15/11/2017     Revisão/Reestruturação
 *     1.01    Bruce	     07/10/2017	    Reestruturação
@@ -48,6 +49,7 @@
 #include "corpodiscente.h"
 #include "corpoDocente.h"
 #include "gradeCurricular.h"
+#include "CorpoSala.h"
 #include "HISTORICO.h"
 #include "menu.h"
 #include "leitura.h"
@@ -224,9 +226,21 @@
 			printf( "\n14: Remover uma disciplina." ) ;
 			printf( "\n15: Apagar os dados de todas as disciplinas." ) ;
 
-			//printf("\n9: deletar sala");
-			//printf("\n10: adicionar sala");
-			//printf("\n12: adicionar turma");
+			printf( "\n\nSALAS" ) ;
+			printf( "\n16: Exibir o conjunto de salas." ) ;
+			printf( "\n17: Cadastrar uma sala." ) ;
+			/*printf( "\n18: Modificar uma sala." ) ;
+				TODO
+
+				A sala possui algumas funções para modificar os dados ja cadastrados. Essas funções não foram disponibilizadas pelo modulo CDS Corpo Sala.
+				Não existem funções suficiente para fazer um função de modifica sala.
+
+				A unica função disponivel é a reserva sala. Mas a meu entender, esta deve ser chamada quando o usuario cadastrar um sala numa turma. E não deve ser simplesmente disponibilizada ao usuário.
+				Quando estiver completa a integração de sala com turma essa função certamente sera usada.
+			*/
+			printf( "\n18: Remover uma sala." ) ;
+			printf( "\n19: Apagar os dados de todas as sala." ) ;
+
 			//printf("\n4: ver criterio de aprovacao");
 
 			printf( "\n\n0: Sair do Menu Administrativo.\n\n" ) ;
@@ -316,7 +330,32 @@
 					break ;
 				case 15:
 					MEN_removeTodasDisciplinas();
-					break ;			
+					break ;	
+				case 16:
+					printf( "*********** SALAS CADASTRADAS ***********\n\n" ) ;
+					if ( CDS_exibe() != CDS_CondRetOK ) 
+					{
+						printf( "Nenhuma sala cadastrada!\n\n" ) ; 
+					} /* if */
+					MEN_menuAnterior() ;
+					break ;
+				case 17:
+					MEN_adicionaSala();
+					break ;
+				/*
+				case 18:
+					MEN_modificaSala();
+					break ;
+				
+
+				TODO ver nota logo acima desta.
+				*/
+				case 18:
+					MEN_removeSala();
+					break ;
+				case 19:
+					MEN_removeTodasSalas();
+					break ;	
 				default:
 					if ( opcao )
 					{
@@ -370,6 +409,7 @@
 		CDO_cria() ;
 		CDI_cria() ;
 		GRC_cria() ;
+		CDS_cria() ;
 
 		CDO_leDados(CDO_DADOS_PATH) ;
 		CDI_leDados(CDI_DADOS_PATH) ;
@@ -394,8 +434,6 @@
 					printf( "\n\nFechando programa...\n\n" ) ;
 					CDO_salvaDados(CDO_DADOS_PATH);
 					CDO_libera() ;
-					CDI_salvaDados(CDI_DADOS_PATH);
-					CDI_deleta() ; 
 					GRC_libera() ;
 					exit(0) ;
 					break ;
@@ -423,6 +461,16 @@
 					break ;
 			}
 		} while ( opcao ) ;
+
+		CDO_salvaDados(CDO_DADOS_PATH);
+		CDI_salvaDados(CDI_DADOS_PATH);
+
+ 		CDO_libera() ;
+		CDI_deleta() ; 
+		GRC_libera() ;
+		CDS_libera() ;
+
+		exit(EXIT_SUCCESS);
 		
 		return 0 ;
 	}

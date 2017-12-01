@@ -15,6 +15,7 @@
 *
 *  $HA Histórico de evolução:
 *     Versão  Autor         Data		Observações
+	0.03  Bruce	30/11/2017	Pequena correção, as letras so eram convertidas depois de serem aceitas.	
 *     0.02    Bruce/Cris  25/11/2017  	Revisão
 *     0.01    Bruce/Cris  25/11/2017    Início do desenvolvimento
 *
@@ -55,17 +56,19 @@ typedef int (*LER_Compara) (unsigned char) ;
 		{
 			a = getch() ;
 		
+			if ( converte == 1 ) 
+			{
+				a = toupper(a) ;
+			}
+			else
+				if ( converte == -1 )
+				{
+					a = tolower(a) ;
+				} /* if */
+
 			if ( compara(a)  && cont < max )
 			{			
-				if ( converte == 1 ) 
-				{
-					a = toupper(a) ;
-				}
-				else
-					if ( converte == -1 )
-					{
-						a = tolower(a) ;
-					} /* if */
+				
 			
 				leValor [cont] = (char) a ;
 				printf( "%c", leValor[cont] ) ;

@@ -36,14 +36,14 @@
  ***************************************************************************/
 
 /* Inclusões do compilador */
-#include "sala.h"
 #include  <stdio.h>
 #include  <string.h>
 #include <stdlib.h>
+#include "sala.h"
 
 
 
-/* Inclus„o do respectivo mÛdulo de definiÁ„o */
+/* Inclusão do respectivo mÛdulo de definição */
 
 #define SALA_OWN
 #include "sala.h"
@@ -119,7 +119,12 @@ SAL_tpCondRet SAL_criarSala (SAL_tpSala ** pSala,
         return SAL_CondRetFaltouMemoria ;
     
     retorno = SAL_setCodigo(*pSala,codigo);
-    if (retorno != SAL_CondRetOK) {retornoDaRemove = SAL_removeSala(pSala); if( retornoDaRemove != SAL_CondRetOK) return retornoDaRemove; return retorno;}
+	if (retorno != SAL_CondRetOK) {
+		retornoDaRemove = SAL_removeSala(pSala);
+		if( retornoDaRemove != SAL_CondRetOK) 
+			return retornoDaRemove;
+		return retorno;
+	}
     retorno = SAL_setMaxAlunos(*pSala,maxAlunos);
     if (retorno != SAL_CondRetOK){retornoDaRemove = SAL_removeSala(pSala); if( retornoDaRemove != SAL_CondRetOK) return retornoDaRemove; return retorno;}
     retorno = SAL_setELaboratorio(*pSala,eLaboratorio);
@@ -202,7 +207,7 @@ SAL_tpCondRet SAL_printSala (SAL_tpSala * pSala)
 
 SAL_tpCondRet SAL_setCodigo (SAL_tpSala * pSala, char *codigo)
 {
-    unsigned int i;
+    //unsigned int i;
     if (pSala == NULL){
         return SAL_CondRetRecebeuPonteiroNulo;
     }
@@ -210,20 +215,21 @@ SAL_tpCondRet SAL_setCodigo (SAL_tpSala * pSala, char *codigo)
     if (codigo == NULL || strlen(codigo) >= tamCodigoSala){
         return SAL_CondRetParamInvalido;
     }
+/*
+	Não se deve limitar as possibilidades do usuário..
+
     
-    if (codigo[0] != 'L' && codigo[0] != 'K' && codigo[0] != 'F' && codigo[0] != 'I' && codigo[0] != 'R')
-    {
+    if (codigo[0] != 'L' && codigo[0] != 'K' && codigo[0] != 'F' && codigo[0] != 'I' && codigo[0] != 'R'){
         return SAL_CondRetParamInvalido;
     }
     
-    for(i=1;i< strlen(codigo);i++)
-    {
+    for(i=1;i< strlen(codigo);i++){
         if(codigo[i] < '0' || codigo[i] > '9')
         {
             return SAL_CondRetParamInvalido;
         }
     }
-    
+*/    
     strcpy(pSala->codigo, codigo);
     
     return SAL_CondRetOK;
@@ -301,7 +307,7 @@ SAL_tpCondRet SAL_setELaboratorio (SAL_tpSala * pSala, int eLaboratorio)
     if (pSala == NULL)
         return SAL_CondRetRecebeuPonteiroNulo;
     
-    if (eLaboratorio != 1 && eLaboratorio != 0)
+    if (eLaboratorio != SAL_TIPO_LABORATORIO && eLaboratorio != SAL_TIPO_COMUM)
         return SAL_CondRetParamInvalido;
     
     pSala->eLaboratorio = eLaboratorio;
@@ -323,7 +329,7 @@ SAL_tpCondRet SAL_getELaboratorio (SAL_tpSala * pSala, int *eLaboratorio)
     
     *eLaboratorio = pSala->eLaboratorio;
     
-    if (*eLaboratorio != 1 && *eLaboratorio != 0)
+    if (*eLaboratorio != SAL_TIPO_LABORATORIO && *eLaboratorio != SAL_TIPO_COMUM)
         return SAL_CondRetErroEstrutura;
     
     return SAL_CondRetOK;
@@ -340,7 +346,7 @@ SAL_tpCondRet SAL_getNumero (SAL_tpSala * pSala, int *numero)
 {
     if (pSala == NULL)
         return SAL_CondRetRecebeuPonteiroNulo;
-    
+
     if (pSala->codigo[4] == '\0'){
         *numero = (pSala->codigo[1]-'0')*100+(pSala->codigo[2]-'0')*10+(pSala->codigo[3]-'0');
         return SAL_CondRetOK;

@@ -49,7 +49,7 @@
 /*****  Protótipos das funções encapsuladas no módulo  *****/
 
 	SAL_tpSala* CDS_buscaCod( char *codigo ) ;
-	SAL_tpSala* CDS_buscaDispo( int dia, int horini, int horfim,int qtd, int lab ) ;
+	SAL_tpSala* CDS_buscaDispo( int dia, int horini, int horfim, int qtd, int lab ) ;
 
  
 /***************************************************************************
@@ -78,8 +78,8 @@
 	SAL_tpSala* CDS_buscaCod ( char * codigo )
 	{ 
 
-		char cod[5] ;
-		unsigned int i=0, size ; 
+		char cod[CDS_TAM_COD] ;
+		unsigned int i=0, size = 0 ; 
     
 		SAL_tpSala * s = NULL ;
     
@@ -91,13 +91,13 @@
 		{
 			get_val_cursor( CorpoS->Sala, ( void** ) &s ) ;
 			SAL_getCodigo( s, cod ) ;
-			if ( strcmp( codigo,cod ) == 0 )
+			if ( strcmp( codigo, cod ) == 0 )
 			{
 				return s ;
 			} /* if */
 
 			next( CorpoS->Sala ) ;
-	    } /* for */
+		} /* for */
 
 		return NULL ;
 
@@ -109,7 +109,7 @@
 
 	CDS_tpCondRet CDS_insere( char * codigo, int maxAlunos, int eLaboratorio )
 	{
-
+		SAL_tpCondRet ret;
 		SAL_tpSala * s ;
     
 		if ( CDS_buscaCod( codigo ) != NULL )
@@ -117,8 +117,14 @@
 			return CDS_CondRetSalaJaCadastrada ;
 		} /* if */
     
-		SAL_criarSala( &s, codigo, maxAlunos, eLaboratorio ) ;
-    
+		ret = SAL_criarSala( &s, codigo, maxAlunos, eLaboratorio ) ;
+
+		if(ret != SAL_CondRetOK){
+			#ifdef _DEBUG
+			printf("Erro ao inserir sala %d\n", (int) ret);
+			#endif
+			return CDS_CondRetParametroInvalido;
+		}
 		if ( s == NULL )
 		{
 			return CDS_CondRetFaltouMemoria ;
@@ -151,7 +157,7 @@
 		} /* if */
 
 	} /* Fim funcao: CDS &Retira Corpo Sala */
-	
+		
 /***************************************************************************
 * Funcao: CDS  &Exibe Corpo Sala
 *  ****/
@@ -159,8 +165,8 @@
 	CDS_tpCondRet CDS_exibe ()
 	{
 
-		unsigned int i, tam = 0 ;
-		SAL_tpSala  * s ;
+		unsigned int i=0, tam = 0 ;
+		SAL_tpSala  * s = NULL;
 	
 		list_size( CorpoS->Sala, &tam ) ;
 
@@ -345,7 +351,7 @@
 	SAL_tpSala * CDS_buscaDispo( int dia, int horini, int horfim, int qtd, int lab )
 	{
     
-		unsigned int i = 0, size ;
+		unsigned int i = 0, size = 0 ;
 		SAL_tpSala  * s = NULL ;
 		int elab ;
 		int maxalu ;

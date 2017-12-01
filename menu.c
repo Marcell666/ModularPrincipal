@@ -11,7 +11,7 @@
 *  Projeto: Sistema Acadêmico da turma 3WB
 *  Gestor:  Grupo 1 / Grupo 2 / Grupo 5
 *  Autores:   Bruce Marcellino (Grupo 1)
-*			  Bruno Miranda Marinho (Grupo 2)
+*	      Bruno Miranda Marinho (Grupo 2)
 *             Cristiane Ramalho Guimarães (Grupo 5)
 *             Flávio Thiago Franco Vaz (Grupo 2)
 *             João Victor Cerqueira (Grupo 2)
@@ -20,6 +20,7 @@
 *
 *  $HA Histórico de evolução:
 *     Versão  Autor         Data		Observações
+*     1.05    Bruce	30/11/2017	Inserção das salas
 *     1.04    Bruce/Cris 25/11/2017     Revisão/finalização
 *     1.03    Cristiane  14/11/2017     Reestruturação
 *     1.02    Cristiane  08/11/2017     Funções de leitura
@@ -51,6 +52,7 @@
 #include "aluno.h"
 #include "corpoDocente.h"
 #include "gradeCurricular.h"
+#include "CorpoSala.h"
 #include "leitura.h"
 
 #ifdef __linux__
@@ -65,6 +67,7 @@
 /*****  Protótipos das funções encapsuladas no módulo  *****/
 
 	int MEN_comparaLeCodigoGRC ( unsigned char c ) ;
+	int MEN_comparaLePredioSAL ( unsigned char c ) ;
 
 /*****  Código das funções exportadas pelo módulo  *****/
 
@@ -739,7 +742,7 @@
 			} else
 			{
 				system( "cls" ) ;
-				printf( "\nDisciplina cadastrado com sucesso!\n\n" ) ;
+				printf( "\nDisciplina cadastrada com sucesso!\n\n" ) ;
 				GRC_mostraAtual () ;
 			} /* if */
 		} /* if */
@@ -903,7 +906,7 @@
 				} else
 					if( ret == GRC_CondRetIdJaCriado )
 					{
-						printf( "ERRO. Ja existe um professor com este valor de identificacao.\n" ) ;
+						printf( "ERRO. Ja existe uma disciplina com este valor de identificacao.\n" ) ;
 					} /* if */
 
 		} while ( opcao ) ;
@@ -938,7 +941,7 @@
 			{
 				printf ("\nDISCIPLINA:\n") ;
 				GRC_mostraAtual() ;
-				printf ("TEM CERTEZA QUE DESEJA REMOVER PERMANENTEMENTE TODOS OS DADOS DESTE PROFESSOR?\n\n") ;
+				printf ("TEM CERTEZA QUE DESEJA REMOVER PERMANENTEMENTE TODOS OS DADOS DESTA DISCIPLINA?\n\n") ;
 				printf( "\nDigite: \n" ) ;
 				printf("1: Para SIM.\n") ;
 				printf("0: Para NAO.\n\n") ;
@@ -1172,6 +1175,170 @@
 	
 	} /* Fim função: MEN  &Menu Grade Curricular */
 
+
+/***************************************************************************
+*
+*  Função: MEN  &Adiciona Sala
+*  ****/
+
+	void MEN_adicionaSala ( void )
+	{
+		char predio[2];
+		char numero[ MEN_TAM_COD_SAL];
+		char codigo[ MEN_TAM_COD_SAL] ;
+		int maxAlunos;
+		int eLaboratorio ;
+
+		CDS_tpCondRet ret ;
+
+		system( "cls" ) ;
+		printf( "\n*********** CADASTRO DE SALA ***********\n" ) ;
+				
+		//adiciona sala
+		printf( "\nInicial do predio: \n" ) ;
+		LER_leStringConverte( predio, 1, 1, MEN_comparaLePredioSAL, LER_TOUPPER) ;
+
+		printf( "\nCodigo da sala: \n" ) ;
+		LER_leString( numero, MEN_MIN_COD_SAL ,  MEN_MAX_COD_SAL, LER_comparaLeSoNumero ) ;
+
+		printf( "\nCapacidade de Alunos: \n" ) ;
+		LER_leInteiro( &maxAlunos, 1, 2, LER_comparaLeSoNumero ) ;
+
+		do{
+			printf( "\nA sala e laboratorio?: \n" ) ;
+			printf("1: Sim\n");
+			printf("0: Nao\n");
+			LER_leInteiro(&eLaboratorio, 1, 1, LER_comparaLeSoNumero) ;
+		}while(eLaboratorio != 0 && eLaboratorio != 1);
+		
+		
+
+		//compoe codigo
+		strcpy(codigo, predio);
+		strcat(codigo, numero);
+		printf("codigo composto %s\n", codigo);
+
+		ret = CDS_insere( codigo, maxAlunos, eLaboratorio ) ;
+		printf("dafuq %d\n", ret);
+
+		if ( ret == CDS_CondRetSalaJaCadastrada )
+		{
+			printf( "Sala ja cadastrada.\n" ) ;
+		}
+		else if ( ret == CDS_CondRetFaltouMemoria )
+		{
+			printf( "Erro de memoria ao cadastrar sala." ) ;
+		}
+		else 
+		{
+			system( "cls" ) ;
+			printf( "\nSala cadastrada com sucesso!\n\n" ) ;
+			CDS_exibeDisponibilidade (codigo) ;
+		} /* if */
+
+		MEN_menuAnterior() ;
+
+	} /* Fim função: MEN  &Adiciona Sala */
+
+
+/***************************************************************************
+*
+*  Função: MEN  &Remove Sala
+*  ****/
+
+	void MEN_removeSala ( void )
+	{
+
+		int opcao ;
+		char codigo[MEN_TAM_COD_SAL] ;
+
+		printf( "\n*********** REMOVE SALA ***********\n" ) ;
+		
+		printf( "\nDigite a codigo da sala que deseja remover permanentemente da relacao de salas: \n" ) ;
+
+		LER_leStringConverte(codigo, 1, LER_TAM_STRING, MEN_comparaLeCodigoGRC, LER_TOUPPER);
+	
+		
+		while ( 1 )
+		{
+			printf ("\nSALA:\n") ;
+			CDS_exibeDisponibilidade ( codigo ) ;
+			printf ("TEM CERTEZA QUE DESEJA REMOVER PERMANENTEMENTE TODOS OS DADOS DESTA SALA?\n\n") ;
+			printf( "\nDigite: \n" ) ;
+			printf("1: Para SIM.\n") ;
+			printf("0: Para NAO.\n\n") ;
+
+			LER_leInteiro( &opcao, 1, 1, LER_comparaLeSoNumero ) ;
+
+			if ( opcao == 1 )
+			{
+				if ( CDS_retira(codigo) != CDS_CondRetOK )
+				{
+					printf( "Nao existe sala cadastrada com este codigo %s.\n", codigo ) ;
+				}/* if */
+				else
+				{
+					printf ( "\nDados da sala removidos com sucesso!\n" ) ;
+				} /* if */
+				MEN_menuAnterior() ;
+				return ;
+			} 
+			else 
+				if ( opcao == 0 )
+				{
+					break ;
+				} /* if */
+
+			system( "cls" ) ;
+			printf( "\nOPCAO INVALIDA! Digite o numero de algumas das opcoes abaixo. \n\n" ) ;
+		} /* while */
+
+		MEN_menuAnterior() ;
+		return ;
+
+	} /* Fim função: MEN  &Remove Sala */
+
+/***************************************************************************
+*
+*  Função: MEN  &Remove Todas Sala
+*  ****/
+
+	void MEN_removeTodasSalas ( void )
+	{
+
+		int opcao ;
+		while ( 1 )
+		{
+			printf ( "TEM CERTEZA QUE DESEJA REMOVER PERMANENTEMENTE TODOS OS DADOS DE TODAS AS SALAS CADASTRADAS?\n\n" ) ;
+			printf( "\nDigite: \n" ) ;
+			printf("1: Para SIM.\n") ;
+			printf("0: Para NAO.\n\n") ;
+
+			LER_leInteiro(&opcao, 1, 1, LER_comparaLeSoNumero) ;
+
+			if( opcao == 1 )
+			{
+					CDS_limpa() ;
+					printf ( "\nTodos os dados de todas as salas foram removidas com sucesso!\n" ) ;
+					MEN_menuAnterior() ;
+					return ;
+			} 
+			else
+				if ( opcao == 0 )
+				{
+					break ;
+				} /* if */
+
+			system( "cls" ) ;
+			printf( "\nOPCAO INVALIDA! Digite o numero de algumas das opcoes abaixo. \n\n" ) ;
+		} /* while */
+
+		printf ( "\nNenhum dado de nenhuma sala foi removido.\n" ) ; 
+		MEN_menuAnterior() ;
+
+	} /* Fim função: MEN  &Remove Todas Salas */
+
+
 /***************************************************************************
 *
 *  Função: MEN  &Menu Anterior
@@ -1207,5 +1374,24 @@
 		return isalpha(c) || isdigit(c) || c==' ' || c== '-' ;
 
 	} /* Fim função: MEN  -Compara Le Codigo GRC */
+
+/***********************************************************************
+*
+*  $FC Função: MEN  -Compara Le Predio SAL
+*
+*  $ED Descrição da função
+*	  		
+*
+***********************************************************************/
+/*Assertivas: 
+/			 
+***********************************************************************/
+
+	int MEN_comparaLePredioSAL ( unsigned char c )
+	{
+
+		return c=='I' || c=='K' || c=='L' || c=='R' || c=='F' ;
+
+	} /* Fim função: MEN  -Compara Le Predio SAL */
 
 /********** Fim do módulo de implementação: MEN Menu **********/

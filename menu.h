@@ -46,6 +46,15 @@
 #define  MEN_QTD_EST 27
 #define  MEN_TAM_RG 10
 
+//Sala
+#define MEN_MIN_COD_SAL 3
+/* Somente numeros, usado na leitura do codigo da sala */
+#define MEN_MAX_COD_SAL 4
+/* Somente numeros, usado na leitura do codigo da sala */
+#define MEN_TAM_COD_SAL 6
+/* Incluindo inicial do predio, usado como tamanho da string caractere inicial + 4 digitos + caractere de terminacao */
+
+//Disciplina
 #define MEN_MAX_NOME 25
 #define MEN_MAX_CODIGO 8
 #define MEN_MAX_BIBLIOGRAFIA 300
@@ -244,6 +253,47 @@
 ***********************************************************************/
 
 	void MEN_menuGradeCurricular ( void ) ;
+
+/***********************************************************************
+*
+*  $FC Função: MEN_adicionaSala
+*
+*  $ED Descrição da função
+*		
+*
+***********************************************************************/
+/*Assertivas: Retorno da função: não há retorno.
+/			 Parâmetros: não há parametros.
+***********************************************************************/
+void MEN_adicionaSala ( void );
+
+/***********************************************************************
+*
+*  $FC Função: MEN_removeSala
+*
+*  $ED Descrição da função
+*		
+*
+***********************************************************************/
+/*Assertivas: Retorno da função: não há retorno.
+/			 Parâmetros: não há parametros.
+***********************************************************************/
+
+void MEN_removeSala ( void );
+
+/***********************************************************************
+*
+*  $FC Função: MEN_removeTodasSalas
+*
+*  $ED Descrição da função
+*		
+*
+***********************************************************************/
+/*Assertivas: Retorno da função: não há retorno.
+/			 Parâmetros: não há parametros.
+***********************************************************************/
+
+void MEN_removeTodasSalas ( void );
 
 /***********************************************************************
 *

@@ -58,6 +58,9 @@
 #define inicioSemanaLetiva 0
 #define fimSemanaLetiva 5
 
+#define SAL_TIPO_COMUM 0
+#define SAL_TIPO_LABORATORIO 1
+
 /***** Declara¡?es exportadas pelo m€dulo *****/
 
 /*Tipo estruturado tpSala » constituido por quatro (4) tipos de dados diferentes, criados para identifica¡Ño, categoriza¡Ño

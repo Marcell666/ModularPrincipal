@@ -26,6 +26,11 @@
 
 /***** Declarações exportadas pelo módulo *****/
 
+
+#define CDS_TAM_COD 6
+#define CDS_TAM_STRING 81
+
+
 /* Tipo referência para lista de salas */
 
 	typedef struct corposala CorpoSala ;
@@ -54,8 +59,11 @@
 		CDS_CondRetSalaNaoCadastrada ,
 		/* A sala nao foi cadastrada */
     
-		CDS_CondRetCDSVazio
+		CDS_CondRetCDSVazio,
 		/* O corpo de salas esta vazio */
+		
+		CDS_CondRetParametroInvalido
+		/* Recebeu parametro invalidos para cadastrar uma sala */
     
 	} CDS_tpCondRet ;
 
@@ -109,7 +117,7 @@
  *
  ***********************************************************************/
 
-	CDS_tpCondRet CDS_insereSala ( char * codigo, int maxAlunos, int eLaboratorio ) ;
+	CDS_tpCondRet CDS_insere ( char * codigo, int maxAlunos, int eLaboratorio ) ;
 
 /***********************************************************************
  *
