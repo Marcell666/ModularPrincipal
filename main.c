@@ -371,7 +371,8 @@
 		CDI_cria() ;
 		GRC_cria() ;
 
-		CDO_leDados(CDO_DADOS_PATH);
+		CDO_leDados(CDO_DADOS_PATH) ;
+		CDI_leDados(CDI_DADOS_PATH) ;
 
 		exibeTelaInicial() ;
 
@@ -393,6 +394,8 @@
 					printf( "\n\nFechando programa...\n\n" ) ;
 					CDO_salvaDados(CDO_DADOS_PATH);
 					CDO_libera() ;
+					CDI_salvaDados(CDI_DADOS_PATH);
+					CDI_deleta() ; 
 					GRC_libera() ;
 					exit(0) ;
 					break ;
