@@ -23,6 +23,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "turma.h"
+#include "sala.h"
 
 /***********************************************************************
 *
@@ -51,6 +52,9 @@
 		int QtdMatr ;
 		    /* Quantidade de alunos matriculados em uma turma */
 
+		SAL_tpSala * sala ;
+		    /* Sala onde aquela turma tem aulas */
+
 	};
 
 /*****  Código das funções exportadas pelo módulo  *****/
@@ -60,7 +64,7 @@
 *  ****/
 
 	TUR_tpCondRet TUR_CriaTurma ( Turma ** NovaTurma, char * CodTur,
-		int HorIni, int HorTer, char * DiaSem, int QtdVag, int QtdMat)
+		int HorIni, int HorTer, char * DiaSem, int QtdVag)
 	{
 
 		* NovaTurma = ( Turma * ) malloc( sizeof( Turma )) ;
@@ -90,7 +94,7 @@
 
 		( *NovaTurma )->QtdVaga = QtdVag ;
 
-		( *NovaTurma )->QtdMatr = QtdMat ;
+		( *NovaTurma )->QtdMatr = 0 ;
 
 		return TUR_CondRetOk ;
 
@@ -361,6 +365,31 @@
 		return TUR_CondRetOk ;
 
 	} /* Fim função: TUR  &Exclui turma */
+
+	TUR_cadastraTurmaNaSala(Turma * tur, SAL_tpSala pSala){
+		/*TODO fazer verificacoes*/
+
+		char diasDaSemana[][28] {
+			"SEG",
+			"TER",
+			"QUA",
+			"QUI",
+			"SEX",
+			"SAB"
+		};
+		int i;
+		
+		/*
+			Percorro o vetor de string acima. Procuro cada string acima na string de dias dessa turma. Se achei uma string quer dizer que devo reservar aquele dia.
+			A cada iteração do for avanço um dia. E é o proprio i que vai dizer em que dia estou na semana. Passo esse i para sala como dia.
+
+		*/
+		for(i=0;i<6;i++){
+			if(strstr(tur->DiaSemana, diasDaSemana[i]))
+				SAL_reservaSala (pSala, i, tur->HorarioInicio, tur->HorarioTermino);
+		}
+	}
+
 
 /***************************************************************************
 *
