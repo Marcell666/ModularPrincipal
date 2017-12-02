@@ -191,10 +191,8 @@
 
 		for ( i = 0; i < tam; i++ )
 		{
-			printf("exibe: %d\n", i);
 			get_val_cursor( CorpoS->Sala, ( void** ) &s ) ;
-			if(SAL_printSala( s ) != SAL_CondRetOK)
-				printf("o ponteiro e nulo\n");
+			SAL_printSala( s );
 			next( CorpoS->Sala ) ;
 			printf( "\n" ) ;
 		}
