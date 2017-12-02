@@ -452,3 +452,18 @@ GRC_tpCondRet GRC_exibeTurmas(char* codigo)
 
 	return GRC_CondRetOk;
 }
+
+GRC_tpCondRet GRC_cadastraTurmaNaSala( char codDis, char * codTur, char * codSala){
+	/* TODO adicionar verificacoes */
+	Disciplina * dis;
+	SAL_tpSala * pSala;
+	Turma * tur;
+
+	GRC_buscaPorCodigo(codDis);
+	GRC_devolveDisc(&dis);
+	CDS_buscaSala(&pSala);
+	DIS_buscaTurma(dis, codTur, &tur)
+
+	TUR_cadastraTurmaNaSala(tur, pSala);
+	return GRC_CondRetOk;
+}
