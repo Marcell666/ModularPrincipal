@@ -60,7 +60,7 @@
 *  ****/
 
 	TUR_tpCondRet TUR_CriaTurma ( Turma ** NovaTurma, char * CodTur,
-		int HorIni, int HorTer, char * DiaSem, int QtdVag, int QtdMat)
+		int HorIni, int HorTer, char * DiaSem, int QtdVag)
 	{
 
 		* NovaTurma = ( Turma * ) malloc( sizeof( Turma )) ;
@@ -90,7 +90,7 @@
 
 		( *NovaTurma )->QtdVaga = QtdVag ;
 
-		( *NovaTurma )->QtdMatr = QtdMat ;
+		( *NovaTurma )->QtdMatr = 0 ;
 
 		return TUR_CondRetOk ;
 
@@ -389,7 +389,7 @@
 			) ;
 
 			#ifdef _DEBUG	
-				printf( "Dados da turma de código %d foram salvos com sucesso!\n", tur->CodTurma ) ;
+				printf( "Dados da turma de código %s foram salvos com sucesso!\n", tur->CodTurma ) ;
 			#endif
 
 			return TUR_CondRetOk ;
