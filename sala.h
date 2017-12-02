@@ -50,9 +50,8 @@
 #define tamPredio 10
 #define tamCodigoSala 6
 #define ajusteHora 7
-#define salaReservada 1
-#define salaLiberada 0
-#define salaLivre 0
+#define SAL_RESERVADA 1
+#define SAL_LIBERADA 0
 #define inicioDiaLetivo 7
 #define fimDiaLetivo 23
 #define inicioSemanaLetiva 0
@@ -382,6 +381,7 @@ SAL_tpCondRet SAL_getHorarioNoDia(SAL_tpSala * pSala, int dia, int horarioInicio
 
 SAL_tpCondRet SAL_salvaDados (SAL_tpSala * pSala,  FILE *f );
 SAL_tpCondRet SAL_leDados (SAL_tpSala * pSala,  FILE *f );
+
 #undef SALA_EXT
 
 /********** Fim do m€dulo de defini¡Ño: M€dulo Sala **********/

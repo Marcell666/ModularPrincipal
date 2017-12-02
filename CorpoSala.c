@@ -179,6 +179,8 @@
 	
 		list_size( CorpoS->Sala, &tam ) ;
 
+		printf("funcao exibe\n");
+
 		if ( tam == 0 )
 		{
 			printf( "\n\nNao ha salas cadastradas.\n" ) ;
@@ -189,10 +191,12 @@
 
 		for ( i = 0; i < tam; i++ )
 		{
+			printf("exibe: %d\n", i);
 			get_val_cursor( CorpoS->Sala, ( void** ) &s ) ;
-			SAL_printSala( s ) ;
+			if(SAL_printSala( s ) != SAL_CondRetOK)
+				printf("o ponteiro e nulo\n");
 			next( CorpoS->Sala ) ;
-			printf("\n") ;
+			printf( "\n" ) ;
 		}
 
 		return CDS_CondRetOK ;
@@ -205,9 +209,8 @@
 
 	CDS_tpCondRet CDS_libera ()
 	{
-
-		clear( CorpoS->Sala ) ;
-		free( CorpoS ) ;
+		CDS_limpa();
+		del(CorpoS->Sala);
 		return CDS_CondRetOK ; 
 
 	} /* Fim funcao: CDS &Libera Corpo Sala */
@@ -218,16 +221,21 @@
 
 	CDS_tpCondRet CDS_limpa ()
 	{
+		/*  TODO IMPORTANTE
 
-		unsigned int size=0 ;
-		list_size( CorpoS->Sala, &size ) ;
-		if (size == 0)
-		{
-			return CDS_CondRetCDSVazio ;
-		} /* if */
-    
-		clear( CorpoS->Sala ) ;
-		return CDS_CondRetOK ;
+			Corrigir esta função
+			Ela esta com VAZAMENTO DE MEMORIA
+		
+		SAL_tpSala *pSala=NULL;
+		if(pop_back(CorpoS->Sala, (void**) &pSala) == LIS_CondRetListaVazia)
+			return CDS_CondRetCDSVazio;
+		SAL_removeSala(&pSala);
+		while(pop_back(CorpoS->Sala, (void**) &pSala)==LIS_CondRetOK){
+			SAL_removeSala(&pSala);
+		}
+		*/
+		clear(CorpoS->Sala);
+		return CDS_CondRetOK;
 
 	} /* Fim funcao: CDS &Limpa Corpo Sala */
 
@@ -431,7 +439,7 @@
 		FILE *f ;
 		char pathComPasta[CDS_TAM_STRING] ;
 
-		//colcocando pasta no inicio do path
+		//colocando pasta no inicio do path
 		#ifdef __linux__
 			strcpy(pathComPasta,"Dados/");
 		#else
@@ -440,7 +448,7 @@
 
 		strcat(pathComPasta, path) ;
 
-		#ifdef _DEBUG_	
+		#ifdef _DEBUG
 			printf("PATH: %s\n", pathComPasta) ;
 		#endif
 
@@ -448,7 +456,7 @@
 
 		if ( !f )
 		{
-			#ifdef _DEBUG_	
+			#ifdef _DEBUG	
 				printf( "Erro ao salvar arquivo de dados das salas no módulo CDS. %s\n", pathComPasta ) ;
 			#endif
 			return CDS_CondRetErroAbrirArquivo ;
@@ -479,9 +487,15 @@
 	CDS_tpCondRet CDS_leDados ( char * path )
 	{
 
+		
+		#ifdef _DEBUG	
+			CDS_tpCondRet ret;
+		#endif	
 		SAL_tpSala *pSala;
-		CDS_tpCondRet ret ;
 		FILE *f ;
+		//int i;
+		char c;
+		/* TODO Esta variavel está aqui somente para usar a scanf. Essa parte do codigo precisa ser melhorada num momento oportuno*/
 				
 		char pathComPasta[CDS_TAM_STRING] ;
 
@@ -504,7 +518,7 @@
 		if ( !f )
 		{
 			#ifdef _DEBUG
-				printf("Erro ao abrir arquivo de dados pessoais das Sala no modulo Corpo de Salas.\n PATH: %s\n", pathComPasta) ;
+				printf("Erro ao abrir arquivo de dados pessoais das Salas no modulo Corpo de Salas.\nPATH: %s\n", pathComPasta) ;
 			#endif
 			/*
 				Falha na abertura, criar pasta.
@@ -523,35 +537,43 @@
 		} /* if */
 
 	
+		//for(i=0;i<4;i++){
 		do{
 
 			/*
-				A sala não disponibiliza uma maneira de mudar a matriz de disponibilidade (Sim, é isso mesmo. A matriz de disponibilidade nao estao disponivel.)
+				A sala não disponibiliza uma maneira de mudar a matriz de disponibilidade (Sim, é isso mesmo. A matriz de disponibilidade nao esta disponivel.)
 				Por isso, a matriz gravada em arquivo precisa ser lida pela propria sala, pois aqui os dados dela estao encapsulados.
 				Então estou cadastrando uma sala com dados quaisquer, e passando para a sala. La ela le de um arquivo os daodos que precisa e os atribui a sala passada. Aqui, eu coloco a sala na lista.
 				
 			*/
-			ret = SAL_criarSala(&pSala, "F123", 1, 1);
+			fseek(f, -1 , SEEK_CUR);
+			#ifdef _DEBUG
+			ret = 
+			#endif
+			SAL_criarSala(&pSala, "F999", 1, 1);
 			
 			#ifdef _DEBUG
 				if(ret != CDS_CondRetOK)
 				{
 					printf("Erro ao cadastrar Sala\n") ;
 				}
+			ret = 
 			#endif
-			ret = SAL_leDados(pSala, f);
+			SAL_leDados(pSala, f);
 			#ifdef _DEBUG
 				if(ret != CDS_CondRetOK)
 				{
 					printf("Erro ao ler Sala\n") ;
 				}
 			#endif
-			push_back( CorpoS->Sala, (void**) &pSala) ;
-		} while( fscanf(f, "\n")>0 ) ;
+			push_back( CorpoS->Sala, (void*) pSala) ;
+			
+			
+		}while(fscanf(f, "%c", &c)>0);
 
 		fclose(f) ;
 
-		return ret ;
+		return CDS_CondRetOK ;
 
 	} /* Fim função: CDS Le Dados */
 
