@@ -413,6 +413,7 @@
 
 		CDO_leDados(CDO_DADOS_PATH) ;
 		CDI_leDados(CDI_DADOS_PATH) ;
+		CDS_leDados(CDS_DADOS_PATH) ;
 
 		exibeTelaInicial() ;
 
@@ -432,10 +433,17 @@
 				case 0:
 					system( "cls" ) ;
 					printf( "\n\nFechando programa...\n\n" ) ;
-					CDO_salvaDados(CDO_DADOS_PATH);
-					CDO_libera() ;
+
+					CDO_salvaDados(CDO_DADOS_PATH) ;
+					CDI_salvaDados(CDI_DADOS_PATH) ;
+					CDS_salvaDados(CDS_DADOS_PATH) ;
+
+			 		CDO_libera() ;
+					CDI_deleta() ; 
 					GRC_libera() ;
-					exit(0) ;
+					CDS_libera() ;
+
+					exit(EXIT_SUCCESS) ;
 					break ;
 				case 1:
 					system( "cls" ) ;
@@ -462,8 +470,9 @@
 			}
 		} while ( opcao ) ;
 
-		CDO_salvaDados(CDO_DADOS_PATH);
-		CDI_salvaDados(CDI_DADOS_PATH);
+		CDO_salvaDados(CDO_DADOS_PATH) ;
+		CDI_salvaDados(CDI_DADOS_PATH) ;
+		CDS_salvaDados(CDS_DADOS_PATH) ;
 
  		CDO_libera() ;
 		CDI_deleta() ; 

@@ -29,6 +29,7 @@
 
 #define CDS_TAM_COD 6
 #define CDS_TAM_STRING 81
+#define CDS_DADOS_PATH "dadosCDS.txt"
 
 
 /* Tipo referência para lista de salas */
@@ -62,8 +63,11 @@
 		CDS_CondRetCDSVazio,
 		/* O corpo de salas esta vazio */
 		
-		CDS_CondRetParametroInvalido
+		CDS_CondRetParametroInvalido,
 		/* Recebeu parametro invalidos para cadastrar uma sala */
+		
+		CDS_CondRetErroAbrirArquivo
+		/* Erro ao salvar ou ler dados */
     
 	} CDS_tpCondRet ;
 
@@ -408,6 +412,10 @@
  ***********************************************************************/
 
 	CDS_tpCondRet CDS_reservaSala ( int dia, int horini, int horfim, int qtd, int lab ) ;
+
+	CDS_tpCondRet CDS_salvaDados( char * path ) ;
+	CDS_tpCondRet CDS_leDados ( char * path ) ;
+
 
 /********** Fim do modulo de definicao: Modulo Corpo de Salas **********/
 

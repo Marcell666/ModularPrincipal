@@ -9,10 +9,12 @@
 *
 *  Projeto: INF 1301 / 1628 Automatiza??o dos testes de modulos C
 *  Gestor:  LES/DI/PUC-Rio
-*  Autores: cgln - Cristiane - Guilherme - Leonardo - Nathalia
+*  Autores: cgln - Cristiane - Guilherme - Leonardo - Nathalia 
+*	BM - Bruce Marcellino
 *
 *  $HA Hist?rico de evolu??o:
 *     Vers?o  Autor    Data     Observacoes
+*	3.01	BM	01/dez/2017	Persistencia de dados de sala
 *     3       cgln  04/nov/2017 manutencao das funcoes do modulo
 *     2       cgln  02/nov/2017 unificacao de todos os modulos em um so projeto
 *     1       cgln  31/out/2017 inicio desenvolvimento
@@ -25,6 +27,13 @@
 #include "sala.h"
 #include "listas.h"
 #include "CorpoSala.h"
+#ifdef __linux__
+	#include <sys/stat.h>
+	#include <sys/types.h>
+	#include <fcntl.h>
+#else
+	#include <direct.h>
+#endif
 
 /***********************************************************************
 *
@@ -170,6 +179,8 @@
 	
 		list_size( CorpoS->Sala, &tam ) ;
 
+		printf("funcao exibe\n");
+
 		if ( tam == 0 )
 		{
 			printf( "\n\nNao ha salas cadastradas.\n" ) ;
@@ -181,9 +192,9 @@
 		for ( i = 0; i < tam; i++ )
 		{
 			get_val_cursor( CorpoS->Sala, ( void** ) &s ) ;
-			SAL_printSala( s ) ;
+			SAL_printSala( s );
 			next( CorpoS->Sala ) ;
-			printf("\n") ;
+			printf( "\n" ) ;
 		}
 
 		return CDS_CondRetOK ;
@@ -196,9 +207,8 @@
 
 	CDS_tpCondRet CDS_libera ()
 	{
-
-		clear( CorpoS->Sala ) ;
-		free( CorpoS ) ;
+		CDS_limpa();
+		del(CorpoS->Sala);
 		return CDS_CondRetOK ; 
 
 	} /* Fim funcao: CDS &Libera Corpo Sala */
@@ -209,16 +219,21 @@
 
 	CDS_tpCondRet CDS_limpa ()
 	{
+		/*  TODO IMPORTANTE
 
-		unsigned int size=0 ;
-		list_size( CorpoS->Sala, &size ) ;
-		if (size == 0)
-		{
-			return CDS_CondRetCDSVazio ;
-		} /* if */
-    
-		clear( CorpoS->Sala ) ;
-		return CDS_CondRetOK ;
+			Corrigir esta função
+			Ela esta com VAZAMENTO DE MEMORIA
+		
+		SAL_tpSala *pSala=NULL;
+		if(pop_back(CorpoS->Sala, (void**) &pSala) == LIS_CondRetListaVazia)
+			return CDS_CondRetCDSVazio;
+		SAL_removeSala(&pSala);
+		while(pop_back(CorpoS->Sala, (void**) &pSala)==LIS_CondRetOK){
+			SAL_removeSala(&pSala);
+		}
+		*/
+		clear(CorpoS->Sala);
+		return CDS_CondRetOK;
 
 	} /* Fim funcao: CDS &Limpa Corpo Sala */
 
@@ -408,5 +423,158 @@
 		} /* if */
         
 	}/* Fim funcao: CDS &Reserva Sala */
+
+/***************************************************************************
+ *
+ *  Função: CDS Salva Dados
+ *  ****/
+
+	CDS_tpCondRet CDS_salvaDados( char * path )
+	{
+
+		SAL_tpSala * pSala;
+
+		FILE *f ;
+		char pathComPasta[CDS_TAM_STRING] ;
+
+		//colocando pasta no inicio do path
+		#ifdef __linux__
+			strcpy(pathComPasta,"Dados/");
+		#else
+			strcpy(pathComPasta,"Dados\\") ;
+		#endif
+
+		strcat(pathComPasta, path) ;
+
+		#ifdef _DEBUG
+			printf("PATH: %s\n", pathComPasta) ;
+		#endif
+
+		f = fopen(pathComPasta,"wt") ;
+
+		if ( !f )
+		{
+			#ifdef _DEBUG	
+				printf( "Erro ao salvar arquivo de dados das salas no módulo CDS. %s\n", pathComPasta ) ;
+			#endif
+			return CDS_CondRetErroAbrirArquivo ;
+		} /* if */
+
+		first( CorpoS->Sala ) ;
+		do
+		{
+			if( get_val_cursor( CorpoS->Sala , (void**) &pSala) == LIS_CondRetListaVazia )
+			{
+				fclose(f) ;
+				return CDS_CondRetCDSVazio;
+			}
+			SAL_salvaDados(pSala, f);
+		} while( next(CorpoS->Sala)==LIS_CondRetOK ) ;
+		
+		fclose(f) ;
+
+		return CDS_CondRetOK ;
+
+	}  /* Fim função: CDS Salva Dados */
+
+ /***************************************************************************
+ *
+ *  Função: CDS Le Dados
+ *  ****/
+
+	CDS_tpCondRet CDS_leDados ( char * path )
+	{
+
+		
+		#ifdef _DEBUG	
+			CDS_tpCondRet ret;
+		#endif	
+		SAL_tpSala *pSala;
+		FILE *f ;
+		//int i;
+		char c;
+		/* TODO Esta variavel está aqui somente para usar a scanf. Essa parte do codigo precisa ser melhorada num momento oportuno*/
+				
+		char pathComPasta[CDS_TAM_STRING] ;
+
+		//colocando pasta no inicio do path
+		#ifdef __linux__
+			strcpy( pathComPasta,"Dados/" ) ;
+		#else
+			strcpy( pathComPasta,"Dados\\" ) ;
+		#endif
+
+		strcat( pathComPasta, path ) ;
+
+		#ifdef _DEBUG
+			printf( "PATH: %s\n", pathComPasta ) ;
+		#endif
+
+		//abrindo arquivo
+		f = fopen( pathComPasta, "rt" ) ;
+
+		if ( !f )
+		{
+			#ifdef _DEBUG
+				printf("Erro ao abrir arquivo de dados pessoais das Salas no modulo Corpo de Salas.\nPATH: %s\n", pathComPasta) ;
+			#endif
+			/*
+				Falha na abertura, criar pasta.
+	
+				Não deve existir a possibilidade de abrir a pasta e não ter nenhum arquivo dentro dela.
+				Se não existe pasta, é a primeira vez que o o programa funciona, e portanto não tem arquivos.
+				Se existe pasta, já não é a primeira vez e tem algum arquivo la dentro, mesmo que esteja vazio.
+				A não ser que o usuário delete os arquivos da pasta manualmente, mas então, por isso eu não me responsabilizo. Afinal estamos possibilitando que ele remova os dados atraves do proprio programa, o que não causa erros.
+			*/
+			#ifdef __linux__
+				mkdir( "Dados", 0777 ) ;
+			#else
+				_mkdir( "Dados" ) ;
+			#endif
+			return CDS_CondRetOK ;
+		} /* if */
+
+	
+		//for(i=0;i<4;i++){
+		do{
+
+			/*
+				A sala não disponibiliza uma maneira de mudar a matriz de disponibilidade (Sim, é isso mesmo. A matriz de disponibilidade nao esta disponivel.)
+				Por isso, a matriz gravada em arquivo precisa ser lida pela propria sala, pois aqui os dados dela estao encapsulados.
+				Então estou cadastrando uma sala com dados quaisquer, e passando para a sala. La ela le de um arquivo os daodos que precisa e os atribui a sala passada. Aqui, eu coloco a sala na lista.
+				
+			*/
+			fseek(f, -1 , SEEK_CUR);
+			#ifdef _DEBUG
+			ret = 
+			#endif
+			SAL_criarSala(&pSala, "F999", 1, 1);
+			
+			#ifdef _DEBUG
+				if(ret != CDS_CondRetOK)
+				{
+					printf("Erro ao cadastrar Sala\n") ;
+				}
+			ret = 
+			#endif
+			SAL_leDados(pSala, f);
+			#ifdef _DEBUG
+				if(ret != CDS_CondRetOK)
+				{
+					printf("Erro ao ler Sala\n") ;
+				}
+			#endif
+			push_back( CorpoS->Sala, (void*) pSala) ;
+			
+			
+		}while(fscanf(f, "%c", &c)>0);
+
+		fclose(f) ;
+
+		return CDS_CondRetOK ;
+
+	} /* Fim função: CDS Le Dados */
+
+
 
 /********** Fim do modulo de implementacao: CDS Corpo de Salas **********/

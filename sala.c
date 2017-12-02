@@ -73,23 +73,23 @@ struct SAL_tagSala  {
      e 0 "livre", assim, por exemplo, a sala estaria ocupada
      segunda e quarta (7-9) e
      terca e quinta (21-23)
-     |Segunda|Terca|Quarta|Quinta|Sexta|S·bado|
-     7|  1    |  0  |  1   |  0   |  0  |  0  |
-     8|  1    |  0  |  1   |  0   |  0  |  0  |
-     9|  0    |  0  |  0   |  0   |  0  |  0  |
-     10|  0    |  0  |  0   |  0   |  0  |  0  |
-     11|  0    |  0  |  0   |  0   |  0  |  0  |
-     12|  0    |  0  |  0   |  0   |  0  |  0  |
-     13|  0    |  0  |  0   |  0   |  0  |  0  |
-     14|  0    |  0  |  0   |  0   |  0  |  0  |
-     15|  0    |  0  |  0   |  0   |  0  |  0  |
-     16|  0    |  0  |  0   |  0   |  0  |  0  |
-     17|  0    |  0  |  0   |  0   |  0  |  0  |
-     18|  0    |  0  |  0   |  0   |  0  |  0  |
-     19|  0    |  0  |  0   |  0   |  0  |  0  |
-     20|  0    |  0  |  0   |  0   |  0  |  0  |
-     21|  0    |  1  |  0   |  1   |  0  |  0  |
-     22|  0    |  1  |  0   |  1   |  0  |  0  |
+	|Segunda|Terca|Quarta|Quinta|Sexta|S·bado|
+     07	|  1    |  0  |  1   |  0   |  0  |  0  |
+     08	|  1    |  0  |  1   |  0   |  0  |  0  |
+     09	|  0    |  0  |  0   |  0   |  0  |  0  |
+     10	|  0    |  0  |  0   |  0   |  0  |  0  |
+     11	|  0    |  0  |  0   |  0   |  0  |  0  |
+     12	|  0    |  0  |  0   |  0   |  0  |  0  |
+     13	|  0    |  0  |  0   |  0   |  0  |  0  |
+     14	|  0    |  0  |  0   |  0   |  0  |  0  |
+     15	|  0    |  0  |  0   |  0   |  0  |  0  |
+     16	|  0    |  0  |  0   |  0   |  0  |  0  |
+     17	|  0    |  0  |  0   |  0   |  0  |  0  |
+     18	|  0    |  0  |  0   |  0   |  0  |  0  |
+     19	|  0    |  0  |  0   |  0   |  0  |  0  |
+     20	|  0    |  0  |  0   |  0   |  0  |  0  |
+     21	|  0    |  1  |  0   |  1   |  0  |  0  |
+     22	|  0    |  1  |  0   |  1   |  0  |  0  |
      --------------------------------------
      */
     int disponibilidade[HORARIOS][DIAS];
@@ -145,10 +145,9 @@ SAL_tpCondRet SAL_criarSala (SAL_tpSala ** pSala,
 SAL_tpCondRet SAL_removeSala (SAL_tpSala ** pSala)
 {
     if (*pSala == NULL)
-        return SAL_CondRetRecebeuPonteiroNulo;
-    
-    else
-    {
+	return SAL_CondRetRecebeuPonteiroNulo;
+
+    else{
         free(*pSala);
         *pSala = NULL;
     }
@@ -169,22 +168,27 @@ SAL_tpCondRet SAL_printSala (SAL_tpSala * pSala)
     char predio [tamPredio];
     int andar, maxAlunos, eLab;
     
-    if (pSala == NULL){
-       return SAL_CondRetRecebeuPonteiroNulo;}
+	if (pSala == NULL){
+		return SAL_CondRetRecebeuPonteiroNulo;
+	}
     
-    retorno = SAL_getCodigo(pSala,codigo);
+    retorno = SAL_getCodigo( pSala, codigo );
     if (retorno != SAL_CondRetOK)
         return retorno;
-    retorno = SAL_getPredio(pSala,predio);
+
+    retorno = SAL_getPredio( pSala, predio );
     if (retorno != SAL_CondRetOK)
         return retorno;
-    retorno = SAL_getAndar(pSala,&andar);
+
+    retorno = SAL_getAndar( pSala, &andar );
     if (retorno != SAL_CondRetOK)
         return retorno;
-    retorno = SAL_getMaxAlunos(pSala,&maxAlunos);
+
+    retorno = SAL_getMaxAlunos( pSala, &maxAlunos );
     if (retorno != SAL_CondRetOK)
         return retorno;
-    retorno = SAL_getELaboratorio(pSala,&eLab);
+
+    retorno = SAL_getELaboratorio( pSala, &eLab );
     if (retorno != SAL_CondRetOK)
         return retorno;
     
@@ -207,7 +211,7 @@ SAL_tpCondRet SAL_printSala (SAL_tpSala * pSala)
 
 SAL_tpCondRet SAL_setCodigo (SAL_tpSala * pSala, char *codigo)
 {
-    //unsigned int i;
+    unsigned int i;
     if (pSala == NULL){
         return SAL_CondRetRecebeuPonteiroNulo;
     }
@@ -215,9 +219,6 @@ SAL_tpCondRet SAL_setCodigo (SAL_tpSala * pSala, char *codigo)
     if (codigo == NULL || strlen(codigo) >= tamCodigoSala){
         return SAL_CondRetParamInvalido;
     }
-/*
-	Não se deve limitar as possibilidades do usuário..
-
     
     if (codigo[0] != 'L' && codigo[0] != 'K' && codigo[0] != 'F' && codigo[0] != 'I' && codigo[0] != 'R'){
         return SAL_CondRetParamInvalido;
@@ -229,7 +230,7 @@ SAL_tpCondRet SAL_setCodigo (SAL_tpSala * pSala, char *codigo)
             return SAL_CondRetParamInvalido;
         }
     }
-*/    
+    
     strcpy(pSala->codigo, codigo);
     
     return SAL_CondRetOK;
@@ -424,39 +425,44 @@ SAL_tpCondRet SAL_getAndar (SAL_tpSala * pSala, int *andar)
  * Funcao: Sal get horario da sala em determinado dia                      *
  **************************************************************************/
 
-SAL_tpCondRet SAL_getHorarioNoDia(SAL_tpSala * pSala, int dia, int horaInicio, int horaFim) {
-    int hora;
-    
-    if (pSala == NULL)
-        return SAL_CondRetRecebeuPonteiroNulo;
-    
-    if (horaInicio < inicioDiaLetivo || horaInicio >= fimDiaLetivo || horaFim <= inicioDiaLetivo || horaFim > fimDiaLetivo) {
-        return SAL_CondRetParamInvalido;
-    }
-    
-    if (horaInicio >= horaFim) {
-        return SAL_CondRetParamInvalido;
-    }
-    
-    if (dia < inicioSemanaLetiva || dia > fimSemanaLetiva) {
-        return SAL_CondRetParamInvalido;
-    }
-    
-    horaInicio -= ajusteHora;
-    horaFim -= ajusteHora;
-    
-    for (hora = horaInicio; hora < horaFim; hora++) {
-        if (pSala->disponibilidade[hora][dia] != salaLivre && pSala->disponibilidade[hora][dia] != salaReservada) {
-            return SAL_CondRetErroEstrutura;
-        }
-        
-        if (pSala->disponibilidade[hora][dia] != salaLivre) {
-            return SAL_CondRetErroAoReservar;
-        }
-    }
-    
-    return SAL_CondRetOK;
-}
+	SAL_tpCondRet SAL_getHorarioNoDia(SAL_tpSala * pSala, int dia, int horaInicio, int horaFim)
+	{
+		int hora;
+
+		if (pSala == NULL)
+			return SAL_CondRetRecebeuPonteiroNulo;
+
+		if (horaInicio < inicioDiaLetivo || horaInicio >= fimDiaLetivo || horaFim <= inicioDiaLetivo || horaFim > fimDiaLetivo)
+		{
+			return SAL_CondRetParamInvalido;
+		}
+
+		if (horaInicio >= horaFim)
+		{
+			 return SAL_CondRetParamInvalido;
+		}
+
+		if (dia < inicioSemanaLetiva || dia > fimSemanaLetiva)
+		{
+			return SAL_CondRetParamInvalido;
+		}
+
+		horaInicio -= ajusteHora;
+		horaFim -= ajusteHora;
+
+		for (hora = horaInicio; hora < horaFim; hora++)
+		{
+			if (pSala->disponibilidade[hora][dia] != SAL_LIBERADA && pSala->disponibilidade[hora][dia] != SAL_RESERVADA)
+			{
+				return SAL_CondRetErroEstrutura;
+			}
+			if (pSala->disponibilidade[hora][dia] != SAL_LIBERADA) {
+				return SAL_CondRetErroAoReservar;
+			}
+		}
+
+		return SAL_CondRetOK;
+	}
 
 /* Fim da funÁ„o SAL_getHorarioNoDia */
 
@@ -480,7 +486,7 @@ SAL_tpCondRet SAL_reservaSala (SAL_tpSala * pSala, int dia, int horaInicio, int 
     
     for(hora = horaInicio - ajusteHora; hora < horaFim - ajusteHora; hora++)
     {
-        pSala->disponibilidade [hora][dia] = salaReservada;
+        pSala->disponibilidade [hora][dia] = SAL_RESERVADA;
     }
     return SAL_CondRetOK;
 }
@@ -504,9 +510,9 @@ SAL_tpCondRet SAL_liberaSala (SAL_tpSala * pSala, int dia, int horaInicio, int h
     
     for(hora = horaInicio - ajusteHora; hora < horaFim - ajusteHora; hora++)
     {
-        if (pSala->disponibilidade[hora][dia] != salaLivre && pSala->disponibilidade[hora][dia] != salaReservada)
+        if (pSala->disponibilidade[hora][dia] != SAL_LIBERADA && pSala->disponibilidade[hora][dia] != SAL_RESERVADA)
             return SAL_CondRetErroEstrutura;
-        if(pSala->disponibilidade[hora][dia] == salaLivre)
+        if(pSala->disponibilidade[hora][dia] == SAL_LIBERADA)
         {
             return SAL_CondRetErroAoLiberar;
         }
@@ -514,7 +520,7 @@ SAL_tpCondRet SAL_liberaSala (SAL_tpSala * pSala, int dia, int horaInicio, int h
     
     for(hora = horaInicio - ajusteHora; hora < horaFim - ajusteHora; hora++)
     {
-        pSala->disponibilidade [hora][dia] = salaLiberada;
+        pSala->disponibilidade [hora][dia] = SAL_LIBERADA;
     }
     return SAL_CondRetOK;
 }
@@ -533,8 +539,8 @@ SAL_tpCondRet SAL_resetDisponibilidade (SAL_tpSala * pSala){
     
     for (i = 0 ; i < HORARIOS ; i++){
         for (j = 0; j < DIAS ; j++){
-            pSala->disponibilidade[i][j] = salaLivre;
-            if (pSala->disponibilidade[i][j] != salaLivre)
+            pSala->disponibilidade[i][j] = SAL_LIBERADA;
+            if (pSala->disponibilidade[i][j] != SAL_LIBERADA)
                 return SAL_CondRetErroAoLiberar;
         }
     }
@@ -557,9 +563,9 @@ SAL_tpCondRet SAL_printDisponibilidade(SAL_tpSala * pSala) {
     for (i = 0 ; i < HORARIOS ; i++){
         printf("%d-%d\t",i+7,i+8);
         for (j = 0 ; j < DIAS ; j++){
-            if (pSala->disponibilidade[i][j] != salaLivre && pSala->disponibilidade[i][j] != salaReservada)
+            if (pSala->disponibilidade[i][j] != SAL_LIBERADA && pSala->disponibilidade[i][j] != SAL_RESERVADA)
                 return SAL_CondRetErroEstrutura;
-            if (pSala->disponibilidade[i][j] == salaReservada)
+            if (pSala->disponibilidade[i][j] == SAL_RESERVADA)
                 printf("XXXXXX\t");
             else
                 printf("------\t");
@@ -572,5 +578,102 @@ SAL_tpCondRet SAL_printDisponibilidade(SAL_tpSala * pSala) {
 }
 
 /* Fim funcao: Sal reset disponibilidade Sala */
+
+/***************************************************************************
+*
+*  Função: SAL Salva Dados
+*  ****/
+
+	SAL_tpCondRet SAL_salvaDados (SAL_tpSala * pSala,  FILE *f )
+	{
+			int i, e;
+			if ( !f )
+			{
+				#ifdef _DEBUG	
+					printf("Erro ao abrir arquivo de dados das salas.\n") ;
+				#endif
+				return SAL_CondRetErroAbrirArquivo ;
+			} /* if */
+				/*
+					Formato de escrita/leitura
+					Dados da sala:
+					%s %d %d
+					disponibilidade:
+					%d %d ....
+				*/
+
+			fprintf(f, "%s %d %d\n",
+				pSala->codigo,
+				pSala->maxAlunos,
+				pSala->eLaboratorio
+			) ;
+			for( i=0; i<HORARIOS; i++ ){
+				for( e=0; e<DIAS; e++ ){
+					fprintf(f, "%d ", pSala->disponibilidade[i][e]);
+				}
+			}
+			fprintf(f, "\n");
+
+			#ifdef _DEBUG	
+				printf("Dados da sala de codigo %s salvos com sucesso!\n", pSala->codigo);
+			#endif
+
+			return SAL_CondRetOK ;
+
+	} /* Fim função: SAL Salva Dados */
+
+/***************************************************************************
+
+*
+*  Função: SAL Le Dados
+*  ****/
+
+	SAL_tpCondRet SAL_leDados (SAL_tpSala * pSala,  FILE *f )
+	{
+			int i, e;
+			if ( !f )
+			{
+				#ifdef _DEBUG	
+					printf("Erro ao abrir arquivo de dados das salas.\n") ;
+				#endif
+				return SAL_CondRetErroAbrirArquivo ;
+			} /* if */
+				/*
+					Formato de escrita/leitura
+					Dados da sala:
+					%s %d %d
+					disponibilidade:
+					%d %d ....
+				*/
+
+			fscanf(f, " %s %d %d\n",
+				pSala->codigo,
+				&pSala->maxAlunos,
+				&pSala->eLaboratorio
+			) ;
+			#ifdef _DEBUG
+				printf("%s %d %d\n",
+				pSala->codigo,
+				pSala->maxAlunos,
+				pSala->eLaboratorio);
+			#endif
+			for(i=0;i<HORARIOS;i++){
+				for(e=0;e<DIAS;e++){					
+					fscanf(f, "%d ", pSala->disponibilidade[i] + e );
+					#ifdef _DEBUG	
+						printf("%d ", pSala->disponibilidade[i][e] );
+					#endif
+				}
+			}
+
+
+			#ifdef _DEBUG	
+				printf("Dados da sala de codigo %s carregados com sucesso!\n", pSala->codigo);
+			#endif
+
+			return SAL_CondRetOK ;
+
+	} /* Fim função: SAL le Dados */
+
 
 /********** Fim do modulo de implementacao: Modulo Sala **********/

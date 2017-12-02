@@ -50,9 +50,8 @@
 #define tamPredio 10
 #define tamCodigoSala 6
 #define ajusteHora 7
-#define salaReservada 1
-#define salaLiberada 0
-#define salaLivre 0
+#define SAL_RESERVADA 1
+#define SAL_LIBERADA 0
 #define inicioDiaLetivo 7
 #define fimDiaLetivo 23
 #define inicioSemanaLetiva 0
@@ -78,28 +77,31 @@ typedef struct SAL_tagSala SAL_tpSala;
  *$.***********************************************************************/
 
 typedef enum {
-    
-    SAL_CondRetOK = 0 ,
-    /* Executou correto */
-    
-    SAL_CondRetFaltouMemoria = 1 ,
-    /* Erro ao tentar ciar sala */
-    
-    SAL_CondRetRecebeuPonteiroNulo = 2 ,
-    /* Recebeu ponteiro para sala nulo */
-    
-    SAL_CondRetErroEstrutura = 3 ,
-    /* Recebeu estrutura com erro */
-    
-    SAL_CondRetParamInvalido = 4 ,
-    /* Erro no parametro recebido em funcao set */
-    
-    SAL_CondRetErroAoReservar = 5 ,
-    /* Enviada quando uma sala ja esta reservada */
-    
-    SAL_CondRetErroAoLiberar = 6
-    /* Erro ao tentar liberar sala */
-    
+
+	SAL_CondRetOK = 0 ,
+	/* Executou correto */
+
+	SAL_CondRetFaltouMemoria = 1 ,
+	/* Erro ao tentar ciar sala */
+
+	SAL_CondRetRecebeuPonteiroNulo = 2 ,
+	/* Recebeu ponteiro para sala nulo */
+
+	SAL_CondRetErroEstrutura = 3 ,
+	/* Recebeu estrutura com erro */
+
+	SAL_CondRetParamInvalido = 4 ,
+	/* Erro no parametro recebido em funcao set */
+
+	SAL_CondRetErroAoReservar = 5 ,
+	/* Enviada quando uma sala ja esta reservada */
+
+	SAL_CondRetErroAoLiberar = 6 ,
+	/* Erro ao tentar liberar sala */
+	
+	SAL_CondRetErroAbrirArquivo 
+	/* Erro ao tentar abrir tentar salvar os dados em um arquivo */
+
 } SAL_tpCondRet ;
 
 
@@ -376,6 +378,9 @@ SAL_tpCondRet SAL_printDisponibilidade(SAL_tpSala * pSala);
  *$.***********************************************************************/
 
 SAL_tpCondRet SAL_getHorarioNoDia(SAL_tpSala * pSala, int dia, int horarioInicio, int horarioFim);
+
+SAL_tpCondRet SAL_salvaDados (SAL_tpSala * pSala,  FILE *f );
+SAL_tpCondRet SAL_leDados (SAL_tpSala * pSala,  FILE *f );
 
 #undef SALA_EXT
 
