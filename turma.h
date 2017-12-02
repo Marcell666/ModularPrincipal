@@ -49,6 +49,15 @@
 		TUR_CondRetFormatoInvalido ,
 			/* Parâmetro com formato inválido */
 
+		TUR_CondRetErroAbrirArquivo ,
+		    /* Erro ao abrir arquivo com os dados da turma */
+
+		TUR_CondRetTurmaLotada ,
+			/* Turma cheia */
+
+		TUR_CondRetTurmaVazia
+			/* Turma vazia */
+
 	} TUR_tpCondRet ;
 
 
@@ -77,7 +86,7 @@
  ***********************************************************************/
 
 	TUR_tpCondRet TUR_CriaTurma ( Turma ** NovaTurma, char * CodTur,
-		int HorIni, int HorTer, char * DiaSem, int QtdVag ) ;
+		int HorIni, int HorTer, char * DiaSem, int QtdVag, int QtdMat ) ;
 
 
 /***********************************************************************
@@ -285,6 +294,7 @@
  *     $P HorTer - ponteiro para obter horario de termino da turma
  *     $P DiaSem - ponteiro para obter Dias da semana da turma
  *     $P QtdVag - ponteiro para obter Quantidade de vagas da turma
+ *     $P QtdVag - ponteiro para obter Quantidade alunos matriculados na turma
  *
  *  $FV Valor retornado
  *     TUR_CondRetOk
@@ -293,7 +303,7 @@
  ***********************************************************************/
 
 	TUR_tpCondRet TUR_GetTurma ( Turma * tur, char * CodTur,
-		int * HorIni, int * HorTer, char * DiaSem, int * QtdVag ) ;
+		int * HorIni, int * HorTer, char * DiaSem, int * QtdVag, int * QtdMat ) ;
 
 
 /***********************************************************************
@@ -330,5 +340,17 @@
  ***********************************************************************/
 
 	TUR_tpCondRet TUR_ExcluiTurma ( Turma * turma ) ;
+
+
+
+	TUR_tpCondRet TUR_AlteraQtdMatr ( Turma * tur, int qtdMat ) ;
+
+	TUR_tpCondRet TUR_IncremQtdMatr ( Turma * tur ) ;
+
+	TUR_tpCondRet TUR_DecremQtdMatr ( Turma * tur ) ;
+
+	TUR_tpCondRet TUR_GetQtdMat ( Turma * tur, int * QtdMat ) ;
+
+	TUR_tpCondRet TUR_salvaDados ( Turma * tur, FILE *f ) ;
 
 /********** Fim do módulo de definição: Módulo turma **********/

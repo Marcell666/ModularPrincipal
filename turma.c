@@ -48,6 +48,9 @@
 		int QtdVaga ;
 			/* Número de vagas da turma */
 
+		int QtdMatr ;
+		    /* Quantidade de alunos matriculados em uma turma */
+
 	};
 
 /*****  Código das funções exportadas pelo módulo  *****/
@@ -57,7 +60,7 @@
 *  ****/
 
 	TUR_tpCondRet TUR_CriaTurma ( Turma ** NovaTurma, char * CodTur,
-		int HorIni, int HorTer, char * DiaSem, int QtdVag )
+		int HorIni, int HorTer, char * DiaSem, int QtdVag, int QtdMat)
 	{
 
 		* NovaTurma = ( Turma * ) malloc( sizeof( Turma )) ;
@@ -87,6 +90,8 @@
 
 		( *NovaTurma )->QtdVaga = QtdVag ;
 
+		( *NovaTurma )->QtdMatr = QtdMat ;
+
 		return TUR_CondRetOk ;
 
 	} /* Fim função: TUR  &Cria turma */
@@ -105,7 +110,7 @@
 		} else
 		{
 			tur->HorarioInicio = hora1 ;
-			printf( "Hora alterada" ) ;
+			printf( "\nHorário de inicio da turma alterado com sucesso!\n" ) ;
 			return TUR_CondRetOk ;
 		} /* if */
 	
@@ -125,7 +130,7 @@
 		} else
 		{
 			tur->HorarioTermino = hora2 ;
-			printf( "Hora alterada" ) ;
+			printf( "\nHorário final da turma alterado com sucesso!\n" ) ;
 			return TUR_CondRetOk ;
 		} /* if */
 
@@ -140,7 +145,7 @@
 	{
 
 		strcpy( tur->DiaSemana, dia ) ;
-		printf( "Dias alterados" ) ;
+		printf( "\nDia da semana da turma alterado com sucesso!\n" ) ;
         return TUR_CondRetOk ;
 
     } /* Fim função: TUR  &Altera dia */
@@ -154,7 +159,7 @@
 	{ 
 
 		strcpy( tur->CodTurma, cod ) ;
-		printf( "Codigo alterado" ) ;
+		printf( "\nCodigo da turma alterado com sucesso!\n" ) ;
 		return TUR_CondRetOk ;
 
 	} /* Fim função: TUR  &Altera codigo */
@@ -168,10 +173,62 @@
 	{
 
 		tur->QtdVaga = qtd ;
-		printf( "Quantidade alterada" ) ;
+		printf( "\nQuantidade de vagas da turma alterada com sucesso!\n" ) ;
 		return TUR_CondRetOk ;
 
 	} /* Fim função: TUR  &Altera qtd vaga */
+
+/***************************************************************************
+*
+*  Função: TUR  &Altera qtd alunos matirculado
+*  ****/
+
+	TUR_tpCondRet TUR_AlteraQtdMatr ( Turma * tur, int qtdMat )
+	{
+
+		tur->QtdMatr = qtdMat ;
+		printf( "\nQuantidade de alunos matriculados na turma alterada com sucesso!\n" ) ;
+		return TUR_CondRetOk ;
+
+	} /* Fim função: TUR  &Altera qtd alunos matirculado */
+
+/***************************************************************************
+*
+*  Função: TUR  &Incrementa qtd matriculado
+*  ****/
+
+	TUR_tpCondRet TUR_IncremQtdMatr ( Turma * tur )
+	{
+
+		if ( tur->QtdVaga == tur->QtdMatr )
+		{
+			return TUR_CondRetTurmaLotada ;
+		} /* if */
+
+		tur->QtdMatr++ ;
+
+		return TUR_CondRetOk ;
+
+	} /* Fim função: TUR  &Incrementa qtd matriculado */
+
+/***************************************************************************
+*
+*  Função: TUR  &Decrementa qtd matriculado
+*  ****/
+
+	TUR_tpCondRet TUR_DecremQtdMatr ( Turma * tur )
+	{
+
+		if ( tur->QtdMatr == 0 )
+		{
+			return TUR_CondRetTurmaVazia ;
+		} /* if */
+
+		tur->QtdMatr-- ;
+
+		return TUR_CondRetOk ;
+
+	} /* Fim função: TUR  &Decrementa qtd matriculado */
 
 /***************************************************************************
 *
@@ -240,11 +297,24 @@
 
 /***************************************************************************
 *
+*  Função: TUR  &Get qtd matriculado
+*  ****/
+	
+	TUR_tpCondRet TUR_GetQtdMat ( Turma * tur, int * QtdMat )
+	{
+
+		*QtdMat = tur->QtdMatr ;
+		return TUR_CondRetOk ;
+
+	} /* Fim função: TUR  &Get qtd matriculado */
+
+/***************************************************************************
+*
 *  Função: TUR  &Get turma
 *  ****/
 
 	TUR_tpCondRet TUR_GetTurma ( Turma * tur, char * CodTur, int * HorIni, int * HorTer,
-		char * DiaSem, int * QtdVag )
+		char * DiaSem, int * QtdVag, int * QtdMat )
 	{
 
 		strcpy( CodTur, tur->CodTurma ) ;
@@ -252,6 +322,7 @@
 		*HorTer = tur->HorarioTermino ;
 		strcpy( DiaSem, tur->DiaSemana ) ;
 		*QtdVag = tur->QtdVaga ;
+		*QtdMat = tur->QtdMatr;
 
 		return TUR_CondRetOk ;
 
@@ -265,12 +336,13 @@
 	TUR_tpCondRet TUR_ExibeTurma ( Turma * tur )
 	{
 
-		puts( "\n\n****** TURMA SELECIONADA ******" ) ;
+		puts( "\n\n****** TURMA SELECIONADA ******\n" ) ;
 		printf( "\nCodigo: %s",tur->CodTurma ) ;
 		printf( "\nHorario de inicio: %d:00",tur->HorarioInicio ) ;
 		printf( "\nHorario de termino: %d:00",tur->HorarioTermino ) ;
 		printf( "\nDias da semana: %s",tur->DiaSemana ) ;
-		printf( "\nQuantidade de vagas: %d\n\n",tur->QtdVaga ) ;
+		printf( "\nQuantidade de vagas: %d",tur->QtdVaga ) ;
+		printf( "\nQuantidade de alunos matriculados: %d\n\n", tur->QtdVaga ) ;
 
 		return TUR_CondRetOk ;
 
@@ -289,5 +361,39 @@
 		return TUR_CondRetOk ;
 
 	} /* Fim função: TUR  &Exclui turma */
+
+/***************************************************************************
+*
+*  Função: TUR  &Salva dados
+*  ****/
+
+	TUR_tpCondRet TUR_salvaDados ( Turma * tur, FILE *f )
+	{
+			if ( !f )
+			{
+				#ifdef _DEBUG	
+					printf("Erro ao abrir arquivo com os dados de turma.\n") ;
+				#endif
+				return TUR_CondRetErroAbrirArquivo ;
+			} /* if */
+
+			fprintf(f,
+					"\t \'%s\' \'%s\' %d %d %d %d\n",
+					
+					tur->CodTurma ,
+					tur->DiaSemana ,
+					tur->HorarioInicio ,
+					tur->HorarioTermino ,
+					tur->QtdMatr ,
+					tur->QtdVaga
+			) ;
+
+			#ifdef _DEBUG	
+				printf( "Dados da turma de código %d foram salvos com sucesso!\n", tur->CodTurma ) ;
+			#endif
+
+			return TUR_CondRetOk ;
+
+	} /* Fim função: PRF Salva Dados */
 
 /********** Fim do módulo de implementação: TUR  Turma **********/
