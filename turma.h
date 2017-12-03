@@ -86,7 +86,7 @@
  ***********************************************************************/
 
 	TUR_tpCondRet TUR_CriaTurma ( Turma ** NovaTurma, char * CodTur,
-		int HorIni, int HorTer, char * DiaSem, int QtdVag, int QtdMat ) ;
+		int HorIni, int HorTer, char * DiaSem, int QtdVag ) ;
 
 
 /***********************************************************************

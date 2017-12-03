@@ -418,7 +418,7 @@
 			) ;
 
 			#ifdef _DEBUG	
-				printf( "Dados da turma de código %d foram salvos com sucesso!\n", tur->CodTurma ) ;
+				printf( "Dados da turma de código %s foram salvos com sucesso!\n", tur->CodTurma ) ;
 			#endif
 
 			return TUR_CondRetOk ;
