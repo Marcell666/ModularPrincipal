@@ -391,8 +391,13 @@
  *  ****/
 	CDO_tpCondRet CDO_alteraRg(int rg){
 		PRF_ptProfessor prof = NULL;
+		int id;
 		if(get_val_cursor(doc->professores, (void**) &prof) == LIS_CondRetListaVazia)
 				return CDO_CondRetCorpoDocenteVazio;
+		PRF_consultaMatricula(prof, &id);
+		if(CDO_buscaPorRg(rg) == CDO_CondRetOk) return CDO_CondRetIdJaCriado;
+		/* Retornando cursor para posicao original */
+		CDO_buscaPorMatricula(id);
 		if(PRF_alteraRg(prof,rg)==PRF_CondRetFormatoInvalido) return CDO_CondRetFormatoInvalido;
 		return CDO_CondRetOk;
 	}/* Fim função: CDO Altera RG*/
