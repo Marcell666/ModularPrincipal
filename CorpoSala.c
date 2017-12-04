@@ -52,10 +52,10 @@
 /*****  Dados encapsulados no modulo  *****/
 
 	static CorpoSala * CorpoS ;
-	/* instância de corpo de sala armazenada por este módulo */
+	/* instï¿½ncia de corpo de sala armazenada por este mï¿½dulo */
 
 
-/*****  Protótipos das funções encapsuladas no módulo  *****/
+/*****  Protï¿½tipos das funï¿½ï¿½es encapsuladas no mï¿½dulo  *****/
 
 	SAL_tpSala* CDS_buscaCod( char *codigo ) ;
 	SAL_tpSala* CDS_buscaDispo( int dia, int horini, int horfim, int qtd, int lab ) ;
@@ -109,6 +109,38 @@
 		} /* for */
 
 		return NULL ;
+
+	} /* Fim funcao: CDS &Busca Codigo Corpo Sala */
+
+	/***************************************************************************
+* Funcao: CDS  &Busca Codigo Corpo Sala
+*  ****/
+
+	CDS_tpCondRet* CDS_buscaCodSala ( char * codigo )
+	{ 
+
+		char cod[CDS_TAM_COD] ;
+		unsigned int i=0, size = 0 ; 
+    
+		SAL_tpSala * s = NULL ;
+    
+		list_size( CorpoS->Sala, &size ) ;
+    
+		first( CorpoS->Sala ) ;
+    
+		for ( i = 0;i < size; i++ ) 
+		{
+			get_val_cursor( CorpoS->Sala, ( void** ) &s ) ;
+			SAL_getCodigo( s, cod ) ;
+			if ( strcmp( codigo, cod ) == 0 )
+			{
+				return s ;
+			} /* if */
+
+			next( CorpoS->Sala ) ;
+		} /* for */
+
+		return CDS_CondRetOK ;
 
 	} /* Fim funcao: CDS &Busca Codigo Corpo Sala */
 
@@ -221,7 +253,7 @@
 	{
 		/*  TODO IMPORTANTE
 
-			Corrigir esta função
+			Corrigir esta funï¿½ï¿½o
 			Ela esta com VAZAMENTO DE MEMORIA
 		
 		SAL_tpSala *pSala=NULL;
@@ -426,7 +458,7 @@
 
 /***************************************************************************
  *
- *  Função: CDS Salva Dados
+ *  Funï¿½ï¿½o: CDS Salva Dados
  *  ****/
 
 	CDS_tpCondRet CDS_salvaDados( char * path )
@@ -455,7 +487,7 @@
 		if ( !f )
 		{
 			#ifdef _DEBUG	
-				printf( "Erro ao salvar arquivo de dados das salas no módulo CDS. %s\n", pathComPasta ) ;
+				printf( "Erro ao salvar arquivo de dados das salas no mï¿½dulo CDS. %s\n", pathComPasta ) ;
 			#endif
 			return CDS_CondRetErroAbrirArquivo ;
 		} /* if */
@@ -475,11 +507,11 @@
 
 		return CDS_CondRetOK ;
 
-	}  /* Fim função: CDS Salva Dados */
+	}  /* Fim funï¿½ï¿½o: CDS Salva Dados */
 
  /***************************************************************************
  *
- *  Função: CDS Le Dados
+ *  Funï¿½ï¿½o: CDS Le Dados
  *  ****/
 
 	CDS_tpCondRet CDS_leDados ( char * path )
@@ -493,7 +525,7 @@
 		FILE *f ;
 		//int i;
 		char c;
-		/* TODO Esta variavel está aqui somente para usar a scanf. Essa parte do codigo precisa ser melhorada num momento oportuno*/
+		/* TODO Esta variavel estï¿½ aqui somente para usar a scanf. Essa parte do codigo precisa ser melhorada num momento oportuno*/
 				
 		char pathComPasta[CDS_TAM_STRING] ;
 
@@ -521,10 +553,10 @@
 			/*
 				Falha na abertura, criar pasta.
 	
-				Não deve existir a possibilidade de abrir a pasta e não ter nenhum arquivo dentro dela.
-				Se não existe pasta, é a primeira vez que o o programa funciona, e portanto não tem arquivos.
-				Se existe pasta, já não é a primeira vez e tem algum arquivo la dentro, mesmo que esteja vazio.
-				A não ser que o usuário delete os arquivos da pasta manualmente, mas então, por isso eu não me responsabilizo. Afinal estamos possibilitando que ele remova os dados atraves do proprio programa, o que não causa erros.
+				Nï¿½o deve existir a possibilidade de abrir a pasta e nï¿½o ter nenhum arquivo dentro dela.
+				Se nï¿½o existe pasta, ï¿½ a primeira vez que o o programa funciona, e portanto nï¿½o tem arquivos.
+				Se existe pasta, jï¿½ nï¿½o ï¿½ a primeira vez e tem algum arquivo la dentro, mesmo que esteja vazio.
+				A nï¿½o ser que o usuï¿½rio delete os arquivos da pasta manualmente, mas entï¿½o, por isso eu nï¿½o me responsabilizo. Afinal estamos possibilitando que ele remova os dados atraves do proprio programa, o que nï¿½o causa erros.
 			*/
 			#ifdef __linux__
 				mkdir( "Dados", 0777 ) ;
@@ -539,9 +571,9 @@
 		do{
 
 			/*
-				A sala não disponibiliza uma maneira de mudar a matriz de disponibilidade (Sim, é isso mesmo. A matriz de disponibilidade nao esta disponivel.)
+				A sala nï¿½o disponibiliza uma maneira de mudar a matriz de disponibilidade (Sim, ï¿½ isso mesmo. A matriz de disponibilidade nao esta disponivel.)
 				Por isso, a matriz gravada em arquivo precisa ser lida pela propria sala, pois aqui os dados dela estao encapsulados.
-				Então estou cadastrando uma sala com dados quaisquer, e passando para a sala. La ela le de um arquivo os daodos que precisa e os atribui a sala passada. Aqui, eu coloco a sala na lista.
+				Entï¿½o estou cadastrando uma sala com dados quaisquer, e passando para a sala. La ela le de um arquivo os daodos que precisa e os atribui a sala passada. Aqui, eu coloco a sala na lista.
 				
 			*/
 			fseek(f, -1 , SEEK_CUR);
@@ -573,7 +605,7 @@
 
 		return CDS_CondRetOK ;
 
-	} /* Fim função: CDS Le Dados */
+	} /* Fim funï¿½ï¿½o: CDS Le Dados */
 
 
 

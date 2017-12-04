@@ -31,6 +31,7 @@
 #include "gradeCurricular.h"
 #include "disciplina.h"
 #include "listas.h"
+#include "sala.h"
 
 /***********************************************************************
 *
@@ -422,12 +423,16 @@ GRC_tpCondRet GRC_insereTurma(char* codTur, int horIni, int horTer, char* diaSem
 	Turma* novaTurma = NULL;
 	ParDisciplina* parDisc;
 	int ret2;
-	GRC_tpCondRet ret = GRC_buscaPorCodigo(codigo);
+	//GRC_tpCondRet ret = GRC_buscaPorCodigo(codigo);
 
-	if (ret != GRC_CondRetOk)
-		return ret;
+	//if (ret != GRC_CondRetOk)
+	//	return ret;
 	if (get_val_cursor(grc->parDisciplinas, (void**)&parDisc) == LIS_CondRetListaVazia)
 		return GRC_CondRetGradeCurricularVazia;
+	DIS_get_codigo(parDisc->disciplina, &codigo);
+	if (GRC_buscaPorCodigo(codigo) != GRC_CondRetOk) 
+		return GRC_CondRetDisciplinaNaoEncontrada;
+		
 	ret2 = TUR_CriaTurma(&novaTurma, codTur, horIni, horTer, diaSem, qtdVag);
 	if (ret2 == TUR_CondRetFaltouMemoria)
 		return GRC_CondRetNaoHaMemoria;
@@ -453,17 +458,17 @@ GRC_tpCondRet GRC_exibeTurmas(char* codigo)
 	return GRC_CondRetOk;
 }
 
-GRC_tpCondRet GRC_cadastraTurmaNaSala( char codDis, char * codTur, char * codSala){
+//GRC_tpCondRet GRC_cadastraTurmaNaSala( char codDis, char * codTur, char * codSala){
 	/* TODO adicionar verificacoes */
-	Disciplina * dis;
-	SAL_tpSala * pSala;
-	Turma * tur;
+	//Disciplina * dis;
+	//SAL_tpSala * pSala;
+	//Turma * tur;
 
-	GRC_buscaPorCodigo(codDis);
-	GRC_devolveDisc(&dis);
-	CDS_buscaSala(&pSala);
-	DIS_buscaTurma(dis, codTur, &tur)
+	//GRC_buscaPorCodigo(&codDis);
+	//GRC_devolveDisc(&dis);
+	//CDS_buscaSala(&pSala);
+	//DIS_buscaTurma(dis, codTur, &tur);
 
-	TUR_cadastraTurmaNaSala(tur, pSala);
-	return GRC_CondRetOk;
-}
+	//TUR_cadastraTurmaNaSala(tur, pSala);
+	//return GRC_CondRetOk;
+//}

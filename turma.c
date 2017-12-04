@@ -366,10 +366,12 @@
 
 	} /* Fim função: TUR  &Exclui turma */
 
-	TUR_cadastraTurmaNaSala(Turma * tur, SAL_tpSala pSala){
+TUR_tpCondRet	TUR_cadastraTurmaNaSala(Turma * tur, SAL_tpSala* pSala){
 		/*TODO fazer verificacoes*/
 
-		char diasDaSemana[][28] {
+
+
+		char diasDaSemana[6][28] = {
 			"SEG",
 			"TER",
 			"QUA",
@@ -388,6 +390,8 @@
 			if(strstr(tur->DiaSemana, diasDaSemana[i]))
 				SAL_reservaSala (pSala, i, tur->HorarioInicio, tur->HorarioTermino);
 		}
+
+		return TUR_CondRetOk ;
 	}
 
 

@@ -798,6 +798,9 @@
 					GRC_mostraAtual() ;
 					break ;
 				case 2: 
+				system( "cls" ) ;
+					printf( "Digite o código da disciplina que deseja buscar:\n" ) ;
+					LER_leStringConverte( codigo, 0, LER_TAM_STRING, MEN_comparaLeCodigoGRC, LER_TOUPPER );
 					if ( GRC_buscaPorCodigo(codigo) != GRC_CondRetOk )
 					{
 						printf( "Nao existe disciplina cadastrada com este codigo %s.\n", codigo ) ;
@@ -876,13 +879,18 @@
 					} while ( horTer > 23 || horTer < 9 ) ;
 					printf( "Digite a quantidade de vagas:\n" ) ;
 					LER_leInteiro( &qtdVag, 0, 2, LER_comparaLeSoNumero ) ;
+					
 					ret = GRC_insereTurma( codTur, horIni, horTer, diaSem, qtdVag, codigo ) ;
+					if( ret != GRC_CondRetOk )
+						printf( "Erro ao cadastrar\n" ) ;
+					else
+						printf( "Cadastro realizado com sucesso.\n" ) ;
 					break ;
 				case 6:
 					//exibir as turmas de uma disciplina
 					system( "cls" ) ;
 					printf( "Digite o codigo da disciplina que deseja checar as turmas:\n" ) ;
-					scanf( " %s", codigo ) ;
+					LER_leStringConverte( codigo, 4, 8, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ;
 					ret = GRC_exibeTurmas( codigo ) ;
 					break ;
 				default:
@@ -1136,7 +1144,8 @@
 				case 9:
 					system( "cls" ) ;
 					printf( "Digite o codigo da disciplina que deseja checar as turmas:\n" ) ;
-					scanf( " %s", codigo ) ;
+					LER_leStringConverte( codigo, 0, LER_TAM_STRING, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ;
+
 					ret = GRC_exibeTurmas( codigo ) ;
 					break ;
 				default:

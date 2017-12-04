@@ -95,6 +95,8 @@
 
 	CDS_tpCondRet CDS_cria () ;
 
+	CDS_tpCondRet* CDS_buscaCodSala(char* codigo);
+
 /***********************************************************************
  *
  *  $FC Funcao: CDS &Insere
