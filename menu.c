@@ -882,7 +882,8 @@
 					//exibir as turmas de uma disciplina
 					system( "cls" ) ;
 					printf( "Digite o codigo da disciplina que deseja checar as turmas:\n" ) ;
-					scanf( " %s", codigo ) ;
+					 ret = GRC_exibeTurmas("INF1301");
+					LER_leStringConverte( codigo, 1, LER_TAM_STRING, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ;
 					ret = GRC_exibeTurmas( codigo ) ;
 					break ;
 				default:
@@ -898,7 +899,7 @@
 			{
 				system( "cls" ) ;
 				printf( "Alteracao realizada com sucesso!\n\n" ) ;
-				GRC_mostraAtual() ;
+				MEN_menuAnterior();
 			} else
 				if ( ret == GRC_CondRetFormatoInvalido )
 				{
@@ -1196,6 +1197,11 @@
 				
 		//adiciona sala
 		printf( "\nInicial do predio: \n" ) ;
+		printf( "K. Kennedy\n" ) ;
+		printf( "L. Leme\n" ) ;
+		printf( "I. IAG\n" ) ;
+		printf( "R. RDC\n" ) ;
+		printf( "F. Frings\n" ) ;
 		LER_leStringConverte( predio, 1, 1, MEN_comparaLePredioSAL, LER_TOUPPER) ;
 
 		printf( "\nCodigo da sala: \n" ) ;
@@ -1219,7 +1225,6 @@
 		printf("codigo composto %s\n", codigo);
 
 		ret = CDS_insere( codigo, maxAlunos, eLaboratorio ) ;
-		printf("dafuq %d\n", ret);
 
 		if ( ret == CDS_CondRetSalaJaCadastrada )
 		{
