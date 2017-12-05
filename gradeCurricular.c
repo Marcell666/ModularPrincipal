@@ -31,6 +31,7 @@
 #include "gradeCurricular.h"
 #include "disciplina.h"
 #include "listas.h"
+#include "CorpoSala.h"
 
 /***********************************************************************
 *
@@ -417,13 +418,13 @@ GRC_tpCondRet GRC_attSituacaoDisCorrente ( float G1, float G2, float G3, float G
 	return GRC_CondRetOk;
 } /* Fim função:GRC_devolveDisc*/
 
-GRC_tpCondRet GRC_cadastraTurmaNaSala( char codDisc, codTur, codSala){
+GRC_tpCondRet GRC_cadastraTurmaNaSala( char *codDis, char *codTur, char *codSala){
 	Disciplina * dis;
 	SAL_tpSala * pSala;
 	Turma * tur;
 
 	GRC_buscaPorCodigo(codDis);
-	GRC_devolveDisc(&dis);
+	GRC_devolveDisc((void**) &dis);
 
 	CDS_buscaCod(&pSala, codSala);
 

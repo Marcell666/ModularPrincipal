@@ -22,6 +22,8 @@
 *
 ***************************************************************************/
 
+#include "sala.h"
+
 /***** Declarações exportadas pelo módulo *****/
 
 /* Tipo referência para uma turma */

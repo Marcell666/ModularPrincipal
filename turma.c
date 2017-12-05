@@ -23,6 +23,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "turma.h"
+#include "sala.h"
 
 /***********************************************************************
 *
@@ -50,6 +51,8 @@
 
 		int QtdMatr ;
 		    /* Quantidade de alunos matriculados em uma turma */
+
+		SAL_tpSala *pSala;
 
 	};
 
@@ -91,6 +94,8 @@
 		( *NovaTurma )->QtdVaga = QtdVag ;
 
 		( *NovaTurma )->QtdMatr = 0 ;
+
+		
 
 		return TUR_CondRetOk ;
 
@@ -342,7 +347,14 @@
 		printf( "\nHorario de termino: %d:00",tur->HorarioTermino ) ;
 		printf( "\nDias da semana: %s",tur->DiaSemana ) ;
 		printf( "\nQuantidade de vagas: %d",tur->QtdVaga ) ;
-		printf( "\nQuantidade de alunos matriculados: %d\n\n", tur->QtdVaga ) ;
+		printf( "\nQuantidade de alunos matriculados: %d\n", tur->QtdVaga ) ;
+
+		printf("\nSala:\n");
+		if(tur->pSala !=NULL)
+			SAL_printSala(tur->pSala);
+		else
+			printf("--//--\n");
+		printf("\n");
 
 		return TUR_CondRetOk ;
 
@@ -397,10 +409,10 @@
 	} /* Fim função: PRF Salva Dados */
 
 
-TUR_tpCondRet	TUR_cadastraTurmaNaSala(Turma * tur, SAL_tpSala* pSala){
+	TUR_tpCondRet TUR_cadastraTurmaNaSala(Turma * tur, SAL_tpSala* pSala){
  		/*TODO fazer verificacoes*/
  
-		char diasDaSemana[][28] {
+		char diasDaSemana[][28] = {
  			"SEG",
  			"TER",
  			"QUA",

@@ -417,6 +417,18 @@
 
 		exibeTelaInicial() ;
 
+		
+
+//		GRC_tpCondRet GRC_insereTurma(char* codTur, int horIni, int horTer, char* diaSem, int qtdVag, char* codigo)
+//		GRC_tpCondRet GRC_cadastraTurmaNaSala( char *codDis, char *codTur, char *codSala);
+//		GRC_tpCondRet GRC_exibeTurmas(char* codigo)
+//		GRC_tpCondRet GRC_cadastra(char* nome, char* codigo, int creditos, char* bibliografia, char* ementa, int criterio) {
+
+		GRC_cadastra ( "Modular", "INF1301", 4, "Livro de Modular", "verificadores aracabouço stand up comedy", 4 ) ;
+		GRC_insereTurma ( "3WB", 8, 10, "TER-QUI", 31, "INF1301" ) ;
+		GRC_cadastraTurmaNaSala ( "INF1301", "3WB", "F124" ) ;
+		GRC_exibeTurmas ( "INF1301" ) ;
+
 		do
 		{
 			printf( "\n*********** SISTEMA ACADEMICO ***********\n" ) ;

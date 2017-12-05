@@ -24,7 +24,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "sala.h"
 #include "listas.h"
 #include "CorpoSala.h"
 #ifdef __linux__
@@ -57,7 +56,6 @@
 
 /*****  Protótipos das funções encapsuladas no módulo  *****/
 
-	SAL_tpSala* CDS_buscaCod( char *codigo ) ;
 	SAL_tpSala* CDS_buscaDispo( int dia, int horini, int horfim, int qtd, int lab ) ;
 
  
@@ -81,16 +79,18 @@
 	} /* Fim funcao: CDS  &Cria Corpo Sala */
  
 /***************************************************************************
-* Funcao: CDS  &Busca Codigo Corpo Sala
+* Funcao: CDS  &Busca Codigo 
 *  ****/
 
-	SAL_tpSala* CDS_buscaCod ( char * codigo )
+	CDS_tpCondRet CDS_buscaCod ( SAL_tpSala **s, char * codigo )
 	{ 
 
 		char cod[CDS_TAM_COD] ;
 		unsigned int i=0, size = 0 ; 
-    
-		SAL_tpSala * s = NULL ;
+   
+		if(s == NULL){
+			return CDS_CondRetParametroInvalido;
+		}
     
 		list_size( CorpoS->Sala, &size ) ;
     
@@ -98,17 +98,19 @@
     
 		for ( i = 0;i < size; i++ ) 
 		{
-			get_val_cursor( CorpoS->Sala, ( void** ) &s ) ;
-			SAL_getCodigo( s, cod ) ;
+			get_val_cursor( CorpoS->Sala, ( void** ) s ) ;
+			SAL_getCodigo( *s, cod ) ;
 			if ( strcmp( codigo, cod ) == 0 )
 			{
-				return s ;
+				return CDS_CondRetOK ;
 			} /* if */
 
 			next( CorpoS->Sala ) ;
 		} /* for */
 
-		return NULL ;
+		*s = NULL;
+
+		return CDS_CondRetNaoAchou ;
 
 	} /* Fim funcao: CDS &Busca Codigo Corpo Sala */
 
@@ -120,12 +122,13 @@
 	{
 		SAL_tpCondRet ret;
 		SAL_tpSala * s ;
-    
-		if ( CDS_buscaCod( codigo ) != NULL )
+ 		CDS_buscaCod( &s, codigo );
+		if (  s != NULL )
 		{
 			return CDS_CondRetSalaJaCadastrada ;
 		} /* if */
     
+		s = NULL;
 		ret = SAL_criarSala( &s, codigo, maxAlunos, eLaboratorio ) ;
 
 		if(ret != SAL_CondRetOK){
@@ -154,7 +157,7 @@
 
 		SAL_tpSala * s ;
     
-		s = CDS_buscaCod( codigo ) ;
+		CDS_buscaCod( &s, codigo ) ;
     
 		if ( s == NULL )
 		{
@@ -244,7 +247,7 @@
 	CDS_tpCondRet CDS_getQtdMax( int * max, char * cod )
 	{
 		SAL_tpSala * s ;
-		s = CDS_buscaCod( cod ) ;
+		CDS_buscaCod(&s, cod ) ;
 	
 		if ( s == NULL )
 		{
@@ -264,7 +267,7 @@
 	CDS_tpCondRet CDS_getTipo( int * tipo, char * cod )
 	{
 		SAL_tpSala * s ;
-		s = CDS_buscaCod( cod ) ;
+		CDS_buscaCod(&s, cod ) ;
 
 		if ( s == NULL )
 		{
@@ -284,7 +287,7 @@
 	CDS_tpCondRet CDS_getNum( int * num, char * cod )
 	{
 		SAL_tpSala * s ;
-		s = CDS_buscaCod( cod ) ;
+		CDS_buscaCod(&s, cod ) ;
 
 		if ( s == NULL )
 		{
@@ -304,7 +307,7 @@
 	CDS_tpCondRet CDS_getPredio( char * predio, char * cod )
 	{
 		SAL_tpSala * s ;
-		s = CDS_buscaCod( cod ) ;
+		CDS_buscaCod(&s, cod ) ;
 
 		if ( s == NULL )
 		{
@@ -325,7 +328,7 @@
 	CDS_tpCondRet CDS_getAndar( int * andar, char * cod )
 	{
 		SAL_tpSala * s ;
-		s = CDS_buscaCod( cod ) ;
+		CDS_buscaCod(&s, cod ) ;
 		
 		if ( s == NULL )
 		{
@@ -346,7 +349,7 @@
 	CDS_tpCondRet CDS_exibeDisponibilidade( char * cod )
 	{
 		SAL_tpSala * s ;
-		s = CDS_buscaCod( cod ) ;
+		CDS_buscaCod(&s, cod ) ;
 
 		if ( s == NULL )
 		{
