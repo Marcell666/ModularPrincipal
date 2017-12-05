@@ -423,6 +423,7 @@ GRC_tpCondRet GRC_cadastraTurmaNaSala( char *codDis, char *codTur, char *codSala
 	SAL_tpSala * pSala;
 	Turma * tur;
 
+	/* TODO inserir verificacoes */
 	GRC_buscaPorCodigo(codDis);
 	GRC_devolveDisc((void**) &dis);
 

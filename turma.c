@@ -95,6 +95,8 @@
 
 		( *NovaTurma )->QtdMatr = 0 ;
 
+		( *NovaTurma )->pSala = NULL;
+
 		
 
 		return TUR_CondRetOk ;
@@ -431,6 +433,7 @@
  			if(strstr(tur->DiaSemana, diasDaSemana[i]))
  				SAL_reservaSala (pSala, i, tur->HorarioInicio, tur->HorarioTermino);
  		}
+		tur->pSala = pSala;
 
 		return TUR_CondRetOk ;
  	}
