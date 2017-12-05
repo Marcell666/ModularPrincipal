@@ -487,6 +487,9 @@ DIS_tpCondRet DIS_exibe_todas_turmas(Disciplina *d) {
 
 	ret = list_size(d->turmas, &size);
 	if (ret == LIS_CondRetListaVazia) {
+
+		
+		printf("erro estrutura");
 		return DIS_CondRetErroEstrutura;
 	}
 
