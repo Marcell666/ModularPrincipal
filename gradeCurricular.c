@@ -409,13 +409,30 @@ GRC_tpCondRet GRC_devolveDisc(void** Disc) {
   *
   *  Função: GRC Devolve a situação do aluno na Disciplina cursor atual, notas não utilizadas = 0
   *  ****/
-GRC_tpCondRet GRC_attSituacaoDisCorrente(float G1, float G2, float G3, float G4, float* media, int* situacao) {
+GRC_tpCondRet GRC_attSituacaoDisCorrente ( float G1, float G2, float G3, float G4, float* media, int* situacao ) {
 	ParDisciplina *parDisc1;
 
 	get_val_cursor(grc->parDisciplinas, (void**)&parDisc1);
 	DIS_situacaoAluno(parDisc1->disciplina, G1, G2, G3, G4, media, situacao);
 	return GRC_CondRetOk;
 } /* Fim função:GRC_devolveDisc*/
+
+GRC_tpCondRet GRC_cadastraTurmaNaSala( char codDisc, codTur, codSala){
+	Disciplina * dis;
+	SAL_tpSala * pSala;
+	Turma * tur;
+
+	GRC_buscaPorCodigo(codDis);
+	GRC_devolveDisc(&dis);
+
+	CDS_buscaCod(&pSala, codSala);
+
+	DIS_buscaTurma(dis, codTur, &tur);
+
+	TUR_cadastraTurmaNaSala(tur, pSala);
+	return GRC_CondRetOk;
+}
+
 
 GRC_tpCondRet GRC_insereTurma(char* codTur, int horIni, int horTer, char* diaSem, int qtdVag, char* codigo)
 {

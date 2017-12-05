@@ -23,7 +23,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "turma.h"
-#include "sala.h"
 
 /***********************************************************************
 *
@@ -51,9 +50,6 @@
 
 		int QtdMatr ;
 		    /* Quantidade de alunos matriculados em uma turma */
-
-		SAL_tpSala * sala ;
-		    /* Sala onde aquela turma tem aulas */
 
 	};
 
@@ -366,35 +362,6 @@
 
 	} /* Fim função: TUR  &Exclui turma */
 
-TUR_tpCondRet	TUR_cadastraTurmaNaSala(Turma * tur, SAL_tpSala* pSala){
-		/*TODO fazer verificacoes*/
-
-
-
-		char diasDaSemana[6][28] = {
-			"SEG",
-			"TER",
-			"QUA",
-			"QUI",
-			"SEX",
-			"SAB"
-		};
-		int i;
-		
-		/*
-			Percorro o vetor de string acima. Procuro cada string acima na string de dias dessa turma. Se achei uma string quer dizer que devo reservar aquele dia.
-			A cada iteração do for avanço um dia. E é o proprio i que vai dizer em que dia estou na semana. Passo esse i para sala como dia.
-
-		*/
-		for(i=0;i<6;i++){
-			if(strstr(tur->DiaSemana, diasDaSemana[i]))
-				SAL_reservaSala (pSala, i, tur->HorarioInicio, tur->HorarioTermino);
-		}
-
-		return TUR_CondRetOk ;
-	}
-
-
 /***************************************************************************
 *
 *  Função: TUR  &Salva dados
@@ -428,5 +395,32 @@ TUR_tpCondRet	TUR_cadastraTurmaNaSala(Turma * tur, SAL_tpSala* pSala){
 			return TUR_CondRetOk ;
 
 	} /* Fim função: PRF Salva Dados */
+
+
+TUR_tpCondRet	TUR_cadastraTurmaNaSala(Turma * tur, SAL_tpSala* pSala){
+ 		/*TODO fazer verificacoes*/
+ 
+		char diasDaSemana[][28] {
+ 			"SEG",
+ 			"TER",
+ 			"QUA",
+ 			"QUI",
+ 			"SEX",
+ 			"SAB"
+ 		};
+ 		int i;
+ 		
+ 		/*
+ 			Percorro o vetor de string acima. Procuro cada string acima na string de dias dessa turma. Se achei uma string quer dizer que devo reservar aquele dia.
+ 			A cada iteração do for avanço um dia. E é o proprio i que vai dizer em que dia estou na semana. Passo esse i para sala como dia.
+ 
+ 		*/
+ 		for(i=0;i<6;i++){
+ 			if(strstr(tur->DiaSemana, diasDaSemana[i]))
+ 				SAL_reservaSala (pSala, i, tur->HorarioInicio, tur->HorarioTermino);
+ 		}
+
+		return TUR_CondRetOk ;
+ 	}
 
 /********** Fim do módulo de implementação: TUR  Turma **********/

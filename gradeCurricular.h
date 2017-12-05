@@ -548,6 +548,8 @@ GRC_tpCondRet GRC_insereTurma(char* codTur, int horIni, int horTer, char* diaSem
 
 GRC_tpCondRet GRC_exibeTurmas(char* codigo);
 
+GRC_tpCondRet GRC_cadastraTurmaNaSala( char codDisc, codTur, codSala);
+
 #endif
 
 /***********************************************************************/

@@ -342,7 +342,6 @@
 	TUR_tpCondRet TUR_ExcluiTurma ( Turma * turma ) ;
 
 
-
 	TUR_tpCondRet TUR_AlteraQtdMatr ( Turma * tur, int qtdMat ) ;
 
 	TUR_tpCondRet TUR_IncremQtdMatr ( Turma * tur ) ;
@@ -352,5 +351,8 @@
 	TUR_tpCondRet TUR_GetQtdMat ( Turma * tur, int * QtdMat ) ;
 
 	TUR_tpCondRet TUR_salvaDados ( Turma * tur, FILE *f ) ;
+
+
+	TUR_tpCondRet TUR_cadastraTurmaNaSala(Turma * tur, SAL_tpSala* pSala);
 
 /********** Fim do módulo de definição: Módulo turma **********/
