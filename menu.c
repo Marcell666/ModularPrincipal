@@ -766,12 +766,14 @@
 				"inserir um Pre-Requisito",
 				"remover todos os Pre-Requisitos",
 				"inserir uma turma",
+				"cadastrar uma turma em uma sala",
 				"exibir as turmas de uma disciplina"
 		} ;
 		char codigo[MEN_MAX_CODIGO], codTur[MEN_COD_TUR], diaSem[MEN_DIA_SEMANA] ;
+		char codSala[6];
 
 		int horIni, horTer, qtdVag ;
-		int nOpcoes = 7, i ;
+		int nOpcoes = 8, i ;
 		GRC_tpCondRet ret ;
 		int opcao ;
 
@@ -879,10 +881,22 @@
 					ret = GRC_insereTurma( codTur, horIni, horTer, diaSem, qtdVag, codigo ) ;
 					break ;
 				case 6:
+					//cadastrar uma turma numa sala
+					printf( "Digite o codigo da disciplina a qual pertence a turma que deseja cadastrar numa sala:\n" ) ;
+					LER_leStringConverte( codigo, 1, LER_TAM_STRING, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ;
+					printf( "Digite o codigo da turma que deseja cadastrar numa sala:\n" ) ;
+					LER_leStringConverte( codTur, 1, LER_TAM_STRING, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ;
+					printf( "Digite a inicial do predio:\n" ) ;
+					LER_leStringConverte( codigoSala, 1, 1, MEN_comparaLePredioSAL, LER_TOUPPER ) ;
+					printf( "Digite numero da sala:\n" ) ;
+					LER_leInteiro( codigoSala+1, 3, 4, MEN_comparaLeSoNumero ) ;
+					GRC_cadastraTurmaNaSala( codigo, codTur, codSala ) ;
+					break;
+				case 7:
 					//exibir as turmas de uma disciplina
 					system( "cls" ) ;
 					printf( "Digite o codigo da disciplina que deseja checar as turmas:\n" ) ;
-					 ret = GRC_exibeTurmas("INF1301");
+					ret = GRC_exibeTurmas("INF1301");
 					LER_leStringConverte( codigo, 1, LER_TAM_STRING, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ;
 					ret = GRC_exibeTurmas( codigo ) ;
 					break ;
