@@ -36,18 +36,6 @@
 #include "professor.h"
 #include "CorpoSala.h"
 
-
-
-
-//bibliotecas para criação de pastas
-#ifdef __linux__
-	#include <sys/stat.h>
-	#include <sys/types.h>
-	#include <fcntl.h>
-#else
-	#include <direct.h>
-#endif
-
 /***********************************************************************
 *
 *  $TC Tipo de dados: parDisciplina
@@ -81,7 +69,8 @@ static GradeCurricular *grc;
 /* instância de Grade Curricular armazenada por este módulo */
 
 /***** Protótipos das funções encapsuladas no módulo *****/
-GRC_tpCondRet GRC_mostraPreRequisitos(ParDisciplina *parD);
+	void GRC_retiraAspas(char *s);
+	GRC_tpCondRet GRC_mostraPreRequisitos(ParDisciplina *parD);
 
 
 /*****  Código das funções exportadas pelo módulo  *****/
@@ -556,27 +545,18 @@ GRC_tpCondRet GRC_exibeTurmas(char* codigo)
 		char c = ',';
 
 		FILE *f ;
-		char pathComPasta[MAX_NOME] ;
-
-		//colcocando pasta no inicio do path
-		#ifdef __linux__
-			strcpy(pathComPasta,"Dados/");
-		#else
-			strcpy(pathComPasta,"Dados\\") ;
-		#endif
-
-		strcat(pathComPasta, path) ;
 
 		#ifdef _DEBUG	
-			printf("PATH: %s\n", pathComPasta) ;
+			printf("PATH: %s\n", path) ;
 		#endif
 
-		f = fopen(pathComPasta,"wt") ;
+		printf( "PATH: %s\n", path ) ;
+		f = fopen(path,"wt") ;
 
 		if ( !f )
 		{
 			#ifdef _DEBUG	
-				printf( "Erro ao salvar arquivo de dados de Grade Curricular.\nPATH: %s\n", pathComPasta ) ;
+				printf( "Erro ao salvar arquivo de dados de Grade Curricular.\nPATH: %s\n", path ) ;
 			#endif
 			return GRC_CondRetErroAbrirArquivo ;
 		} /* if */
@@ -660,43 +640,20 @@ void GRC_retiraAspas(char *s){
 		char codSala[81] = "";
 
 		FILE * f ;
-				
-		char pathComPasta[MAX_NOME] ;
-
-		//colocando pasta no inicio do path
-		#ifdef __linux__
-			strcpy( pathComPasta,"Dados/" ) ;
-		#else
-			strcpy( pathComPasta,"Dados\\" ) ;
-		#endif
-
-		strcat( pathComPasta, path ) ;
 
 		#ifdef _DEBUG
-			printf( "PATH: %s\n", pathComPasta ) ;
+			printf( "PATH: %s\n", path) ;
 		#endif
 
 		//abrindo arquivo
-		f = fopen( pathComPasta, "rt" ) ;
+		f = fopen( path, "rt" ) ;
 
 		if ( !f )
 		{
 			#ifdef _DEBUG
-				printf("Erro ao abrir arquivo de dados de Grade Curricular.\n PATH: %s\n", pathComPasta) ;
+				printf("Erro ao abrir arquivo de dados de Grade Curricular.\n PATH: %s\n", path) ;
 			#endif
-			/*
-				Falha na abertura, criar pasta.
-	
-				Não deve existir a possibilidade de abrir a pasta e não ter nenhum arquivo dentro dela.
-				Se não existe pasta, é a primeira vez que o o programa funciona, e portanto não tem arquivos.
-				Se existe pasta, já não é a primeira vez e tem algum arquivo la dentro, mesmo que esteja vazio.
-				A não ser que o usuário delete os arquivos da pasta manualmente, mas então, por isso eu não mes responsabilizo. Afinal estamos possibilitando que ele remova os dados atraves do proprio programa, o que não causa erros.
-			*/
-			#ifdef __linux__
-				mkdir( "Dados", 0777 ) ;
-			#else
-				_mkdir( "Dados" ) ;
-			#endif
+
 			return GRC_CondRetOk ;
 		} /* if */
 

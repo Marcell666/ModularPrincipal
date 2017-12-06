@@ -54,6 +54,15 @@
 #include "menu.h"
 #include "leitura.h"
 
+//bibliotecas para criação de pastas
+#ifdef __linux__
+	#include <sys/stat.h>
+	#include <sys/types.h>
+	#include <fcntl.h>
+#else
+	#include <direct.h>
+#endif
+
 
 /***********************************************************************
 *
@@ -402,6 +411,59 @@
 
 
 
+	void criaPasta(){
+		#ifdef __linux__
+			mkdir( "Dados", 0777 ) ;
+		#else
+			_mkdir( "Dados" ) ;
+		#endif
+	}
+
+	void leDados(){
+
+		//colocando pasta no inicio do path
+		#ifdef __linux__
+			char path[255] = "Dados/";
+		#else
+			char path[255] = "Dados\\";
+		#endif
+	
+		strcpy(path+6, CDO_DADOS_PATH ) ;
+		CDO_leDados ( path ) ;
+		strcpy(path+6, CDI_DADOS_PATH ) ;
+		CDI_leDados ( path ) ;
+		strcpy(path+6, CDS_DADOS_PATH ) ;
+		CDS_leDados ( path ) ;
+		strcpy(path+6, GRC_DADOS_PATH ) ;
+		GRC_leDados ( path ) ;
+
+	}
+	void salvaDados(){
+
+		//colocando pasta no inicio do path
+		#ifdef __linux__
+			char path[255] = "Dados/";
+		#else
+			char path[255] = "Dados\\";
+		#endif
+
+		strcpy(path+6, CDO_DADOS_PATH ) ;
+		CDO_salvaDados ( path ) ;
+		strcpy(path+6, CDI_DADOS_PATH ) ;
+		CDI_salvaDados ( path ) ;
+		strcpy(path+6, CDS_DADOS_PATH ) ;
+		CDS_salvaDados ( path ) ;
+		strcpy(path+6, GRC_DADOS_PATH ) ;
+		GRC_salvaDados ( path ) ;
+	}
+	void libera(){
+		CDO_libera() ;
+		CDI_deleta() ; 
+		GRC_libera() ;
+		CDS_libera() ;
+	}
+
+
 	int main ( void )
 	{
 		int opcao = 0 ;
@@ -411,11 +473,7 @@
 		GRC_cria() ;
 		CDS_cria() ;
 
-		CDO_leDados(CDO_DADOS_PATH) ;
-		CDI_leDados(CDI_DADOS_PATH) ;
-		CDS_leDados(CDS_DADOS_PATH) ;
-		GRC_leDados ( GRC_DADOS_PATH ) ;
-
+		criaPasta();
 		exibeTelaInicial() ;
 
 		do
@@ -434,16 +492,10 @@
 				case 0:
 					system( "cls" ) ;
 					printf( "\n\nFechando programa...\n\n" ) ;
+					
+					salvaDados();
 
-					CDO_salvaDados(CDO_DADOS_PATH) ;
-					CDI_salvaDados(CDI_DADOS_PATH) ;
-					CDS_salvaDados(CDS_DADOS_PATH) ;
-					GRC_salvaDados ( GRC_DADOS_PATH ) ;
-
-			 		CDO_libera() ;
-					CDI_deleta() ; 
-					GRC_libera() ;
-					CDS_libera() ;
+			 		libera();
 
 					exit(EXIT_SUCCESS) ;
 					break ;
@@ -472,15 +524,9 @@
 			}
 		} while ( opcao ) ;
 
-		CDO_salvaDados(CDO_DADOS_PATH) ;
-		CDI_salvaDados(CDI_DADOS_PATH) ;
-		CDS_salvaDados(CDS_DADOS_PATH) ;
-		GRC_salvaDados ( GRC_DADOS_PATH ) ;
+		salvaDados();
 
- 		CDO_libera() ;
-		CDI_deleta() ; 
-		GRC_libera() ;
-		CDS_libera() ;
+ 		libera();
 
 		exit(EXIT_SUCCESS);
 		

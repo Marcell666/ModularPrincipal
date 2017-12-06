@@ -26,13 +26,6 @@
 #include <string.h>
 #include "listas.h"
 #include "CorpoSala.h"
-#ifdef __linux__
-	#include <sys/stat.h>
-	#include <sys/types.h>
-	#include <fcntl.h>
-#else
-	#include <direct.h>
-#endif
 
 /***********************************************************************
 *
@@ -438,27 +431,16 @@
 		SAL_tpSala * pSala;
 
 		FILE *f ;
-		char pathComPasta[CDS_TAM_STRING] ;
-
-		//colocando pasta no inicio do path
-		#ifdef __linux__
-			strcpy(pathComPasta,"Dados/");
-		#else
-			strcpy(pathComPasta,"Dados\\") ;
-		#endif
-
-		strcat(pathComPasta, path) ;
-
 		#ifdef _DEBUG
-			printf("PATH: %s\n", pathComPasta) ;
+			printf("PATH: %s\n", path) ;
 		#endif
 
-		f = fopen(pathComPasta,"wt") ;
+		f = fopen(path,"wt") ;
 
 		if ( !f )
 		{
 			#ifdef _DEBUG	
-				printf( "Erro ao salvar arquivo de dados das salas no módulo CDS. %s\n", pathComPasta ) ;
+				printf( "Erro ao salvar arquivo de dados das salas no módulo CDS. %s\n", path ) ;
 			#endif
 			return CDS_CondRetErroAbrirArquivo ;
 		} /* if */
@@ -497,44 +479,20 @@
 		//int i;
 		char c;
 		/* TODO Esta variavel está aqui somente para usar a scanf. Essa parte do codigo precisa ser melhorada num momento oportuno*/
-				
-		char pathComPasta[CDS_TAM_STRING] ;
-
-		//colocando pasta no inicio do path
-		#ifdef __linux__
-			strcpy( pathComPasta,"Dados/" ) ;
-		#else
-			strcpy( pathComPasta,"Dados\\" ) ;
-		#endif
-
-		strcat( pathComPasta, path ) ;
 
 		#ifdef _DEBUG
-			printf( "PATH: %s\n", pathComPasta ) ;
+			printf( "PATH: %s\n", path ) ;
 		#endif
 
 		//abrindo arquivo
-		f = fopen( pathComPasta, "rt" ) ;
+		f = fopen( path, "rt" ) ;
 
 		if ( !f )
 		{
 			#ifdef _DEBUG
-				printf("Erro ao abrir arquivo de dados pessoais das Salas no modulo Corpo de Salas.\nPATH: %s\n", pathComPasta) ;
+				printf("Erro ao abrir arquivo de dados pessoais das Salas no modulo Corpo de Salas.\nPATH: %s\n", path) ;
 			#endif
-			/*
-				Falha na abertura, criar pasta.
-	
-				Não deve existir a possibilidade de abrir a pasta e não ter nenhum arquivo dentro dela.
-				Se não existe pasta, é a primeira vez que o o programa funciona, e portanto não tem arquivos.
-				Se existe pasta, já não é a primeira vez e tem algum arquivo la dentro, mesmo que esteja vazio.
-				A não ser que o usuário delete os arquivos da pasta manualmente, mas então, por isso eu não me responsabilizo. Afinal estamos possibilitando que ele remova os dados atraves do proprio programa, o que não causa erros.
-			*/
-			#ifdef __linux__
-				mkdir( "Dados", 0777 ) ;
-			#else
-				_mkdir( "Dados" ) ;
-			#endif
-			return CDS_CondRetOK ;
+			return CDS_CondRetOK;
 		} /* if */
 
 	
