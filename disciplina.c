@@ -640,7 +640,7 @@ LL - Clayton Lucas Mendes Lima
 		} /* if */
 
 		fprintf(f, 
-					"\'%s\' \'%s\' %d \'%s\' \'%s\' %d \n",
+					"\'%s\' %s %d \'%s\' \'%s\' %d \n",
 					
 					dis->nome,
 					dis->codigo,

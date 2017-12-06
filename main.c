@@ -414,6 +414,7 @@
 		CDO_leDados(CDO_DADOS_PATH) ;
 		CDI_leDados(CDI_DADOS_PATH) ;
 		CDS_leDados(CDS_DADOS_PATH) ;
+		GRC_leDados ( GRC_DADOS_PATH ) ;
 
 		exibeTelaInicial() ;
 
@@ -437,6 +438,7 @@
 					CDO_salvaDados(CDO_DADOS_PATH) ;
 					CDI_salvaDados(CDI_DADOS_PATH) ;
 					CDS_salvaDados(CDS_DADOS_PATH) ;
+					GRC_salvaDados ( GRC_DADOS_PATH ) ;
 
 			 		CDO_libera() ;
 					CDI_deleta() ; 
@@ -473,6 +475,7 @@
 		CDO_salvaDados(CDO_DADOS_PATH) ;
 		CDI_salvaDados(CDI_DADOS_PATH) ;
 		CDS_salvaDados(CDS_DADOS_PATH) ;
+		GRC_salvaDados ( GRC_DADOS_PATH ) ;
 
  		CDO_libera() ;
 		CDI_deleta() ; 

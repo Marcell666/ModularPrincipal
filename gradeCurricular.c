@@ -552,6 +552,8 @@ GRC_tpCondRet GRC_exibeTurmas(char* codigo)
 	{
 
 		ParDisciplina *parD = NULL;
+		unsigned int tam = 0;
+		char c = ',';
 
 		FILE *f ;
 		char pathComPasta[MAX_NOME] ;
@@ -565,7 +567,7 @@ GRC_tpCondRet GRC_exibeTurmas(char* codigo)
 
 		strcat(pathComPasta, path) ;
 
-		#ifdef _DEBUG_	
+		#ifdef _DEBUG	
 			printf("PATH: %s\n", pathComPasta) ;
 		#endif
 
@@ -573,14 +575,15 @@ GRC_tpCondRet GRC_exibeTurmas(char* codigo)
 
 		if ( !f )
 		{
-			#ifdef _DEBUG_	
+			#ifdef _DEBUG	
 				printf( "Erro ao salvar arquivo de dados de Grade Curricular.\nPATH: %s\n", pathComPasta ) ;
 			#endif
 			return GRC_CondRetErroAbrirArquivo ;
 		} /* if */
 
 		first( grc->parDisciplinas ) ;
-		do
+		list_size(grc->parDisciplinas, &tam);
+		for(;tam;tam--)
 		{
 			if( get_val_cursor(grc->parDisciplinas, (void**)&parD) == LIS_CondRetListaVazia )
 			{
@@ -588,15 +591,40 @@ GRC_tpCondRet GRC_exibeTurmas(char* codigo)
 				return GRC_CondRetGradeCurricularVazia ;
 			} /* if */
 			DIS_salvaDados ( parD->disciplina, f ) ;
-			DIS_salvaTurma ( parD->disciplina, f ) ; 
+			DIS_salvaTurma ( parD->disciplina, f ) ;
+
+			/*
+				Caractere de Separação.
+				Não sei quantos turma vou ler, por isso coloquei uma virgula, ao final de cada uma delas e um ponto-e-virgula, no final de todas.
+				Após um ponto-e-virgula começa outra disciplina.
+			*/
+			if(tam==1) c = ';';
+			printf("%c\n", c);
 
 		} while( next(grc->parDisciplinas)==LIS_CondRetOK ) ;
+		
 		
 		fclose(f) ;
 
 		return GRC_CondRetOk ;
 
 	}  /* Fim função: GRC Salva Dados */
+
+ /***************************************************************************
+ *
+ *  Função: GRC Retira Aspas
+ *  ****/
+
+void GRC_retiraAspas(char *s){
+	int tam = strlen(s);
+	if( tam == 2 ) s[0] = '\0';
+	else{
+		s[tam-1] = '\0';
+		strcpy(s, s+1);
+	}
+} /* Fim função: GRC Retira Aspas */
+	
+
 
  /***************************************************************************
  *
@@ -628,8 +656,8 @@ GRC_tpCondRet GRC_exibeTurmas(char* codigo)
 
 		*/
 		int matProf;
-		char matProfS[81];
-		char codSala[81];
+		char matProfS[81] = "";
+		char codSala[81] = "";
 
 		FILE * f ;
 				
@@ -671,10 +699,11 @@ GRC_tpCondRet GRC_exibeTurmas(char* codigo)
 			#endif
 			return GRC_CondRetOk ;
 		} /* if */
-	
+
 		while( fscanf(f, "\'%[^\']\' %s %d \'%[^\']\' \'%[^\']\' %d\n",
 				nome, codigo, &creditos, bibliografia, ementa, &criterio )>0 )
 		{
+
 			#ifdef _DEBUG
 				printf( "%s %s %d %s %s %d \n",
 					nome, codigo, creditos, bibliografia, ementa, criterio ) ;
@@ -690,12 +719,21 @@ GRC_tpCondRet GRC_exibeTurmas(char* codigo)
 				return ret ;
 			} /* if */
 
-			while( fscanf(f, "%s %s %d %d %d %d \'%s\' \'%s\' %c\n",
+			while( fscanf(f, "%s %s %d %d %d %d %s %s %c\n",
 				codTur, diaSem, &horIni, &horFin, &qtdMat, &qtdVag, matProfS, codSala, &c )>0 )
 			{
+
 				#ifdef _DEBUG
-					printf( "%s %s %d %d %d %s %s %d %c\n",
-						codTur, diaSem, horIni, horFin, qtdMat, matProfS, codSala, qtdVag, c ) ;
+					printf( "%s %s %d %d %d %d %s %s %c\n",
+						codTur, diaSem, horIni, horFin, qtdMat, qtdVag, matProfS, codSala,  c ) ;
+				#endif
+
+				GRC_retiraAspas(matProfS);
+				GRC_retiraAspas(codSala); 
+
+				#ifdef _DEBUG
+					printf( "Aspas retiradas:%s %s \n",
+						matProfS, codSala ) ;
 				#endif
 
 				matProf = atoi(matProfS);				
@@ -714,6 +752,7 @@ GRC_tpCondRet GRC_exibeTurmas(char* codigo)
 
 				if (c == ';')
 				{
+					printf("cheguei no fim\n");
 					break ;
 				} /* if */
 
