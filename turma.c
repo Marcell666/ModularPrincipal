@@ -453,26 +453,16 @@
 		char matProfS[81] = "";
 		char codSala[tamCodigoSala] = "" ; 
 		
-				
-		if ( !f )
-		{
-			#ifdef _DEBUG	
-				printf("Erro ao abrir arquivo com os dados de turma.\n") ;
-			#endif
-			return TUR_CondRetErroAbrirArquivo ;
-		} /* if */
-		
 		if(tur->prof!=NULL){
 			PRF_consultaMatricula( tur->prof, &matProf ) ;
 			sprintf(matProfS,"%d", matProf);
 		}
 
-
 		if(tur->pSala != NULL)
 			SAL_getCodigo(tur->pSala, codSala);
 
 		fprintf(f,
-				"\t \'%s\' \'%s\' %d %d %d %d \'%s\' \'%s\'\n",
+				"\t %s %s %d %d %d %d \'%s\' \'%s\'",
 				
 				tur->CodTurma ,
 				tur->DiaSemana ,
