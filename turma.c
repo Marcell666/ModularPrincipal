@@ -24,6 +24,7 @@
 #include <string.h>
 #include "turma.h"
 #include "sala.h"
+#include "professor.h"
 
 /***********************************************************************
 *
@@ -52,7 +53,10 @@
 		int QtdMatr ;
 		    /* Quantidade de alunos matriculados em uma turma */
 
-		SAL_tpSala *pSala;
+		//SAL_tpSala * sala ;
+			/* Sala onde aquela turma tem aulas */
+
+		PRF_ptProfessor prof ;
 
 	};
 
@@ -63,7 +67,7 @@
 *  ****/
 
 	TUR_tpCondRet TUR_CriaTurma ( Turma ** NovaTurma, char * CodTur,
-		int HorIni, int HorTer, char * DiaSem, int QtdVag)
+		int HorIni, int HorTer, char * DiaSem, int QtdVag, int QtdMat)
 	{
 
 		* NovaTurma = ( Turma * ) malloc( sizeof( Turma )) ;
@@ -93,11 +97,7 @@
 
 		( *NovaTurma )->QtdVaga = QtdVag ;
 
-		( *NovaTurma )->QtdMatr = 0 ;
-
-		( *NovaTurma )->pSala = NULL;
-
-		
+		( *NovaTurma )->QtdMatr = QtdMat ;
 
 		return TUR_CondRetOk ;
 
@@ -342,6 +342,7 @@
 	
 	TUR_tpCondRet TUR_ExibeTurma ( Turma * tur )
 	{
+		char nome[PRF_TAM_STRING];
 
 		puts( "\n\n****** TURMA SELECIONADA ******\n" ) ;
 		printf( "\nCodigo: %s",tur->CodTurma ) ;
@@ -349,14 +350,9 @@
 		printf( "\nHorario de termino: %d:00",tur->HorarioTermino ) ;
 		printf( "\nDias da semana: %s",tur->DiaSemana ) ;
 		printf( "\nQuantidade de vagas: %d",tur->QtdVaga ) ;
-		printf( "\nQuantidade de alunos matriculados: %d\n", tur->QtdVaga ) ;
-
-		printf("\nSala:\n");
-		if(tur->pSala !=NULL)
-			SAL_printSala(tur->pSala);
-		else
-			printf("--//--\n");
-		printf("\n");
+		printf( "\nQuantidade de alunos matriculados: %d", tur->QtdVaga ) ;
+		PRF_consultaNome(tur->prof, nome);
+		pirntf( "\nProfessor: %s\n\n", nome );
 
 		return TUR_CondRetOk ;
 
@@ -378,64 +374,92 @@
 
 /***************************************************************************
 *
+*  Função: TUR  &Cadastra Prof na Turma
+*  ****/
+
+	TUR_tpCondRet TUR_cadastraProfTurma ( Turma * tur , Prof ** professor )
+	{
+		tur->prof = * professor ;
+
+		return TUR_CondRetOk ;
+	}
+
+/***************************************************************************
+*
+*  Função: TUR  &Cadastra Turma na Sala
+*  ****/
+
+	TUR_tpCondRet	TUR_cadastraTurmaNaSala(Turma * tur, SAL_tpSala * pSala){
+			/*TODO fazer verificacoes*/
+
+
+
+			char diasDaSemana[][28] = {
+				"SEG",
+				"TER",
+				"QUA",
+				"QUI",
+				"SEX",
+				"SAB"
+			};
+			int i;
+		
+			/*
+				Percorro o vetor de string acima. Procuro cada string acima na string de dias dessa turma. Se achei uma string quer dizer que devo reservar aquele dia.
+				A cada iteração do for avanço um dia. E é o proprio i que vai dizer em que dia estou na semana. Passo esse i para sala como dia.
+
+			*/
+			for(i=0;i<6;i++){
+				if(strstr(tur->DiaSemana, diasDaSemana[i]))
+					SAL_reservaSala (pSala, i, tur->HorarioInicio, tur->HorarioTermino);
+			}
+
+			return TUR_CondRetOk ;
+		} /* Fim função: TUR Cadastra Turma na Sala */
+
+/***************************************************************************
+*
 *  Função: TUR  &Salva dados
 *  ****/
 
 	TUR_tpCondRet TUR_salvaDados ( Turma * tur, FILE *f )
 	{
-			if ( !f )
-			{
-				#ifdef _DEBUG	
-					printf("Erro ao abrir arquivo com os dados de turma.\n") ;
-				#endif
-				return TUR_CondRetErroAbrirArquivo ;
-			} /* if */
+		int matProf ;
+		char codSala[tamCodigoSala] ; 
+		PRF_tpCondRet retProf ;
+		//SAL_tpCondRet retSala ;
+				
+		if ( !f )
+		{
+			#ifdef _DEBUG	
+				printf("Erro ao abrir arquivo com os dados de turma.\n") ;
+			#endif
+			return TUR_CondRetErroAbrirArquivo ;
+		} /* if */
+		
+		retProf = PRF_consultaMatricula( tur->prof, &matProf ) ;
 
-			fprintf(f,
-					"\t \'%s\' \'%s\' %d %d %d %d\n",
-					
-					tur->CodTurma ,
-					tur->DiaSemana ,
-					tur->HorarioInicio ,
-					tur->HorarioTermino ,
-					tur->QtdMatr ,
-					tur->QtdVaga
-			) ;
+		//retSala = SAL_getCodigo(tur->sala, codSala);
+
+		fprintf(f,
+				"\t \'%s\' \'%s\' %d %d %d %d %d \n",
+				
+				tur->CodTurma ,
+				tur->DiaSemana ,
+				tur->HorarioInicio ,
+				tur->HorarioTermino ,
+				tur->QtdMatr ,
+				tur->QtdVaga ,
+				matProf
+				/* codSala */
+		) ;
 
 			#ifdef _DEBUG	
-				printf( "Dados da turma de código %s foram salvos com sucesso!\n", tur->CodTurma ) ;
+				printf( "Dados da turma de codigo %d foram salvos com sucesso!\n", tur->CodTurma ) ;
 			#endif
 
 			return TUR_CondRetOk ;
 
-	} /* Fim função: PRF Salva Dados */
-
-
-	TUR_tpCondRet TUR_cadastraTurmaNaSala(Turma * tur, SAL_tpSala* pSala){
- 		/*TODO fazer verificacoes*/
- 
-		char diasDaSemana[][28] = {
- 			"SEG",
- 			"TER",
- 			"QUA",
- 			"QUI",
- 			"SEX",
- 			"SAB"
- 		};
- 		int i;
- 		
- 		/*
- 			Percorro o vetor de string acima. Procuro cada string acima na string de dias dessa turma. Se achei uma string quer dizer que devo reservar aquele dia.
- 			A cada iteração do for avanço um dia. E é o proprio i que vai dizer em que dia estou na semana. Passo esse i para sala como dia.
- 
- 		*/
- 		for(i=0;i<6;i++){
- 			if(strstr(tur->DiaSemana, diasDaSemana[i]))
- 				SAL_reservaSala (pSala, i, tur->HorarioInicio, tur->HorarioTermino);
- 		}
-		tur->pSala = pSala;
-
-		return TUR_CondRetOk ;
- 	}
+	} /* Fim função: TUR Salva Dados */
 
 /********** Fim do módulo de implementação: TUR  Turma **********/

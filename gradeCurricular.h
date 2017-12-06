@@ -53,8 +53,10 @@ typedef enum {
 	/* Condicao de Retorno Disciplina Não Encontrada, usada quando o Disciplina não é encontrado numa busca ou quando a lista está vazia quando percorrida */
 	GRC_CondRetIdJaCriado,
 	/* Condicao de Retorno Id Já Criado, usada quando existe outra Instância de Disciplina na Grade Curricular com o mesmo código */
-	GRC_CondRetFormatoInvalido
+	GRC_CondRetFormatoInvalido,
 	/* Condicao de Retorno Formato Inválido, usada quando os parâmetros de uma certa função não estão de acordo com o que é esperado pelas funções auxiliares */
+	GRC_CondRetErroAbrirArquivo
+	/* Condicao de Erro Abrir Arquivo, usada quando ocorrer erro ao abrir o arquivo com os dados de Grade Curricular. */
 } GRC_tpCondRet;
 
 
@@ -62,6 +64,9 @@ typedef enum {
 typedef GRC_tpCondRet(*GRC_alteraInt)(int);
 typedef GRC_tpCondRet(*GRC_alteraString)(char*);
 
+/***** Declarações exportadas pelo módulo *****/
+
+	#define  GRC_DADOS_PATH "dadosGRC.txt"
 
 /***********************************************************************
 *
@@ -544,11 +549,15 @@ GRC_tpCondRet GRC_attSituacaoDisCorrente(float G1, float G2, float G3, float G4,
 *
 ***********************************************************************/
 
-GRC_tpCondRet GRC_insereTurma(char* codTur, int horIni, int horTer, char* diaSem, int qtdVag, char* codigo);
+GRC_tpCondRet GRC_insereTurma(char* codTur, int horIni, int horTer, char* diaSem, int qtdVag, int  qtdMat, char* codigo);
 
 GRC_tpCondRet GRC_exibeTurmas(char* codigo);
 
-GRC_tpCondRet GRC_cadastraTurmaNaSala( char *codDisc, char *codTur, char *codSala);
+GRC_tpCondRet GRC_leDados ( char * path ) ;
+
+GRC_tpCondRet GRC_salvaDados ( char * path );
+
+GRC_tpCondRet GRC_CadastraProfNaTurma ( char * codDisc, int matProf, char * codTurma ) ;
 
 #endif
 

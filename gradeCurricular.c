@@ -24,14 +24,28 @@
 *     Este módulo utiliza funcões de interface do módulo disciplina e lista.
 ***************************************************************************/
 
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "gradeCurricular.h"
+#include "criterio_de_aprovacao.h"
 #include "disciplina.h"
 #include "listas.h"
-#include "CorpoSala.h"
+#include "turma.h"
+#include "corpoDocente.h"
+#include "professor.h"
+
+
+
+
+//bibliotecas para criação de pastas
+#ifdef __linux__
+	#include <sys/stat.h>
+	#include <sys/types.h>
+	#include <fcntl.h>
+#else
+	#include <direct.h>
+#endif
 
 /***********************************************************************
 *
@@ -250,7 +264,7 @@ GRC_tpCondRet GRC_buscaPorCodigo(char *chave) {
 	ParDisciplina *parD = NULL;
 	char *inicioCod = NULL;
 	int i;
-	unsigned int size;
+	unsigned int size = 0;
 
 	list_size(grc->parDisciplinas, &size);	// Pego o tamanho da lista
 	first(grc->parDisciplinas);	// Seto a lista para o primeiro nó
@@ -280,11 +294,13 @@ GRC_tpCondRet GRC_inserePreRequisito(char *codigoPre) {
 	ParDisciplina *parDPre = NULL;
 	char *codigo = NULL;
 	/* Recuperando disciplina atual da lista */
-	if (get_val_cursor(grc->parDisciplinas, (void**)&parD) == LIS_CondRetListaVazia) return GRC_CondRetGradeCurricularVazia;
+	if (get_val_cursor(grc->parDisciplinas, (void**)&parD) == LIS_CondRetListaVazia) 
+		return GRC_CondRetGradeCurricularVazia;
 	/* Recuperando o código dela */
 	DIS_get_codigo(parD->disciplina, &codigo);
 	/* Procurando o pre requisito */
-	if (GRC_buscaPorCodigo(codigoPre) != GRC_CondRetOk) {
+	if (GRC_buscaPorCodigo(codigoPre) != GRC_CondRetOk) 
+	{
 		/* Se não encontrei retorno o cursor para onde comecei e retorno */
 		GRC_buscaPorCodigo(codigo);
 		free(codigo);
@@ -301,7 +317,7 @@ GRC_tpCondRet GRC_inserePreRequisito(char *codigoPre) {
 	GRC_buscaPorCodigo(codigo);
 	free(codigo);
 	return GRC_CondRetOk;
-}/* Fim função: GRC Busca Por RG */
+}/* Fim função: GRC Insere Pre-Requisito */
 
 
  /***************************************************************************
@@ -410,7 +426,7 @@ GRC_tpCondRet GRC_devolveDisc(void** Disc) {
   *
   *  Função: GRC Devolve a situação do aluno na Disciplina cursor atual, notas não utilizadas = 0
   *  ****/
-GRC_tpCondRet GRC_attSituacaoDisCorrente ( float G1, float G2, float G3, float G4, float* media, int* situacao ) {
+GRC_tpCondRet GRC_attSituacaoDisCorrente(float G1, float G2, float G3, float G4, float* media, int* situacao) {
 	ParDisciplina *parDisc1;
 
 	get_val_cursor(grc->parDisciplinas, (void**)&parDisc1);
@@ -418,25 +434,7 @@ GRC_tpCondRet GRC_attSituacaoDisCorrente ( float G1, float G2, float G3, float G
 	return GRC_CondRetOk;
 } /* Fim função:GRC_devolveDisc*/
 
-GRC_tpCondRet GRC_cadastraTurmaNaSala( char *codDis, char *codTur, char *codSala){
-	Disciplina * dis;
-	SAL_tpSala * pSala;
-	Turma * tur;
-
-	/* TODO inserir verificacoes */
-	GRC_buscaPorCodigo(codDis);
-	GRC_devolveDisc((void**) &dis);
-
-	CDS_buscaCod(&pSala, codSala);
-
-	DIS_buscaTurma(dis, codTur, &tur);
-
-	TUR_cadastraTurmaNaSala(tur, pSala);
-	return GRC_CondRetOk;
-}
-
-
-GRC_tpCondRet GRC_insereTurma(char* codTur, int horIni, int horTer, char* diaSem, int qtdVag, char* codigo)
+GRC_tpCondRet GRC_insereTurma(char* codTur, int horIni, int horTer, char* diaSem, int qtdVag, int  qtdMat, char* codigo)
 {
 	Turma* novaTurma = NULL;
 	ParDisciplina* parDisc;
@@ -447,7 +445,7 @@ GRC_tpCondRet GRC_insereTurma(char* codTur, int horIni, int horTer, char* diaSem
 		return ret;
 	if (get_val_cursor(grc->parDisciplinas, (void**)&parDisc) == LIS_CondRetListaVazia)
 		return GRC_CondRetGradeCurricularVazia;
-	ret2 = TUR_CriaTurma(&novaTurma, codTur, horIni, horTer, diaSem, qtdVag);
+	ret2 = TUR_CriaTurma(&novaTurma, codTur, horIni, horTer, diaSem, qtdVag, qtdMat);
 	if (ret2 == TUR_CondRetFaltouMemoria)
 		return GRC_CondRetNaoHaMemoria;
 	DIS_insere_turma(parDisc->disciplina, novaTurma);
@@ -471,3 +469,197 @@ GRC_tpCondRet GRC_exibeTurmas(char* codigo)
 
 	return GRC_CondRetOk;
 }
+
+ /***************************************************************************
+ *
+ *  Função: GRC 
+ *  ****/
+
+	GRC_tpCondRet GRC_CadastraProfNaTurma ( char * codDisc, int matProf, char * codTurma ) 
+	{
+		Prof * professor = NULL;
+		Disciplina * Disc = NULL ;
+		Turma * tur = NULL;
+		
+		GRC_buscaPorCodigo(codDisc);
+		GRC_devolveDisc ((void**)&Disc); 
+
+		DIS_buscaTurma(Disc, codTurma, &tur);
+
+		CDO_DevolvProf( &professor, matProf );
+		
+		TUR_cadastraProfTurma (tur, &professor);
+		
+		return GRC_CondRetOk;
+		
+	}
+
+
+ /***************************************************************************
+ *
+ *  Função: GRC Salva Dados
+ *  ****/
+
+	GRC_tpCondRet GRC_salvaDados ( char * path )
+	{
+
+		ParDisciplina *parD = NULL;
+
+		FILE *f ;
+		char pathComPasta[MAX_NOME] ;
+
+		//colcocando pasta no inicio do path
+		#ifdef __linux__
+			strcpy(pathComPasta,"Dados/");
+		#else
+			strcpy(pathComPasta,"Dados\\") ;
+		#endif
+
+		strcat(pathComPasta, path) ;
+
+		#ifdef _DEBUG_	
+			printf("PATH: %s\n", pathComPasta) ;
+		#endif
+
+		f = fopen(pathComPasta,"wt") ;
+
+		if ( !f )
+		{
+			#ifdef _DEBUG_	
+				printf( "Erro ao salvar arquivo de dados de Grade Curricular.\nPATH: %s\n", pathComPasta ) ;
+			#endif
+			return GRC_CondRetErroAbrirArquivo ;
+		} /* if */
+
+		first( grc->parDisciplinas ) ;
+		do
+		{
+			if( get_val_cursor(grc->parDisciplinas, (void**)&parD) == LIS_CondRetListaVazia )
+			{
+				fclose(f) ;
+				return GRC_CondRetGradeCurricularVazia ;
+			} /* if */
+			DIS_salvaDados ( parD->disciplina, f ) ;
+			DIS_salvaTurma ( parD->disciplina, f ) ; 
+
+		} while( next(grc->parDisciplinas)==LIS_CondRetOK ) ;
+		
+		fclose(f) ;
+
+		return GRC_CondRetOk ;
+
+	}  /* Fim função: GRC Salva Dados */
+
+ /***************************************************************************
+ *
+ *  Função: GRC Le Dados
+ *  ****/
+
+	GRC_tpCondRet GRC_leDados ( char * path )
+	{
+
+		char nome[MAX_NOME];
+		char codigo[MAX_CODIGO];
+		int creditos;
+		char bibliografia[MAX_BIBLIOGRAFIA];
+		char ementa[MAX_EMENTA];
+		int criterio;
+		CRI_funcCriterio criAprov;
+		List * turmas;
+		char codTur[4];
+		char diaSem[28];
+		int horIni, horFin;
+		int qtdVag, qtdMat;
+		char c ;
+		GRC_tpCondRet ret;
+
+		FILE * f ;
+				
+		char pathComPasta[MAX_NOME] ;
+
+		//colocando pasta no inicio do path
+		#ifdef __linux__
+			strcpy( pathComPasta,"Dados/" ) ;
+		#else
+			strcpy( pathComPasta,"Dados\\" ) ;
+		#endif
+
+		strcat( pathComPasta, path ) ;
+
+		#ifdef _DEBUG
+			printf( "PATH: %s\n", pathComPasta ) ;
+		#endif
+
+		//abrindo arquivo
+		f = fopen( pathComPasta, "rt" ) ;
+
+		if ( !f )
+		{
+			#ifdef _DEBUG
+				printf("Erro ao abrir arquivo de dados de Grade Curricular.\n PATH: %s\n", pathComPasta) ;
+			#endif
+			/*
+				Falha na abertura, criar pasta.
+	
+				Não deve existir a possibilidade de abrir a pasta e não ter nenhum arquivo dentro dela.
+				Se não existe pasta, é a primeira vez que o o programa funciona, e portanto não tem arquivos.
+				Se existe pasta, já não é a primeira vez e tem algum arquivo la dentro, mesmo que esteja vazio.
+				A não ser que o usuário delete os arquivos da pasta manualmente, mas então, por isso eu não mes responsabilizo. Afinal estamos possibilitando que ele remova os dados atraves do proprio programa, o que não causa erros.
+			*/
+			#ifdef __linux__
+				mkdir( "Dados", 0777 ) ;
+			#else
+				_mkdir( "Dados" ) ;
+			#endif
+			return GRC_CondRetOk ;
+		} /* if */
+	
+		while( fscanf(f, "\'%[^\']\' %s %d \'%[^\']\' \'%[^\']\' %d\n",
+				nome, codigo, &creditos, bibliografia, ementa, &criterio )>0 )
+		{
+			#ifdef _DEBUG
+				printf( "%s %s %d %s %s %d \n",
+					nome, codigo, creditos, bibliografia, ementa, criterio ) ;
+			#endif
+
+			ret = GRC_cadastra( nome, codigo, creditos, bibliografia, ementa, criterio) ;
+			
+			if ( ret != GRC_CondRetOk )
+			{
+				#ifdef _DEBUG
+					printf("Erro ao cadastrar Disciplina.\n") ;
+				#endif
+				return ret ;
+			} /* if */
+
+			while( fscanf(f, "%s %s %d %d %d %d %c\n",
+				codTur, diaSem, &horIni, &horFin, &qtdMat, &qtdVag, &c )>0 )
+			{
+				#ifdef _DEBUG
+					printf( "%s %s %d %d %d %d %c\n",
+							codTur, diaSem, horIni, horFin, qtdMat, qtdVag, c ) ;
+				#endif
+				
+				if (c == ';')
+				{
+					break ;
+				} /* if */
+
+				ret = GRC_insereTurma( codTur, horIni, horFin, diaSem, qtdVag, qtdMat, codigo);
+				
+				if ( ret != GRC_CondRetOk )
+				{
+					#ifdef _DEBUG
+						printf("Erro ao cadastrar Turma.\n") ;
+					#endif
+				} /* if */
+
+			} /* while */
+			
+		} /* while */
+
+		fclose(f) ;
+
+		return ret ;
+
+	} /* Fim função: GRC Le Dados */

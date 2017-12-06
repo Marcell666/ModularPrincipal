@@ -28,7 +28,7 @@
 
 #include "turma.h"
 
-#define MAX_NOME 25
+#define MAX_NOME 81
 #define MAX_CODIGO 8
 #define MAX_BIBLIOGRAFIA 300
 #define MAX_EMENTA 300
@@ -59,8 +59,13 @@ typedef enum {
 	/* Estrutura da Disciplina está correta */
 	DIS_CondRetParametroInvalido,
 	/* Erro no parametro da disciplina */
-	DIS_CondRetTurmaNaoExiste
+	DIS_CondRetTurmaNaoExiste,
 	/* Turma inexistente para essa disciplina*/
+	DIS_CondRetErroAbrirArquivo,
+	/* Erro ao abrir arquivo */
+	DIS_CondRetListaTurmaVazia,
+	/* Lista de turma vazia */
+	DIS_CondRetProfNaoExiste
 }DIS_tpCondRet;
 /***********************************************************************
 *
@@ -218,3 +223,7 @@ DIS_tpCondRet DIS_exibe_todas_turmas(Disciplina *d);
 DIS_tpCondRet DIS_situacaoAluno(Disciplina* disc, float G1, float G2, float G3, float G4, float* media, int*situacao);
 
 DIS_tpCondRet DIS_buscaTurma(Disciplina* d, char* codTurmaDesej, Turma** tur);
+
+DIS_tpCondRet DIS_salvaDados ( Disciplina * dis, FILE * f ) ;
+
+DIS_tpCondRet DIS_salvaTurma ( Disciplina * dis, FILE * f ) ;

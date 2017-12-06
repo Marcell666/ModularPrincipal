@@ -40,6 +40,8 @@
 #ifndef CORPODOCENTE_H
 #define CORPODOCENTE_H
 
+#include "professor.h"
+
 /***** Declarações exportadas pelo módulo *****/
 
 #define  CDO_DADOS_PATH "dadosCDO.txt"
@@ -781,10 +783,9 @@ CDO_tpCondRet CDO_alteraEndereco(char *pais, char *uf, char *cidade, char *bairr
 
 CDO_tpCondRet CDO_leDados(char *path) ;
 
-
 CDO_tpCondRet CDO_salvaDados(char *path) ;
 
-
+CDO_tpCondRet CDO_DevolvProf ( Prof ** prof, int matProf ) ;
 
 #endif
 

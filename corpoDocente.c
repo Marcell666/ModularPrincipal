@@ -490,10 +490,28 @@
 		return CDO_CondRetOk;
 	} /* Fim função: CDO Altera Endereco */
 
- /***************************************************************************
- *
- *  Função: CDO Salva Dados
- *  ****/
+/***************************************************************************
+*
+*  Função: CDO Devolve Professor 
+*  ****/
+
+	CDO_tpCondRet CDO_DevolvProf ( Prof** prof, int matProf )
+	{
+
+		if ( CDO_buscaPorMatricula (matProf) != CDO_CondRetOk )
+		{
+			return CDO_CondRetProfessorNaoEncontrado ;
+		}
+		
+		get_val_cursor(doc->professores, (void**) prof);
+
+		return CDO_CondRetOk ;
+	}
+
+/***************************************************************************
+*
+*  Função: CDO Salva Dados
+*  ****/
 
 	CDO_tpCondRet CDO_salvaDados( char * path )
 	{
