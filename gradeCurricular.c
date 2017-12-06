@@ -427,8 +427,8 @@ GRC_tpCondRet GRC_cadastraTurmaNaSala( char *codDis, char *codTur, char *codSala
 	CDS_buscaCod(&pSala, codSala);
 
 	DIS_buscaTurma(dis, codTur, &tur);
-/*	TODO descomentar isto	*/
-//	TUR_cadastraTurmaNaSala(tur, pSala);
+
+	TUR_cadastraTurmaNaSala(tur, pSala);
 	return GRC_CondRetOk;
 }/* Fim função: GRC cadastra Turma Na Sala */
 
@@ -458,7 +458,7 @@ GRC_tpCondRet GRC_attSituacaoDisCorrente(float G1, float G2, float G3, float G4,
 	return GRC_CondRetOk;
 } /* Fim função:GRC_devolveDisc*/
 
-GRC_tpCondRet GRC_insereTurma(char* codTur, int horIni, int horTer, char* diaSem, int qtdVag, int  qtdMat, char* codigo)
+GRC_tpCondRet GRC_insereTurma(char* codTur, int horIni, int horTer, char* diaSem, int qtdVag, int qtdMat, char* codigo)
 {
 	Turma* novaTurma = NULL;
 	ParDisciplina* parDisc;

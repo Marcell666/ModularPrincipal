@@ -878,7 +878,6 @@
 					} while ( horTer > 23 || horTer < 9 ) ;
 					printf( "Digite a quantidade de vagas:\n" ) ;
 					LER_leInteiro( &qtdVag, 0, 2, LER_comparaLeSoNumero ) ;
-					
 					ret = GRC_insereTurma( codTur, horIni, horTer, diaSem, qtdVag, 0, codigo ) ;
 					break ;
 				case 6:
@@ -891,9 +890,7 @@
 					LER_leStringConverte( codSala, 1, 1, MEN_comparaLePredioSAL, LER_TOUPPER ) ;
 					printf( "Digite numero da sala:\n" ) ;
 					LER_leString( codSala+1, 3, 4, LER_comparaLeSoNumero ) ;
-					/*TODO descomentar isso*/
-					printf("foi mal \n");
-					//GRC_cadastraTurmaNaSala( codigo, codTur, codSala ) ;
+					GRC_cadastraTurmaNaSala( codigo, codTur, codSala ) ;
 					break;
 				case 7:
 					//exibir as turmas de uma disciplina

@@ -551,7 +551,7 @@ GRC_tpCondRet GRC_attSituacaoDisCorrente(float G1, float G2, float G3, float G4,
 *
 ***********************************************************************/
 
-GRC_tpCondRet GRC_insereTurma(char* codTur, int horIni, int horTer, char* diaSem, int qtdVag, int  qtdMat, char* codigo);
+GRC_tpCondRet GRC_insereTurma(char* codTur, int horIni, int horTer, char* diaSem, int qtdVag, int qtdMat, char* codigo);
 
 GRC_tpCondRet GRC_exibeTurmas(char* codigo);
 

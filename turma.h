@@ -23,7 +23,7 @@
 *     Este modulo implementa um conjunto de funcoes para criar e manipular a estrutura turma.
 *
 ***************************************************************************/
-
+#include "sala.h"
 #include "professor.h"
 
 /***** Declarações exportadas pelo módulo *****/
@@ -346,7 +346,7 @@
 	TUR_tpCondRet TUR_ExcluiTurma ( Turma * turma ) ;
 
 
-	//TUR_tpCondRet TUR_cadastraTurmaNaSala(Turma * tur, SAL_tpSala * pSala) ;
+	TUR_tpCondRet TUR_cadastraTurmaNaSala(Turma * tur, SAL_tpSala * pSala) ;
 
 	TUR_tpCondRet TUR_AlteraQtdMatr ( Turma * tur, int qtdMat ) ;
 

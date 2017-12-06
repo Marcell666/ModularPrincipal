@@ -23,7 +23,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "turma.h"
-#include "sala.h"
 #include "professor.h"
 
 /***********************************************************************
@@ -53,7 +52,7 @@
 		int QtdMatr ;
 		    /* Quantidade de alunos matriculados em uma turma */
 
-		//SAL_tpSala * sala ;
+		SAL_tpSala * pSala ;
 			/* Sala onde aquela turma tem aulas */
 
 		PRF_ptProfessor prof ;
@@ -98,6 +97,8 @@
 		( *NovaTurma )->QtdVaga = QtdVag ;
 
 		( *NovaTurma )->QtdMatr = QtdMat ;
+
+		( *NovaTurma )->pSala = NULL;
 
 		return TUR_CondRetOk ;
 
@@ -354,6 +355,12 @@
 		PRF_consultaNome(tur->prof, nome);
 		printf( "\nProfessor: %s\n\n", nome );
 
+		printf("\nSala:\n");
+		if(tur->pSala !=NULL)
+			SAL_printSala(tur->pSala);
+		else
+			printf("--//--\n");
+		printf("\n");
 		return TUR_CondRetOk ;
 
 	} /* Fim função: TUR  &Exibe turma */
@@ -411,6 +418,7 @@
 				if(strstr(tur->DiaSemana, diasDaSemana[i]))
 					SAL_reservaSala (pSala, i, tur->HorarioInicio, tur->HorarioTermino);
 			}
+			tur->pSala = pSala;
 
 			return TUR_CondRetOk ;
 		} /* Fim função: TUR Cadastra Turma na Sala */
