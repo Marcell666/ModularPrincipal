@@ -34,6 +34,7 @@
 #include "turma.h"
 #include "corpoDocente.h"
 #include "professor.h"
+#include "CorpoSala.h"
 
 
 
@@ -408,6 +409,29 @@ GRC_tpCondRet GRC_consultaEmenta(char *ementa) {
 	free(EmentaTemp);
 	return GRC_CondRetOk;
 }/* Fim função: GRC Consulta Ementa*/
+
+
+ /***************************************************************************
+ *
+ *  Função: GRC cadastra Turma Na Sala
+ *  ****/
+GRC_tpCondRet GRC_cadastraTurmaNaSala( char *codDis, char *codTur, char *codSala){
+	Disciplina * dis;
+	SAL_tpSala * pSala;
+	Turma * tur;
+
+	/* TODO inserir verificacoes */
+	GRC_buscaPorCodigo(codDis);
+	GRC_devolveDisc((void**) &dis);
+
+	CDS_buscaCod(&pSala, codSala);
+
+	DIS_buscaTurma(dis, codTur, &tur);
+/*	TODO descomentar isto	*/
+//	TUR_cadastraTurmaNaSala(tur, pSala);
+	return GRC_CondRetOk;
+}/* Fim função: GRC cadastra Turma Na Sala */
+
 
  /***************************************************************************
  *

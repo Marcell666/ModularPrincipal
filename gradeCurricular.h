@@ -33,6 +33,8 @@
 #ifndef GRADECURRICULAR_H
 #define GRADECURRICULAR_H
 
+#include "sala.h"
+
 /***********************************************************************
 *
 *  $TC Tipo de dados: GRC Condições de retorno
@@ -558,6 +560,8 @@ GRC_tpCondRet GRC_leDados ( char * path ) ;
 GRC_tpCondRet GRC_salvaDados ( char * path );
 
 GRC_tpCondRet GRC_CadastraProfNaTurma ( char * codDisc, int matProf, char * codTurma ) ;
+
+GRC_tpCondRet GRC_cadastraTurmaNaSala( char *codDis, char *codTur, char *codSala) ;
 
 #endif
 

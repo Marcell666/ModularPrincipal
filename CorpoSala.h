@@ -25,7 +25,7 @@
  ***************************************************************************/
 
 /***** Declarações exportadas pelo módulo *****/
-
+#include "sala.h"
 
 #define CDS_TAM_COD 6
 #define CDS_TAM_STRING 81
@@ -66,7 +66,10 @@
 		CDS_CondRetParametroInvalido,
 		/* Recebeu parametro invalidos para cadastrar uma sala */
 		
-		CDS_CondRetErroAbrirArquivo
+		CDS_CondRetErroAbrirArquivo,
+		/* Erro ao salvar ou ler dados */
+
+		CDS_CondRetNaoAchou
 		/* Erro ao salvar ou ler dados */
     
 	} CDS_tpCondRet ;
@@ -94,8 +97,6 @@
  ***********************************************************************/
 
 	CDS_tpCondRet CDS_cria () ;
-
-	CDS_tpCondRet* CDS_buscaCodSala(char* codigo);
 
 /***********************************************************************
  *
@@ -414,6 +415,9 @@
  ***********************************************************************/
 
 	CDS_tpCondRet CDS_reservaSala ( int dia, int horini, int horfim, int qtd, int lab ) ;
+
+	
+	CDS_tpCondRet CDS_buscaCod ( SAL_tpSala **s, char * codigo );
 
 	CDS_tpCondRet CDS_salvaDados( char * path ) ;
 	CDS_tpCondRet CDS_leDados ( char * path ) ;

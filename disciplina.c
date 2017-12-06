@@ -100,7 +100,7 @@ LL - Clayton Lucas Mendes Lima
 			return 4;
 		else if (d->criAprov == CRI_Criterio05)
 			return 5;
-		return NULL;
+		return -1;
 	} /* Fim função: DIS converte criterio para inteiro */
 
 /***************************************************************************
@@ -653,7 +653,7 @@ LL - Clayton Lucas Mendes Lima
 			) ;
 
 			#ifdef _DEBUG	
-				printf( "Dados da disciplina de código %d foram salvos com sucesso!\n", dis->codigo ) ;
+				printf( "Dados da disciplina de código %s foram salvos com sucesso!\n", dis->codigo ) ;
 			#endif
 
 			return DIS_CondRetOK ;

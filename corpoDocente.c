@@ -34,7 +34,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "corpoDocente.h"
-#include "professor.h"
 #include "listas.h"
 
 //bibliotecas para criação de pastas

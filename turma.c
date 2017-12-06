@@ -352,7 +352,7 @@
 		printf( "\nQuantidade de vagas: %d",tur->QtdVaga ) ;
 		printf( "\nQuantidade de alunos matriculados: %d", tur->QtdVaga ) ;
 		PRF_consultaNome(tur->prof, nome);
-		pirntf( "\nProfessor: %s\n\n", nome );
+		printf( "\nProfessor: %s\n\n", nome );
 
 		return TUR_CondRetOk ;
 
@@ -392,8 +392,6 @@
 	TUR_tpCondRet	TUR_cadastraTurmaNaSala(Turma * tur, SAL_tpSala * pSala){
 			/*TODO fazer verificacoes*/
 
-
-
 			char diasDaSemana[][28] = {
 				"SEG",
 				"TER",
@@ -425,7 +423,7 @@
 	TUR_tpCondRet TUR_salvaDados ( Turma * tur, FILE *f )
 	{
 		int matProf ;
-		char codSala[tamCodigoSala] ; 
+		//char codSala[tamCodigoSala] ; 
 		PRF_tpCondRet retProf ;
 		//SAL_tpCondRet retSala ;
 				
@@ -437,6 +435,8 @@
 			return TUR_CondRetErroAbrirArquivo ;
 		} /* if */
 		
+		/* TODO verificar ret prof */
+
 		retProf = PRF_consultaMatricula( tur->prof, &matProf ) ;
 
 		//retSala = SAL_getCodigo(tur->sala, codSala);
@@ -455,7 +455,7 @@
 		) ;
 
 			#ifdef _DEBUG	
-				printf( "Dados da turma de codigo %d foram salvos com sucesso!\n", tur->CodTurma ) ;
+				printf( "Dados da turma de codigo %s foram salvos com sucesso!\n", tur->CodTurma ) ;
 			#endif
 
 			return TUR_CondRetOk ;

@@ -24,7 +24,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "sala.h"
 #include "listas.h"
 #include "CorpoSala.h"
 #ifdef __linux__
@@ -52,12 +51,11 @@
 /*****  Dados encapsulados no modulo  *****/
 
 	static CorpoSala * CorpoS ;
-	/* instï¿½ncia de corpo de sala armazenada por este mï¿½dulo */
+	/* instância de corpo de sala armazenada por este módulo */
 
 
-/*****  Protï¿½tipos das funï¿½ï¿½es encapsuladas no mï¿½dulo  *****/
+/*****  Protótipos das funções encapsuladas no módulo  *****/
 
-	SAL_tpSala* CDS_buscaCod( char *codigo ) ;
 	SAL_tpSala* CDS_buscaDispo( int dia, int horini, int horfim, int qtd, int lab ) ;
 
  
@@ -81,16 +79,18 @@
 	} /* Fim funcao: CDS  &Cria Corpo Sala */
  
 /***************************************************************************
-* Funcao: CDS  &Busca Codigo Corpo Sala
+* Funcao: CDS  &Busca Codigo 
 *  ****/
 
-	SAL_tpSala* CDS_buscaCod ( char * codigo )
+	CDS_tpCondRet CDS_buscaCod ( SAL_tpSala **s, char * codigo )
 	{ 
 
 		char cod[CDS_TAM_COD] ;
 		unsigned int i=0, size = 0 ; 
-    
-		SAL_tpSala * s = NULL ;
+   
+		if(s == NULL){
+			return CDS_CondRetParametroInvalido;
+		}
     
 		list_size( CorpoS->Sala, &size ) ;
     
@@ -98,49 +98,19 @@
     
 		for ( i = 0;i < size; i++ ) 
 		{
-			get_val_cursor( CorpoS->Sala, ( void** ) &s ) ;
-			SAL_getCodigo( s, cod ) ;
+			get_val_cursor( CorpoS->Sala, ( void** ) s ) ;
+			SAL_getCodigo( *s, cod ) ;
 			if ( strcmp( codigo, cod ) == 0 )
 			{
-				return s ;
+				return CDS_CondRetOK ;
 			} /* if */
 
 			next( CorpoS->Sala ) ;
 		} /* for */
 
-		return NULL ;
+		*s = NULL;
 
-	} /* Fim funcao: CDS &Busca Codigo Corpo Sala */
-
-	/***************************************************************************
-* Funcao: CDS  &Busca Codigo Corpo Sala
-*  ****/
-
-	CDS_tpCondRet* CDS_buscaCodSala ( char * codigo )
-	{ 
-
-		char cod[CDS_TAM_COD] ;
-		unsigned int i=0, size = 0 ; 
-    
-		SAL_tpSala * s = NULL ;
-    
-		list_size( CorpoS->Sala, &size ) ;
-    
-		first( CorpoS->Sala ) ;
-    
-		for ( i = 0;i < size; i++ ) 
-		{
-			get_val_cursor( CorpoS->Sala, ( void** ) &s ) ;
-			SAL_getCodigo( s, cod ) ;
-			if ( strcmp( codigo, cod ) == 0 )
-			{
-				return s ;
-			} /* if */
-
-			next( CorpoS->Sala ) ;
-		} /* for */
-
-		return CDS_CondRetOK ;
+		return CDS_CondRetNaoAchou ;
 
 	} /* Fim funcao: CDS &Busca Codigo Corpo Sala */
 
@@ -152,12 +122,13 @@
 	{
 		SAL_tpCondRet ret;
 		SAL_tpSala * s ;
-    
-		if ( CDS_buscaCod( codigo ) != NULL )
+ 		CDS_buscaCod( &s, codigo );
+		if (  s != NULL )
 		{
 			return CDS_CondRetSalaJaCadastrada ;
 		} /* if */
     
+		s = NULL;
 		ret = SAL_criarSala( &s, codigo, maxAlunos, eLaboratorio ) ;
 
 		if(ret != SAL_CondRetOK){
@@ -186,7 +157,7 @@
 
 		SAL_tpSala * s ;
     
-		s = CDS_buscaCod( codigo ) ;
+		CDS_buscaCod( &s, codigo ) ;
     
 		if ( s == NULL )
 		{
@@ -253,7 +224,7 @@
 	{
 		/*  TODO IMPORTANTE
 
-			Corrigir esta funï¿½ï¿½o
+			Corrigir esta função
 			Ela esta com VAZAMENTO DE MEMORIA
 		
 		SAL_tpSala *pSala=NULL;
@@ -276,7 +247,7 @@
 	CDS_tpCondRet CDS_getQtdMax( int * max, char * cod )
 	{
 		SAL_tpSala * s ;
-		s = CDS_buscaCod( cod ) ;
+		CDS_buscaCod(&s, cod ) ;
 	
 		if ( s == NULL )
 		{
@@ -296,7 +267,7 @@
 	CDS_tpCondRet CDS_getTipo( int * tipo, char * cod )
 	{
 		SAL_tpSala * s ;
-		s = CDS_buscaCod( cod ) ;
+		CDS_buscaCod(&s, cod ) ;
 
 		if ( s == NULL )
 		{
@@ -316,7 +287,7 @@
 	CDS_tpCondRet CDS_getNum( int * num, char * cod )
 	{
 		SAL_tpSala * s ;
-		s = CDS_buscaCod( cod ) ;
+		CDS_buscaCod(&s, cod ) ;
 
 		if ( s == NULL )
 		{
@@ -336,7 +307,7 @@
 	CDS_tpCondRet CDS_getPredio( char * predio, char * cod )
 	{
 		SAL_tpSala * s ;
-		s = CDS_buscaCod( cod ) ;
+		CDS_buscaCod(&s, cod ) ;
 
 		if ( s == NULL )
 		{
@@ -357,7 +328,7 @@
 	CDS_tpCondRet CDS_getAndar( int * andar, char * cod )
 	{
 		SAL_tpSala * s ;
-		s = CDS_buscaCod( cod ) ;
+		CDS_buscaCod(&s, cod ) ;
 		
 		if ( s == NULL )
 		{
@@ -378,7 +349,7 @@
 	CDS_tpCondRet CDS_exibeDisponibilidade( char * cod )
 	{
 		SAL_tpSala * s ;
-		s = CDS_buscaCod( cod ) ;
+		CDS_buscaCod(&s, cod ) ;
 
 		if ( s == NULL )
 		{
@@ -458,7 +429,7 @@
 
 /***************************************************************************
  *
- *  Funï¿½ï¿½o: CDS Salva Dados
+ *  Função: CDS Salva Dados
  *  ****/
 
 	CDS_tpCondRet CDS_salvaDados( char * path )
@@ -487,7 +458,7 @@
 		if ( !f )
 		{
 			#ifdef _DEBUG	
-				printf( "Erro ao salvar arquivo de dados das salas no mï¿½dulo CDS. %s\n", pathComPasta ) ;
+				printf( "Erro ao salvar arquivo de dados das salas no módulo CDS. %s\n", pathComPasta ) ;
 			#endif
 			return CDS_CondRetErroAbrirArquivo ;
 		} /* if */
@@ -507,11 +478,11 @@
 
 		return CDS_CondRetOK ;
 
-	}  /* Fim funï¿½ï¿½o: CDS Salva Dados */
+	}  /* Fim função: CDS Salva Dados */
 
  /***************************************************************************
  *
- *  Funï¿½ï¿½o: CDS Le Dados
+ *  Função: CDS Le Dados
  *  ****/
 
 	CDS_tpCondRet CDS_leDados ( char * path )
@@ -525,7 +496,7 @@
 		FILE *f ;
 		//int i;
 		char c;
-		/* TODO Esta variavel estï¿½ aqui somente para usar a scanf. Essa parte do codigo precisa ser melhorada num momento oportuno*/
+		/* TODO Esta variavel está aqui somente para usar a scanf. Essa parte do codigo precisa ser melhorada num momento oportuno*/
 				
 		char pathComPasta[CDS_TAM_STRING] ;
 
@@ -553,10 +524,10 @@
 			/*
 				Falha na abertura, criar pasta.
 	
-				Nï¿½o deve existir a possibilidade de abrir a pasta e nï¿½o ter nenhum arquivo dentro dela.
-				Se nï¿½o existe pasta, ï¿½ a primeira vez que o o programa funciona, e portanto nï¿½o tem arquivos.
-				Se existe pasta, jï¿½ nï¿½o ï¿½ a primeira vez e tem algum arquivo la dentro, mesmo que esteja vazio.
-				A nï¿½o ser que o usuï¿½rio delete os arquivos da pasta manualmente, mas entï¿½o, por isso eu nï¿½o me responsabilizo. Afinal estamos possibilitando que ele remova os dados atraves do proprio programa, o que nï¿½o causa erros.
+				Não deve existir a possibilidade de abrir a pasta e não ter nenhum arquivo dentro dela.
+				Se não existe pasta, é a primeira vez que o o programa funciona, e portanto não tem arquivos.
+				Se existe pasta, já não é a primeira vez e tem algum arquivo la dentro, mesmo que esteja vazio.
+				A não ser que o usuário delete os arquivos da pasta manualmente, mas então, por isso eu não me responsabilizo. Afinal estamos possibilitando que ele remova os dados atraves do proprio programa, o que não causa erros.
 			*/
 			#ifdef __linux__
 				mkdir( "Dados", 0777 ) ;
@@ -571,9 +542,9 @@
 		do{
 
 			/*
-				A sala nï¿½o disponibiliza uma maneira de mudar a matriz de disponibilidade (Sim, ï¿½ isso mesmo. A matriz de disponibilidade nao esta disponivel.)
+				A sala não disponibiliza uma maneira de mudar a matriz de disponibilidade (Sim, é isso mesmo. A matriz de disponibilidade nao esta disponivel.)
 				Por isso, a matriz gravada em arquivo precisa ser lida pela propria sala, pois aqui os dados dela estao encapsulados.
-				Entï¿½o estou cadastrando uma sala com dados quaisquer, e passando para a sala. La ela le de um arquivo os daodos que precisa e os atribui a sala passada. Aqui, eu coloco a sala na lista.
+				Então estou cadastrando uma sala com dados quaisquer, e passando para a sala. La ela le de um arquivo os daodos que precisa e os atribui a sala passada. Aqui, eu coloco a sala na lista.
 				
 			*/
 			fseek(f, -1 , SEEK_CUR);
@@ -605,7 +576,7 @@
 
 		return CDS_CondRetOK ;
 
-	} /* Fim funï¿½ï¿½o: CDS Le Dados */
+	} /* Fim função: CDS Le Dados */
 
 
 
