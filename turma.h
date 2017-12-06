@@ -348,6 +348,8 @@
 
 	TUR_tpCondRet TUR_cadastraTurmaNaSala(Turma * tur, SAL_tpSala * pSala) ;
 
+	TUR_tpCondRet TUR_alteraSala ( Turma * tur , SAL_tpSala * pSala );
+
 	TUR_tpCondRet TUR_AlteraQtdMatr ( Turma * tur, int qtdMat ) ;
 
 	TUR_tpCondRet TUR_IncremQtdMatr ( Turma * tur ) ;

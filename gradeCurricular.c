@@ -518,6 +518,30 @@ GRC_tpCondRet GRC_exibeTurmas(char* codigo)
 		
 	}
 
+ /***************************************************************************
+ *
+ *  Função: GRC 
+ *  ****/
+
+	GRC_tpCondRet GRC_CadastraSalaNaTurma ( char * codDisc, char * codTur, char * codSala ) 
+	{
+		SAL_tpSala * pSala = NULL;
+		Disciplina * Disc = NULL ;
+		Turma * tur = NULL;
+		
+		GRC_buscaPorCodigo(codDisc);
+		GRC_devolveDisc ((void**)&Disc); 
+
+		DIS_buscaTurma(Disc, codTur, &tur);
+
+		CDS_buscaCod ( &pSala, codSala );
+		
+		TUR_alteraSala (tur, pSala);
+		
+		return GRC_CondRetOk;
+		
+	}
+
 
  /***************************************************************************
  *
@@ -588,14 +612,24 @@ GRC_tpCondRet GRC_exibeTurmas(char* codigo)
 		char bibliografia[MAX_BIBLIOGRAFIA];
 		char ementa[MAX_EMENTA];
 		int criterio;
-		CRI_funcCriterio criAprov;
-		List * turmas;
+		//List * turmas;
 		char codTur[4];
 		char diaSem[28];
 		int horIni, horFin;
 		int qtdVag, qtdMat;
 		char c ;
 		GRC_tpCondRet ret;
+
+		/* TODO colocar define */
+
+		/*
+			Estou lendo a matricula de professor como string, porque a turma não necessariamente possui um professor.
+			Então lemos aspas simples vazia para indicar isso.
+
+		*/
+		int matProf;
+		char matProfS[81];
+		char codSala[81];
 
 		FILE * f ;
 				
@@ -656,26 +690,31 @@ GRC_tpCondRet GRC_exibeTurmas(char* codigo)
 				return ret ;
 			} /* if */
 
-			while( fscanf(f, "%s %s %d %d %d %d %c\n",
-				codTur, diaSem, &horIni, &horFin, &qtdMat, &qtdVag, &c )>0 )
+			while( fscanf(f, "%s %s %d %d %d %d \'%s\' \'%s\' %c\n",
+				codTur, diaSem, &horIni, &horFin, &qtdMat, &qtdVag, matProfS, codSala, &c )>0 )
 			{
 				#ifdef _DEBUG
-					printf( "%s %s %d %d %d %d %c\n",
-							codTur, diaSem, horIni, horFin, qtdMat, qtdVag, c ) ;
+					printf( "%s %s %d %d %d %s %s %d %c\n",
+						codTur, diaSem, horIni, horFin, qtdMat, matProfS, codSala, qtdVag, c ) ;
 				#endif
-				
-				if (c == ';')
-				{
-					break ;
-				} /* if */
+
+				matProf = atoi(matProfS);				
 
 				ret = GRC_insereTurma( codTur, horIni, horFin, diaSem, qtdVag, qtdMat, codigo);
+				
+				GRC_CadastraProfNaTurma(codigo, matProf, codTur);
+				GRC_CadastraSalaNaTurma ( codigo, codTur, codSala );
 				
 				if ( ret != GRC_CondRetOk )
 				{
 					#ifdef _DEBUG
 						printf("Erro ao cadastrar Turma.\n") ;
 					#endif
+				} /* if */
+
+				if (c == ';')
+				{
+					break ;
 				} /* if */
 
 			} /* while */

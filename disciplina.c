@@ -620,8 +620,6 @@ LL - Clayton Lucas Mendes Lima
 
 		} while( next(dis->turmas)==LIS_CondRetOK ) ;
 		
-		fclose(f) ;
-
 		return DIS_CondRetOK ;
 	}
 

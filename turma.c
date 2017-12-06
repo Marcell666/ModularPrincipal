@@ -393,6 +393,18 @@
 
 /***************************************************************************
 *
+*  Função: TUR  &Cadastra Prof na Turma
+*  ****/
+
+	TUR_tpCondRet TUR_alteraSala ( Turma * tur , SAL_tpSala * pSala )
+	{
+		tur->pSala = pSala ;
+
+		return TUR_CondRetOk ;
+	}
+
+/***************************************************************************
+*
 *  Função: TUR  &Cadastra Turma na Sala
 *  ****/
 
@@ -430,10 +442,17 @@
 
 	TUR_tpCondRet TUR_salvaDados ( Turma * tur, FILE *f )
 	{
-		int matProf ;
-		//char codSala[tamCodigoSala] ; 
-		PRF_tpCondRet retProf ;
-		//SAL_tpCondRet retSala ;
+		int matProf = 0 ;
+		/* TODO usar define */
+
+		/*
+			Estou lendo a matricula de professor como string, porque a turma não necessariamente possui um professor.
+			Então lemos aspas simples vazia para indicar isso.
+
+		*/
+		char matProfS[81] = "";
+		char codSala[tamCodigoSala] = "" ; 
+		
 				
 		if ( !f )
 		{
@@ -443,14 +462,17 @@
 			return TUR_CondRetErroAbrirArquivo ;
 		} /* if */
 		
-		/* TODO verificar ret prof */
+		if(tur->prof!=NULL){
+			PRF_consultaMatricula( tur->prof, &matProf ) ;
+			sprintf(matProfS,"%d", matProf);
+		}
 
-		retProf = PRF_consultaMatricula( tur->prof, &matProf ) ;
 
-		//retSala = SAL_getCodigo(tur->sala, codSala);
+		if(tur->pSala != NULL)
+			SAL_getCodigo(tur->pSala, codSala);
 
 		fprintf(f,
-				"\t \'%s\' \'%s\' %d %d %d %d %d \n",
+				"\t \'%s\' \'%s\' %d %d %d %d \'%s\' \'%s\'\n",
 				
 				tur->CodTurma ,
 				tur->DiaSemana ,
@@ -458,8 +480,8 @@
 				tur->HorarioTermino ,
 				tur->QtdMatr ,
 				tur->QtdVaga ,
-				matProf
-				/* codSala */
+				matProfS,
+				codSala
 		) ;
 
 			#ifdef _DEBUG	

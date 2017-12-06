@@ -1230,8 +1230,6 @@
 			printf("0: Nao\n");
 			LER_leInteiro(&eLaboratorio, 1, 1, LER_comparaLeSoNumero) ;
 		}while(eLaboratorio != 0 && eLaboratorio != 1);
-		
-		
 
 		//compoe codigo
 		strcpy(codigo, predio);
