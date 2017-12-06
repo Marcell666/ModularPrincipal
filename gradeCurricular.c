@@ -563,6 +563,7 @@ GRC_tpCondRet GRC_exibeTurmas(char* codigo)
 
 		first( grc->parDisciplinas ) ;
 		list_size(grc->parDisciplinas, &tam);
+
 		for(;tam;tam--)
 		{
 			if( get_val_cursor(grc->parDisciplinas, (void**)&parD) == LIS_CondRetListaVazia )
@@ -580,8 +581,8 @@ GRC_tpCondRet GRC_exibeTurmas(char* codigo)
 			*/
 			if(tam==1) c = ';';
 			printf("%c\n", c);
-
-		} while( next(grc->parDisciplinas)==LIS_CondRetOK ) ;
+			next(grc->parDisciplinas);
+		}
 		
 		
 		fclose(f) ;
