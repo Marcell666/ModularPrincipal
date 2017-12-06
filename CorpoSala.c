@@ -471,9 +471,7 @@
 	{
 
 		
-		#ifdef _DEBUG	
-			CDS_tpCondRet ret;
-		#endif	
+		CDS_tpCondRet ret;
 		SAL_tpSala *pSala;
 		FILE *f ;
 		//int i;
@@ -497,7 +495,7 @@
 
 	
 		//for(i=0;i<4;i++){
-		do{
+		while(fscanf(f, "%c", &c)>0){
 
 			/*
 				A sala não disponibiliza uma maneira de mudar a matriz de disponibilidade (Sim, é isso mesmo. A matriz de disponibilidade nao esta disponivel.)
@@ -506,29 +504,23 @@
 				
 			*/
 			fseek(f, -1 , SEEK_CUR);
-			#ifdef _DEBUG
-			ret = 
-			#endif
-			SAL_criarSala(&pSala, "F999", 1, 1);
+			ret = SAL_criarSala(&pSala, "F999", 1, 1);
 			
-			#ifdef _DEBUG
-				if(ret != CDS_CondRetOK)
-				{
+			if(ret != CDS_CondRetOK)
+			{
+				#ifdef _DEBUG
 					printf("Erro ao cadastrar Sala\n") ;
-				}
-			ret = 
-			#endif
-			SAL_leDados(pSala, f);
-			#ifdef _DEBUG
-				if(ret != CDS_CondRetOK)
-				{
+				#endif
+			}
+			ret = SAL_leDados(pSala, f);
+			if(ret != CDS_CondRetOK)
+			{
+				#ifdef _DEBUG
 					printf("Erro ao ler Sala\n") ;
-				}
-			#endif
+				#endif
+			}
 			push_back( CorpoS->Sala, (void*) pSala) ;
-			
-			
-		}while(fscanf(f, "%c", &c)>0);
+		}
 
 		fclose(f) ;
 
