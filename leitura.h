@@ -38,6 +38,8 @@
 	void LER_leUF ( char * UF ) ;
 
 	void LER_leData ( int * dia, int * mes, int * ano );
+	
+	void LER_leNota ( float *leValor, int min, int max, LER_Compara compara ) ;
 
 	int LER_comparaLeSoLetra ( unsigned char a ) ;
 

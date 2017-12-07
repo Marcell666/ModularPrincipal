@@ -234,7 +234,47 @@ typedef int (*LER_Compara) (unsigned char) ;
 
 		} while ( * ano < LER_MIN_ANO ) ;
 
-	} /* Fim função: LER  &Compara Le UF */
+	} /* Fim função: LER  &Compara Le Data */
+
+
+/***************************************************************************
+*
+* Função: LER  &Le Nota
+*  ****/
+
+	void LER_leNota ( float *leValor, int min, int max, LER_Compara compara)
+	{		
+		
+		int temPonto;
+		char cad_carac[LER_TAM_STRING+1] ;
+		int i;
+		*leValor = 11;
+		do 
+		{
+			temPonto = 0;
+			LER_leString( cad_carac, min, max, LER_comparaLeSoNumero ) ;
+		
+			// percorro o 'texto' lido, que vai se tornar um float
+			for(i=0;cad_carac[i]!='\0';i++){
+				// conto os pontos
+				if(cad_carac[i] == '.') temPonto++;
+				// so de passar de um ja saio
+				if(temPonto>1) break;
+			}
+			if(temPonto>1) continue;
+
+			//valor ja pode ser convertido para float
+			*leValor = atof(cad_carac);
+
+			if ( *leValor > 10.0 )
+			{
+				printf( "\tNota nao deve ser maior que 10. Digite a nota novamente.\n" ) ;
+			}
+
+		} while (*leValor > 10.0 || temPonto>1) ;
+
+	} /* Fim função: LER  &Le Nota */
+
 
 
 /*****  Código das funções encapsuladas no módulo  *****/
