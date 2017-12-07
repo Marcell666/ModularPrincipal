@@ -608,16 +608,29 @@ LL - Clayton Lucas Mendes Lima
 	DIS_tpCondRet DIS_salvaTurma ( Disciplina * dis, FILE *f )
 	{
 		Turma * tur ;
-		
+		char c = ',' ;
+		unsigned int qtdTur = 0 ;
+
 		first( dis->turmas ) ;
+		list_size(dis->turmas, &qtdTur);
+
 		do
 		{
 			if( get_val_cursor(dis->turmas, (void**)&tur) == LIS_CondRetListaVazia )
 			{
 				return DIS_CondRetListaTurmaVazia ;
 			}
+
 			TUR_salvaDados ( tur, f ) ;
 
+			if ( qtdTur == 1 )
+			{
+				c = ';';
+			}
+
+			fprintf(f, " %c\n", c);
+			
+			qtdTur--;
 		} while( next(dis->turmas)==LIS_CondRetOK ) ;
 		
 		return DIS_CondRetOK ;
@@ -630,6 +643,7 @@ LL - Clayton Lucas Mendes Lima
 
 	DIS_tpCondRet DIS_salvaDados ( Disciplina * dis, FILE *f )
 	{
+		Turma * tur ;
 
 		if ( !f )
 		{
@@ -640,20 +654,30 @@ LL - Clayton Lucas Mendes Lima
 		} /* if */
 
 		fprintf(f, 
-					"\'%s\' %s %d \'%s\' \'%s\' %d \n",
-					
-					dis->nome,
-					dis->codigo,
-					dis->creditos,
-					dis->bibliografia,
-					dis->ementa,
-					dis->criterio
-			) ;
+				"\'%s\' %s %d \'%s\' \'%s\' %d ",
+				
+				dis->nome,
+				dis->codigo,
+				dis->creditos,
+				dis->bibliografia,
+				dis->ementa,
+				dis->criterio
+		) ;
 
-			#ifdef _DEBUG	
-				printf( "Dados da disciplina de código %s foram salvos com sucesso!\n", dis->codigo ) ;
-			#endif
+		if( get_val_cursor(dis->turmas, (void**)&tur) == LIS_CondRetListaVazia )
+		{
+			fprintf(f, 
+					";\n");
+		} else
+		{
+			fprintf(f, 
+					",\n");
+		}
 
-			return DIS_CondRetOK ;
+		#ifdef _DEBUG	
+			printf( "Dados da disciplina de codigo %s foram salvos com sucesso!\n", dis->codigo ) ;
+		#endif
+			
+		return DIS_CondRetOK ;
 
 	} /* Fim função: DIS Salva Dados */
