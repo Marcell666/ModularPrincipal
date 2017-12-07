@@ -26,6 +26,13 @@
 #include <string.h>
 #include "listas.h"
 #include "CorpoSala.h"
+#ifdef __linux__
+	#include <sys/stat.h>
+	#include <sys/types.h>
+	#include <fcntl.h>
+#else
+	#include <direct.h>
+#endif
 
 /***********************************************************************
 *
@@ -44,10 +51,10 @@
 /*****  Dados encapsulados no modulo  *****/
 
 	static CorpoSala * CorpoS ;
-	/* inst‚ncia de corpo de sala armazenada por este mÛdulo */
+	/* inst√¢ncia de corpo de sala armazenada por este m√≥dulo */
 
 
-/*****  ProtÛtipos das funÁıes encapsuladas no mÛdulo  *****/
+/*****  Prot√≥tipos das fun√ß√µes encapsuladas no m√≥dulo  *****/
 
 	SAL_tpSala* CDS_buscaDispo( int dia, int horini, int horfim, int qtd, int lab ) ;
 
@@ -217,7 +224,7 @@
 	{
 		/*  TODO IMPORTANTE
 
-			Corrigir esta funÁ„o
+			Corrigir esta fun√ß√£o
 			Ela esta com VAZAMENTO DE MEMORIA
 		
 		SAL_tpSala *pSala=NULL;
@@ -422,7 +429,7 @@
 
 /***************************************************************************
  *
- *  FunÁ„o: CDS Salva Dados
+ *  Fun√ß√£o: CDS Salva Dados
  *  ****/
 
 	CDS_tpCondRet CDS_salvaDados( char * path )
@@ -431,16 +438,27 @@
 		SAL_tpSala * pSala;
 
 		FILE *f ;
-		#ifdef _DEBUG
-			printf("PATH: %s\n", path) ;
+		char pathComPasta[CDS_TAM_STRING] ;
+
+		//colocando pasta no inicio do path
+		#ifdef __linux__
+			strcpy(pathComPasta,"Dados/");
+		#else
+			strcpy(pathComPasta,"Dados\\") ;
 		#endif
 
-		f = fopen(path,"wt") ;
+		strcat(pathComPasta, path) ;
+
+		#ifdef _DEBUG
+			printf("PATH: %s\n", pathComPasta) ;
+		#endif
+
+		f = fopen(pathComPasta,"wt") ;
 
 		if ( !f )
 		{
 			#ifdef _DEBUG	
-				printf( "Erro ao salvar arquivo de dados das salas no mÛdulo CDS. %s\n", path ) ;
+				printf( "Erro ao salvar arquivo de dados das salas no m√≥dulo CDS. %s\n", pathComPasta ) ;
 			#endif
 			return CDS_CondRetErroAbrirArquivo ;
 		} /* if */
@@ -460,73 +478,105 @@
 
 		return CDS_CondRetOK ;
 
-	}  /* Fim funÁ„o: CDS Salva Dados */
+	}  /* Fim fun√ß√£o: CDS Salva Dados */
 
  /***************************************************************************
  *
- *  FunÁ„o: CDS Le Dados
+ *  Fun√ß√£o: CDS Le Dados
  *  ****/
 
 	CDS_tpCondRet CDS_leDados ( char * path )
 	{
 
 		
-		CDS_tpCondRet ret;
+		#ifdef _DEBUG	
+			CDS_tpCondRet ret;
+		#endif	
 		SAL_tpSala *pSala;
 		FILE *f ;
 		//int i;
 		char c;
-		/* TODO Esta variavel est· aqui somente para usar a scanf. Essa parte do codigo precisa ser melhorada num momento oportuno*/
+		/* TODO Esta variavel est√° aqui somente para usar a scanf. Essa parte do codigo precisa ser melhorada num momento oportuno*/
+				
+		char pathComPasta[CDS_TAM_STRING] ;
+
+		//colocando pasta no inicio do path
+		#ifdef __linux__
+			strcpy( pathComPasta,"Dados/" ) ;
+		#else
+			strcpy( pathComPasta,"Dados\\" ) ;
+		#endif
+
+		strcat( pathComPasta, path ) ;
 
 		#ifdef _DEBUG
-			printf( "PATH: %s\n", path ) ;
+			printf( "PATH: %s\n", pathComPasta ) ;
 		#endif
 
 		//abrindo arquivo
-		f = fopen( path, "rt" ) ;
+		f = fopen( pathComPasta, "rt" ) ;
 
 		if ( !f )
 		{
 			#ifdef _DEBUG
-				printf("Erro ao abrir arquivo de dados pessoais das Salas no modulo Corpo de Salas.\nPATH: %s\n", path) ;
+				printf("Erro ao abrir arquivo de dados pessoais das Salas no modulo Corpo de Salas.\nPATH: %s\n", pathComPasta) ;
 			#endif
-			return CDS_CondRetOK;
+			/*
+				Falha na abertura, criar pasta.
+	
+				N√£o deve existir a possibilidade de abrir a pasta e n√£o ter nenhum arquivo dentro dela.
+				Se n√£o existe pasta, √© a primeira vez que o o programa funciona, e portanto n√£o tem arquivos.
+				Se existe pasta, j√° n√£o √© a primeira vez e tem algum arquivo la dentro, mesmo que esteja vazio.
+				A n√£o ser que o usu√°rio delete os arquivos da pasta manualmente, mas ent√£o, por isso eu n√£o me responsabilizo. Afinal estamos possibilitando que ele remova os dados atraves do proprio programa, o que n√£o causa erros.
+			*/
+			#ifdef __linux__
+				mkdir( "Dados", 0777 ) ;
+			#else
+				_mkdir( "Dados" ) ;
+			#endif
+			return CDS_CondRetOK ;
 		} /* if */
 
 	
 		//for(i=0;i<4;i++){
-		while(fscanf(f, "%c", &c)>0){
+		do{
 
 			/*
-				A sala n„o disponibiliza uma maneira de mudar a matriz de disponibilidade (Sim, È isso mesmo. A matriz de disponibilidade nao esta disponivel.)
+				A sala n√£o disponibiliza uma maneira de mudar a matriz de disponibilidade (Sim, √© isso mesmo. A matriz de disponibilidade nao esta disponivel.)
 				Por isso, a matriz gravada em arquivo precisa ser lida pela propria sala, pois aqui os dados dela estao encapsulados.
-				Ent„o estou cadastrando uma sala com dados quaisquer, e passando para a sala. La ela le de um arquivo os daodos que precisa e os atribui a sala passada. Aqui, eu coloco a sala na lista.
+				Ent√£o estou cadastrando uma sala com dados quaisquer, e passando para a sala. La ela le de um arquivo os daodos que precisa e os atribui a sala passada. Aqui, eu coloco a sala na lista.
 				
 			*/
 			fseek(f, -1 , SEEK_CUR);
-			ret = SAL_criarSala(&pSala, "F999", 1, 1);
+			#ifdef _DEBUG
+			ret = 
+			#endif
+			SAL_criarSala(&pSala, "F999", 1, 1);
 			
-			if(ret != CDS_CondRetOK)
-			{
-				#ifdef _DEBUG
+			#ifdef _DEBUG
+				if(ret != CDS_CondRetOK)
+				{
 					printf("Erro ao cadastrar Sala\n") ;
-				#endif
-			}
-			ret = SAL_leDados(pSala, f);
-			if(ret != CDS_CondRetOK)
-			{
-				#ifdef _DEBUG
+				}
+			ret = 
+			#endif
+			SAL_leDados(pSala, f);
+			#ifdef _DEBUG
+				if(ret != CDS_CondRetOK)
+				{
 					printf("Erro ao ler Sala\n") ;
-				#endif
-			}
+				}
+			#endif
 			push_back( CorpoS->Sala, (void*) pSala) ;
-		}
+			
+			
+		}while(fscanf(f, "%c", &c)>0);
 
 		fclose(f) ;
 
 		return CDS_CondRetOK ;
 
-	} /* Fim funÁ„o: CDS Le Dados */
+	} /* Fim fun√ß√£o: CDS Le Dados */
 
 
 

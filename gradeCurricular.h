@@ -69,6 +69,7 @@ typedef GRC_tpCondRet(*GRC_alteraString)(char*);
 /***** Declarações exportadas pelo módulo *****/
 
 	#define  GRC_DADOS_PATH "dadosGRC.txt"
+	#define  GRC_PRE_REQ_DADOS_PATH "dadosGRCPreReq.txt"
 
 /***********************************************************************
 *
@@ -557,7 +558,11 @@ GRC_tpCondRet GRC_exibeTurmas(char* codigo);
 
 GRC_tpCondRet GRC_leDados ( char * path ) ;
 
-GRC_tpCondRet GRC_salvaDados ( char * path );
+GRC_tpCondRet GRC_salvaDados ( char * path ) ;
+
+GRC_tpCondRet GRC_salvaDadosPreReq ( char * path ) ;
+
+GRC_tpCondRet GRC_leDadosPreReq ( char * path ) ;
 
 GRC_tpCondRet GRC_CadastraProfNaTurma ( char * codDisc, int matProf, char * codTurma ) ;
 

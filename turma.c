@@ -100,6 +100,8 @@
 
 		( *NovaTurma )->pSala = NULL;
 
+		( *NovaTurma )->prof = NULL;
+
 		return TUR_CondRetOk ;
 
 	} /* Fim função: TUR  &Cria turma */
@@ -453,10 +455,20 @@
 		char matProfS[81] = "";
 		char codSala[tamCodigoSala] = "" ; 
 		
+				
+		if ( !f )
+		{
+			#ifdef _DEBUG	
+				printf("Erro ao abrir arquivo com os dados de turma.\n") ;
+			#endif
+			return TUR_CondRetErroAbrirArquivo ;
+		} /* if */
+		
 		if(tur->prof!=NULL){
 			PRF_consultaMatricula( tur->prof, &matProf ) ;
 			sprintf(matProfS,"%d", matProf);
 		}
+
 
 		if(tur->pSala != NULL)
 			SAL_getCodigo(tur->pSala, codSala);

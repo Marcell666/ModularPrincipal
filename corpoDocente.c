@@ -34,7 +34,17 @@
 #include <stdlib.h>
 #include <string.h>
 #include "corpoDocente.h"
+#include "professor.h"
 #include "listas.h"
+
+//bibliotecas para criação de pastas
+#ifdef __linux__
+	#include <sys/stat.h>
+	#include <sys/types.h>
+	#include <fcntl.h>
+#else
+	#include <direct.h>
+#endif
 
 
 /***********************************************************************
@@ -509,17 +519,27 @@
 		PRF_ptProfessor prof = NULL ;
 
 		FILE *f ;
+		char pathComPasta[PRF_TAM_STRING] ;
 
-		#ifdef _DEBUG_	
-			printf("PATH: %s\n", path) ;
+		//colcocando pasta no inicio do path
+		#ifdef __linux__
+			strcpy(pathComPasta,"Dados/");
+		#else
+			strcpy(pathComPasta,"Dados\\") ;
 		#endif
 
-		f = fopen(path,"wt") ;
+		strcat(pathComPasta, path) ;
+
+		#ifdef _DEBUG_	
+			printf("PATH: %s\n", pathComPasta) ;
+		#endif
+
+		f = fopen(pathComPasta,"wt") ;
 
 		if ( !f )
 		{
 			#ifdef _DEBUG_	
-				printf( "Erro ao salvar arquivo de dados pessoais dos professores no módulo Corpo Docente. %s\n", path ) ;
+				printf( "Erro ao salvar arquivo de dados pessoais dos professores no módulo Corpo Docente. %s\n", pathComPasta ) ;
 			#endif
 			return CDO_CondRetErroAbrirArquivo ;
 		} /* if */
@@ -571,18 +591,42 @@
 		int numero ;
 		CDO_tpCondRet ret ;
 		FILE *f ;
+				
+		char pathComPasta[PRF_TAM_STRING] ;
 
-		//abrindo arquivo
-		f = fopen( path, "rt" ) ;
+		//colocando pasta no inicio do path
+		#ifdef __linux__
+			strcpy( pathComPasta,"Dados/" ) ;
+		#else
+			strcpy( pathComPasta,"Dados\\" ) ;
+		#endif
+
+		strcat( pathComPasta, path ) ;
 
 		#ifdef _DEBUG
-			printf("PATH: %s\n", path) ;
+			printf( "PATH: %s\n", pathComPasta ) ;
 		#endif
+
+		//abrindo arquivo
+		f = fopen( pathComPasta, "rt" ) ;
 
 		if ( !f )
 		{
 			#ifdef _DEBUG
-				printf("Erro ao abrir arquivo de dados pessoais dos professores no módulo Corpo Docente.\n PATH: %s\n", path) ;
+				printf("Erro ao abrir arquivo de dados pessoais dos professores no módulo Corpo Docente.\n PATH: %s\n", pathComPasta) ;
+			#endif
+			/*
+				Falha na abertura, criar pasta.
+	
+				Não deve existir a possibilidade de abrir a pasta e não ter nenhum arquivo dentro dela.
+				Se não existe pasta, é a primeira vez que o o programa funciona, e portanto não tem arquivos.
+				Se existe pasta, já não é a primeira vez e tem algum arquivo la dentro, mesmo que esteja vazio.
+				A não ser que o usuário delete os arquivos da pasta manualmente, mas então, por isso eu não mes responsabilizo. Afinal estamos possibilitando que ele remova os dados atraves do proprio programa, o que não causa erros.
+			*/
+			#ifdef __linux__
+				mkdir( "Dados", 0777 ) ;
+			#else
+				_mkdir( "Dados" ) ;
 			#endif
 			return CDO_CondRetOk ;
 		} /* if */

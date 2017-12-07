@@ -36,6 +36,18 @@
 #include "professor.h"
 #include "CorpoSala.h"
 
+
+
+
+//bibliotecas para criação de pastas
+#ifdef __linux__
+	#include <sys/stat.h>
+	#include <sys/types.h>
+	#include <fcntl.h>
+#else
+	#include <direct.h>
+#endif
+
 /***********************************************************************
 *
 *  $TC Tipo de dados: parDisciplina
@@ -69,8 +81,7 @@ static GradeCurricular *grc;
 /* instância de Grade Curricular armazenada por este módulo */
 
 /***** Protótipos das funções encapsuladas no módulo *****/
-	void GRC_retiraAspas(char *s);
-	GRC_tpCondRet GRC_mostraPreRequisitos(ParDisciplina *parD);
+GRC_tpCondRet GRC_mostraPreRequisitos(ParDisciplina *parD);
 
 
 /*****  Código das funções exportadas pelo módulo  *****/
@@ -542,21 +553,29 @@ GRC_tpCondRet GRC_exibeTurmas(char* codigo)
 
 		ParDisciplina *parD = NULL;
 		unsigned int tam = 0;
-		char c = ',';
 
 		FILE *f ;
+		char pathComPasta[MAX_NOME] ;
 
-		#ifdef _DEBUG	
-			printf("PATH: %s\n", path) ;
+		//colcocando pasta no inicio do path
+		#ifdef __linux__
+			strcpy(pathComPasta,"Dados/");
+		#else
+			strcpy(pathComPasta,"Dados\\") ;
 		#endif
 
-		printf( "PATH: %s\n", path ) ;
-		f = fopen(path,"wt") ;
+		strcat(pathComPasta, path) ;
+
+		#ifdef _DEBUG	
+			printf("PATH: %s\n", pathComPasta) ;
+		#endif
+
+		f = fopen(pathComPasta,"wt") ;
 
 		if ( !f )
 		{
 			#ifdef _DEBUG	
-				printf( "Erro ao salvar arquivo de dados de Grade Curricular.\nPATH: %s\n", path ) ;
+				printf( "Erro ao salvar arquivo de dados de Grade Curricular.\nPATH: %s\n", pathComPasta ) ;
 			#endif
 			return GRC_CondRetErroAbrirArquivo ;
 		} /* if */
@@ -571,20 +590,14 @@ GRC_tpCondRet GRC_exibeTurmas(char* codigo)
 				fclose(f) ;
 				return GRC_CondRetGradeCurricularVazia ;
 			} /* if */
+			
 			DIS_salvaDados ( parD->disciplina, f ) ;
+
 			DIS_salvaTurma ( parD->disciplina, f ) ;
 
-			/*
-				Caractere de Separação.
-				Não sei quantos turma vou ler, por isso coloquei uma virgula, ao final de cada uma delas e um ponto-e-virgula, no final de todas.
-				Após um ponto-e-virgula começa outra disciplina.
-			*/
-			if(tam==1) c = ';';
-			printf("%c\n", c);
 			next(grc->parDisciplinas);
 		}
-		
-		
+				
 		fclose(f) ;
 
 		return GRC_CondRetOk ;
@@ -593,19 +606,115 @@ GRC_tpCondRet GRC_exibeTurmas(char* codigo)
 
  /***************************************************************************
  *
+ *  Função: GRC Salva Dados Pre Requisitos
+ *  ****/
+
+	GRC_tpCondRet GRC_salvaDadosPreReq ( char * path )
+	{
+
+		ParDisciplina *parD = NULL;
+		Disciplina *Disc = NULL;
+		unsigned int qtdDisc = 0;
+		unsigned int qtdPreReq = 0;
+		unsigned int size = 0; 
+		char *codDisc = NULL;
+
+		FILE *f ;
+		char pathComPasta[MAX_NOME] ;
+
+		//colcocando pasta no inicio do path
+		#ifdef __linux__
+			strcpy(pathComPasta,"Dados/");
+		#else
+			strcpy(pathComPasta,"Dados\\") ;
+		#endif
+
+		strcat(pathComPasta, path) ;
+
+		#ifdef _DEBUG	
+			printf("PATH: %s\n", pathComPasta) ;
+		#endif
+
+		f = fopen(pathComPasta,"wt") ;
+
+		if ( !f )
+		{
+			#ifdef _DEBUG	
+				printf( "Erro ao salvar arquivo de dados de Pre Requisitos de Grade Curricular.\nPATH: %s\n", pathComPasta ) ;
+			#endif
+			return GRC_CondRetErroAbrirArquivo ;
+		} /* if */
+
+		first( grc->parDisciplinas ) ;
+		list_size(grc->parDisciplinas, &qtdDisc );
+
+		if( qtdDisc==0 )
+			{
+				fclose(f) ;
+				return GRC_CondRetGradeCurricularVazia ;
+			} /* if */
+
+		for(;qtdDisc;qtdDisc--)
+		{
+			if ( get_val_cursor(grc->parDisciplinas, (void**)&parD) != LIS_CondRetOK )
+			{
+				continue ;
+			} /* if */
+
+			if (first( parD->preRequisitos ) != LIS_CondRetListaVazia)
+			{
+				list_size(parD->preRequisitos, &qtdPreReq) ;
+				DIS_get_codigo( parD->disciplina, &codDisc) ;
+
+				fprintf(f, 
+						"%s %u ",
+						codDisc, qtdPreReq
+						) ;
+
+				for (;qtdPreReq;qtdPreReq--)
+				{
+					get_val_cursor(parD->preRequisitos, (void**)&Disc) ;
+					DIS_get_codigo( Disc, &codDisc) ;
+
+						fprintf(f, 
+						"%s ",
+						codDisc
+						) ;
+
+					next(parD->preRequisitos);
+				
+				} 
+			
+				fprintf(f, "\n");
+			}
+
+			next(grc->parDisciplinas);
+
+		} 
+		
+		fclose(f) ;
+
+		return GRC_CondRetOk ;
+
+	}  /* Fim função: alva Dados Pre Requisitos */
+
+ /***************************************************************************
+ *
  *  Função: GRC Retira Aspas
  *  ****/
 
-void GRC_retiraAspas(char *s){
-	int tam = strlen(s);
-	if( tam == 2 ) s[0] = '\0';
-	else{
-		s[tam-1] = '\0';
-		strcpy(s, s+1);
-	}
-} /* Fim função: GRC Retira Aspas */
+	void GRC_retiraAspas(char *s)
+	{
+		int tam = strlen(s) ;
+		if ( tam == 2 )
+			s[0] = '\0' ;
+		else
+		{
+			s[tam-1] = '\0' ;
+			strcpy( s, s+1 ) ;
+		}
+	} /* Fim função: GRC Retira Aspas */
 	
-
 
  /***************************************************************************
  *
@@ -621,7 +730,6 @@ void GRC_retiraAspas(char *s){
 		char bibliografia[MAX_BIBLIOGRAFIA];
 		char ementa[MAX_EMENTA];
 		int criterio;
-		//List * turmas;
 		char codTur[4];
 		char diaSem[28];
 		int horIni, horFin;
@@ -641,30 +749,53 @@ void GRC_retiraAspas(char *s){
 		char codSala[81] = "";
 
 		FILE * f ;
+				
+		char pathComPasta[MAX_NOME] ;
+
+		//colocando pasta no inicio do path
+		#ifdef __linux__
+			strcpy( pathComPasta,"Dados/" ) ;
+		#else
+			strcpy( pathComPasta,"Dados\\" ) ;
+		#endif
+
+		strcat( pathComPasta, path ) ;
 
 		#ifdef _DEBUG
-			printf( "PATH: %s\n", path) ;
+			printf( "PATH: %s\n", pathComPasta ) ;
 		#endif
 
 		//abrindo arquivo
-		f = fopen( path, "rt" ) ;
+		f = fopen( pathComPasta, "rt" ) ;
 
 		if ( !f )
 		{
 			#ifdef _DEBUG
-				printf("Erro ao abrir arquivo de dados de Grade Curricular.\n PATH: %s\n", path) ;
+				printf("Erro ao abrir arquivo de dados de Grade Curricular.\n PATH: %s\n", pathComPasta) ;
 			#endif
-
+			/*
+				Falha na abertura, criar pasta.
+	
+				Não deve existir a possibilidade de abrir a pasta e não ter nenhum arquivo dentro dela.
+				Se não existe pasta, é a primeira vez que o o programa funciona, e portanto não tem arquivos.
+				Se existe pasta, já não é a primeira vez e tem algum arquivo la dentro, mesmo que esteja vazio.
+				A não ser que o usuário delete os arquivos da pasta manualmente, mas então, por isso eu não mes responsabilizo. Afinal estamos possibilitando que ele remova os dados atraves do proprio programa, o que não causa erros.
+			*/
+			#ifdef __linux__
+				mkdir( "Dados", 0777 ) ;
+			#else
+				_mkdir( "Dados" ) ;
+			#endif
 			return GRC_CondRetOk ;
 		} /* if */
 
-		while( fscanf(f, "\'%[^\']\' %s %d \'%[^\']\' \'%[^\']\' %d\n",
-				nome, codigo, &creditos, bibliografia, ementa, &criterio )>0 )
+		while( fscanf(f, "\'%[^\']\' %s %d \'%[^\']\' \'%[^\']\' %d %c\n",
+				nome, codigo, &creditos, bibliografia, ementa, &criterio, &c )>0 )
 		{
 
 			#ifdef _DEBUG
-				printf( "%s %s %d %s %s %d \n",
-					nome, codigo, creditos, bibliografia, ementa, criterio ) ;
+				printf( "%s\n %s\n %d\n %s\n %s\n %d\n %c\n",
+					nome, codigo, creditos, bibliografia, ementa, criterio , c) ;
 			#endif
 
 			ret = GRC_cadastra( nome, codigo, creditos, bibliografia, ementa, criterio) ;
@@ -675,6 +806,11 @@ void GRC_retiraAspas(char *s){
 					printf("Erro ao cadastrar Disciplina.\n") ;
 				#endif
 				return ret ;
+			} /* if */
+
+			if (c == ';')
+			{
+				continue;
 			} /* if */
 
 			while( fscanf(f, "%s %s %d %d %d %d %s %s %c\n",
@@ -693,14 +829,20 @@ void GRC_retiraAspas(char *s){
 					printf( "Aspas retiradas:%s %s \n",
 						matProfS, codSala ) ;
 				#endif
-
-				matProf = atoi(matProfS);				
-
+		
 				ret = GRC_insereTurma( codTur, horIni, horFin, diaSem, qtdVag, qtdMat, codigo);
-				
-				GRC_CadastraProfNaTurma(codigo, matProf, codTur);
-				GRC_CadastraSalaNaTurma ( codigo, codTur, codSala );
-				
+
+				if (strlen(matProfS))
+				{
+					matProf = atoi(matProfS);			
+					GRC_CadastraProfNaTurma(codigo, matProf, codTur);
+				} /* if */
+
+				if( strlen(codSala) )
+				{
+					GRC_CadastraSalaNaTurma ( codigo, codTur, codSala );
+				} /* if */
+
 				if ( ret != GRC_CondRetOk )
 				{
 					#ifdef _DEBUG
@@ -710,7 +852,6 @@ void GRC_retiraAspas(char *s){
 
 				if (c == ';')
 				{
-					printf("cheguei no fim\n");
 					break ;
 				} /* if */
 
@@ -723,3 +864,94 @@ void GRC_retiraAspas(char *s){
 		return ret ;
 
 	} /* Fim função: GRC Le Dados */
+
+/***************************************************************************
+ *
+ *  Função: GRC Le Dados Pre Requisitos
+ *  ****/
+
+	GRC_tpCondRet GRC_leDadosPreReq ( char * path )
+	{
+		ParDisciplina *parD = NULL;
+		char codDisc[8];
+		char codDiscPreReq[8];
+		int qtd ;
+		GRC_tpCondRet ret;
+
+		FILE * f ;
+				
+		char pathComPasta[MAX_NOME] ;
+
+		//colocando pasta no inicio do path
+		#ifdef __linux__
+			strcpy( pathComPasta,"Dados/" ) ;
+		#else
+			strcpy( pathComPasta,"Dados\\" ) ;
+		#endif
+
+		strcat( pathComPasta, path ) ;
+
+		#ifdef _DEBUG
+			printf( "PATH: %s\n", pathComPasta ) ;
+		#endif
+
+		//abrindo arquivo
+		f = fopen( pathComPasta, "rt" ) ;
+
+		if ( !f )
+		{
+			#ifdef _DEBUG
+				printf("Erro ao abrir arquivo de dados de Pre Requisitos de disciplina.\n PATH: %s\n", pathComPasta) ;
+			#endif
+			
+			#ifdef __linux__
+				mkdir( "Dados", 0777 ) ;
+			#else
+				_mkdir( "Dados" ) ;
+			#endif
+			return GRC_CondRetOk ;
+		} /* if */
+		
+		if( get_val_cursor(grc->parDisciplinas, (void**)&parD) == LIS_CondRetListaVazia )
+		{
+			fclose(f) ;
+			return GRC_CondRetGradeCurricularVazia ;
+		} /* if */
+				
+		while( fscanf(f, "%s %d",
+				codDisc, &qtd )>0 )
+		{
+
+			#ifdef _DEBUG
+				printf( "%s %d",
+					codDisc, qtd ) ;
+			#endif
+						
+			first( parD->preRequisitos ) ;
+			
+			if (GRC_buscaPorCodigo(codDisc) == GRC_CondRetOk)
+			{
+				for (;qtd;qtd--)
+				{
+					fscanf(f, " %s", codDiscPreReq );
+					ret = GRC_inserePreRequisito(codDiscPreReq) ;
+				} /* for */
+					
+					fscanf(f,"\n"); 
+				}
+			
+			if ( ret != GRC_CondRetOk )
+			{
+				#ifdef _DEBUG
+					printf("Erro ao cadastrar Disciplina.\n") ;
+				#endif
+				return ret ;
+			} /* if */
+
+		} /* while */
+
+		fclose(f) ;
+
+		return ret ;
+
+	} /* Fim função: GRC Le Dados Pre Requisitos */

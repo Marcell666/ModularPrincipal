@@ -30,8 +30,8 @@
 
 #define MAX_NOME 81
 #define MAX_CODIGO 8
-#define MAX_BIBLIOGRAFIA 300
-#define MAX_EMENTA 300
+#define MAX_BIBLIOGRAFIA 1024
+#define MAX_EMENTA 1024
 #define MIN_CREDITOS 1
 #define MAX_CRITERIO 25
 
