@@ -43,7 +43,6 @@
 #define  MEN_TAM_CPF 12
 #define  MEN_TAM_MAT 9
 #define  MEN_TAM_TEL 10
-#define  MEN_QTD_EST 27
 #define  MEN_TAM_RG 10
 
 //Sala
@@ -55,12 +54,11 @@
 /* Incluindo inicial do predio, usado como tamanho da string caractere inicial + 4 digitos + caractere de terminacao */
 
 //Disciplina
-#define MEN_MAX_NOME 25
+#define MEN_MAX_NOME 81
 #define MEN_MAX_CODIGO 8
-#define MEN_MAX_BIBLIOGRAFIA 300
-#define MEN_MAX_EMENTA 300
+#define MEN_MAX_BIBLIOGRAFIA 1024
+#define MEN_MAX_EMENTA 1024
 #define MEN_MIN_CREDITOS 1
-#define MEN_MAX_CRITERIO 25
 #define MEN_COD_TUR 4
 #define MEN_DIA_SEMANA 28
 

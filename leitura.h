@@ -11,7 +11,15 @@
 #define LER_MIN_NUM 1
 #define LER_MAX_NUM 8
 #define LER_QTD_EST 27
+#define LER_TAM_DSM 27 //dia da semana
 #define LER_TAM_RG 9
+#define LER_COD_TUR 3
+#define LER_MIN_SAL 3 //sem contar com o predio
+#define LER_MAX_SAL 4 //sem contar com o predio
+#define LER_COD_DIS 7
+
+#define LER_TAM_BIBLIOGRAFIA 1023
+#define LER_TAM_EMENTA 1023
 
 #define LER_TOUPPER 1
 #define LER_NORMAL 0

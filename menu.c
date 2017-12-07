@@ -54,6 +54,7 @@
 #include "gradeCurricular.h"
 #include "CorpoSala.h"
 #include "leitura.h"
+#include "alumat.h"
 
 #ifdef __linux__
 	#define VK_ENTER 10
@@ -66,6 +67,8 @@
 
 /*****  Protótipos das funções encapsuladas no módulo  *****/
 
+	void MEN_menuMatricula(unsigned int mat);
+	void MEN_menuCancelaDisc(unsigned int mat);
 	int MEN_comparaLeCodigoGRC ( unsigned char c ) ;
 	int MEN_comparaLePredioSAL ( unsigned char c ) ;
 
@@ -208,7 +211,7 @@
 		LER_leInteiro( &end.numero, LER_MIN_NUM, LER_MAX_NUM, LER_comparaLeSoNumero ) ;
 		
 		printf( "\nComplemento:\n" ) ;
-		LER_leString( end.comp, 0, LER_TAM_STRING, LER_comparaLeComplemento) ;
+		LER_leString( end.comp, 1, LER_TAM_STRING, LER_comparaLeComplemento) ;
 
 		printf( "\nBairro:\n" ) ;
 		LER_leString( end.bairro, 1, LER_TAM_STRING, LER_comparaLeSoLetra) ;
@@ -240,6 +243,73 @@
 
 	} /* Fim função: MEN  &Adiciona Aluno */
 
+
+	void MEN_menuMatricula(unsigned int mat)
+	{
+		char codDis[MEN_MAX_CODIGO];
+		char codTur[MEN_COD_TUR];
+		AMT_tpCondRet ret;
+
+		printf("\nDigite o codigo da disciplina a se matricular: \n");
+		LER_leStringConverte( codDis, 4, 8, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ;
+		if (GRC_buscaPorCodigo(codDis) == GRC_CondRetDisciplinaNaoEncontrada) {
+			printf("Codigo invalido...\n");
+			MEN_menuAnterior();
+			return;
+		}
+
+		printf("Turmas disponiveis: \n");
+		GRC_exibeTurmas(codDis);
+
+		printf("Digite o Codigo da turma: \n");
+		LER_leStringConverte( codTur, LER_COD_TUR, LER_COD_TUR, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ;
+
+		ret = AMT_matriculaNaDisc(mat, codDis, codTur);
+
+		if (ret == AMT_CondRetDisciplinaNaoEncontrada) {
+			printf( "A disciplina indicado nao existe.\n");
+		} else if ( ret == AMT_CondRetLimiteDeCredUlt ){
+			printf( "Limite maximo de creditos excedido, nao e possivel matricular.\n");
+		} else if ( ret == AMT_CondRetFaltouMemoria ){
+			printf( "Erro de memoria ao cadastrar.\n" ) ;
+		} else if ( ret == AMT_CondRetTurmaNaoExiste ){
+			printf( "A turma indicada nao existe.\n");
+		} else if ( ret == AMT_CondRetAlunoNaoExiste ){
+			printf( "O aluno indicado nao existe.\n" ) ;
+		} else {
+			system( "cls" ) ;
+			printf("Matricula realizada com sucesso!\n");
+		} /* if */
+		MEN_menuAnterior();
+	}
+
+	void MEN_menuCancelaDisc(unsigned int mat)
+	{
+
+		char codDis[9];
+		AMT_tpCondRet ret;
+
+		printf("\nCancelar disciplina\n");
+
+		printf("\nDigite o codigo da disciplina a cancelar: \n");
+		LER_leStringConverte( codDis, 4, 8, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ;
+
+		ret = AMT_retiraDisc(mat,codDis);
+
+		if (ret == AMT_CondRetAlunoNaoExiste) {
+			printf("O aluno nao esta matriculado em nenhuma disciplina.\n");
+		}
+		else if (ret == AMT_CondRetDisciplinaNaoEncontrada) {
+			printf("O aluno nao esta nesta disciplina.\n");
+		} 
+		else if(ret == AMT_CondRetOK) {
+			printf("A disciplina foi retirada da grade de horarios.\n");
+		}
+		MEN_menuAnterior();
+	}
+
+
+
 /***************************************************************************
 *
 *  Função: MEN  &Modifica Aluno
@@ -255,11 +325,19 @@
 		CPF cpf ;
 		int opcao ;
 		CDI_tpCondRet ret ;
+		AMT_tpCondRet retAMT ;
+		char codigo[MEN_TAM_STRING];
+		char codTur[MEN_TAM_STRING];
+		int nFaltas=0;
+		float g1,g2,g3,g4;
 
 		printf( "\n*********** EDITAR DADOS DE ALUNO ***********\n\n" ) ;
 
 		do
 		{
+			
+			ret = CDI_CondRetOK ;
+			retAMT = AMT_CondRetOK ;
 			printf( "\nALUNO:\n" ) ;
 			CDI_imprimeInfo( (unsigned int)matAnt ) ;
 			printf( "\n\nEscolha o dado a ser alterado: \n\n" ) ;
@@ -269,9 +347,16 @@
 			printf( "4: Data de nascimento\n" ) ;
 			printf( "5: CPF\n" ) ;
 			printf( "6: Endereco\n" ) ;
+			printf( "7: Matricular numa Disciplina\n" ) ;
+			printf( "8: Cancelar matricula numa Disciplina\n" ) ;
+			printf( "9: Mostrar a grade\n" ) ;
+			printf( "10: Alterar quantidade de faltas\n" ) ;
+			printf( "11: Inserir notas\n" ) ;
+			printf( "12: Alterar turma de uma disciplina\n" ) ;
+
 			printf( "\n0: Voltar ao menu anterior\n" ) ;
 			
-			LER_leInteiro( &opcao, 1, 1, LER_comparaLeSoNumero ) ;
+			LER_leInteiro( &opcao, 1, 2, LER_comparaLeSoNumero ) ;
 
 			system("cls") ;
 
@@ -316,7 +401,7 @@
 					printf( "\nNumero:\n" ) ;
 					LER_leInteiro( &end.numero, LER_MIN_NUM, LER_MAX_NUM, LER_comparaLeSoNumero ) ;
 					printf( "\nComplemento:\n" ) ;
-					LER_leString( end.comp, 0, LER_TAM_STRING, LER_comparaLeComplemento) ;
+					LER_leString( end.comp, 1, LER_TAM_STRING, LER_comparaLeComplemento) ;
 					printf( "\nBairro: \n" ) ;
 					LER_leString( end.bairro, 1, LER_TAM_STRING, LER_comparaLeSoLetra) ;
 					printf( "\nCidade: \n" ) ;
@@ -324,6 +409,51 @@
 					printf( "\nEstado (sigla): \n" ) ;
 					LER_leUF( end.estado ) ;
 					ret = CDI_altera( matAnt, NULL, 0, NULL, 0 , NULL, &end ) ;
+					break ;
+				case 7:
+					MEN_menuMatricula(matAnt);
+					break ;
+				case 8:
+					MEN_menuCancelaDisc(matAnt);
+					break ;
+				case 9:
+					retAMT = AMT_imprimeGrade(matAnt);
+					break ;
+				case 10:
+					printf( "\nCodigo da disciplina: \n" ) ;
+					LER_leStringConverte( codigo, LER_COD_DIS, LER_COD_DIS, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ;
+					printf( "\nQuantidade de faltas: \n" ) ;
+					LER_leInteiro( &nFaltas, 1, 3, LER_comparaLeSoNumero ) ;
+					retAMT = AMT_alteraFaltas(matAnt, nFaltas, codigo);
+					break ;
+				case 11:
+					
+					printf( "\nCodigo da disciplina: \n" ) ;
+					LER_leStringConverte( codigo, LER_COD_DIS, LER_COD_DIS, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ;
+					printf( "\nNova nota na g1: \n" ) ;
+					LER_leNota( &g1, 1, 5, LER_comparaLeSoNumero ) ;
+					printf( "\nNova nota na g2: \n" ) ;
+					LER_leNota( &g2, 1, 5, LER_comparaLeSoNumero ) ;
+					printf( "\nNova nota na g3: \n" ) ;
+					LER_leNota( &g3, 1, 5, LER_comparaLeSoNumero ) ;
+					printf( "\nNova nota na g4: \n" ) ;
+					LER_leNota( &g4, 1, 5, LER_comparaLeSoNumero ) ;
+					retAMT = AMT_insereNota(g1, g2, g3, g4, matAnt, codigo);
+					break ;
+				case 12:
+					printf( "\nCodigo da disciplina que deseja trocar a turma: \n" ) ;
+					LER_leStringConverte( codigo, LER_COD_DIS, LER_COD_DIS, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ;
+					printf( "\nCodigo da turma: \n" ) ;
+					LER_leStringConverte( codTur, LER_COD_TUR, LER_COD_TUR, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ;
+					retAMT = AMT_alteraTurma(matAnt, codigo, codTur);
+
+					if(retAMT == AMT_CondRetAlunoNaoExiste){
+						printf("Aluno nao esta matriculado em nenhuma disciplina.");
+					} else if(retAMT == AMT_CondRetDisciplinaNaoEncontrada){
+						printf("Aluno nao esta matriculado nessa disciplina.");
+					} else if(retAMT == AMT_CondRetTurmaNaoExiste){
+						printf("A turma indicada nao foi cadastrada.");
+					}
 					break ;
 				default:
 					if ( opcao )
@@ -334,7 +464,7 @@
 					break;
 			}
 
-			if ( ret == CDI_CondRetOK )
+			if ( ret == CDI_CondRetOK && retAMT == AMT_CondRetOK )
 			{
 				printf( "\nDados alterados com sucesso!\n\n" ) ;
 
@@ -349,7 +479,8 @@
 
 				MEN_menuAnterior() ;
 				return ;
-			} /* if */
+			}/* if */
+				
 
 		} while ( opcao ) ;
 
@@ -402,7 +533,7 @@
 		LER_leInteiro( &numero, LER_MIN_NUM, LER_MAX_NUM, LER_comparaLeSoNumero ) ;
 
 		printf( "\nComplemento:\n" ) ;
-		LER_leString( complemento, 0, LER_TAM_STRING, LER_comparaLeComplemento) ;
+		LER_leString( complemento, 1, LER_TAM_STRING, LER_comparaLeComplemento) ;
 
 		printf( "\nBairro:\n" ) ;
 		LER_leString( bairro, 1, LER_TAM_STRING, LER_comparaLeSoLetra) ;
@@ -538,7 +669,7 @@
 					printf( "\nNumero:\n" ) ;
 					LER_leInteiro( &numero, LER_MIN_NUM, LER_MAX_NUM, LER_comparaLeSoNumero ) ;
 					printf( "\nComplemento:\n" ) ;
-					LER_leString( complemento, 0, LER_TAM_STRING, LER_comparaLeComplemento) ;
+					LER_leString( complemento, 1, LER_TAM_STRING, LER_comparaLeComplemento) ;
 					printf( "\nBairro:\n" ) ;
 					LER_leString( bairro, 1, LER_TAM_STRING, LER_comparaLeSoLetra) ;
 					printf( "\nCidade:\n" ) ;
@@ -605,8 +736,8 @@
 				CDO_mostraAtual() ;
 				printf("TEM CERTEZA QUE DESEJA REMOVER PERMANENTEMENTE TODOS OS DADOS DESTE PROFESSOR?\n\n") ;
 				printf( "\nDigite: \n" ) ;
-				printf("1: Para SIM.\n") ;
-				printf("0: Para NAO.\n\n") ;
+				printf("1: SIM.\n") ;
+				printf("0: NAO.\n\n") ;
 
 				LER_leInteiro( &opcao, 1, 1, LER_comparaLeSoNumero ) ;
 
@@ -652,8 +783,8 @@
 			{
 				printf ("TEM CERTEZA QUE DESEJA REMOVER PERMANENTEMENTE TODOS OS DADOS DE TODOS OS PROFESSORES CADASTRADOS?\n\n") ;
 				printf( "\nDigite: \n" ) ;
-				printf("1: Para SIM.\n") ;
-				printf("0: Para NAO.\n\n") ;
+				printf("1: SIM.\n") ;
+				printf("0: NAO.\n\n") ;
 
 				LER_leInteiro( &opcao, 1, 1, LER_comparaLeSoNumero ) ;
 
@@ -704,17 +835,17 @@
 				
 		//adiciona aluno
 		printf( "\nNome da disciplina: \n" ) ;
-		LER_leString( nome, 1, MEN_MAX_NOME, LER_comparaLeSoLetra) ;
+		LER_leString( nome, 1, LER_TAM_STRING, LER_comparaLeSoLetra) ;
 
 
 		printf( "\nCodigo da disciplina: \n" ) ;
-		LER_leStringConverte( codigo, 4, 8, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ;
+		LER_leStringConverte( codigo, LER_COD_DIS, LER_COD_DIS, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ;
 
 		printf( "\nBibliografia da disciplina: \n" ) ;
-		LER_leString( bibliografia, 1, MEN_MAX_BIBLIOGRAFIA, LER_comparaLeComplemento) ;
+		LER_leString( bibliografia, 1, LER_TAM_BIBLIOGRAFIA, LER_comparaLeComplemento) ;
 
 		printf( "\nEmenta da disciplina: \n" ) ;
-		LER_leString( ementa, 1, MEN_MAX_EMENTA, LER_comparaLeLogradouro) ;
+		LER_leString( ementa, 1, LER_TAM_EMENTA, LER_comparaLeLogradouro) ;
 	
 		printf( "\nQuantidade de creditos da disciplina: \n" ) ;
 		LER_leInteiro(&creditos, 1, 2, LER_comparaLeSoNumero) ;
@@ -813,7 +944,7 @@
 					//inserir um Pre-Requisito
 					system( "cls" ) ;
 					printf( "Digite o código da disciplina que deseja configurar como pre-requisito:\n" ) ;
-					LER_leStringConverte( codigo, 0, LER_TAM_STRING, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ;
+					LER_leStringConverte( codigo, LER_COD_DIS, LER_COD_DIS, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ;
 					ret = GRC_inserePreRequisito( codigo ) ;
 					if( ret != GRC_CondRetOk )
 						printf( "Erro ao cadastrar\n" ) ;
@@ -827,8 +958,8 @@
 					printf ("TEM CERTEZA QUE DESEJA REMOVER PERMANENTEMENTE TODOS OS PRE-REQUISITOS DESTA DISCIPLINA?\n\n") ;
 					while ( 1 )
 					{
-						printf ("Digite 1: Para SIM.\n") ;
-						printf ("Digite 0: Para NAO.\n\n") ;
+						printf ("1: SIM.\n") ;
+						printf ("0: NAO.\n\n") ;
 
 						LER_leInteiro( &opcao, 1, 1, LER_comparaLeSoNumero ) ;
 
@@ -857,13 +988,13 @@
 					//inserir uma turma
 					system( "cls" ) ;
 					printf( "Digite o codigo da disciplina em que deseja inserir uma turma:\n" ) ;
-					LER_leStringConverte( codigo, 0, LER_TAM_STRING, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ;
+					LER_leStringConverte( codigo, LER_COD_DIS, LER_COD_DIS, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ;
 					printf( "Digite o codigo da turma:\n" ) ;				
-					LER_leStringConverte( codTur, 0, LER_TAM_STRING, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ;
+					LER_leStringConverte( codTur, LER_COD_TUR, LER_COD_TUR, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ;
 					printf( "Digite o dia da semana da aula:\n" ) ;
 					// Pode nao parecer coerente pelo nome da funcao usa-la aqui, mas na verdade os caracteres sao quase os mesmos
 					// Talvez fosse bom renomear essas funções para que uso delas fosse mais intuitivo
-					LER_leStringConverte( diaSem, 0, LER_TAM_STRING, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ;
+					LER_leStringConverte( diaSem, 1, LER_TAM_DSM, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ;
 					do 
 					{
 						printf( "Digite a hora de inicio da aula(7 >= HorIni <= 21):\n" ) ;
@@ -877,19 +1008,19 @@
 						//scanf("%d", &horTer);
 					} while ( horTer > 23 || horTer < 9 ) ;
 					printf( "Digite a quantidade de vagas:\n" ) ;
-					LER_leInteiro( &qtdVag, 0, 2, LER_comparaLeSoNumero ) ;
+					LER_leInteiro( &qtdVag, 1, 2, LER_comparaLeSoNumero ) ;
 					ret = GRC_insereTurma( codTur, horIni, horTer, diaSem, qtdVag, 0, codigo ) ;
 					break ;
 				case 6:
 					//cadastrar uma turma numa sala
 					printf( "Digite o codigo da disciplina a qual pertence a turma que deseja cadastrar numa sala:\n" ) ;
-					LER_leStringConverte( codigo, 1, LER_TAM_STRING, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ;
+					LER_leStringConverte( codigo, LER_COD_DIS, LER_COD_DIS, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ;
 					printf( "Digite o codigo da turma que deseja cadastrar numa sala:\n" ) ;
-					LER_leStringConverte( codTur, 1, LER_TAM_STRING, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ;
+					LER_leStringConverte( codTur, LER_COD_TUR, LER_COD_TUR, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ;
 					printf( "Digite a inicial do predio:\n" ) ;
 					LER_leStringConverte( codSala, 1, 1, MEN_comparaLePredioSAL, LER_TOUPPER ) ;
 					printf( "Digite numero da sala:\n" ) ;
-					LER_leString( codSala+1, 3, 4, LER_comparaLeSoNumero ) ;
+					LER_leString( codSala+1, LER_MIN_SAL, LER_MAX_SAL, LER_comparaLeSoNumero ) ;
 					GRC_cadastraTurmaNaSala( codigo, codTur, codSala ) ;
 					break;
 				case 7:
@@ -897,7 +1028,7 @@
 					system( "cls" ) ;
 					printf( "Digite o codigo da disciplina que deseja checar as turmas:\n" ) ;
 					ret = GRC_exibeTurmas("INF1301");
-					LER_leStringConverte( codigo, 1, LER_TAM_STRING, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ;
+					LER_leStringConverte( codigo, LER_COD_DIS, LER_COD_DIS, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ;
 					ret = GRC_exibeTurmas( codigo ) ;
 					break ;
 				default:
@@ -937,14 +1068,14 @@
 	{
 
 		int opcao ;
-		char codigo[LER_TAM_STRING+1] ;
+		char codigo[MEN_MAX_CODIGO] ;
 		GRC_tpCondRet ret ;
 
 		printf( "\n*********** REMOVE DISCIPLINA ***********\n" ) ;
 		
 		printf( "\nDigite a codigo da disciplina que deseja remover permanentemente da relacao de disciplinas: \n" ) ;
 
-		LER_leStringConverte(codigo, 0, LER_TAM_STRING, MEN_comparaLeCodigoGRC, LER_TOUPPER);
+		LER_leStringConverte(codigo, LER_COD_DIS, LER_COD_DIS, MEN_comparaLeCodigoGRC, LER_TOUPPER);
 	
 		if ( GRC_buscaPorCodigo(codigo) != GRC_CondRetOk )
 		{
@@ -958,8 +1089,8 @@
 				GRC_mostraAtual() ;
 				printf ("TEM CERTEZA QUE DESEJA REMOVER PERMANENTEMENTE TODOS OS DADOS DESTA DISCIPLINA?\n\n") ;
 				printf( "\nDigite: \n" ) ;
-				printf("1: Para SIM.\n") ;
-				printf("0: Para NAO.\n\n") ;
+				printf("1: SIM.\n") ;
+				printf("0: NAO.\n\n") ;
 
 				LER_leInteiro( &opcao, 1, 1, LER_comparaLeSoNumero ) ;
 
@@ -1003,8 +1134,8 @@
 		{
 			printf ( "TEM CERTEZA QUE DESEJA REMOVER PERMANENTEMENTE TODOS OS DADOS DE TODAS AS DISCIPLINAS CADASTRADAS?\n\n" ) ;
 			printf( "\nDigite: \n" ) ;
-			printf("1: Para SIM.\n") ;
-			printf("0: Para NAO.\n\n") ;
+			printf("1: SIM.\n") ;
+			printf("0: NAO.\n\n") ;
 
 			LER_leInteiro(&opcao, 1, 1, LER_comparaLeSoNumero) ;
 
@@ -1091,7 +1222,7 @@
 				case 3:
 					system( "cls" ) ;
 					printf( "Digite o código da disciplina que deseja buscar:\n" ) ;
-					LER_leString( codigo, 0, LER_TAM_STRING, LER_comparaLeSoLetra) ;				
+					LER_leString( codigo, LER_COD_DIS, LER_COD_DIS, LER_comparaLeSoLetra) ;				
 					ret = GRC_buscaPorCodigo( codigo ) ;
 					GRC_mostraAtual() ;
 					break ;
@@ -1103,7 +1234,7 @@
 				case 5:
 					system( "cls" ) ;
 					printf( "Digite o código da disciplina que deseja configurar como pre-requisito:\n" ) ;
-					LER_leStringConverte( codigo, 0, LER_TAM_STRING, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ;
+					LER_leStringConverte( codigo, LER_COD_DIS, LER_COD_DIS, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ;
 					ret = GRC_inserePreRequisito( codigo ) ;
 					break ; 
 				case 6:
@@ -1112,8 +1243,8 @@
 					break ;
 				case 7:
 					system( "cls" ) ;
-					printf( "\nDeseja mesmo apagar toda a grade curricular?\n1:Sim\n2-Nao\n" ) ;				
-					LER_leInteiro( &opcao, 0, 1, LER_comparaLeSoNumero ) ;
+					printf( "\nDeseja mesmo apagar toda a grade curricular?\n1: SIM\n0: NAO\n" ) ;		
+					LER_leInteiro( &opcao, 1, 1, LER_comparaLeSoNumero ) ;
 					if ( opcao == 1 ) 
 					{
 						system( "cls" ) ;
@@ -1126,13 +1257,13 @@
 				case 8: 
 					system( "cls" ) ;
 					printf( "Digite o codigo da disciplina em que deseja inserir uma turma:\n" ) ;
-					LER_leStringConverte( codigo, 0, LER_TAM_STRING, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ;
+					LER_leStringConverte( codigo, LER_COD_DIS, LER_COD_DIS, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ;
 					printf( "Digite o codigo da turma:\n" ) ;				
-					LER_leStringConverte( codTur, 0, LER_TAM_STRING, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ;
+					LER_leStringConverte( codTur, LER_COD_TUR, LER_COD_TUR, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ;
 					printf( "Digite o dia da semana da aula:\n" ) ;
 					// Pode nao parecer coerente pelo nome da funcao usa-la aqui, mas na verdade os caracteres sao quase os mesmos
 					// Talvez fosse bom renomear essas funções para que uso delas fosse mais intuitivo
-					LER_leStringConverte( diaSem, 0, LER_TAM_STRING, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ; 
+					LER_leStringConverte( diaSem, 1, LER_TAM_DSM, MEN_comparaLeCodigoGRC, LER_TOUPPER ) ; 
 					do
 					{
 						printf( "Digite a hora de inicio da aula(7 >= HorIni <= 21):\n" ) ;
@@ -1145,7 +1276,7 @@
 						//scanf("%d", &horTer);
 					} while ( horTer >23 || horTer < 9 ) ; 
 					printf( "Digite a quantidade de vagas:\n" ) ;
-					LER_leInteiro( &qtdVag, 0, 2, LER_comparaLeSoNumero ) ;
+					LER_leInteiro( &qtdVag, 1, 2, LER_comparaLeSoNumero ) ;
 					ret = GRC_insereTurma( codTur, horIni, horTer, diaSem, qtdVag, 0, codigo ) ;
 					break ;
 				case 9:
@@ -1219,12 +1350,13 @@
 		LER_leStringConverte( predio, 1, 1, MEN_comparaLePredioSAL, LER_TOUPPER) ;
 
 		printf( "\nCodigo da sala: \n" ) ;
-		LER_leString( numero, MEN_MIN_COD_SAL ,  MEN_MAX_COD_SAL, LER_comparaLeSoNumero ) ;
+		//estou somando 1 para contar com o numero do predio
+		LER_leString( numero, LER_MIN_SAL+1 ,  LER_MAX_SAL+1, LER_comparaLeSoNumero ) ;
 
 		printf( "\nCapacidade de Alunos: \n" ) ;
 		LER_leInteiro( &maxAlunos, 1, 2, LER_comparaLeSoNumero ) ;
 
-		do{
+		do{	
 			printf( "\nA sala e laboratorio?: \n" ) ;
 			printf("1: Sim\n");
 			printf("0: Nao\n");
@@ -1273,7 +1405,7 @@
 		
 		printf( "\nDigite a codigo da sala que deseja remover permanentemente da relacao de salas: \n" ) ;
 
-		LER_leStringConverte(codigo, 1, LER_TAM_STRING, MEN_comparaLeCodigoGRC, LER_TOUPPER);
+		LER_leStringConverte(codigo, LER_COD_DIS, LER_COD_DIS, MEN_comparaLeCodigoGRC, LER_TOUPPER);
 	
 		
 		while ( 1 )
@@ -1282,8 +1414,8 @@
 			CDS_exibeDisponibilidade ( codigo ) ;
 			printf ("TEM CERTEZA QUE DESEJA REMOVER PERMANENTEMENTE TODOS OS DADOS DESTA SALA?\n\n") ;
 			printf( "\nDigite: \n" ) ;
-			printf("1: Para SIM.\n") ;
-			printf("0: Para NAO.\n\n") ;
+			printf("1: SIM.\n") ;
+			printf("0: NAO.\n\n") ;
 
 			LER_leInteiro( &opcao, 1, 1, LER_comparaLeSoNumero ) ;
 
@@ -1328,8 +1460,8 @@
 		{
 			printf ( "TEM CERTEZA QUE DESEJA REMOVER PERMANENTEMENTE TODOS OS DADOS DE TODAS AS SALAS CADASTRADAS?\n\n" ) ;
 			printf( "\nDigite: \n" ) ;
-			printf("1: Para SIM.\n") ;
-			printf("0: Para NAO.\n\n") ;
+			printf("1: SIM.\n") ;
+			printf("0: NAO.\n\n") ;
 
 			LER_leInteiro(&opcao, 1, 1, LER_comparaLeSoNumero) ;
 
