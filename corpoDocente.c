@@ -588,7 +588,7 @@
 		} /* if */
 
 	
-		while( fscanf(f, "\'%[^\']\' %s %d %s %d %d %d %d %d %s %s \'%[^\']\' \'%[^\']\' \'%[^\']\' %d \'%[^\']\'\n",
+		while( fscanf(f, "\'%[^\']\' %s %d %s %d %d %d %d %d \'%[^\']\' %s \'%[^\']\' \'%[^\']\' \'%[^\']\' %d \'%[^\']\'\n",
 				nome, cpf, &matricula, email, &telefone, &rg, &dia, &mes, &ano,
 				pais, uf, cidade, bairro, rua, &numero, complemento )>0 )
 		{

@@ -910,7 +910,7 @@ PRF_tpCondRet PRF_alteraPais(Prof* professor, char* pais){
 				*/
 
 			fprintf(f,
-					"\'%s\' %s %d %s %d %d %d %d %d %s %s \'%s\' \'%s\' \'%s\' %d \'%s\' \n",
+					"\'%s\' %s %d %s %d %d %d %d %d \'%s\' %s \'%s\' \'%s\' \'%s\' %d \'%s\' \n",
 
 				prof->nome,
 				prof->cpf,
